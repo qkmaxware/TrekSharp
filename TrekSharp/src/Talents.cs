@@ -43,6 +43,88 @@ public class SpeciesRestrictedTalent : CharacterTalent {
     
 }
 
+public class DisciplineAndTalentTalent : CharacterTalent {
+    public Disciplines Disciplines {get; set;}
+    public string TalentName {get; set;}
+    public DisciplineAndTalentTalent() {}
+    public DisciplineAndTalentTalent(Disciplines disciplines, string talent, string name, string desc) : base(name, desc) {
+        this.Disciplines = disciplines;
+        this.TalentName = talent;
+    }
+    private bool Matches(Disciplines match, Disciplines against) {
+        for (var i = 0; i < 6; i++) {
+            if (match[i] < against[i])
+                return false; // Not a match for this set
+        }
+        return true;
+    }
+
+    public override bool CanBeUsedBy(Character character) {
+        if (character is PlayerCharacter player) {
+            if (player.Talents == null)
+                return false;
+            return Matches(character.Disciplines, Disciplines) && player.Talents.Select(talent => talent.Name).Contains(TalentName);
+        } else {
+            return false;
+        }
+    }
+}
+
+public class DisciplineAndFocusTalent : CharacterTalent {
+    public Disciplines Disciplines {get; set;}
+    public string Focus {get; set;}
+    public DisciplineAndFocusTalent() {}
+    public DisciplineAndFocusTalent(Disciplines disciplines, string focus, string name, string desc) : base(name, desc) {
+        this.Disciplines = disciplines;
+        this.Focus = focus;
+    }
+    private bool Matches(Disciplines match, Disciplines against) {
+        for (var i = 0; i < 6; i++) {
+            if (match[i] < against[i])
+                return false; // Not a match for this set
+        }
+        return true;
+    }
+
+    public override bool CanBeUsedBy(Character character) {
+        if (character is PlayerCharacter player) {
+            if (player.Focuses == null)
+                return false;
+            return Matches(character.Disciplines, Disciplines) && player.Focuses.Contains(Focus);
+        } else {
+            return false;
+        }
+    }
+}
+
+public class AttributeAndDisciplineLimitedTalent : CharacterTalent {
+    public Disciplines Disciplines {get; set;}
+    public Attributes Attributes {get; set;}
+
+    public AttributeAndDisciplineLimitedTalent() {}
+    public AttributeAndDisciplineLimitedTalent(Attributes attr, Disciplines disc, string name, string desc) : base(name, desc) {
+        this.Disciplines = disc;
+        this.Attributes = attr;
+    }
+    private bool Matches(Disciplines match, Disciplines against) {
+        for (var i = 0; i < 6; i++) {
+            if (match[i] < against[i])
+                return false; // Not a match for this set
+        }
+        return true;
+    }
+    private bool Matches(Attributes match, Attributes against) {
+        for (var i = 0; i < 6; i++) {
+            if (match[i] < against[i])
+                return false; // Not a match for this set
+        }
+        return true;
+    }
+    public override bool CanBeUsedBy(Character character) {
+        return Matches(character.Disciplines, Disciplines) && Matches(character.Attributes, Attributes);
+    }
+}
+
 public class DisciplineLimitedTalent : CharacterTalent {
     public List<Disciplines> minDisciplines {get; set;}
     public DisciplineLimitedTalent() {}

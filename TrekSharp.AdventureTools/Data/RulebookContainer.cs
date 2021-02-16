@@ -6,7 +6,9 @@ namespace TrekSharp.AdventureTools.Data {
 public class RulebookContainer {
     private Dictionary<string, Rulebook> rulebooks = new Dictionary<string, Rulebook> {
         {"Core", Rulebook.Core},
-        {"Command Division", Rulebooks.CommandDivision.Instance },   
+        {"Command Division", Rulebooks.CommandDivision.Instance }, 
+        {"Operations Division", Rulebooks.OperationsDivision.Instance },   
+        {"Science Division", Rulebooks.ScienceDivision.Instance },   
         {"More Races", Rulebooks.MoreRaces.Instance }   ,
     };
     private List<string> _protected = new List<string>() {
