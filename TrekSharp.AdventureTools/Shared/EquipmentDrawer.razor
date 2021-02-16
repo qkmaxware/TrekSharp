@@ -1,0 +1,36 @@
+<div class="w3-margin-bottom">
+    <div class="row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            EQUIPMENT 
+        </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+        <ul class="w3-ul w3-small">
+            @if (Player != null && Player.Equipment != null) {
+            foreach (var item in Player.Equipment) {
+                <li>
+                    @item.Name 
+                    @if(item.Qualities != null) {
+                        <small>(@string.Join(',', item.Qualities))</small>
+                    }
+                    @if (item.UsageDice.HasValue) {
+                        <span class="w3-right">
+                            @(item.UsageDice.Value + Player.BonusDamageDice) 
+                            <img src="/assets/challenge-effect.png" width=12 height=12 />
+                        </span>
+                    }
+                </li>
+            }
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public Character Player {get; set;}
+
+}

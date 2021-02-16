@@ -1,0 +1,24 @@
+<div class="w3-margin-bottom">
+    <div class="row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            VALUES 
+        </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+        <ul class="w3-ul w3-small">
+            @foreach (var value in Values) {
+                <li>@value &nbsp;</li>
+            }
+        </ul>
+        <div>
+            DETERMINATION <input type="checkbox"/> <input type="checkbox"/> <input type="checkbox"/>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public List<string> Values {get; set;}
+}

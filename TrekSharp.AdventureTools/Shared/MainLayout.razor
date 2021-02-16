@@ -1,0 +1,17 @@
+﻿@inherits LayoutComponentBase
+
+<NavMenu />
+<UtilitySidebar/>
+<div class="w3-main" style="margin-left:200px; min-height:90vh;">
+    <div class="w3-container">
+        @Body
+    </div>
+</div>
+
+<Copyright></Copyright>
+
+@code {
+    public void Refresh() {
+        StateHasChanged();
+    }
+}

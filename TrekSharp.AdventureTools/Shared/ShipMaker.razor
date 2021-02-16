@@ -1,0 +1,349 @@
+@inherits AppComponentBase
+
+@if(state == State.PickBooks) {
+    <RulebookPicker @ref="Rulebooks"></RulebookPicker>
+} else if (state == State.CreateShip) {
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            SERVICE DATE
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-padding w3-margin-bottom">
+        <p>
+            Choose which year you want to play in together with your GM. A service date can be picked from the list of important dates in the star trek timeline.
+        </p>
+        <div>
+        @foreach (var kv in importantTimes) {
+            <button @onclick="@(() => ServiceDate = kv.Value)"> @kv.Key </button>
+        }
+        </div>
+        <p>
+            Alternatively, manually enter your desired service date.
+        </p>
+        <div>
+        <input type="date" class="w3-grey" required @bind="ServiceDate" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            REGISTRY
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-padding w3-margin-bottom">
+        <p>
+            Every Starship needs a name. The Federation has no universal convention for the naming of ships, often naming them after locations, important historical persons (normally only the person’s surname), ancient ships, mythical figures, or even more abstract ideals, virtues, or concepts. In many cases, these vague naming conventions overlap — a ship may be named after an ancient ship that was itself named after a location, for example — but this shouldn’t cause any issues. The name should ideally be a single word or, more rarely, two.
+        </p>
+        <div class="row">
+            <span class="hbar elbow-left knee-left w3-padding">Name</span>
+            <span class="hbar row-fill" style="margin-left: 10px;">
+                <input type="text" class="w3-padding" style="width: 100%;" @bind="Name"/>
+            </span>
+        </div>
+        <p>
+            To go with the name, each Federation starship has a registry number. This is a four- (for games set in the Original Series era), or five-digit number (for games set in the Next Generation era), prefixed by either the letters NCC, or NX. NCC is used for most ships, but NX is reserved for prototype vessels and the first ship of a class , in honor of the first Human starships able to reach warp 5.
+        </p>
+        <div class="row">
+            <span class="hbar elbow-left knee-left w3-padding">Registry Number</span>
+            <span class="hbar row-fill" style="margin-left: 10px;">
+                <input type="text" class="w3-padding" style="width: 100%;" @bind="Registry"/>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            SPACEFRAME
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-padding w3-margin-bottom">
+        @foreach (var frame in AllSpaceframes) {
+        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+            <div class="w3-quarter">
+                <a href="@(frame.GetMemoryAlphaSearchLink())" target="_blank">@frame.Name</a>
+            </div>
+            <div class="w3-quarter">
+                @foreach (var reference in frame.Systems.Enumerate()) {
+                    <span>@reference.Name @reference.Value</span><br/>
+                }
+            </div>
+            <div class="w3-quarter">
+                @foreach (var reference in frame.Departments.Enumerate()) {
+                    if (reference.Value > 0) {
+                        <span>@reference.Name +@reference.Value</span><br/>
+                    }
+                }
+            </div>
+            <div class="w3-quarter w3-right-align">
+                <input type="radio" 
+                    checked="@(frame.Equals(spaceFrame))" 
+                    @onchange="@(() => spaceFrame = frame)" />
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            MISSION PROFILE
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-padding w3-margin-bottom">
+        @foreach (var talent in AllProfiles) {
+        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+            <div class="w3-quarter">
+                <label>@talent.Name</label>
+            </div>
+            <div class="w3-quarter">
+                @talent.Description
+                &nbsp;
+            </div>
+            <div class="w3-quarter">
+                @foreach (var reference in talent.Departments.Enumerate()) {
+                    if (reference.Value > 0) {
+                        <span>@reference.Name @reference.Value</span><br/>
+                    }
+                }
+            </div>
+            <div class="w3-quarter w3-right-align">
+                <input type="radio" 
+                    checked="@(talent.Equals(missionProfile))" 
+                    @onchange="@(() => missionProfile = talent)" />
+            </div>
+        </div>
+        }
+    </div>
+} else if (state == State.PickTalents) {
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            MISSION PROFILE TALENT
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-padding w3-margin-bottom">
+        @foreach (var talent in ProfileTalents) {
+        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+            <div class="w3-third">
+                <label>@talent.Name</label>
+            </div>
+            <div class="w3-third">
+                @talent.Description
+                &nbsp;
+            </div>
+            <div class="w3-third w3-right-align">
+                <input type="radio" 
+                    checked="@(talent.Equals(profileTalent))" 
+                    @onchange="@(() => profileTalent = talent)" />
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            ADDITIONAL TALENTS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <p>
+        You may also select an additional @AdditionalTalentCount talents.
+    </p>
+    <div class="w3-padding w3-margin-bottom">
+        @if (AdditionalTalentCount > 0) {
+        foreach (var talent in AdditionalTalents()) {
+        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+            <div class="w3-third">
+                <label>@talent.Name</label>
+            </div>
+            <div class="w3-third">
+                @talent.Description
+                &nbsp;
+            </div>
+            <div class="w3-third w3-right-align">
+                <input type="radio" 
+                    checked="@(hasTalent(talent))" 
+                    @onchange="@(() => toggleTalent(talent))" />
+            </div>
+        </div>
+        }
+        }
+    </div>
+} else if (state == State.Refit) {
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            REFITS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <p>
+        Given the age of your vessel, you are elligable for @RefitPoints refits. Each refit grants a point that can be used to increase a System attribute by one. No System attribute may go above 12.
+    </p>
+    <SystemIncrement
+        Points="RefitPoints"
+        MaxPointsPerItem="12"
+        Reference="refitedSystems"
+    />
+}
+<div class="w3-row">
+    <div class="w3-half">
+        @if (!FirstState()) {
+            <button style="button" @onclick="GoBack"> Back </button>
+        }
+    </div>
+    <div class="w3-half w3-right-align">
+        @if (!LastState()) {
+            <button style="button" @onclick="Next"> Next </button>
+        } else {
+            <button style="button" @onclick="Save"> Save </button>
+            <button style="button" @onclick="Export"> Export JSON </button>
+        }
+    </div>
+</div>
+
+@code {
+
+    private enum State {
+        PickBooks,
+        CreateShip,
+        Refit,
+        PickTalents,
+    }
+    private State state = State.PickBooks;
+
+    private void GoBack() {
+        if (!FirstState()) {
+            state = (State)((int)state - 1);
+        }
+    }
+    private bool FirstState() {
+        return state == State.PickBooks;
+    }
+    private bool LastState() {
+        return state == State.PickTalents;
+    }
+    private void Next() {
+        if (!LastState()) {
+            state = (State)((int)state + 1);
+        }
+    }
+
+    private RulebookPicker Rulebooks;
+
+    private IEnumerable<Spaceframe> AllSpaceframes => Rulebooks.EnabledRulebooks.SelectMany(book => book.Spaceframes);
+
+    private Dictionary<string, DateTime> importantTimes = new Dictionary<string, DateTime>() {
+        {"Enterprise"               , new DateTime(2151, 1, 1)}, 
+        {"Discovery"                , new DateTime(2255, 1, 1)},
+        {"The Original Series"      , new DateTime(2265, 1, 1)},
+        {"Original Series Movies"   , new DateTime(2273, 1, 1)},
+        {"The Next Generation"      , new DateTime(2364, 1, 1)},
+        {"Deep Space 9"             , new DateTime(2369, 1, 1)},
+        {"Voyager"                  , new DateTime(2371, 1, 1)},
+        {"Picard"                   , new DateTime(2399, 1, 1)},
+    };
+
+    private Spaceframe spaceFrame = null;
+
+    private MissionProfile missionProfile = null;
+    private Systems missionProfileSystems => missionProfile.Systems;
+    private Disciplines missionProfileDepartments => missionProfile.Departments;
+    private IEnumerable<MissionProfile> AllProfiles => Rulebooks.EnabledRulebooks.SelectMany(book => book.MissionProfiles);    
+
+    private DateTime ServiceDate = new DateTime(2371, 1, 1);
+    private int RefitPoints =>
+        Math.Max(
+            0, 
+            (int)((ServiceDate - spaceFrame.DesignDate).TotalDays / 356) / 10
+        );
+    private Systems refitedSystems = new Systems();
+
+    private int AdditionalTalentCount => spaceFrame.Scale - spaceFrame.StartingTalents.Count - 1;
+
+    private string Name = "USS - ";
+    private string Registry = "NCC - ";
+
+    private IEnumerable<ShipTalent> AllShipTalents => Rulebooks.EnabledRulebooks.SelectMany(book => book.ShipTalents);
+    private IEnumerable<ShipTalent> ProfileTalents => AllShipTalents.Where(
+        talent => 
+            missionProfile.MissionProfileTalents.Contains(talent.Name)
+            && !spaceFrame.StartingTalents.Contains(talent.Name) // don't show talents I already have
+        );
+    private IEnumerable<ShipTalent> AdditionalTalents(){
+        var vessel = FinalShip;
+        return AllShipTalents.Where(talent => talent.CanBeUsedBy(vessel));
+    } 
+    private ShipTalent profileTalent = null;
+    private List<ShipTalent> additionalTalents = new List<ShipTalent>();
+    private bool hasTalent(ShipTalent talent) {
+        return additionalTalents.Contains(talent);
+    }
+    private void addTalent(ShipTalent talent) {
+        while (additionalTalents.Count > AdditionalTalentCount - 1) {
+            additionalTalents.RemoveAt(0);
+        }
+        if (additionalTalents.Count < AdditionalTalentCount) {
+            additionalTalents.Add(talent);
+        }
+    }
+   private void toggleTalent(ShipTalent talent) {
+       if (additionalTalents.Contains(talent)) {
+           additionalTalents.Remove(talent);
+       } else {
+           addTalent(talent);
+       }
+   }
+
+    public PlayerVessel FinalShip {
+        get {
+            PlayerVessel vessel = new PlayerVessel();
+            vessel.Name = Name;
+            vessel.Registry = Registry;
+            vessel.Frame = spaceFrame;
+            vessel.Systems = new Systems();
+            vessel.Systems.Add(spaceFrame.Systems);
+            vessel.Systems.Add(refitedSystems);
+            vessel.MissionProfile = missionProfile;
+            vessel.Departments = new Disciplines();
+            vessel.Departments.Add(spaceFrame.Departments);
+            vessel.Departments.Add(missionProfile.Departments);
+            vessel.Talents = new List<ShipTalent>();
+
+            // Add initial talents
+            foreach (var talentName in spaceFrame.StartingTalents) {
+                var talent = AllShipTalents.Where(t => t.Name == talentName).FirstOrDefault();
+                if (talent != null) {
+                    vessel.Talents.Add(talent);
+                }
+            }
+            // Add mission profile talent
+            vessel.Talents.Add(profileTalent);
+
+            // Add remaining Scale - Count (talents + mission profile talent) talents
+            foreach (var talent in additionalTalents) {
+                vessel.Talents.Add(talent);
+            }
+
+            return vessel;
+        }
+    }
+
+    public void Save() {
+        Data.Ships.Add(this.FinalShip);
+        var id = Data.Ships.Count - 1;
+        NavigationManager.NavigateTo($"/manage/ships/{id}");
+    }
+
+    public async Task Export() {
+        var ship = this.FinalShip;
+        await this.DownloadJson($"{ship.Name}.{ship.Registry}.vessel", ship);
+    }
+}

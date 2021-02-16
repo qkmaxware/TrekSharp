@@ -1,0 +1,345 @@
+@page "/new/random/plot"
+@using System.Text.RegularExpressions
+
+<div class="lcars">
+    <div class="container">
+        <RulebookPicker @ref="Rulebooks"/>
+
+        <div class="row">
+            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+            <span class="spacer typeface text-secondary w3-large">
+                MISSION STATEMENT
+            </span>
+            <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+        </div>
+        <div class="w3-center">
+            <div class="w3-container w3-padding w3-margin">@statement</div>
+            <button class="w3-button w3-blue" @onclick="generate"> Generate New </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    RulebookPicker Rulebooks;
+
+    private string statement;
+
+    private string pluralize(string value) {
+        if (value.Length < 1)
+            return value;
+
+        var last_letter = value[value.Length - 1];
+        switch (last_letter) {
+            case 's':
+            case 'h':
+            case 'x':
+            case 'z':
+                return value + "es";
+            default:
+                return value + "s";
+        }
+    }
+
+    private void generate() {
+        var rulebooks = Rulebooks.EnabledRulebooks.ToList();
+
+        var generator = new Dictionary<string, List<string>>();
+
+        generator["template"] = new List<string>{
+            "<a> @location where <a> @character has @action",
+            "<a> @character aboard <a> @ship vessel has @action",
+            "<a> @ship vessel has @action",
+            "<a> @ship vessel has discovered <a> @location",
+            "The @faction is causing trouble at <a> @location",
+            "<a> @role has <a> @personality clone who has @action",
+        };
+
+        generator["species"] = Rulebooks.EnabledRulebooks.SelectMany(book => book.Species).Select(species => species.Name).ToList();
+
+        generator["ship"] = Rulebooks.EnabledRulebooks.SelectMany(book => book.Spaceframes).Select(frame => frame.Name)
+                            .Concat(Rulebooks.EnabledRulebooks.SelectMany(book => book.NpcSpaceframes).Select(frame => frame.Name))
+                            .ToList();
+
+        generator["event"] = new List<string>{
+            "seized power on <a> @location",
+            "eliminated all @species(s)",
+        };
+
+        generator["action"] = new List<string>{
+            "travelled through time and @event",
+            "built <a> @mcguffin to attack the @faction",
+            "built <a> @mcguffin, travelled through time and @event",
+            "stole <a> special @equipment",
+        };
+
+        generator["mcguffin"] = new List<string>{
+            "doomsday weapon",
+            "sentient hologram",
+            "genesis device",
+            "retrovirus",
+            "explosive device",
+            "army of @species mercenaries"
+        };
+
+        generator["location"] = new List<string>{
+            "@size class @class planet",
+            "Dyson Sphere",
+            "@size @faction research base",
+            "@state @faction research base",
+            "@size @faction outpost",
+            "@state @faction outpost",
+            "@size @species colony",
+            "@state @species colony",
+            "@size @state @species colony",
+            "@faction space station",
+            "@state @ship vessel"
+        };
+
+        generator["equipment"] = new List<string>{
+            "Phaser",
+            "Tricorder",
+            "Medical Tricorder",
+        };
+
+        generator["class"] = new List<string>{
+            "D",
+            "H",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "R",
+            "T",
+            "Y",
+        };
+        
+        generator["state"] = new List<string>{
+            "hidden",
+            "destroyed",
+            "abandoned",
+            "new",
+            "captured",
+        };
+
+        generator["role"] = new List<string>{
+            "Ensign ", "Crewman Third Class",
+            "Lieutenant Junior Grade" , "Crewman Second Class",
+            "Lieutenant" , "Crewman First Class",
+            "Lieutenant Commander" , "Petty Officer Third Class",
+            "Commander" , "Petty Officer Second Class",
+            "Captain" , "Petty Officer First Class",
+            "Fleet Captain" , "Chief Petty Officer",
+            "Commodore" , "Senior Chief Petty Officer",
+            "Rear Admiral" , "Master Chief Petty Officer" ,
+            "Admiral" , "Command Master Chief Petty Officer",
+        };
+    
+        generator["ore"] = new List<string>{
+            "trellium",
+            "iridium",
+            "duridium",
+            "dilithium",
+        };
+
+        generator["job"] = new List<string>{
+            "scientist",
+            "researcher",
+            "traveller",
+            "trader",
+            "spy",
+            "farmer",
+            "inventor",
+            "miner",
+            "@ore miner",
+            "holo-programmer",
+            "warp-field technician",
+            "time traveller",
+            "programmer",
+            "councillor",
+            "senator",
+            "cadet",
+            "trainee",
+            "student",
+            "information broker",
+        };
+
+        generator["character"] = new List<string>{
+            // Singular
+            "@personality @species @job",
+            "@size @species @job",
+            "@appearance @species @job",
+            "@personality @species",
+            "@size @species",
+            "@appearance @species",
+            "@personality @job",
+            "@size @job",
+            "@adjective @job",
+            // Plurals
+            "group of @personality @species @job(s)",
+            "group of @size @species @job(s)",
+            "group of @appearance @species @job(s)",
+            "group of @personality @species(s)",
+            "group of @size @species(s)",
+            "group of @appearance @species(s)",
+            "group of @personality @job(s)",
+            "group of @size @job(s)",
+            "group of @adjective @job(s)",    
+        };
+
+        generator["size"] = new List<string>{
+            "big",
+            "colossal",
+            "gigantic",
+            "huge",
+            "immense",
+            "large",
+            "little",
+            "massive",
+            "miniature",
+            "puny",
+            "small",
+            "tall",
+            "tiny",    
+        };
+
+        generator["personality"] = new List<string> {
+            "agreeable",
+            "ambitious",
+            "brave",
+            "calm",
+            "delightful",
+            "eager",
+            "faithful",
+            "happy",
+            "jolly",
+            "kind",
+            "lively",
+            "nice",
+            "obedient",
+            "polite",
+            "proud",
+            "silly",
+            "thankful",
+            "witty",
+            "wonderful",
+            "zealous",
+            "angry",
+            "mad",
+            "bewildered",
+            "clumsy",
+            "embarrassed",
+            "fierce",
+            "grumpy",
+            "helpless",
+            "jealous",
+            "lazy",
+            "mysterious",
+            "nervous",
+            "panicky",
+            "pitiful",
+            "repulsive",
+            "scary",
+            "thoughtless",
+            "scary",
+            "uptight",
+            "worried",
+            "power hungry",
+        };
+
+        generator["appearance"] = new List<string>{
+            "attractive",
+            "bald",
+            "beautiful",
+            "chubby",
+            "clean",
+            "dazzling",
+            "drab",
+            "elegant",
+            "fancy",
+            "fit",
+            "handsome",
+            "shapely",
+            "stocky",
+            "muscular",
+            "skinny",
+            "unkempt",
+        };
+
+        generator["timeframe"] = new List<string>{
+            "21st century",
+            "22nd century",
+            "23rd century",
+            "24th century",
+            "32nd century",   
+        };
+
+        generator["faction"] = new List<string>{
+            "United Federation of Planets",
+            "Klingon Empire",
+            "Romulan Star Empire",
+            "Romulan Republic",
+            "Orion Syndicate",
+            "Cardassian Union",
+            "Ferengi Alliance",
+            "Breen Confederacy",
+            "Borg Collective",
+            "Gorn Hegemony",
+            "The Dominion",
+        };
+
+        // Generate
+        // 1. Pick template
+        var template = generator["template"].Random();
+
+        // 2. While subcomponents exist, substitute
+        Regex replacement = new Regex(@"\@\w+(?:\(s\))?");
+        while (replacement.IsMatch(template)) {
+            template = replacement.Replace(template, (match) => {
+                var property = match.Value.Substring(1); // without the @
+                var plural = false;
+                if (property.EndsWith("(s)")) {
+                    plural = true;
+                    property = property.Substring(0, property.Length - 3);
+                }
+
+                if (generator.ContainsKey(property)) {
+                    var thing = generator[property].Random();
+                    if (plural) {
+                        thing = pluralize(thing);
+                    }
+                    return thing;
+                } else {
+                    return string.Empty;
+                }
+            });
+        }
+
+        // 3. Cleanup a/an
+        Regex an = new Regex(@"\<an?\>(\s*\w)?");
+        template = an.Replace(template, (match) => {
+            // Get next letter
+            var next_letter = match.Groups[1]?.Value?.Trim();
+            if (next_letter == null)
+                return string.Empty; // no next character, delete this <an>
+                
+            // Determine if 'a' or 'an' should be used
+            var letter = next_letter.ToLower();
+			switch (letter) {
+				case "a":
+				case "e":
+				case "i":
+				case "o":
+				case "u":
+					return "an" + match.Groups[1].Value; // is a vowel
+				default: 
+					return "a"  + match.Groups[1].Value; // is a consonant
+			};
+        });
+
+        // 4. Capitalize first letter
+        template = char.ToUpper(template[0]).ToString() + template.Substring(1);
+
+        this.statement = template;
+    }
+}

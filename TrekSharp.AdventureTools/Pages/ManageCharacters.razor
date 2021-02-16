@@ -1,0 +1,612 @@
+@page "/manage/characters"
+@inherits AppComponentBase
+
+<div class="lcars">
+    <!-- Player Characters -->
+    <div class="container w3-margin-bottom">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">PARTY</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                @foreach (var group in Data.Party.ByN(4)) {
+                    <div class="w3-row-padding">
+                        @foreach (var character in group) {
+                        <div class="w3-col s3">
+                            <div class="row">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @character.Rank @character.Name 
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right"></div>
+                            </div>
+                            <div style="width: 100%; height: 125px;" @onclick="@(() => navigateToPlayerCharacter(character))">
+                                <img src="@character.Species.GetSpeciesImageUrl()" onerror="this.style.display='none'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
+                            </div>
+                            <div class="w3-padding row">
+                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                    <b>Stress</b> <input type="number" class="w3-small" style="width: 64px;" @bind="character.UsedStress"/> / @character.TotalStress
+                                </div>
+                            </div>
+                            <div class="w3-padding row">
+                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                    <b>Resistance</b> <input type="number" class="w3-small" style="width: 64px;" @bind="character.Resistance"/>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+
+    <!-- Support Characters -->
+    <div class="container w3-margin-bottom">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">SUPPORT</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                @foreach (var group in Data.Supports.ByN(4)) {
+                    <div class="w3-row-padding">
+                        @foreach (var character in group) {
+                        <div class="w3-col s3">
+                            <div class="row">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @character.Rank @character.Name 
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right"></div>
+                            </div>
+                            <div style="width: 100%; height: 125px;" @onclick="@(() => navigateToSupportCharacter(character))">
+                                <img src="@character.Species.GetSpeciesImageUrl()" onerror="this.style.display='none'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
+                            </div>
+                            <div class="w3-padding row">
+                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                    <b>Stress</b> <input type="number" class="w3-small" style="width: 64px;" @bind="character.UsedStress"/> / @character.TotalStress
+                                </div>
+                            </div>
+                            <div class="w3-padding row">
+                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                    <b>Resistance</b> <input type="number" class="w3-small" style="width: 64px;" @bind="character.Resistance"/>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+
+    <!-- NPC -->
+    <div class="container w3-margin-bottom">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">NPC</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                @foreach (var group in Data.NPCs.ByN(4)) {
+                    <div class="w3-row-padding">
+                        @foreach (var character in group) {
+                        <div class="w3-col s3">
+                            <div class="row">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @character.Rank @character.Name 
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right"></div>
+                            </div>
+                            <div class="w3-padding row">
+                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                    <b>Stress</b> 
+                                    <input type="number" class="w3-small" style="width: 64px;" @bind="character.UsedStress"/> / @character.TotalStress
+                                </div>
+                            </div>
+                            <div class="w3-padding row">
+                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                    <b>Resistance</b> <input type="number" class="w3-small" style="width: 64px;" @bind="character.Resistance"/>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;">
+                <input list="npc_recommendations" style="width: 256px;" @bind="npc_search"/>
+                <datalist id="npc_recommendations">
+                    @foreach (var npc in this.npcs) {
+                        <option value="@npc.Name"/>
+                    }
+                </datalist>
+                <button @onclick="this.addCharacter">
+                    +
+                </button>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private void navigateToPlayerCharacter(PlayerCharacter character) {
+        var id = Data.Party.IndexOf(character);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"/manage/characters/player/{id}");
+        }
+    }
+    private void navigateToSupportCharacter(SupportCharacter character) {
+        var id = Data.Supports.IndexOf(character);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"/manage/characters/support/{id}");
+        }
+    }
+
+    private string npc_search;
+    private List<NpcCharacter> npcs = new List<NpcCharacter>() {
+        new NpcCharacter {
+            Name = "Minor Starfleet Conn Officer",
+            BaseStress = 9,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Attributes = new Attributes {
+                Control = 10,
+                Fitness = 10,
+                Presence = 10,
+                Daring = 10,
+                Insight = 08,
+                Reason = 09
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 01,
+                Science = 01,
+                Conn = 02, 
+                Engineering = 02,
+                Medicine = 01
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Starfleet Security Officer",
+            BaseStress = 11,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Attributes = new Attributes {
+                Control = 10,
+                Fitness = 09,
+                Presence = 09,
+                Daring = 10,
+                Insight = 08,
+                Reason = 08
+            },
+            Disciplines = new Disciplines {
+                Command = 02,
+                Security = 02,
+                Science = 01,
+                Conn = 01, 
+                Engineering = 01,
+                Medicine = 01
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Starfleet Engineer",
+            BaseStress = 10,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Attributes = new Attributes {
+                Control = 10,
+                Fitness = 09,
+                Presence = 08,
+                Daring = 08,
+                Insight = 09,
+                Reason = 10
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 01,
+                Science = 02,
+                Conn = 01, 
+                Engineering = 02,
+                Medicine = 01
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Starfleet Science Officer",
+            BaseStress = 9,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Attributes = new Attributes {
+                Control = 09,
+                Fitness = 08,
+                Presence = 08,
+                Daring = 09,
+                Insight = 10,
+                Reason = 10
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 01,
+                Science = 02,
+                Conn = 01, 
+                Engineering = 01,
+                Medicine = 02
+            }
+        },
+        new NpcCharacter {
+            Name = "Notable Section 31 Operative",
+            BaseStress = 11,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Values = new List<string> {
+                "The Ends Justify the Means"
+            },
+            Focuses = new List<string> {
+                "Espionage",
+                "Infiltration"
+            },
+            Attributes = new Attributes {
+                Control = 11,
+                Fitness = 08,
+                Presence = 10,
+                Daring = 09,
+                Insight = 10,
+                Reason = 09
+            },
+            Disciplines = new Disciplines {
+                Command = 02,
+                Security = 03,
+                Science = 02,
+                Conn = 01, 
+                Engineering = 02,
+                Medicine = 01
+            },
+            SpecialRules = new List<string> {
+                "Adaptable: May spend 2 Threat to immediately gain a single Focus for the remainder of the scene",
+                "Covert: Whenever required to attempt a Task to conceal their activities, they may roll an aditional d20"
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Klingon Warrior",
+            BaseStress = 13,
+            Resistance = 1,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Klingon").FirstOrDefault(),
+            Attributes = new Attributes {
+                Control = 09,
+                Fitness = 11,
+                Presence = 10,
+                Daring = 11,
+                Insight = 08,
+                Reason = 08
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 02,
+                Science = 00,
+                Conn = 02, 
+                Engineering = 01,
+                Medicine = 00
+            },
+            SpecialRules = new List<string> {
+                "Brak'lul: Resistance increased by +2 against non-lethal attacks",
+                "Warrior's Spirit: When attempting a melee attack, and purchases one or more dice, re-roll any number of dice."
+            }
+        },
+        new NpcCharacter {
+            Name = "Notable Klingon Warrior",
+            BaseStress = 14,
+            Resistance = 1,
+            Values = new List<string> {
+                "Today is a Good Day to Die!"
+            },
+            Focuses = new List<string> {
+                "Hand-toHand Combat",
+                "Resilience"
+            },
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Klingon").FirstOrDefault(),
+            Attributes = new Attributes {
+                Control = 09,
+                Fitness = 11,
+                Presence = 10,
+                Daring = 11,
+                Insight = 08,
+                Reason = 08
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 02,
+                Science = 00,
+                Conn = 02, 
+                Engineering = 01,
+                Medicine = 00
+            },
+            SpecialRules = new List<string> {
+                "First into Battle: Spend 3 Momentum to assist andother Klingon's next attack using Daring + Command",
+                "Brak'lul: Resistance increased by +2 against non-lethal attacks",
+                "Warrior's Spirit: When attempting a melee attack, and purchases one or more dice, re-roll any number of dice."
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Romulan Uhlan",
+            BaseStress = 11,
+            Resistance = 0,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Romulan").FirstOrDefault(),
+            Attributes = new Attributes {
+                Control = 11,
+                Fitness = 09,
+                Presence = 08,
+                Daring = 08,
+                Insight = 10,
+                Reason = 11
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 02,
+                Science = 00,
+                Conn = 02, 
+                Engineering = 01,
+                Medicine = 00
+            },
+            SpecialRules = new List<string> {
+                "Guile and Cunning: When attempting to remain hidden or unnoticed, spend one Threat to increase the difficulty of enemy detection Tasks",
+                "Wary: When attempting to detect an enemy or hazard you may re-roll one d20"
+            }
+        },
+        new NpcCharacter {
+            Name = "Notable Romulan Centurion",
+            BaseStress = 11,
+            Resistance = 0,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Romulan").FirstOrDefault(),
+            Values = new List<string> {
+                "I Will Not Fail in My Duty to the Empire"
+            },
+            Focuses = new List<string> {
+                "Paranoid",
+                "Guerilla Tactics"
+            },
+            Attributes = new Attributes {
+                Control = 12,
+                Fitness = 09,
+                Presence = 09,
+                Daring = 10,
+                Insight = 10,
+                Reason = 10
+            },
+            Disciplines = new Disciplines {
+                Command = 03,
+                Security = 02,
+                Science = 01,
+                Conn = 02, 
+                Engineering = 01,
+                Medicine = 00
+            },
+            SpecialRules = new List<string> {
+                "Ambush: When attacking an unaware opponent, spend 2 Threat to allow for all Centurion under their command to re-roll any number of d20 on attack rolls",
+                "Guile and Cunning: When attempting to remain hidden or unnoticed, spend one Threat to increase the difficulty of enemy detection Tasks",
+                "Wary: When attempting to detect an enemy or hazard you may re-roll one d20"
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Ferengi Menial",
+            BaseStress = 9,
+            Resistance = 0,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Ferengi").FirstOrDefault(),
+            Values = new List<string> {
+                
+            },
+            Focuses = new List<string> {
+                
+            },
+            Attributes = new Attributes {
+                Control = 10,
+                Fitness = 08,
+                Presence = 11,
+                Daring = 08,
+                Insight = 11,
+                Reason = 09
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 01,
+                Science = 00,
+                Conn = 02, 
+                Engineering = 02,
+                Medicine = 01
+            },
+            SpecialRules = new List<string> {
+                "Greed Is Eternal: When enraged in negotiations that have the potential for profit, spend 1 Threat during the Task to re-roll the dice pool"
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Ferengi Salesman",
+            BaseStress = 9,
+            Resistance = 0,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Ferengi").FirstOrDefault(),
+            Values = new List<string> {
+                "First Rule of Acquisition - Once You Have Their Money, Never Give It Back"
+            },
+            Focuses = new List<string> {
+                "Economics",
+                "Negotiation"
+            },
+            Attributes = new Attributes {
+                Control = 11,
+                Fitness = 08,
+                Presence = 12,
+                Daring = 09,
+                Insight = 10,
+                Reason = 10
+            },
+            Disciplines = new Disciplines {
+                Command = 03,
+                Security = 01,
+                Science = 02,
+                Conn = 00, 
+                Engineering = 02,
+                Medicine = 01
+            },
+            SpecialRules = new List<string> {
+                "Greed Is Eternal: When enraged in negotiations that have the potential for profit, spend 1 Threat during the Task to re-roll the dice pool",
+                "Free Advice Is Seldom Cheap: Increase the difficulty og all social conflict to persuasion by 2. Remove this difficulty if something is offered in trade.",
+            }
+        },
+        new NpcCharacter {
+            Name = "Minor Cardassian Soldier",
+            BaseStress = 11,
+            Resistance = 1,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Cardassian").FirstOrDefault(),
+            Values = new List<string> {
+               
+            },
+            Focuses = new List<string> {
+            
+            },
+            Attributes = new Attributes {
+                Control = 11,
+                Fitness = 09,
+                Presence = 09,
+                Daring = 10,
+                Insight = 08,
+                Reason = 10
+            },
+            Disciplines = new Disciplines {
+                Command = 01,
+                Security = 02,
+                Science = 00,
+                Conn = 02, 
+                Engineering = 01,
+                Medicine = 00
+            },
+            SpecialRules = new List<string> {
+                "Ambushes and Traps: Whenever a Ready Task is used to ready a Ranged attack, that Ranged attack gets a bonus d20",
+                "Loyal and Disciplined: Whenever a Cardassian recieves assistance from a superior, that Cardassian may re-roll a single d20"
+            }
+        },
+         new NpcCharacter {
+            Name = "Notable Cardassian Glinn",
+            BaseStress = 12,
+            Resistance = 1,
+            Species = Rulebook.Core.Species.Where(species => species.Name == "Cardassian").FirstOrDefault(),
+            Values = new List<string> {
+               "Cardassians Dot Not Choose to Be Superior, Fate Made Us This Way"
+            },
+            Focuses = new List<string> {
+                "Military Tactics",
+                "Willpower"
+            },
+            Attributes = new Attributes {
+                Control = 12,
+                Fitness = 09,
+                Presence = 11,
+                Daring = 10,
+                Insight = 08,
+                Reason = 10
+            },
+            Disciplines = new Disciplines {
+                Command = 02,
+                Security = 03,
+                Science = 01,
+                Conn = 02, 
+                Engineering = 01,
+                Medicine = 00
+            },
+            SpecialRules = new List<string> {
+                "Expects Success: Whenever a Glinn uses the Direct or Asssit Task to aid a subordinate, that Task may always Succeed at Cost",
+                "Ambushes and Traps: Whenever a Ready Task is used to ready a Ranged attack, that Ranged attack gets a bonus d20",
+                "Loyal and Disciplined: Whenever a Cardassian recieves assistance from a superior, that Cardassian may re-roll a single d20"
+            }
+        }
+    };
+
+    private NpcCharacter selectedNpc {
+        get {
+            for (var i = 0; i < npcs.Count; i++) {
+                if (npcs[i].Name == npc_search) {
+                    return npcs[i];
+                }
+            }
+            return null;
+        }
+    }
+
+    private NpcCharacter copyCharacter(NpcCharacter c) {
+        NpcCharacter d = new NpcCharacter();
+        d.Name = c.Name;
+        d.Rank = c.Rank;
+        d.Assignment = c.Assignment;
+        d.Species = c.Species;
+        d.BaseStress = c.BaseStress;
+        d.UsedStress = c.UsedStress;
+        d.Resistance = c.Resistance;
+        if (c.Equipment != null)
+            d.Equipment = new List<Item>(c.Equipment);
+        if (c.Values != null)
+            d.Values = new List<string>(c.Values);
+        if (c.Focuses != null)
+            d.Focuses = new List<string>(c.Focuses);
+        if (c.SpecialRules != null)
+            d.SpecialRules = new List<string>(c.SpecialRules);
+
+        return d;
+    }
+
+    private void addCharacter() {
+        var c = selectedNpc;
+        if (c == null)
+            return;
+        var d = copyCharacter(c);
+        var base_name = c.Name;
+        var unique_name = c.Name;
+        var id = 2;
+        while (Data.NPCs.Select(ch => ch.Name).Contains(unique_name)) {
+            unique_name = base_name + " (" + (id++) + ")";
+        }
+        d.Name = unique_name;
+        Data.NPCs.Add(d);
+        npc_search = null;
+        StateHasChanged();
+    }
+}

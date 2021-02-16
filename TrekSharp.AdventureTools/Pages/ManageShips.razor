@@ -1,0 +1,64 @@
+@page "/manage/ships"
+@inherits AppComponentBase
+
+<div class="lcars">
+    <!-- Player Characters -->
+    <div class="container w3-margin-bottom">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">SHIPS</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                @foreach (var group in Data.Ships.ByN(4)) {
+                    <div class="w3-row-padding">
+                        @foreach (var character in group) {
+                        <div class="w3-col s3" @onclick="@(() => navigateToPlayerCharacter(character))">
+                            <div class="row">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @character.Name 
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right"></div>
+                            </div>
+                            <div style="width: 100%; height: 100px; display: table-cell; vertical-align: middle;">
+                                <img src="@character.GetShipImageUrl()" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-width: 640px; height: auto; max-height: 100px;">
+                            </div>
+                            <div class="w3-padding row">
+                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                    <b>Scale</b> @character.Scale
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private void navigateToPlayerCharacter(PlayerVessel character) {
+        var id = Data.Ships.IndexOf(character);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"/manage/ships/{id}");
+        }
+    }
+}

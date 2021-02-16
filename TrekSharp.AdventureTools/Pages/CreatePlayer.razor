@@ -1,0 +1,1336 @@
+@page "/new/player"
+@using System.Globalization
+
+@inherits AppComponentBase
+
+<div class="lcars">
+    <div class="container">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">NEW PLAYER</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                @if(ShowRulebookSelector) {
+                <div>
+                    <RulebookPicker @ref="Rulebooks"></RulebookPicker>
+                    @* <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            ERA
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div>
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-half">
+                                <label>Enterprise (mid-22nd century)</label>
+                            </div>
+                            <div class="w3-half w3-right-align">
+                                <input type="radio" value="22" 
+                                    checked="@(era.Equals(22))" @onchange="@(() => era = 22)" />
+                            </div>
+                        </div>
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-half">
+                                <label>Original Series (mid-23rd century)</label>
+                            </div>
+                            <div class="w3-half w3-right-align">
+                                <input type="radio" value="23" 
+                                    checked="@(era.Equals(23))" @onchange="@(() => era = 23)" />
+                            </div>
+                        </div>
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-half">
+                                <label>Next Generation (mid-24th century)</label>
+                            </div>
+                            <div class="w3-half w3-right-align">
+                                <input type="radio" value="24" 
+                                    checked="@(era.Equals(24))" @onchange="@(() => era = 24)" />
+                            </div>
+                        </div>
+                    </div> *@
+                </div>
+                } else if (ShowSpeciesSelector) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            SPECIES
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div>
+                        <div class="w3-right-align w3-padding">
+                            <input type="text" style="w3-black" placeholder="search" @bind="speciesFilter"/>
+                        </div>
+                        @foreach (var species in AllSpecies) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-half">
+                                <a href="@(species.GetMemoryAlphaSearchLink())" target="_blank">@species.Name</a>
+                            </div>
+                            <div class="w3-half w3-right-align">
+                                <input type="radio"
+                                    checked="@(species.Equals(characterSpecies))" 
+                                    @onchange="@(() => characterSpecies = species)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                } else if (ShowFirstTalentPicker) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            TALENTS
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div>
+                        <div class="w3-right-align w3-padding">
+                            <input type="text" style="w3-black" placeholder="search" @bind="talentFilter"/>
+                        </div>
+                        @foreach (var talent in AllTalents()) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-third">
+                                <label>@talent.Name</label>
+                            </div>
+                            <div class="w3-third">
+                                @talent.Description
+                                &nbsp;
+                            </div>
+                            <div class="w3-third w3-right-align">
+                                <input type="radio" 
+                                    checked="@(talent.Equals(firstTalent))" 
+                                    @onchange="@(() => firstTalent = talent)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                } else if (ShowEnvironment) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            ENVIRONMENT
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div>
+                        @foreach (var env in AllEnvironments) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                <label>@env.Name</label>
+                            </div>
+                            <div class="w3-quarter">
+                                @foreach (var attr in (env.AttributeSelectionMask ?? characterSpecies.AttributeModifiers).Enumerate()) {
+                                    if (attr.Value > 0) {
+                                        <span>@attr.Name</span><br>
+                                    }
+                                }
+                                &nbsp;
+                            </div>
+                            <div class="w3-quarter">
+                                @if (env.DisciplineSelectionMask != null) {
+                                    foreach (var attr in env.DisciplineSelectionMask.Enumerate()) {
+                                        if (attr.Value > 0) {
+                                            <span>@attr.Name</span><br>
+                                        } 
+                                    }
+                                }
+                                &nbsp;
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(env.Equals(characterEnvironment))" 
+                                    @onchange="@(() => characterEnvironment = env)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                } else if (ShowEnvironmentDetails) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            @characterEnvironment.Name.ToUpper()
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        @characterEnvironment.Description
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <AttributeIncrement 
+                                Points="1" 
+                                Mask="characterEnvironment.AttributeSelectionMask ?? characterSpecies.AttributeModifiers"
+                                Reference="characterEnvironmentAttributes"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                DISCIPLINES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineIncrement 
+                                Points="1" 
+                                Mask="characterEnvironment.DisciplineSelectionMask"
+                                Reference="characterEnvironmentDisciplines"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                VALUE
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            This Value should reflect the environment and culture the character was raised within. This is a good opportunity to consider how the character views their own culture, and how they connect — or possibly, don’t connect — to the philosophies and traditions of their people.
+                            <br>
+                            <input type="text" style="width: 100%" @bind="characterEnvironmentValue"/>
+                        </div>
+                    </div>
+                </div>
+                } else if (ShowUpbringing) {
+                    <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            UPBRINGING
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div>
+                        @foreach (var up in AllUpbringings) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-third">
+                                <label>@up.Name</label>
+                            </div>
+                            <div class="w3-third">
+                                <div class="w3-row">
+                                    <div class="w3-third">
+                                        @foreach (var attr in up.AcceptAttributeModifier.Enumerate()) {
+                                            if (attr.Value > 0) {
+                                                <span>@attr.Name +@attr.Value</span><br>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="w3-third">
+                                        @foreach (var attr in up.RejectAttributeModifier.Enumerate()) {
+                                            if (attr.Value > 0) {
+                                                <span>@attr.Name +@attr.Value</span><br>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="w3-third">
+                                        @if (up.DisciplineMask != null) {
+                                            foreach (var attr in up.DisciplineMask.Enumerate()) {
+                                                if (attr.Value > 0) {
+                                                    <span>@attr.Name</span><br>
+                                                } 
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w3-third w3-right-align">
+                                <input type="radio" 
+                                    checked="@(up.Equals(characterUpbringing))" 
+                                    @onchange="@(() => characterUpbringing = up)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                } else if (ShowUpbringingDetails) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            @characterUpbringing.Name.ToUpper()
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        @characterUpbringing.Description
+                        <div>
+                            Do you ACCEPT or REBEL against your upbringing?<br>
+                            <label>Accept</label>
+                            <input type="radio" 
+                                checked="@(characterAcceptsUpbringing == true)" 
+                                @onchange="@(() => characterAcceptsUpbringing = true)" 
+                            />
+                            <br>
+                            <label>Rebel</label>
+                            <input type="radio" 
+                                checked="@(characterAcceptsUpbringing == false)" 
+                                @onchange="@(() => characterAcceptsUpbringing = false)" 
+                            />
+                        </div>
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            @foreach (var attr in characterUpbringingAttributes.Enumerate()) {
+                                if (attr.Value > 0) {
+                                    <div class="row w3-margin-bottom">
+                                        <div class="hbar elbow-left knee-left secondary" style="width: 32px;"></div>
+                                        <div class="hbar w3-padding typeface secondary" style="width: 125px;">
+                                            @attr.Name
+                                        </div>
+                                        <div class="hbar w3-black" style="margin-left: 10px; width: 256px;">
+                                            +@attr.Value
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                DISCIPLINES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineIncrement 
+                                Points="1" 
+                                Mask="characterUpbringing.DisciplineMask"
+                                Reference="characterUpbringingDisciplines"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                TALENT
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <div class="w3-right-align w3-padding">
+                                <input type="text" style="w3-black" placeholder="search" @bind="talentFilter"/>
+                            </div>
+                            @foreach (var talent in AllTalents()) {
+                            <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                                <div class="w3-third">
+                                    <label>@talent.Name</label>
+                                </div>
+                                <div class="w3-third">
+                                    @talent.Description
+                                    &nbsp;
+                                </div>
+                                <div class="w3-third w3-right-align">
+                                    <input type="radio" 
+                                        checked="@(talent.Equals(characterUpbringingTalent))" 
+                                        @onchange="@(() => characterUpbringingTalent = talent)" />
+                                </div>
+                            </div>
+                            }
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                FOCUS
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            The character’s Focus should relate to their connection to their upbringing, covering skills learned during the character’s formative years.
+                            <br>
+                            <input type="text" style="width: 100%" @bind="characterUpbringingFocus"/>
+                        </div>
+                    </div>
+                </div>
+                } else if (ShowCareerPath) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            CAREER PATH
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                Command Track
+                            </div>
+                            <div class="w3-half">
+                                The Command track is for those cadets who aspire to command their own starship someday. It focuses on leadership and interpersonal skills, diplomacy, decisionmaking in crisis situations, an understanding of protocol and procedure, and starship operations, which includes flight control.
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(characterCareerTrack.Equals(CareerTrack.Command))" 
+                                    @onchange="@(() => characterCareerTrack = CareerTrack.Command)" />
+                            </div>
+                        </div>
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                Operations Track
+                            </div>
+                            <div class="w3-half">
+                                The Operations track is practical and hands-on, dealing with many of the realities of Starfleet’s mission. Divided broadly into engineering and security divisions, operations track cadets are defined by a sense of pragmatism, whether that applies to the technical or the tactical.
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(characterCareerTrack.Equals(CareerTrack.Operations))" 
+                                    @onchange="@(() => characterCareerTrack = CareerTrack.Operations)" />
+                            </div>
+                        </div>
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                Sciences Track
+                            </div>
+                            <div class="w3-half">
+                                Somewhat isolated from the other Tracks, the Sciences track is primarily academic, with Starfleet Academy producing many accomplished scientists. Included within the sciences track, but separated by a distinct curriculum, is Starfleet Medical, training doctors, nurses, and counselors to serve aboard Starfleet vessels and facilities across the Federation.
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(characterCareerTrack.Equals(CareerTrack.Sciences))" 
+                                    @onchange="@(() => characterCareerTrack = CareerTrack.Sciences)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <AttributeIncrement 
+                                Points="3"
+                                MaxPointsPerItem="2" 
+                                Mask="attributeMaskAll"
+                                Reference="characterCareerPathAttributes"
+                                />
+                        </div>
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                MAJOR
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            @if (characterCareerTrack == CareerTrack.Command) {
+                                <DisciplineIncrement 
+                                    Points="1"
+                                    Increment="2"
+                                    Mask="commandMajorsMask"
+                                    Reference="characterCareerPathMajorDisciplines"
+                                    OnClick="@(() => minorDisciplineComponent.UpdateMask(createMinorMask()))"
+                                    />
+                            } else if (characterCareerTrack == CareerTrack.Operations) {
+                                <DisciplineIncrement 
+                                    Points="1"
+                                    Increment="2"
+                                    Mask="opsMajorsMask"
+                                    Reference="characterCareerPathMajorDisciplines"
+                                    OnClick="@(() => minorDisciplineComponent.UpdateMask(createMinorMask()))"
+                                    />
+                            } else if (characterCareerTrack == CareerTrack.Sciences) {
+                                <DisciplineIncrement 
+                                    Points="1"
+                                    Increment="2"
+                                    Mask="scienceMajorsMask"
+                                    Reference="characterCareerPathMajorDisciplines"
+                                    OnClick="@(() => minorDisciplineComponent.UpdateMask(createMinorMask()))"
+                                    />
+                            }
+                        </div>
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                MINORS
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineIncrement 
+                                    Points="2"
+                                    MaxPointsPerItem="1"
+                                    Mask="createMinorMask()"
+                                    Reference="characterCareerPathMinorDisciplines"
+                                    @ref="minorDisciplineComponent"
+                                    />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            TALENT
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div>
+                        <div class="w3-right-align w3-padding">
+                            <input type="text" style="w3-black" placeholder="search" @bind="talentFilter"/>
+                        </div>
+                        @foreach (var talent in AllTalents()) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-third">
+                                <label>@talent.Name</label>
+                            </div>
+                            <div class="w3-third">
+                                @talent.Description
+                                &nbsp;
+                            </div>
+                            <div class="w3-third w3-right-align">
+                                <input type="radio" 
+                                    checked="@(talent.Equals(characterCareerTalent))" 
+                                    @onchange="@(() => characterCareerTalent = talent)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            FOCUS
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        Select three focuses for your character, at least one reflecting the time at Starfleet Academy.
+                        <br>
+                        <input type="text" style="width: 100%" @bind="characterCareerFocus1"/>
+                        <input type="text" style="width: 100%" @bind="characterCareerFocus2"/>
+                        <input type="text" style="width: 100%" @bind="characterCareerFocus3"/>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            VALUE
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        The character gains a single Value, which should reflect some aspect of the character’s beliefs that developed during their time at the Academy.
+                        <br>
+                        <input type="text" style="width: 100%" @bind="characterCareerValue"/>
+                    </div>
+                </div>
+                } else if (ShowCareerAge) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            CAREER EXPERIENCE
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                Young Officer
+                            </div>
+                            <div class="w3-half">
+                                
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(experience.Equals(CareerAge.Young))" 
+                                    @onchange="@(() => experience = CareerAge.Young)" />
+                            </div>
+                        </div>
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                Experienced Officer
+                            </div>
+                            <div class="w3-half">
+                                
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(experience.Equals(CareerAge.Experienced))" 
+                                    @onchange="@(() => experience = CareerAge.Experienced)" />
+                            </div>
+                        </div>
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                Veteran Officer
+                            </div>
+                            <div class="w3-half">
+                                
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(experience.Equals(CareerAge.Veteran))" 
+                                    @onchange="@(() => experience = CareerAge.Veteran)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            VALUE
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        The character receives a Value, which must reflect the character’s experience or lack thereof. 
+                        <br>
+                        <input type="text" style="width: 100%" @bind="characterCareerExperienceValue"/>
+                    </div>
+
+                    @if(experience == CareerAge.Experienced) {
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            TALENT
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div>
+                        <div class="w3-right-align w3-padding">
+                            <input type="text" style="w3-black" placeholder="search" @bind="talentFilter"/>
+                        </div>
+                        @foreach (var talent in AllTalents()) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-third">
+                                <label>@talent.Name</label>
+                            </div>
+                            <div class="w3-third">
+                                @talent.Description
+                                &nbsp;
+                            </div>
+                            <div class="w3-third w3-right-align">
+                                <input type="radio" 
+                                    checked="@(talent.Equals(characterCareerExperienceExperiencedTalent))" 
+                                    @onchange="@(() => characterCareerExperienceExperiencedTalent = talent)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>   
+                } else if (ShowFirstCareerEvent) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            CAREER EVENT (1/2)
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-padding w3-margin-bottom">
+                        Your career is a tapestry of events and experiences, but amongst this, a few will have been pivotal moments in your life. Define which moments of your life are important in retrospect, and what seemed definitive to an ensign in their early 20s may be inconsequential to that same officer decades later.
+                        <br>
+                        Select your first career event.
+                    </div>
+
+                    <div>
+                        @foreach (var evt in AllCareerEvents) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                <label>@evt.Name</label>
+                            </div>
+                            <div class="w3-quarter">
+                                @foreach (var attr in evt.AttributeSelectionMask.Enumerate()) {
+                                    if (attr.Value > 0) {
+                                        <span>@attr.Name</span><br>
+                                    }
+                                }
+                                &nbsp;
+                            </div>
+                            <div class="w3-quarter">
+                                @if (evt.DisciplineSelectionMask != null) {
+                                    foreach (var attr in evt.DisciplineSelectionMask.Enumerate()) {
+                                        if (attr.Value > 0) {
+                                            <span>@attr.Name</span><br>
+                                        } 
+                                    }
+                                }
+                                &nbsp;
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(evt.Equals(characterFirstEvent))" 
+                                    @onchange="@(() => characterFirstEvent = evt)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                } else if (ShowFirstCareerEventDetails) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            @characterFirstEvent.Name.ToUpper()
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-padding w3-margin-bottom">
+                        
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <AttributeIncrement 
+                                Points="1" 
+                                Mask="characterFirstEvent.AttributeSelectionMask"
+                                Reference="characterFirstEventAttributes"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                DISCIPLINES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineIncrement 
+                                Points="1" 
+                                Mask="characterFirstEvent.DisciplineSelectionMask"
+                                Reference="characterFirstEventDisciplines"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                FOCUS
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <input type="text" style="width: 100%" @bind="characterFirstEventFocus"/>
+                        </div>
+                    </div>
+                </div>
+                } else if (ShowSecondCareerEvent) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            CAREER EVENT (2/2)
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-padding w3-margin-bottom">
+                        Your career is a tapestry of events and experiences, but amongst this, a few will have been pivotal moments in your life. Define which moments of your life are important in retrospect, and what seemed definitive to an ensign in their early 20s may be inconsequential to that same officer decades later.
+                        <br>
+                        Select your second career event.
+                    </div>
+
+                    <div>
+                        @foreach (var evt in AllCareerEvents) {
+                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                            <div class="w3-quarter">
+                                <label>@evt.Name</label>
+                            </div>
+                            <div class="w3-quarter">
+                                @foreach (var attr in evt.AttributeSelectionMask.Enumerate()) {
+                                    if (attr.Value > 0) {
+                                        <span>@attr.Name</span><br>
+                                    }
+                                }
+                                &nbsp;
+                            </div>
+                            <div class="w3-quarter">
+                                @if (evt.DisciplineSelectionMask != null) {
+                                    foreach (var attr in evt.DisciplineSelectionMask.Enumerate()) {
+                                        if (attr.Value > 0) {
+                                            <span>@attr.Name</span><br>
+                                        } 
+                                    }
+                                }
+                                &nbsp;
+                            </div>
+                            <div class="w3-quarter w3-right-align">
+                                <input type="radio" 
+                                    checked="@(evt.Equals(characterSecondEvent))" 
+                                    @onchange="@(() => characterSecondEvent = evt)" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                } else if (ShowSecondCareerEventDetails) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            @characterSecondEvent.Name.ToUpper()
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-padding w3-margin-bottom">
+                        
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <AttributeIncrement 
+                                Points="1" 
+                                Mask="characterSecondEvent.AttributeSelectionMask"
+                                Reference="characterSecondEventAttributes"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                DISCIPLINES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineIncrement 
+                                Points="1" 
+                                Mask="characterSecondEvent.DisciplineSelectionMask"
+                                Reference="characterSecondEventDisciplines"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                FOCUS
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <input type="text" style="width: 100%" @bind="characterSecondEventFocus"/>
+                        </div>
+                    </div>
+                </div>
+                } else if (ShowNumbersCleanupAndRelationshipValue) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            EXCESS EXPERIENCE
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-padding w3-margin-bottom">
+                        Re-allocate your character's excess experience to other fields so that no attribute is above @(MaxAttributes) and no discipline above @(MaxDisciplines). 
+                    </div>
+
+                    <div style="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <AttributeBalancer 
+                                MaxValue="MaxAttributes"
+                                ToBalance="characterAttributesBeforeRebalance"
+                                Reference="characterAttributeRebalance"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                DISCIPLINES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineBalancer 
+                                MaxValue="MaxDisciplines"
+                                ToBalance="characterDisciplinesBeforeRebalance"
+                                Reference="characterDisciplinesRebalance"
+                                />
+                        </div>
+                    </div>
+                </div>
+                } else if (ShowPersonalization) {
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <span class="spacer typeface text-secondary w3-large">
+                            PERSONALIZE
+                        </span>
+                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-padding w3-margin-bottom">
+                        Your character is almost finished. Simply fill out some personal details below and when you are ready you can export the character sheet.
+                    </div>
+
+                    <div class="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                NAME
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <input type="text" style="width: 100%" @bind="characterName"/>
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                VALUE
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            The character receives one final Value. This might reflect the Career Events rolled previously, or it may represent some other element of the character. This Value might be a relationship, connecting the character to another character in the crew, or to another organization or culture in some way.
+                            <input type="text" style="width: 100%" @bind="characterRelationshipValue"/>
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                RANK
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            @foreach (var rank in RanksByExperience) {
+                                <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                                    <div class="w3-half">
+                                        <label>@rank.Title</label>
+                                    </div>
+                                    <div class="w3-half w3-right-align">
+                                        <input type="radio" 
+                                            checked="@(rank.Equals(characterRank))" 
+                                            @onchange="@(() => characterRank = rank)" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ASSIGNMENT
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            Select the role your character has on the starship, starbase, or outpost they service. You should pick a choice that is best suited for your character given your disciplines.
+                            @foreach (var rank in Assignments) {
+                                <div class="w3-padding w3-margin w3-row w3-border-bottom">
+                                    <div class="w3-quarter">
+                                        <label>@rank.Key</label>
+                                    </div>
+                                    <div class="w3-half">
+                                        @rank.Value
+                                    </div>
+                                    <div class="w3-quarter w3-right-align">
+                                        <input type="radio" 
+                                            checked="@(rank.Key.Equals(characterAssignment))" 
+                                            @onchange="@(() => characterAssignment = rank.Key)" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        
+                    </div>
+                </div>
+                }
+                <!-- Next and Back -->
+                <div class="w3-row">
+                    <div class="w3-half">
+                        @if(current_subpage > 0) {
+                            <button style="button" @onclick="GoBack"> Back </button>
+                        }
+                    </div>
+                    <div class="w3-half w3-right-align">
+                        @if (!ShowPersonalization) {
+                            <button style="button" @onclick="Next"> Next </button>
+                        } else {
+                            <button style="button" @onclick="Save"> Save </button>
+                            <button style="button" @onclick="ExportJson"> Export JSON </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+@code {
+    
+    int current_subpage = 0;
+
+    #region Character 
+    private string characterName = null;
+    private Rank characterRank = null;
+    private string characterAssignment = null;
+    private Species characterSpecies = null;
+    private Attributes characterBaseAttributes = new Attributes (7);
+
+    private TrekSharp.Environment characterEnvironment = null;
+    private string characterEnvironmentValue = null;
+    private Attributes characterEnvironmentAttributes = new Attributes();
+    private Disciplines characterEnvironmentDisciplines = new Disciplines();
+
+    private Upbringing characterUpbringing = null;
+    public bool characterAcceptsUpbringing = true;
+    private Attributes characterUpbringingAttributes => 
+        characterUpbringing == null ? null : (
+            characterAcceptsUpbringing ? characterUpbringing.AcceptAttributeModifier : characterUpbringing.RejectAttributeModifier
+        );
+    private Disciplines characterUpbringingDisciplines = new Disciplines();
+    private string characterUpbringingFocus = null;
+    private CharacterTalent characterUpbringingTalent = null;
+
+    private Attributes characterCareerPathAttributes = new Attributes();
+    private Disciplines characterCareerPathMajorDisciplines = new Disciplines();
+    private Disciplines characterCareerPathMinorDisciplines = new Disciplines();
+    private string characterCareerFocus1 = null;
+    private string characterCareerFocus2 = null;
+    private string characterCareerFocus3 = null;
+    private string characterCareerValue = null;
+    private CharacterTalent characterCareerTalent = null;
+
+    private CharacterTalent characterCareerExperienceExperiencedTalent = null;
+    private CharacterTalent caracterCareerAgeTalent => experience switch {
+        CareerAge.Young => Rulebook.Core.Talents.Where(talent => talent.Name == "Untapped Potential").First(),
+        CareerAge.Veteran => Rulebook.Core.Talents.Where(talent => talent.Name == "Veteran").First(),
+        _ => characterCareerExperienceExperiencedTalent
+    };
+    private string characterCareerExperienceValue = null;
+
+    private CareerEvent characterFirstEvent = null;
+    private string characterFirstEventFocus = null;
+    private Attributes characterFirstEventAttributes = new Attributes();
+    private Disciplines characterFirstEventDisciplines = new Disciplines();
+    private CareerEvent characterSecondEvent = null;
+    private string characterSecondEventFocus = null;
+    private Attributes characterSecondEventAttributes = new Attributes();
+    private Disciplines characterSecondEventDisciplines = new Disciplines();
+
+    private string characterRelationshipValue = null;
+
+    private Attributes characterAttributesBeforeRebalance {
+        get {
+            var attr = new Attributes();
+            attr.Add(characterBaseAttributes);
+            attr.Add(characterSpecies.AttributeModifiers);
+            attr.Add(characterUpbringingAttributes);
+            attr.Add(characterEnvironmentAttributes);
+            attr.Add(characterCareerPathAttributes);
+            attr.Add(characterFirstEventAttributes);
+            attr.Add(characterSecondEventAttributes);
+            return attr;
+        }
+    }
+    private Attributes characterAttributesAfterRebalance {
+        get {
+            var attr = new Attributes();
+            attr.Add(characterAttributesBeforeRebalance);
+            attr.Add(characterAttributeRebalance);
+            return attr;
+        }
+    }
+    private Attributes characterAttributeRebalance = new Attributes();
+    private Disciplines characterDisciplinesBeforeRebalance {
+        get {
+            var attr = new Disciplines();
+            attr.Add(this.characterBaseDisciplines);
+            attr.Add(characterEnvironmentDisciplines);
+            attr.Add(characterUpbringingDisciplines);
+            attr.Add(characterFirstEventDisciplines);
+            attr.Add(characterSecondEventDisciplines);
+            attr.Add(characterCareerPathMajorDisciplines);
+            attr.Add(characterCareerPathMinorDisciplines);
+            return attr;
+        }
+    }
+    private Disciplines characterDisciplinesAfterRebalance {
+        get {
+            var attr = new Disciplines();
+            attr.Add(characterDisciplinesBeforeRebalance);
+            attr.Add(characterDisciplinesRebalance);
+            return attr;
+        }
+    }
+    private Disciplines characterDisciplinesRebalance = new Disciplines();
+
+    private Disciplines characterBaseDisciplines = new Disciplines {
+        Command     = 1,
+        Security    = 1,
+        Science     = 1,
+        Conn        = 1,
+        Engineering = 1,
+        Medicine    = 1,
+    };
+    private List<Item> characterEquipment = new List<Item>() {
+        Rulebook.Core.Items[0],
+        Rulebook.Core.Items[1],
+        Rulebook.Core.Items[2],
+        Rulebook.Core.Items[3],
+        Rulebook.Core.Items[4]
+    };
+    private List<string> characterValues => new List<string>() {
+        characterEnvironmentValue,
+        characterCareerValue,
+        characterCareerExperienceValue,
+        characterRelationshipValue
+    };
+    private List<string> characterFocuses => new List<string>() {
+        characterUpbringingFocus,
+        characterCareerFocus1,
+        characterCareerFocus2,
+        characterCareerFocus3,
+        characterFirstEventFocus,
+        characterSecondEventFocus,
+    };
+    private CharacterTalent firstTalent;
+    private List<CharacterTalent> characterTalents => new List<CharacterTalent>(){
+        firstTalent,
+        characterUpbringingTalent,
+        characterCareerTalent,
+        caracterCareerAgeTalent
+    };
+    public PlayerCharacter FinalCharacter {
+        get {
+            return new PlayerCharacter {
+                Name = characterName,
+                Rank = characterRank,
+                Assignment = characterAssignment,
+                Species = characterSpecies,
+                Attributes = characterAttributesAfterRebalance,
+                Disciplines = characterDisciplinesAfterRebalance,
+                Equipment = characterEquipment,
+                Values = characterValues,
+                Focuses = characterFocuses,
+                Talents = characterTalents,
+
+                Upbringing = characterUpbringing?.Name,
+                Environment = characterEnvironment?.Name,
+            };
+        }
+    }
+    #endregion
+
+    public void Save() {
+        Data.Party.Add(this.FinalCharacter);
+        var id = Data.Party.Count - 1;
+        NavigationManager.NavigateTo($"/manage/characters/player/{id}");
+    }
+
+    public async Task ExportJson() {
+        var character = this.FinalCharacter;
+        await this.DownloadJson($"{character.Name}.character", character);
+    }
+
+    private void GoBack() {
+        if (current_subpage > 0) {
+            current_subpage -= 1;
+        }
+    }
+    private void Next() {
+        if (!ShowPersonalization)
+            current_subpage ++;
+    }
+
+    #region Rulebook Page
+    public bool ShowRulebookSelector => current_subpage == 0;
+    private RulebookPicker Rulebooks;
+    private IEnumerable<Rulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
+
+    private int era = 24;
+    #endregion
+
+    #region Select Species
+    private string speciesFilter = null;
+    public bool ShowSpeciesSelector => current_subpage == 1;
+    public IEnumerable<Species> AllSpecies => EnabledRulebooks
+                                            .SelectMany(book => book.Species)
+                                            .Where(species => 
+                                                string.IsNullOrEmpty(speciesFilter) 
+                                                || CultureInfo.InvariantCulture.CompareInfo.IndexOf(species.Name, speciesFilter, CompareOptions.IgnoreCase) >= 0);
+    #endregion
+
+    #region Talent Picker
+    private string talentFilter = null;
+    private bool ShowFirstTalentPicker => current_subpage == 2;
+    public IEnumerable<CharacterTalent> AllTalents() {
+        var @char = this.FinalCharacter; // Cached once across entire filter
+        return EnabledRulebooks
+            .SelectMany(book => book.Talents)
+            .Where(talent =>
+                talent.CanBeUsedBy(@char)                 // Character can use talent (species or skill rating restrictions)
+                //&& !characterTalents.Contains(talent)   // Character does not already have this talent
+                && (
+                    string.IsNullOrEmpty(talentFilter) 
+                    || CultureInfo.InvariantCulture.CompareInfo.IndexOf(talent.Name, speciesFilter, CompareOptions.IgnoreCase) >= 0
+                )
+            ); 
+    }
+    #endregion
+
+    #region Environment
+    private bool ShowEnvironment => current_subpage == 3;
+    private bool ShowEnvironmentDetails => current_subpage == 4;
+    private IEnumerable<TrekSharp.Environment> AllEnvironments => 
+        EnabledRulebooks.SelectMany(book => book.Environments)
+        .Concat(
+            AllSpecies.Select(
+                species => new TrekSharp.Environment(
+                    $"Another Species' Homeworld ({species.Name})", 
+                    "The character grew up amonst another species. They might have lives in a small enclave of their own kind, or they may have been orphaned in some mannor. Whatever the situation, the character has a unique perspective on their own species and on those they were rasied alongside.",
+                    species.AttributeModifiers, 
+                    new Disciplines {
+                        Command     = 1,
+                        Security    = 1,
+                        Science     = 1,
+                        Conn        = 1,
+                        Engineering = 1,
+                        Medicine    = 1,
+                    }
+                ) 
+            )
+        );
+    #endregion
+
+    #region Upbringing
+    private bool ShowUpbringing => current_subpage == 5;
+    private bool ShowUpbringingDetails => current_subpage == 6;
+    private IEnumerable<TrekSharp.Upbringing> AllUpbringings => EnabledRulebooks.SelectMany(book => book.Upbringings);
+    #endregion
+
+    #region Career Path
+    private bool ShowCareerPath => current_subpage == 7;
+    enum CareerTrack {
+        Command, Operations, Sciences
+    }
+    private Attributes attributeMaskAll = new Attributes(1);
+    private Disciplines commandMajorsMask = new Disciplines {
+        Command = 1,
+        Conn = 1,
+    };
+    private Disciplines opsMajorsMask = new Disciplines {
+        Engineering = 1,
+        Security = 1,
+    };
+    private Disciplines scienceMajorsMask = new Disciplines {
+        Medicine = 1,
+        Science = 1,
+    };
+    private Disciplines createMinorMask () {
+        Disciplines mask = new Disciplines(1); // Start with all
+        // Remove selected major
+        for (var i = 0; i < 6; i++) {
+            mask[i] -= this.characterCareerPathMajorDisciplines[i];
+        }
+        return mask;
+    }
+    private DisciplineIncrement minorDisciplineComponent;
+    private CareerTrack characterCareerTrack = CareerTrack.Command;
+    #endregion
+
+    #region Career Age
+    private bool ShowCareerAge => current_subpage == 8;
+    enum CareerAge {
+        Young, Experienced, Veteran
+    }
+    private CareerAge experience = CareerAge.Experienced;
+    #endregion
+
+    #region Career Events
+    private bool ShowFirstCareerEvent => current_subpage == 9;
+    private bool ShowFirstCareerEventDetails => current_subpage == 10;
+    private bool ShowSecondCareerEvent => current_subpage == 11;
+    private bool ShowSecondCareerEventDetails => current_subpage == 12;
+    private IEnumerable<CareerEvent> AllCareerEvents => EnabledRulebooks.SelectMany(book => book.CareerEvents);
+    #endregion
+
+    #region Number Cleanup
+    private bool ShowNumbersCleanupAndRelationshipValue => current_subpage == 13;
+    private int MaxAttributes => experience == CareerAge.Young ? 11 : 12;
+    private int MaxDisciplines => experience == CareerAge.Young ? 4 : 5;
+    #endregion
+
+    #region  Personalization
+    private bool ShowPersonalization => current_subpage == 14;
+    private IEnumerable<Rank> RanksByExperience {
+        get {
+            if (experience == CareerAge.Young) {
+                yield return Rank.Ensign;
+                yield return Rank.LieutenantJuniorGrade;
+            } else if (experience == CareerAge.Veteran) {
+                yield return Rank.LieutenantCommander;
+                yield return Rank.Commander;
+                yield return Rank.Captain;
+                yield return Rank.RearAdmiral;
+                yield return Rank.ViceAdmiral;
+                yield return Rank.Commodore;
+                yield return Rank.FleetAdmiral;
+            } else {
+                yield return Rank.LieutenantJuniorGrade;
+                yield return Rank.Lieutenant;
+                yield return Rank.LieutenantCommander;
+                yield return Rank.Commander;
+                yield return Rank.Captain;
+            }
+        }
+    }
+    private List<KeyValuePair<string,string>> Assignments = new List<KeyValuePair<string,string>> {
+        new KeyValuePair<string, string>("Executive Officer", "Second-in-Command. The executive officer is the captain’s chief advisor, and takes command in situations where the captain is unable to. If a ship does not have a dedicated executive officer, an officer in another role should be noted as second-in-command, but they will not gain the benefits of this role."),
+        new KeyValuePair<string, string>("Commanding Officer", "The captain. Even if the commanding officer does not hold the rank of captain, they will be referred to as captain by their subordinates. Every ship must have a commanding officer."),
+        new KeyValuePair<string, string>("Operations Manager", "The operations manager manages and oversees all technical operations aboard or involving the ship, normally from the Operations station on the Bridge, or in conjunction with the chief engineer (on smaller ships, one officer may fill both roles). This often entails taking on the duties of a science officer, if there is no dedicated science officer in the senior staff."),
+        new KeyValuePair<string, string>("Chief Engineer", "The chief engineer is responsible for ensuring that the ship remains operational and functional, and commands the engineering department aboard the ship."),
+        new KeyValuePair<string, string>("Chief of Security", "The chief of security oversees the ship’s security department, and is responsible for ensuring the safety of the ship and crew during missions, for the investigation of disciplinary and criminal matters, and for overseeing the protection of important persons aboard the ship. On many ships, the chief of security operates from the Tactical station on the bridge."),
+        new KeyValuePair<string, string>("Ship's Counselor", "On larger ships and starbases, it’s common to have personnel dedicated to the mental soak. Some captains regard them as valuable advisors, as their training covers both culture and psychology, making them exceptionally good at reading the moods and intentions of others."),
+        new KeyValuePair<string, string>("Chief Medical Officer", "The chief medical officer, also known as ship’s surgeon, or ship’s doctor, is responsible for the health and wellbeing of the crew and other persons aboard the ship, and leads the ship’s medical department. A chief medical officer can order, and countermand the orders of, senior officers where matters of that officer’s health are concerned."),
+        new KeyValuePair<string, string>("Science Officer", "A science officer is responsible for advising the commanding officer of all matters scientific, providing hypotheses in matters concerning the unknown. Not all ships have a dedicated science officer within the senior staff, often having the operations manager take on these duties."),
+        new KeyValuePair<string, string>("Flight Controller", "Not a typical senior staff role, some captains, particularly those operating in uncharted space, choose the most senior helmsman or flight control officer to serve as senior staff as well."),
+        new KeyValuePair<string, string>("Communications Officer", "More common in the earlier days of Starfleet, dedicated communications officers are typically skilled in linguistics and cryptography, and aided with advanced translation and decryption technologies, and thus valuable during encounters with both new cultures, and with hostile ones."),
+    }.OrderBy(kv => kv.Key).ToList();
+    #endregion
+
+    public void Reset() {
+        current_subpage = 0;
+    }
+
+}

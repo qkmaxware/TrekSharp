@@ -1,0 +1,36 @@
+name: Deploy
+on:
+  release: 
+    branches: 
+    - "root"
+jobs:
+  deploy:
+    name: Deploy Github Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@master
+        with:
+          submodules: "recursive"
+          fetch-depth: 0
+
+      - name: Setup Dotnet
+        uses: actions/setup-dotnet@v1 
+        with:
+          dotnet-version: '3.1.x' # SDK Version to use; x will use the latest version of the 3.1 channel
+
+      - name: Build Site
+        run: dotnet publish TrekSharp.AdventureTools/TrekSharp.AdventureTools.csproj -c Release -o .release
+
+      - name: Add .nojekyll file
+        run: touch .release/wwwroot/.nojekyll
+
+      - name: Change base-tag
+        run: sed -i 's/<base href="\/" \/>/<base href="\/TrekSharp\/" \/>/g' .release/wwwroot/index.html
+
+      - name: Commit to Github Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: .release/wwwroot

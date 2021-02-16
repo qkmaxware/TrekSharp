@@ -1,0 +1,39 @@
+@using Data
+
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        SOURCES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+</div>
+<div class="w3-padding w3-margin-bottom">
+    <div>
+        <b>Official</b>
+    </div>
+    <div class="w3-padding">
+    @foreach (var kv in Rulebooks.AllRulebooks) {
+        if (!(kv.Value is UnofficialRulebook)) {
+            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Rulebooks.ToggleRulebook(kv.Key))">@kv.Key</button>
+        }
+    }
+    </div>
+    <div>
+        <b>Unofficial</b>
+    </div>
+    <div class="w3-padding">
+    @foreach (var kv in Rulebooks.AllRulebooks) {
+        if (kv.Value is UnofficialRulebook) {
+            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Rulebooks.ToggleRulebook(kv.Key))">@kv.Key</button>
+        }
+    }
+    </div>
+</div>
+
+@code {
+
+    private RulebookContainer Rulebooks = new RulebookContainer();
+
+    public IEnumerable<Rulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
+
+}

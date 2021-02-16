@@ -1,0 +1,164 @@
+@page "/manage/characters/player/{PlayerId}"
+@inherits AppComponentBase
+
+@if (HasCharacter) {
+<PrintNotification/>
+
+<div id="character-sheet" class="lcars">
+    <div id="player-info" class="container">
+        <div class="row">
+            <div class="primary" style="width: 120px">
+                <img src="/assets/starfleet.svg" style="display: block; width: 60%; height: auto; margin-left: auto; margin-right: auto; margin-top: 32px;">
+            </div>
+            <div class="w3-padding row-fill">
+                <h2 class="w3-right-align text-primary typeface">STARFLEET PERSONNEL RECORD</h2>
+                <div>
+                    <div class="w3-row">
+                        <div class="w3-col" style="width: 150px;">
+                            <h4 class="text-secondary typeface" style="margin: 0;">NAME:</h4>
+                        </div>
+                        <div class="w3-rest w3-white">
+                            @Player.Rank @Player.Name
+                        </div>
+                    </div>
+                    <div class="w3-row">
+                        <div class="w3-col" style="width: 150px;">
+                            <h4 class="text-secondary typeface" style="margin: 0;">SPECIES:</h4>
+                        </div>
+                        <div class="w3-rest w3-white">
+                            @Player.Species
+                        </div>
+                    </div>
+                    <div class="w3-row">
+                        <div class="w3-col" style="width: 150px;">
+                            <h4 class="text-secondary typeface" style="margin: 0;">ASSIGNMENT:</h4>
+                        </div>
+                        <div class="w3-rest w3-white">
+                            @Player.Assignment
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col s6">
+                        <div class="w3-row">
+                            <div class="w3-col" style="width: 150px;">
+                                <h4 class="text-secondary typeface" style="margin: 0;">ENVIRONMENT:</h4>
+                            </div>
+                            <div class="w3-rest w3-white">
+                                @Player.Environment
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-col s6">
+                        <div class="w3-row">
+                            <div class="w3-col" style="width: 150px;">
+                                <h4 class="text-secondary typeface" style="margin: 0;">UPBRINGING:</h4>
+                            </div>
+                            <div class="w3-rest w3-white">
+                                @Player.Upbringing
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hbar elbow-left" style="width: 56px;"></div>
+            <div class="hbar row-fill" style="margin-right: 10px;"></div>
+            <div class="hbar" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+    <!-- Body -->
+    <div id="body" class="container">
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <div class="row">
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content -->
+            <div class="w3-row row-fill">
+                <div class="w3-col s6 w3-padding">
+                    <AttributeDrawer Attributes="Player.Attributes"/>
+                    <DisciplineDrawer Disciplines="Player.Disciplines"/>
+                    <ValueDrawer Values="Player.Values"/>
+                    <FocusDrawer Focuses="Player.Focuses"/>
+                </div>
+                <div class="w3-col s6 w3-padding">
+                    <InjuryDrawer Player="Player"/>
+                    <EquipmentDrawer Player="Player"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+    <div class="pagebreak"></div>
+    <div id="body" class="container">
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <div class="row">
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content -->
+            <div class="w3-row row-fill w3-padding">
+                <div class="row w3-margin-bottom row-fill">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                        TALENTS 
+                    </div>
+                    <div class="hbar row-fill elbow-right knee-right"></div>
+                </div>
+                <div class="w3-padding row-fill">
+                    @foreach (var group in Player.Talents.ByN(3)) {
+                        <div class="w3-row-padding">
+                            @foreach (var talent in group) {
+                                <div class="w3-col s4 w3-border-bottom">
+                                    <b>@talent.Name</b>
+                                    <p class="w3-small">@talent.Description</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+
+} else {
+<div class="w3-container">
+    <h2>No player "@(PlayerId)"</h2>
+</div>
+}
+
+@code {
+
+    [Parameter]
+    public string PlayerId { get; set; }
+    public int PlayerIndex {
+        get {
+            int index;
+            if (int.TryParse(PlayerId, out index)) {
+                return index;
+            } else {
+                return -1;
+            }
+        }
+    }
+    public PlayerCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.Party.Count ? Data.Party[PlayerIndex] : null;
+    public bool HasCharacter => Player != null;
+
+}

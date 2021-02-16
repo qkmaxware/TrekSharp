@@ -1,0 +1,31 @@
+<div 
+    class="w3-black w3-sidebar w3-bar-block w3-card w3-animate-right no-print @(SideBarCssClass)"
+    style="right:0; width: 550px; max-width: 100%;"
+>
+    <button class="w3-bar-item w3-button w3-large w3-right-align" @onclick="CloseMenu">Close &times;</button>
+    <TokenManager/>
+    <DiceRoller/>
+</div>
+
+<div class="lcars no-print" style="position: absolute; right: 0;">
+<div 
+    class="w3-button lcars-primary w3-large w3-padding elbow-left knee-left" 
+    style="position:absolute; right:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed;" 
+    @onclick="OpenMenu"
+> Tools
+</div>
+</div>
+
+@code {
+
+    private bool showSidebar = false;
+    public string SideBarCssClass => showSidebar ? "w3-show" : "w3-hide";
+
+    private void OpenMenu() {
+        showSidebar = true;
+    }
+    private void CloseMenu() {
+        showSidebar = false;
+    }
+
+}

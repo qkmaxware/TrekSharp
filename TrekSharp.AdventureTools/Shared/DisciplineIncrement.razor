@@ -1,0 +1,50 @@
+@foreach (var attr in usedMask.Enumerate()) {
+    if (attr.Value > 0) {
+        <div class="row w3-margin-bottom">
+            <div class="hbar elbow-left knee-left secondary" style="width: 32px;"></div>
+            <div class="hbar w3-padding typeface secondary" style="width: 125px;">
+                @attr.Name
+            </div>
+            <div class="hbar w3-black" style="margin-left: 10px; width: 256px;">
+                + @Reference[attr.Index]
+                @if(Reference[attr.Index] > 0) {
+                    <button @onclick="@(() => { Reference[attr.Index] -= Increment; if (OnClick != null) { OnClick();} })">-</button>
+                }
+                @if(PointsRemaining > 0 && Reference[attr.Index] < MaxPointsPerItem) {
+                    <button @onclick="@(() => { Reference[attr.Index] += Increment; if (OnClick != null) { OnClick();} })">+</button>
+                }
+            </div>
+        </div>
+    }
+}
+
+@code {
+    [Parameter]
+    public int Points {get; set;}
+    [Parameter]
+    public int MaxPointsPerItem {get; set;} = Int32.MaxValue;
+    public int PointsRemaining => Points - PointsUsed;
+    public int PointsUsed => Reference.Enumerate().Select(r => r.Value).Sum();
+    public bool HasPointsRemaining => PointsRemaining > 0;
+    
+    [Parameter]
+    public int Increment {get; set;} = 1;
+    [Parameter]
+    public Disciplines Mask {get; set;}
+
+    [Parameter]
+    public Func<Disciplines> MaskFunction {get; set;}
+
+    private Disciplines usedMask => Mask != null ? Mask : MaskFunction();
+
+    [Parameter]
+    public Disciplines Reference {get; set;}
+
+    [Parameter] public Action OnClick { get; set; }
+
+    public void UpdateMask(Disciplines mask) {
+        this.Mask = mask;
+        StateHasChanged();
+    }
+
+}

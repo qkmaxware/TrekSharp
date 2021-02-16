@@ -1,0 +1,13 @@
+@inject IJSRuntime JSRuntime;
+@inject AppData AppDataService;
+@inject NavigationManager AppNavigationManager;
+
+@code {
+    protected AppData Data => AppDataService;
+    protected NavigationManager NavigationManager => AppNavigationManager;
+    public async Task DownloadJson<T>(string filename, T data) {
+        var json = System.Text.Json.JsonSerializer.Serialize(data);
+        byte[] file = System.Text.Encoding.UTF8.GetBytes(json);
+        await JSRuntime.InvokeVoidAsync("BlazorDownloadFile", $"{filename}.json", "text/json", file);
+    }
+}

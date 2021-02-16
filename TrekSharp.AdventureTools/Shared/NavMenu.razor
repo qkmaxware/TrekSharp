@@ -1,0 +1,170 @@
+﻿@inherits AppComponentBase
+
+<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:200px;" id="mySidebar">
+    <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
+    <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
+        Home
+    </NavLink>
+    <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCreateMenu = !collapseCreateMenu)"  style="padding-bottom: 0px;">
+        <div class="row">
+            <div class="hbar knee-left" style="margin-right:10px;"></div>
+            <div>
+                Create <i class="fa fa-caret-down"></i>
+            </div>
+            <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
+        </div>
+    </button>
+    <div id="CreateAccordion" class="@(CreateMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
+        <div class="lbar">
+            <NavLink class="w3-button w3-block" href="/new/random/plot" Match="NavLinkMatch.All">
+                Plot
+            </NavLink>
+            <NavLink class="w3-button w3-block" href="/new/player" Match="NavLinkMatch.All">
+                Player
+            </NavLink>
+            <NavLink class="w3-button w3-block" href="/new/support" Match="NavLinkMatch.All">
+                Support Character
+            </NavLink>
+            <NavLink class="w3-button w3-block" href="/new/ship" Match="NavLinkMatch.All">
+                Ship
+            </NavLink>
+        </div>
+    </div>
+    <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapsePlayMenu = !collapsePlayMenu)" style="padding-bottom: 0px;">
+        <div class="row">
+            <div class="hbar knee-left" style="margin-right:10px;"></div>
+            <div>
+                Manage <i class="fa fa-caret-down"></i>
+            </div>
+            <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
+        </div>
+    </button>
+    <div id="PlayAccordion" class="@(PlayMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
+        <div class="lbar">
+            <NavLink class="w3-button w3-block" href="/manage/characters" Match="NavLinkMatch.All">
+                Characters
+            </NavLink>
+            <NavLink class="w3-button w3-block" href="/manage/ships" Match="NavLinkMatch.All">
+                Ships
+            </NavLink>
+            <NavLink class="w3-button w3-block" href="/manage/task/extended" Match="NavLinkMatch.All">
+                Extended Tasks
+            </NavLink>
+        </div>
+    </div>
+    <div class="w3-padding w3-center" style="position: absolute; bottom: 0; width: 100%; overflow: hidden;">
+        <button 
+            style="border: 0; padding: 0; background-color: inherit;"
+            title="Save"
+            @onclick="downloadDataJson"
+        >
+            <img src="/assets/save.png" width="32" height="32">
+        </button>
+        <button 
+            style="border: 0; padding: 0; background-color: inherit;"
+            title="Load"
+            @onclick="openLoadDialog"
+        >
+            <img src="/assets/load.png" width="32" height="32">
+        </button>
+        <a 
+            href="https://github.com/qkmaxware/TrekSharp"
+            target="_blank"
+            style="border: 0; padding: 0; background-color: inherit;"
+            title="Contribute"
+        >
+            <img src="/assets/github.png" width="32" height="32">
+        </a>
+    </div>
+</div>
+
+<div class="lcars no-print" style="position: absolute;">
+<div 
+    class="w3-button lcars-primary w3-large w3-hide-large w3-padding elbow-right knee-right" 
+    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed;" 
+    @onclick="OpenNavMenu"
+> Menu
+</div>
+</div>
+
+<div id="loadModal" class="w3-modal no-print @(LoadModalCss)">
+    <div class="w3-modal-content">
+        <div class="w3-container w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
+            <div class="lcars">
+                <div class="secondary elbow-left elbow-right knee-left knee-right">
+                    <h3>Load</h3>
+                </div>
+                <div class="w3-container">
+                    Paste your save file json data into the text area below and press load. 
+                </div>
+            </div>
+
+            <textarea style="width: 100%; height: 480px; max-height: 80%; resize: vertical;" @bind="jsonappdata"></textarea>
+            @if (loaderror != null) {
+            <div class="w3-panel w3-red">
+                <p>@loaderror.Message</p>
+            </div> 
+            }
+            <div class="w3-row">
+                <div class="w3-half">
+                    <button class="w3-button" @onclick="closeLoadDialog"> Cancel</button>
+                </div>
+                <div class="w3-half w3-right-align" @onclick="readFile">
+                    <button class="w3-button"> Load</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private bool collapseNavMenu = true;
+    private string NavMenuCssClass => collapseNavMenu ? "w3-hide" : "w3-show";
+
+    private bool collapseCreateMenu = false;
+    private string CreateMenuCssClass => collapseCreateMenu ? "w3-hide" : "w3-show";
+    private bool collapsePlayMenu = false;
+    private string PlayMenuCssClass => collapsePlayMenu ? "w3-hide" : "w3-show";
+
+
+    private bool showLoadingModal = false;
+    private string LoadModalCss => !showLoadingModal ? "w3-hide" : "w3-show";
+
+    public void ToggleNavMenu() {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    public void CloseNavMenu() {
+        collapseNavMenu = true;
+    }
+    public void OpenNavMenu() {
+        collapseNavMenu = false;
+    }
+
+    private string jsonappdata;
+    private Exception loaderror = null;
+    private void openLoadDialog() {
+        showLoadingModal = true;
+        jsonappdata = string.Empty;
+        loaderror = null;
+    }
+    private void closeLoadDialog() {
+        showLoadingModal = false;
+    }
+    private void readFile() {
+        try {
+            var newData = System.Text.Json.JsonSerializer.Deserialize<AppData>(jsonappdata);
+            Data.Overwrite(newData);
+            showLoadingModal = false;
+            NavigationManager.NavigateTo(""); // navigate home since that basically refreshes the app
+        } catch (Exception e) {
+            loaderror = e;
+        }
+    }
+
+    private async Task downloadDataJson() {
+        // Generate a text file
+        await this.DownloadJson("adventure", Data);
+    }
+}

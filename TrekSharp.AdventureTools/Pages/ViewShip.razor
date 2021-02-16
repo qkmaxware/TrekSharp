@@ -1,0 +1,176 @@
+@page "/manage/ships/{ShipId}"
+@inherits AppComponentBase
+
+@if (HasShip) {
+<PrintNotification/>
+
+<div id="character-sheet" class="lcars">
+    <!-- Header -->
+    <div id="player-info" class="container">
+        <div class="row">
+            <div class="primary" style="width: 120px">
+                <img src="/assets/starfleet.svg" style="display: block; width: 60%; height: auto; margin-left: auto; margin-right: auto; margin-top: 32px;">
+            </div>
+            <div class="w3-padding row-fill">
+                <h2 class="w3-right-align text-primary typeface">STARSHIP REGISTRY</h2>
+                <div>
+                    <div class="w3-row">
+                        <div class="w3-col w3-wide" style="width: 150px;">
+                            <h4 class="text-secondary typeface" style="margin: 0;">NAME:</h4>
+                        </div>
+                        <div class="w3-rest w3-white">
+                            @Ship.Name
+                        </div>
+                    </div>
+                    <div class="w3-row">
+                        <div class="w3-col" style="width: 150px;">
+                            <h4 class="text-secondary typeface" style="margin: 0;">DESIGNATION:</h4>
+                        </div>
+                        <div class="w3-rest w3-white">
+                            @Ship.Registry
+                        </div>
+                    </div> 
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col s6">
+                        <div class="w3-row">
+                            <div class="w3-col" style="width: 150px;">
+                                <h4 class="text-secondary typeface" style="margin: 0;">SPACEFRAME:</h4>
+                            </div>
+                            <div class="w3-rest w3-white">
+                                @Ship.Frame.Name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-col s6">
+                        <div class="w3-row">
+                            <div class="w3-col" style="width: 150px;">
+                                <h4 class="text-secondary typeface" style="margin: 0;">PROFILE:</h4>
+                            </div>
+                            <div class="w3-rest w3-white">
+                                @Ship.MissionProfile.Name
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hbar elbow-left" style="width: 56px;"></div>
+            <div class="hbar row-fill" style="margin-right: 10px;"></div>
+            <div class="hbar" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+    <!-- Body -->
+    <div id="body" class="container">
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <div class="row">
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content -->
+            <div class="w3-row row-fill">
+                <div class="w3-col s6 w3-padding">
+                    <!-- Systems -->
+                    <SystemsDrawer Systems="Ship.Systems" />
+                    <!-- Departments -->
+                    <DisciplineDrawer Disciplines="Ship.Departments" Title="DEPARTMENTS"/>
+                    <!-- Image/Scale/Resistance -->
+                    <img src="@Ship.GetShipImageUrl()" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-width: 640px; height: auto;">
+                    <div class="w3-row w3-margin">
+                        <div class="w3-row w3-col s6">
+                            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                                SCALE
+                            </div>
+                            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                                @Ship.Scale
+                            </div>
+                        </div>
+                        <div class="w3-col s6" style="padding-left: 16px;">
+                            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                                RESISTANCE
+                            </div>
+                            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                                @Ship.Resistance
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-col s6 w3-padding">
+                    <CrewSupportDrawer Ship="Ship" />
+                    <PowerDrawer Ship="Ship" />
+                    <ShieldsDrawer Ship="Ship" />
+                    <ShipWeaponsDrawer Ship="Ship" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+
+    <div class="pagebreak"></div>
+
+    <div id="body" class="container">
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <div class="row">
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content -->
+            <div class="w3-row row-fill w3-padding">
+                <div class="row w3-margin-bottom row-fill">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                        TALENTS 
+                    </div>
+                    <div class="hbar row-fill elbow-right knee-right"></div>
+                </div>
+                <div class="w3-padding row-fill">
+                    @foreach (var group in Ship.Talents.ByN(3)) {
+                        <div class="w3-row-padding">
+                            @foreach (var talent in group) {
+                                <div class="w3-col s4 w3-border-bottom">
+                                    <b>@talent.Name</b>
+                                    <p class="w3-small">@talent.Description</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+} else {
+    <span>No ship "@(ShipId)"</span>
+}
+
+@code {
+    [Parameter]
+    public string ShipId { get; set; }
+    public int ShipIndex {
+        get {
+            int index;
+            if (int.TryParse(ShipId, out index)) {
+                return index;
+            } else {
+                return -1;
+            }
+        }
+    }
+    public PlayerVessel Ship => ShipIndex >=0 && ShipIndex < Data.Ships.Count ? Data.Ships[ShipIndex] : null;
+    public bool HasShip => Ship != null;
+}

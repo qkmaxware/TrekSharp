@@ -1,0 +1,31 @@
+@inject AppData Data;
+
+<div class="lcars">
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            TOKENS 
+        </div>
+        <div class="hbar row-fill"></div>
+    </div>
+    <div class="row w3-margin w3-margin-bottom">
+        <div class="hbar elbow-left knee-left w3-padding typeface secondary" style="width: 120px;">
+            MOMENTUM
+        </div>
+        <div class="hbar w3-black row-fill" style="margin-left: 10px;">
+            <input type="number" style="width: 100%;" @bind="Data.Tokens.Momentum"/>
+        </div>      
+    </div>
+    <div class="row w3-margin w3-margin-bottom">
+        <div class="hbar elbow-left knee-left w3-padding typeface secondary" style="width: 120px;">
+            THREAT
+        </div>
+        <div class="hbar w3-black row-fill" style="margin-left: 10px;">
+            <input type="number" style="width: 100%;" @bind="Data.Tokens.Threat"/>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}
