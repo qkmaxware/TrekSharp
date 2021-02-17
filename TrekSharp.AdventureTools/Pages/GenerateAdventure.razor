@@ -3,18 +3,41 @@
 
 <div class="lcars">
     <div class="container">
-        <RulebookPicker @ref="Rulebooks"/>
-
+        <!-- Titlebar -->
         <div class="row">
-            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-            <span class="spacer typeface text-secondary w3-large">
-                MISSION STATEMENT
-            </span>
-            <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">PLOT</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
         </div>
-        <div class="w3-center">
-            <div class="w3-container w3-padding w3-margin">@statement</div>
-            <button class="w3-button w3-blue" @onclick="generate"> Generate New </button>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                <RulebookPicker @ref="Rulebooks"/>
+
+                <div class="row">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <span class="spacer typeface text-secondary w3-large">
+                        MISSION STATEMENT
+                    </span>
+                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                </div>
+                <div class="w3-center">
+                    <div class="w3-container w3-padding w3-margin">@statement</div>
+                    <button class="w3-button w3-blue" @onclick="generate"> Generate New </button>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
         </div>
     </div>
 </div>
@@ -48,10 +71,29 @@
         generator["template"] = new List<string>{
             "<a> @location where <a> @character has @action",
             "<a> @character aboard <a> @ship vessel has @action",
-            "<a> @ship vessel has @action",
-            "<a> @ship vessel has discovered <a> @location",
+            "@entity has @action",
+            "@entity has discovered <a> @location",
             "The @faction is causing trouble at <a> @location",
             "<a> @role has <a> @personality clone who has @action",
+            "<a> @character, disguised as <a> @character, has @action",
+            "<a> @location is overrun by @personality @creature(s)",
+            "@entity has established first contact with a new species",
+            "@entity has encountered <a> @anomaly at <a> @location",
+            "Contact lost with @entity at <a> @coordinate",
+            "<a> @mcguffin is found located near <a> @coordinate"
+        };
+
+        generator["entity"] = new List<string> {
+            "<a> @character",
+            "<a> @ship vessel",
+            "The @faction",
+            "<a> @role",
+        };
+
+        generator["coordinate"] = new List<string> {
+            "@anomaly",
+            "@anomaly on <a> @location",
+            "@location",
         };
 
         generator["species"] = Rulebooks.EnabledRulebooks.SelectMany(book => book.Species).Select(species => species.Name).ToList();
@@ -63,6 +105,8 @@
         generator["event"] = new List<string>{
             "seized power on <a> @location",
             "eliminated all @species(s)",
+            "discovered <a> @anomaly",
+            "infiltrated the @faction",
         };
 
         generator["action"] = new List<string>{
@@ -70,6 +114,9 @@
             "built <a> @mcguffin to attack the @faction",
             "built <a> @mcguffin, travelled through time and @event",
             "stole <a> special @equipment",
+            "infiltrated the @faction",
+            "created <a> @anomaly at <a> @location",
+            "discovered a time travelling @character",
         };
 
         generator["mcguffin"] = new List<string>{
@@ -78,7 +125,8 @@
             "genesis device",
             "retrovirus",
             "explosive device",
-            "army of @species mercenaries"
+            "army of @species mercenaries",
+            "Bajoran Orb",
         };
 
         generator["location"] = new List<string>{
@@ -93,6 +141,58 @@
             "@size @state @species colony",
             "@faction space station",
             "@state @ship vessel"
+        };
+
+        generator["source"] = new List<string> {
+            "quantum",
+            "positronic",
+            "thermionic",
+            "osmotic",
+            "neutrino",
+            "spatial",
+            "resonating",
+            "thermal",
+            "photon",
+            "ionic",
+            "plasma",
+            "nucleonic",
+            "verteron",
+            "gravimetric",
+            "nadion",
+            "subspace",
+            "baryon",
+            "tetryon",
+            "polaron",
+            "tachyon"
+        };
+
+        generator["change"] = new List<string> {
+            "phased",
+            "harmonic",
+            "invarient",
+            "dampening",
+            "multivariant",
+            "polynodal",
+            "multiphasic",
+            "oscillating",
+            "microscopic",
+        };
+
+        generator["effect"] = new List<string> {
+            "flux",
+            "field",
+            "reaction",
+            "gradient",
+            "pulse",
+            "distortion",
+            "interference",
+        };
+
+        generator["anomaly"] = new List<string> {
+            "@source anomaly",
+            "@change @source @effect",
+            "wormhole",
+            "@change @source device"
         };
 
         generator["equipment"] = new List<string>{
@@ -185,6 +285,19 @@
             "group of @personality @job(s)",
             "group of @size @job(s)",
             "group of @adjective @job(s)",    
+        };
+
+        generator["creature"] = new List<string> {
+            "Klingon Targ",
+            "Vulcan Sehlat",
+            "Mugato",
+            "Talarian Hook Spider",
+            "Berengarian Dragon",
+            "Denevan Neural Parasite",
+            "Nova Digger",
+            "Gunji Jackdaw",
+            "Palukoo",
+            "Crystaline Entity",  
         };
 
         generator["size"] = new List<string>{
@@ -285,7 +398,7 @@
             "Breen Confederacy",
             "Borg Collective",
             "Gorn Hegemony",
-            "The Dominion",
+            "Dominion",
         };
 
         // Generate

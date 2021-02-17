@@ -8,6 +8,10 @@
     <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
 </div>
 <div class="w3-padding w3-margin-bottom">
+    <div class="w3-right">
+        <button style="font-size: medium;" @onclick="EnableAll">All</button>
+        <button style="font-size: medium;" @onclick="DisableAll">None</button>
+    </div>
     <div>
         <b>Official</b>
     </div>
@@ -35,5 +39,17 @@
     private RulebookContainer Rulebooks = new RulebookContainer();
 
     public IEnumerable<Rulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
+
+    private void EnableAll() {
+        foreach (var book in Rulebooks.AllRulebooks) {
+            Rulebooks.UseRulebook(book.Key);
+        }
+    }
+
+    private void DisableAll() {
+        foreach (var book in Rulebooks.AllRulebooks) {
+            Rulebooks.DoNotUseRulebook(book.Key);
+        }
+    }
 
 }
