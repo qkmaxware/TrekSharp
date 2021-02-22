@@ -10,14 +10,17 @@ public static class StardateExtentions {
         DateTimeKind.Utc
     );
 
-    private static double StardatesPerYear = 918.23186;
+    //private static double StardatesPerYear = 918.23186;
+    private static double DaysPerStardate = 0.397766856;
 
     public static double Stardate(this DateTime date) {
-        return ((date - TNG0).TotalDays / 365.0) * StardatesPerYear;
+        var days = (date - TNG0).TotalDays;
+        var stardates = days / DaysPerStardate;
+        return stardates;
     }
 
     public static DateTime AsStardate(this double stardate) {
-        return TNG0 + TimeSpan.FromDays((stardate / StardatesPerYear) * 365.0); 
+        return TNG0 + TimeSpan.FromDays(stardate * DaysPerStardate); 
     }
 }
 

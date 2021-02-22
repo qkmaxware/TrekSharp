@@ -52,6 +52,25 @@
             </NavLink>
         </div>
     </div>
+    <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCalcMenu = !collapseCalcMenu)" style="padding-bottom: 0px;">
+        <div class="row">
+            <div class="hbar knee-left" style="margin-right:10px;"></div>
+            <div>
+                Calculate <i class="fa fa-caret-down"></i>
+            </div>
+            <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
+        </div>
+    </button>
+    <div id="CalculatorAccordion" class="@(CalculatorCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
+        <div class="lbar">
+            <NavLink class="w3-button w3-block" href="/calculate/stardate" Match="NavLinkMatch.All">
+                Stardate
+            </NavLink>
+            <NavLink class="w3-button w3-block" href="/calculate/warpspeed" Match="NavLinkMatch.All">
+                Warp Speed
+            </NavLink>
+        </div>
+    </div>
     <div class="w3-padding w3-center" style="position: absolute; bottom: 0; width: 100%; overflow: hidden;">
         <button 
             style="border: 0; padding: 0; background-color: inherit;"
@@ -126,6 +145,8 @@
     private string CreateMenuCssClass => collapseCreateMenu ? "w3-hide" : "w3-show";
     private bool collapsePlayMenu = false;
     private string PlayMenuCssClass => collapsePlayMenu ? "w3-hide" : "w3-show";
+    private bool collapseCalcMenu = false;
+    private string CalculatorCssClass => collapseCalcMenu ? "w3-hide" : "w3-show";
 
 
     private bool showLoadingModal = false;
