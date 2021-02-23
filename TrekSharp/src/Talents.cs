@@ -43,6 +43,15 @@ public class SpeciesRestrictedTalent : CharacterTalent {
     
 }
 
+public class HiddenTalent : CharacterTalent {
+    public HiddenTalent (string name, string desc) : base(name, desc) {}
+
+    public override bool CanBeUsedBy(Character character) {
+        return false;
+    }
+    
+}
+
 public class DisciplineAndTalentTalent : CharacterTalent {
     public Disciplines Disciplines {get; set;}
     public string TalentName {get; set;}

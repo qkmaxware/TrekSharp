@@ -326,7 +326,9 @@ public class CoreRulebook : Rulebook {
                 },
                 "Triage",
                 "When you attempt a Task to identify a specific injury or illness, or to determine the severity of a patient's condition, you may spend on Momentum to diagnose one additional patient."
-            )
+            ),
+            new HiddenTalent("Untapped Potential", "The character’s is inexperienced, but talented and with a bright future in Starfleet. The character may not have or increase any Attribute above 11, or any Discipline above 4 while they have this Talent (and may have to adjust Attributes and Disciplines accordingly at the end of character creation). Whenever the character succeeds at a Task for which they bought one or more additional dice with either Momentum or Threat, they may roll 1 challenge die. The character receives bonus Momentum equal to the roll of the challenge die, and adds one point to Threat if an Effect is rolled. The character cannot gain any higher rank than lieutenant (junior grade) while they possess this Talent."),
+            new HiddenTalent("Veteran", "The character’s is inexperienced, but talented and with a bright measured and considered way. Whenever the character spends a point of Determination, roll 1 challenge die. If an Effect is rolled, immediately regain that spent point of Determination. The character has a rank of at least lieutenant commander."),
         },
         new List<Environment> {
             new Environment(

@@ -88,10 +88,27 @@
                 </div>
                 } else if (ShowFirstTalentPicker) {
                 <div>
+                    @if(characterSpecies.AttributeModifiers == null) {
+                       <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <span class="spacer typeface text-secondary w3-large">
+                                SPECIES ATTRIBUTES
+                            </span>
+                            <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                        </div> 
+                        <div class="w3-padding">
+                        <AttributeIncrement 
+                            Points="3" 
+                            MaxPointsPerItem="1"
+                            Mask="allAttributesMask"
+                            Reference="characterCustomSpeciesAttributes"
+                            />
+                        </div>
+                    }
                     <div class="row">
                         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                         <span class="spacer typeface text-secondary w3-large">
-                            TALENTS
+                            SPECIES TALENT
                         </span>
                         <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
                     </div>
@@ -133,7 +150,7 @@
                                 <label>@env.Name</label>
                             </div>
                             <div class="w3-quarter">
-                                @foreach (var attr in (env.AttributeSelectionMask ?? characterSpecies.AttributeModifiers).Enumerate()) {
+                                @foreach (var attr in (env.AttributeSelectionMask ?? characterSpecies.AttributeModifiers ?? characterCustomSpeciesAttributes).Enumerate()) {
                                     if (attr.Value > 0) {
                                         <span>@attr.Name</span><br>
                                     }
@@ -1006,6 +1023,7 @@
     private string characterAssignment = null;
     private Species characterSpecies = null;
     private Attributes characterBaseAttributes = new Attributes (7);
+    private Attributes characterCustomSpeciesAttributes = new Attributes(0);
 
     private TrekSharp.Environment characterEnvironment = null;
     private string characterEnvironmentValue = null;
@@ -1055,6 +1073,7 @@
             var attr = new Attributes();
             attr.Add(characterBaseAttributes);
             attr.Add(characterSpecies.AttributeModifiers);
+            attr.Add(characterCustomSpeciesAttributes);
             attr.Add(characterUpbringingAttributes);
             attr.Add(characterEnvironmentAttributes);
             attr.Add(characterCareerPathAttributes);
@@ -1103,6 +1122,7 @@
         Engineering = 1,
         Medicine    = 1,
     };
+    private Attributes allAttributesMask = new Attributes(1);
     private List<Item> characterEquipment = new List<Item>() {
         Rulebook.Core.Items[0],
         Rulebook.Core.Items[1],
@@ -1353,7 +1373,7 @@
 
         // Communications Positions
         new KeyValuePair<string, string>("Communications Officer", "More common in the earlier days of Starfleet, dedicated communications officers are typically skilled in linguistics and cryptography, and aided with advanced translation and decryption technologies, and thus valuable during encounters with both new cultures, and with hostile ones."),
-    }.OrderBy(kv => kv.Key).ToList();
+    };
     #endregion
 
     public void Reset() {

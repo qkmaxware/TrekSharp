@@ -10,6 +10,7 @@ public class RulebookContainer {
         {"Operations Division", Rulebooks.OperationsDivision.Instance },   
         {"Science Division", Rulebooks.ScienceDivision.Instance },   
         {"More Races", Rulebooks.MoreRaces.Instance }   ,
+        {"More Ships", Rulebooks.MoreShips.Instance }   ,
     };
     private List<string> _protected = new List<string>() {
         "Core"
