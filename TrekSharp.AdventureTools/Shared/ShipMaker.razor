@@ -238,7 +238,7 @@
 
     private RulebookPicker Rulebooks;
 
-    private IEnumerable<Spaceframe> AllSpaceframes => Rulebooks.EnabledRulebooks.SelectMany(book => book.Spaceframes);
+    private IEnumerable<Spaceframe> AllSpaceframes => Rulebooks.EnabledRulebooks.SelectMany(book => book.Spaceframes).OrderBy(frame => frame.DesignDate);
 
     private Dictionary<string, DateTime> importantTimes = new Dictionary<string, DateTime>() {
         {"Enterprise"               , new DateTime(2151, 1, 1)}, 

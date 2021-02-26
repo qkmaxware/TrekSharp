@@ -35,14 +35,15 @@
                         <input type="text" style="width:100%;" readonly value="@(warp.MetresPerSecond()) m/s">
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                     <span class="spacer typeface text-secondary w3-large">
-                        FLIGHT TIME
+                        TIME OF FLIGHT
                     </span>
                     <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
                 </div>
-                <div>
+                <div class="w3-margin-bottom">
                     <table class="w3-table">
                         <thead>
                             <th>Distance (LY)</th>
@@ -55,9 +56,72 @@
                                     <td>@timeString(i)</td>
                                 </tr>
                             }
+                            <tr>
+                                <td><input type="number" style="width:100%;" @bind="customLightyears"><br></td>
+                                <td>@timeString(customLightyears)</td>
+                            </tr>
                         </tbody>
                     </table>
-                    Light Years: <input type="number" @bind="lightyears"><br>
+                </div>
+
+                <div class="row">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <span class="spacer typeface text-secondary w3-large">
+                        FLIGHT PLANNER
+                    </span>
+                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                </div>
+                <div>
+                    <p>
+                        The stellar distances used here are computed using their J2000 Epoch values.
+                    </p>
+                    <table>
+                        <thead>
+                            <th>
+                               Departure 
+                            </th>
+                            <th>
+                                Destination
+                            </th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < travelRoute.Count; i++) {
+                                var row = i;
+                                @if (row + 1 < travelRoute.Count) {
+                                var ly = Math.Round(Stars[travelRoute[row]].LightYearsTo(Stars[travelRoute[row + 1]]), 2, MidpointRounding.ToEven);
+                                <tr>
+                                    <td>
+                                        <select style="background-color: black; width: 100%;" @bind="travelRoute[row]">
+                                            @foreach (var star in Stars){
+                                                <option value="@star.Key">@star.Key</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select style="background-color: black; width: 100%;" @bind="travelRoute[row + 1]">
+                                            @foreach (var star in Stars){
+                                                <option value="@star.Key">@star.Key</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        + @(ly) LY
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    = @totalDistance() LY over @timeString(totalDistance())
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button @onclick="clearStops" class="w3-small">Clear</button>
+                    <button @onclick="addStop" class="w3-small">Add Destination</button>
                 </div>
             </div>
         </div>
@@ -74,7 +138,9 @@
 
     private static double lyToM = 9.461e+15;
 
-    private int lightyears = 8;
+    private int lightyears = 9;
+    private double customLightyears = 10;
+
 
     private double factor {
         get => warp.Factor;
@@ -82,9 +148,72 @@
     }
     private WarpFactor warp = new WarpFactor(1);
 
-    private string timeString(int i) {
+    private string timeString(double i) {
         var timespan = warp.TimeOfFlight(i * lyToM);
         return string.Format("{0:D2} days {1:D2} hours {0:D2} minutes {0:D2} seconds", timespan.Days, timespan.Hours, timespan.Minutes, timespan.Seconds);
     }
+
+    private class StarData {
+        public double A;
+        public double D;
+        public double R;
+
+        private double deg2rad = (Math.PI * 2.0) / 360.0;
+
+        public double LightYearsTo(StarData star) {
+            var x1 = this.R * Math.Cos(deg2rad * this.A) * Math.Cos(deg2rad * this.D);
+            var y1 = this.R * Math.Sin(deg2rad * this.A) * Math.Cos(deg2rad * this.D);
+            var z1 = this.R * Math.Sin(deg2rad * this.D);
+
+            var x2 = star.R * Math.Cos(deg2rad * star.A) * Math.Cos(deg2rad * star.D);
+            var y2 = star.R * Math.Sin(deg2rad * star.A) * Math.Cos(deg2rad * star.D);
+            var z2 = star.R * Math.Sin(deg2rad * star.D);
+
+            return Math.Sqrt(
+                  (x2 - x1) * (x2 - x1)
+                + (y2 - y1) * (y2 - y1)
+                + (z2 - z1) * (z2 -z1)
+            );
+        }
+    }
+
+
+    private List<string> travelRoute = new List<string>();
+    private void addStop() {
+        if(travelRoute.Count < 1) {
+            travelRoute.Add("Sol");
+            travelRoute.Add("Sirius");
+        } else {
+            travelRoute.Add("Sirius");
+        }
+    }
+    private void clearStops() {
+        travelRoute.Clear();
+    }
+
+    private double totalDistance() {
+        var distance = 0.0;
+        if (travelRoute.Count < 2)
+            return distance;
+
+        for(var i = 0; i < travelRoute.Count - 1; i++) {
+            var start = Stars[travelRoute[i]];
+            var end = Stars[travelRoute[i+1]];
+            distance += start.LightYearsTo(end);
+        }
+        return distance;
+    }
+
+    private Dictionary<string, StarData> Stars = new Dictionary<string, StarData> {
+        {"Sol", new StarData{ A=0, D=0, R=0 }}, // Origin
+        {"Alpha Centari", new StarData{ A=219.8750, D=-60.8322, R=4.3 }},
+        {"Barnard's Star", new StarData{ A=269.4500, D=+4.6933, R=5.96 }},
+        {"Wolf 359", new StarData{ A=164.1208, D=+7.0144, R=7.78 }},
+        {"Sirius", new StarData{ A=101.2870833, D=-16.7161111, R=8.6 }},
+        {"Epsilon Eridani", new StarData{ A=53.2333, D=-9.4583, R=10.52 }},
+        {"Procyon", new StarData{ A=114.8250, D=+5.2250, R=11.4 }},
+        {"Epsilon Indi", new StarData{ A=330.8417, D=-56.7861, R=11.82 }},
+        {"Vega", new StarData { A=279.2345833, D=+38.7836111, R=25.3}},
+    };
 
 }

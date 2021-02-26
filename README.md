@@ -2,7 +2,7 @@
 TrekSharp is a Blazor WebAssembly project designed to create tools for assisting players of Modiphius's <a href="https://www.modiphius.net/collections/star-trek-adventures" target="_blank"> Star Trek Adventures </a> Tabletop RPG. This repository is grouped into two directories, `TrekSharp` contains the core classes and data-structures and `TrekSharp.AdventureTools` contains the actual Blazor application. 
 
 ## License
-This site is intended for personal and non-profit use only and is not sponsored, sanctioned, or affiliated with CBS Studios Inc., Paramount Pictures, Modiphius Entertainment, or the STAR TREK franchise. No copyright infringement is intended through the display of content on this site. All copyrighted material is included under "fair use" principles. The Star Trek® franchise and related logos are owned by and are a registered trademark of Paramount Pictures & CBS Studios Inc. All Rights Reserved by their respective owners.
+This site is intended for personal and non-profit use only and is not sponsored, sanctioned, or affiliated with CBS Studios Inc., Paramount Pictures, Modiphius Entertainment, or the STAR TREK franchise. No copyright infringement is intended through the display of content on this site. Any copyrighted material is included under "fair use" principles. The Star Trek® franchise and related logos are owned by and are a registered trademark of Paramount Pictures & CBS Studios Inc. All Rights Reserved by their respective owners.
 
 The code in this project is licensed under the following [LICENSE](LICENSE).
 

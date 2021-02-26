@@ -10,6 +10,96 @@ public class MoreShips : UnofficialRulebook {
     public static readonly MoreShips Instance = new MoreShips {
         Spaceframes = new List<Spaceframe> {
             new Spaceframe {
+                Name = "Walker Class",
+                DesignDate = new DateTime(2217 ,1, 1),
+                Scale = 3,
+                Weapons = new List<string> {
+                    "Phase Cannons",
+                    "Photonic Torpedoes",
+                    "Tractor Beam (Strength 2)"
+                },
+                StartingTalents = new List<string> {
+                    "Advanced Sickbay",
+                    "Improved Hull Integrity"
+                },
+                Systems = new Systems{
+                    Comms       = 07,
+                    Engines     = 08,
+                    Structure   = 08,
+                    Computers   = 06,
+                    Sensors     = 07,
+                    Weapons     = 07,
+                },
+                Departments= new Disciplines {
+                    Command     = 0,
+                    Security    = 0,
+                    Science     = 0,
+                    Conn        = 1,
+                    Engineering = 1,
+                    Medicine    = 1,
+                }
+            },
+            new Spaceframe {
+                Name = "Shepard Class",
+                DesignDate = new DateTime(2217 ,1, 1),
+                Scale = 3,
+                Weapons = new List<string> {
+                    "Phase Cannons",
+                    "Photonic Torpedoes",
+                    "Tractor Beam (Strength 2)"
+                },
+                StartingTalents = new List<string> {
+                    "Improved Hull Integrity",
+                    "Improved Impulse Drive"
+                },
+                Systems = new Systems{
+                    Comms       = 07,
+                    Engines     = 08,
+                    Structure   = 09,
+                    Computers   = 08,
+                    Sensors     = 08,
+                    Weapons     = 07,
+                },
+                Departments= new Disciplines {
+                    Command     = 0,
+                    Security    = 0,
+                    Science     = 1,
+                    Conn        = 1,
+                    Engineering = 1,
+                    Medicine    = 0,
+                }
+            },
+            new Spaceframe {
+                Name = "Crossfield Class",
+                DesignDate = new DateTime(2255 ,1, 1),
+                Scale = 4,
+                Weapons = new List<string> {
+                    "Phaser Banks",
+                    "Photonic Torpedoes",
+                    "Tractor Beam (Strength 3)"
+                },
+                StartingTalents = new List<string> {
+                    "Extensive Shuttlebays",
+                    "Modular Laboratories"
+                },
+                Systems = new Systems{
+                    Comms       = 08,
+                    Engines     = 07,
+                    Structure   = 08,
+                    Computers   = 09,
+                    Sensors     = 08,
+                    Weapons     = 07,
+                },
+                Departments= new Disciplines {
+                    Command     = 0,
+                    Security    = 0,
+                    Science     = 2,
+                    Conn        = 0,
+                    Engineering = 1,
+                    Medicine    = 0,
+                }
+            },
+            new Spaceframe {
                 Name    = "Challenger Class",
                 DesignDate = new System.DateTime(2350, 1, 1),
                 Scale   = 4,
