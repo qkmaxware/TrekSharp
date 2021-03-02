@@ -11,6 +11,7 @@ public class AppData {
 
     public TokenCollection Tokens {get; set;} = new TokenCollection();
     public List<PlayerVessel> Ships {get; set;} = new List<PlayerVessel>();
+    public List<Vessel> NPCShips {get; set;} = new List<Vessel>();
     public List<PlayerCharacter> Party {get; set;} = new List<PlayerCharacter>();
     public List<SupportCharacter> Supports {get; set;} = new List<SupportCharacter>();
     public List<NpcCharacter> NPCs {get; set;} = new List<NpcCharacter>();
@@ -23,6 +24,7 @@ public class AppData {
         this.Party = @new.Party ?? new List<PlayerCharacter>();
         this.Supports = @new.Supports ?? new List<SupportCharacter>();
         this.NPCs = @new.NPCs ?? new List<NpcCharacter>();
+        this.NPCShips = @new.NPCShips ?? new List<Vessel>();
         this.Tasks = @new.Tasks ?? new List<ExtendedTask>();
     }
 }

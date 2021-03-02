@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,7 +116,23 @@ public class Vessel {
     public List<ShipTalent> Talents {get; set;}
     public int Scale => Frame.Scale;
     public int Resistance => Frame.Scale + (Talents == null ? 0 : Talents.Select(talent => talent.ResistanceModifier).Sum());
+    public int UsedShields;
+    public int ShieldsRemaining {
+        get => Math.Max(0, Shields - UsedShields);
+        set {
+            value = Math.Max(0, Math.Min(value, Shields));
+            this.UsedShields = Shields - value;
+        }
+    }
     public int Shields => Systems.Structure + (Talents == null ? 0 : Talents.Select(talent => talent.ShieldModifier).Sum());
+    public int UsedPower;
+    public int PowerRemaining {
+        get => Math.Max(0, Power - UsedPower);
+        set {
+            value = Math.Max(0, Math.Min(value, Power));
+            this.UsedPower = Power - value;
+        }
+    }
     public int Power => Systems.Engines + (Talents == null ? 0 : Talents.Select(talent => talent.PowerModifier).Sum());
     public int CrewSupport => Frame.Scale;
     public IEnumerable<string> Weapons => Frame.Weapons;
