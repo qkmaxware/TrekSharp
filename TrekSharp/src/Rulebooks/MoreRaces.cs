@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace TrekSharp.Rulebooks {
 
-public class MoreRaces : UnofficialRulebook {
+public class MoreAlphaCannonRaces : UnofficialRulebook {
 
-    private MoreRaces() : base(){}
+    private MoreAlphaCannonRaces() : base(){}
 
-    public static readonly Rulebook Instance = new MoreRaces(){
+    public static readonly Rulebook Instance = new MoreAlphaCannonRaces(){
         Species = new List<Species> () {
             new Species(
                 "Aenar",

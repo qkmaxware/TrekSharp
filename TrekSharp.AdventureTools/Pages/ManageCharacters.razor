@@ -19,6 +19,9 @@
             <div class="secondary" style="width: 120px"></div>
             <!-- Content Pane -->
             <div class="w3-padding row-fill">
+                <div class="w3-container w3-right no-print">
+                    <button @onclick="@(() => importer.Open())">Import Json</button>
+                </div>
                 @foreach (var group in Data.Party.ByN(4)) {
                     <div class="w3-row-padding">
                         @foreach (var character in group) {
@@ -155,26 +158,35 @@
                         }
                     </div>
                 }
+                <div class="w3-container w3-right no-print">
+                    <button @onclick="@(() => npcList?.Open())">Add NPC</button>
+                </div>
             </div>
         </div>
         <!-- Footer -->
         <div class="row">
             <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;">
-                <input list="npc_recommendations" style="width: 256px;" @bind="npc_search"/>
-                <datalist id="npc_recommendations">
-                    @foreach (var npc in this.npcs) {
-                        <option value="@npc.Name"/>
-                    }
-                </datalist>
-                <button @onclick="this.addCharacter">
-                    +
-                </button>
-            </div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
             <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
         </div>
     </div>
 </div>
+
+<AssetImporter
+    @ref="importer"
+    TItem="PlayerCharacter"
+    Title="Import Character"
+    OnLoad="onCharacterLoaded"
+/>
+
+<AssetAddList
+    @ref = "npcList"
+    TItem = "NpcCharacter"
+    Title = "Add NPC"
+    Store = "npcs"
+    ListingFunction = "@(item => item.Name)"
+    OnAdd = "addCharacter"
+/>
 
 @code {
 
@@ -191,7 +203,13 @@
         }
     }
 
-    private string npc_search;
+    private AssetImporter<PlayerCharacter> importer;
+    private void onCharacterLoaded(PlayerCharacter character) {
+        this.Data.Party.Add(character);
+        this.StateHasChanged();
+    }
+
+    private AssetAddList<NpcCharacter> npcList;
     private List<NpcCharacter> npcs = new List<NpcCharacter>() {
         new NpcCharacter {
             Name = "Minor Starfleet Conn Officer",
@@ -561,17 +579,6 @@
         }
     };
 
-    private NpcCharacter selectedNpc {
-        get {
-            for (var i = 0; i < npcs.Count; i++) {
-                if (npcs[i].Name == npc_search) {
-                    return npcs[i];
-                }
-            }
-            return null;
-        }
-    }
-
     private NpcCharacter copyCharacter(NpcCharacter c) {
         NpcCharacter d = new NpcCharacter();
         d.Name = c.Name;
@@ -593,7 +600,7 @@
         return d;
     }
 
-    private void addCharacter() {
+    private void addCharacter(NpcCharacter selectedNpc) {
         var c = selectedNpc;
         if (c == null)
             return;
@@ -606,7 +613,6 @@
         }
         d.Name = unique_name;
         Data.NPCs.Add(d);
-        npc_search = null;
         StateHasChanged();
     }
 }

@@ -19,6 +19,9 @@
             <div class="secondary" style="width: 120px"></div>
             <!-- Content Pane -->
             <div class="w3-padding row-fill">
+                <div class="w3-container w3-right no-print">
+                    <button @onclick="@(() => importer.Open())">Import Json</button>
+                </div>
                 @foreach (var group in Data.Ships.ByN(4)) {
                     <div class="w3-row-padding">
                         @foreach (var character in group) {
@@ -53,7 +56,20 @@
     </div>
 </div>
 
+<AssetImporter
+    @ref="importer"
+    TItem="PlayerVessel"
+    Title="Import Vessel"
+    OnLoad="onShipLoaded"
+/>
+
 @code {
+
+    private AssetImporter<PlayerVessel> importer;
+    private void onShipLoaded(PlayerVessel vessel) {
+        this.Data.Ships.Add(vessel);
+        this.StateHasChanged();
+    }
 
     private void navigateToPlayerCharacter(PlayerVessel character) {
         var id = Data.Ships.IndexOf(character);
@@ -61,4 +77,6 @@
             NavigationManager.NavigateTo($"/manage/ships/{id}");
         }
     }
+
+    
 }

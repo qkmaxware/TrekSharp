@@ -99,21 +99,17 @@
     <div class="w3-padding w3-margin-bottom">
         @foreach (var talent in AllProfiles) {
         <div class="w3-padding w3-margin w3-row w3-border-bottom">
-            <div class="w3-quarter">
+            <div class="w3-third">
                 <label>@talent.Name</label>
             </div>
-            <div class="w3-quarter">
-                @talent.Description
-                &nbsp;
-            </div>
-            <div class="w3-quarter">
+            <div class="w3-third">
                 @foreach (var reference in talent.Departments.Enumerate()) {
                     if (reference.Value > 0) {
                         <span>@reference.Name @reference.Value</span><br/>
                     }
                 }
             </div>
-            <div class="w3-quarter w3-right-align">
+            <div class="w3-third w3-right-align">
                 <input type="radio" 
                     checked="@(talent.Equals(missionProfile))" 
                     @onchange="@(() => missionProfile = talent)" />

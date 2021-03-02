@@ -82,7 +82,7 @@
         <button 
             style="border: 0; padding: 0; background-color: inherit;"
             title="Load"
-            @onclick="openLoadDialog"
+            @onclick="@(() => importer?.Open())"
         >
             <img src="/assets/load.png" width="32" height="32">
         </button>
@@ -106,35 +106,12 @@
 </div>
 </div>
 
-<div id="loadModal" class="w3-modal no-print @(LoadModalCss)">
-    <div class="w3-modal-content">
-        <div class="w3-container w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
-            <div class="lcars">
-                <div class="secondary elbow-left elbow-right knee-left knee-right">
-                    <h3>Load</h3>
-                </div>
-                <div class="w3-container">
-                    Paste your save file json data into the text area below and press load. 
-                </div>
-            </div>
-
-            <textarea style="width: 100%; height: 480px; max-height: 80%; resize: vertical;" @bind="jsonappdata"></textarea>
-            @if (loaderror != null) {
-            <div class="w3-panel w3-red">
-                <p>@loaderror.Message</p>
-            </div> 
-            }
-            <div class="w3-row">
-                <div class="w3-half">
-                    <button class="w3-button" @onclick="closeLoadDialog"> Cancel</button>
-                </div>
-                <div class="w3-half w3-right-align" @onclick="readFile">
-                    <button class="w3-button"> Load</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<AssetImporter
+    @ref="importer"
+    TItem = "AppData"
+    Title ="Load"
+    OnLoad = "loadAppData"
+/>
 
 @code {
 
@@ -163,25 +140,11 @@
         collapseNavMenu = false;
     }
 
-    private string jsonappdata;
-    private Exception loaderror = null;
-    private void openLoadDialog() {
-        showLoadingModal = true;
-        jsonappdata = string.Empty;
-        loaderror = null;
-    }
-    private void closeLoadDialog() {
-        showLoadingModal = false;
-    }
-    private void readFile() {
-        try {
-            var newData = System.Text.Json.JsonSerializer.Deserialize<AppData>(jsonappdata);
-            Data.Overwrite(newData);
-            showLoadingModal = false;
-            NavigationManager.NavigateTo(""); // navigate home since that basically refreshes the app
-        } catch (Exception e) {
-            loaderror = e;
-        }
+    private AssetImporter<AppData> importer;
+
+    private void loadAppData(AppData newData) {
+        this.Data.Overwrite(newData);
+        this.NavigationManager.NavigateTo("/");
     }
 
     private async Task downloadDataJson() {

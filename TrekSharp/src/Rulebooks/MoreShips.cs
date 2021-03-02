@@ -3,11 +3,11 @@ using System;
 
 namespace TrekSharp.Rulebooks {
 
-public class MoreShips : UnofficialRulebook {
+public class MoreAlphaCannonShips : UnofficialRulebook {
 
-    private MoreShips() {}
+    private MoreAlphaCannonShips() {}
 
-    public static readonly MoreShips Instance = new MoreShips {
+    public static readonly MoreAlphaCannonShips Instance = new MoreAlphaCannonShips {
         Spaceframes = new List<Spaceframe> {
             new Spaceframe {
                 Name = "Walker Class",

@@ -1,0 +1,98 @@
+@using System.Globalization
+@typeparam TItem
+
+<div class="w3-modal no-print @(CssClass)">
+    <div class="w3-modal-content">
+        <div class="w3-container w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
+            <div class="lcars">
+                <div class="secondary elbow-left elbow-right knee-left knee-right">
+                    <h3>@Title</h3>
+                </div>
+                <div class="w3-container">
+                    Click one of the items below to select it, them press "Add" to confirm.
+                </div>
+            </div>
+            <div class="lcars">
+                <div class="w3-padding">
+                    <input type="text" placeholder="filter" @bind="filter" style="width: 100%;"/>
+                </div>
+                <div>
+                @if (Store != null) {
+                    for (var i = 0; i < Store.Count; i++) {
+                        var capture = i;
+                        if (matchesFilter(Store[i])) {
+                        <button style="width: 100%" class="@(capture == index ? "secondary" : "primary")" @onclick="@(() => index = capture)">
+                            @ListingFunction(Store[i])            
+                        </button>
+                        }
+                    }
+                }
+                </div>
+            </div>
+            
+            <div class="w3-row">
+                <div class="w3-half">
+                    <button class="w3-button" @onclick="Close"> Cancel</button>
+                </div>
+                <div class="w3-half w3-right-align">
+                    <button class="w3-button" @onclick="add"> Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title {get; set;} = "Add";
+    [Parameter]
+    public List<TItem> Store {get; set;}
+    [Parameter]
+    public Action<TItem> OnAdd {get; set;}
+    [Parameter]
+    public Func<TItem, string> ListingFunction {get; set;} = stringListing;
+
+    // Default listing function
+    private static string stringListing (TItem item) {
+        return item?.ToString();
+    }
+
+    private bool matchesFilter(TItem item) {
+        if (filter == null)
+            return true;
+
+        var name = ListingFunction(item);
+        if (CultureInfo.InvariantCulture.CompareInfo.IndexOf(name, filter, CompareOptions.IgnoreCase) >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private int index = -1;
+    private bool hasItem => Store != null && index >= 0 && index < Store.Count;
+    private TItem item => hasItem ? Store[index] : default(TItem);
+
+    private string filter;
+
+    private bool isOpen = false;
+    private string CssClass => isOpen ? "w3-show" : "w3-hide";
+
+    public void Open() {
+        isOpen = true;
+        filter = null;
+    }
+
+    public void Close() {
+        isOpen = false;
+    }
+
+    private void add() {
+        if (hasItem) {
+            Close();
+            if (OnAdd != null) {
+                OnAdd(item);
+            }
+        }
+    }
+}
