@@ -11,6 +11,11 @@
     content: "\\pagebreak";
 }
 
+.page-A4 {
+    width: 210mm;
+    height: 279mm;
+}
+
 @media print {
     .no-print {
         display: none;

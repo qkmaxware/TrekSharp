@@ -1,0 +1,60 @@
+<div class="lcars no-print w3-margin-left">
+    <div class="container">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left highlight" style="width: 56px;"></div>
+            <div class="hbar row-fill highlight"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="highlight" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+               <label class="typeface">Custom Background</label>
+                <input style="width: 100%;" type="text" placeholder="background url" @bind="customUrl"/>
+                <label class="typeface">Grid Overlay</label>
+                <select style="width: 100%; background-color: black;" @bind="grid">
+                    @foreach (var grid in spaceGrids) {
+                        <option>@grid</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left highlight" style="width: 56px;"></div>
+            <div class="hbar row-fill highlight" style="margin-right: 10px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Grid -->
+<div style="position: relative; width: 100%; padding-bottom: 100%;">
+    <img 
+        style="width: 100%; position: absolute; height: 100%; object-fit: cover; object-position: center;" 
+        src="@(!string.IsNullOrEmpty(customUrl) ? customUrl : "/assets/artwork/grids/space/default background.png")" 
+    >
+    @if(grid != null) {
+    <img 
+        style="width: 100%; position: absolute; left: 0; right: 0; bottom: 0; top: 0; object-fit: cover; object-position: center;" 
+        src="/assets/artwork/grids/space/@(grid).svg" 
+    />
+    }
+</div>
+
+@code {
+
+    private string[] spaceGrids = new string[]{
+        "Diagonal",
+        "4 Corners",
+        "Clover",
+        "Tic Tac Toe",
+        "Circular Grid 1",
+        "Circular Grid 2",
+        "Circular Grid 3",
+    };
+    private string grid = "Circular Grid 3";
+    private string customUrl = null;
+
+}

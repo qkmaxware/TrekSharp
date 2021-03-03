@@ -1,6 +1,6 @@
 ﻿@inherits AppComponentBase
 
-<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:200px;" id="mySidebar">
+<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:200px; z-index: 101;" id="mySidebar">
     <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
     <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
         Home
@@ -27,6 +27,9 @@
             </NavLink>
             <NavLink class="w3-button w3-block" href="/new/ship" Match="NavLinkMatch.All">
                 Ship
+            </NavLink>
+            <NavLink class="w3-button w3-block" href="/new/grid" Match="NavLinkMatch.All">
+                Battle Grid
             </NavLink>
         </div>
     </div>
@@ -100,7 +103,7 @@
 <div class="lcars no-print" style="position: absolute;">
 <div 
     class="w3-button lcars-primary w3-large w3-hide-large w3-padding elbow-right knee-right" 
-    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed;" 
+    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed; z-index: 100;" 
     @onclick="OpenNavMenu"
 > Menu
 </div>

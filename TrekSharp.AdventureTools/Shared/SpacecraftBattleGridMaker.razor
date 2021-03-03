@@ -1,0 +1,117 @@
+<div class="lcars no-print w3-margin-left">
+    <div class="container">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left highlight" style="width: 56px;"></div>
+            <div class="hbar row-fill highlight"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="highlight" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+               
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left highlight" style="width: 56px;"></div>
+            <div class="hbar row-fill highlight" style="margin-right: 10px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Grid -->
+<div class="page-A4" tabindex="0" style="position: relative;" @onkeyup="keyUpInGrid">
+    @foreach (var part in this.parts) {
+        <div style="position: absolute; left: @(part.X * pixelsPerUnit)px; top: @(part.Y * pixelsPerUnit)px;" @onkeyup="keyUpInGrid" @onclick="@(() => select(part))">
+            <div style="transform: rotate(@(part.Rotation)deg);">
+                <img src="@part.ImageUrl" class="@(part == selected ? "w3-border w3-border-red" : string.Empty)"/>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    private int pixelsPerUnit = 32;
+    public class Part {
+        public string ImageUrl {get; set;} = null;
+        public int X {get; set;} = 0;
+        public int Y {get; set;} = 0;
+        public float Rotation {get; set;} = 0;
+    }
+
+    private List<Part> parts = new List<Part>() {
+        new Part {
+            ImageUrl = "/assets/challenge-2.png",
+        }
+    };
+    private Part selected = null;
+    private void select(Part part) {
+        this.selected = part;
+    }
+    private Part createPartFromImage(string image) {
+        var part = new Part {
+            ImageUrl = image
+        };
+        parts.Add(part);
+        return part;
+    }
+
+    private string[] part_images = new string[]{
+
+    };
+
+    private const string LEFT = "ArrowLeft"; private const string A = "KeyA";
+    private const string UP = "ArrowUp";  private const string W = "KeyW";
+    private const string RIGHT = "ArrowRight"; private const string D = "KeyD";
+    private const string DOWN = "ArrowDown"; private const string S = "KeyS";
+    private const string Q = "KeyQ"; private const string E = "KeyE";
+    private const string ESCAPE = "Escape";
+
+    private float wrap(float val, float min, float max){
+        val = val - (float)Math.Round((val - min) / (max - min)) * (max - min);
+        if (val < 0)
+            val = val + max - min;
+        return val;
+    }
+
+    private void keyUpInGrid(KeyboardEventArgs args) {
+        Console.WriteLine(args.Code);
+        if (selected == null) {
+            return;
+        }
+
+        switch (args.Code) {
+            case ESCAPE:
+                selected = null;
+                break;
+            case Q:
+                selected.Rotation = wrap(selected.Rotation - 90, 0, 360);
+                break;
+            case E:
+                selected.Rotation = wrap(selected.Rotation + 90, 0, 360);
+                break;
+            case LEFT:
+            case A:
+                selected.X -= 1;
+                break;
+            case UP:
+            case W:
+                selected.Y -= 1;
+                break;
+            case RIGHT:
+            case D:
+                selected.X += 1;
+                break;
+            case DOWN:
+            case S:
+                selected.Y += 1;
+                break;
+        }
+        
+        StateHasChanged();
+    }
+}

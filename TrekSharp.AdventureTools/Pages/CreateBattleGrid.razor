@@ -1,0 +1,64 @@
+@page "/new/grid"
+
+<PrintNotification/>
+
+<div class="lcars no-print">
+    <div class="container">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">BATTLE GRID</span>
+            </div>
+            <div class="hbar highlight knee-right elbow-right" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left elbow-left primary" style="width: 56px; margin-right: 10px;"></div>
+            <div 
+                class="typeface @(type == GridType.Space ? "highlight" : "secondary")" 
+                style="margin-right: 10px; padding-left: 10px; padding-right: 10px;"
+                @onclick = "@(() => type = GridType.Space)"
+            >
+                <span class="w3-xlarge">Space</span>
+            </div>
+            @* <div 
+                class="typeface @(type == GridType.Spaceship ? "highlight" : "secondary")" 
+                style="margin-right: 10px; padding-left: 10px; padding-right: 10px;"
+                @onclick = "@(() => type = GridType.Spaceship)"
+            >
+                <span class="w3-xlarge">Spacecraft</span>
+            </div>
+            <div 
+                class="typeface @(type == GridType.Ground ? "highlight" : "secondary")" 
+                style="margin-right: 10px; padding-left: 10px; padding-right: 10px;"
+                @onclick = "@(() => type = GridType.Ground)"
+            >
+                <span class="w3-xlarge">Ground</span>
+            </div> *@
+            <div class="hbar row-fill primary"></div>
+            <div class="hbar primary knee-right elbow-right" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+@if (type == GridType.Space) {
+    <SpaceBattleGridMaker/>
+} else if (type == GridType.Ground) {
+
+} else if (type == GridType.Spaceship) {
+    <SpacecraftBattleGridMaker/>
+}
+
+@code {
+
+    enum GridType {
+        Spaceship, Ground, Space
+    }
+
+    private GridType type = GridType.Space;
+
+}
