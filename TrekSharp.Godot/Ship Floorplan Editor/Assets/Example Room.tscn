@@ -1,0 +1,141 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Rooms/Bridge 1/Sprite.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/UI/Capture.cs" type="Script" id=3]
+[ext_resource path="res://Sprites/LCARS Border.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/UI/ManagementUI.cs" type="Script" id=5]
+[ext_resource path="res://Assets/Rooms/Hallway T/Sprite.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Rooms/Hallway 1/Sprite.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Rooms/Transporter Room/Transporter Room.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Rooms/Bar/Bar.png" type="Texture" id=9]
+
+[node name="Example Room Editor" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 173.325, 300.752 )
+scale = Vector2( 0.315381, 0.851603 )
+texture = ExtResource( 4 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
+margin_left = 47.1752
+margin_top = 61.575
+margin_right = 303.175
+margin_bottom = 540.575
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ScrollContainer"]
+margin_right = 260.0
+margin_bottom = 392.0
+columns = 2
+
+[node name="Test Room" type="Button" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+text = "Add Test Room"
+
+[node name="Bridge 1" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 132.0
+margin_right = 260.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="Hallway 1" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_top = 132.0
+margin_right = 128.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 128, 128 )
+texture_normal = ExtResource( 7 )
+expand = true
+stretch_mode = 5
+
+[node name="Hallway T" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 132.0
+margin_top = 132.0
+margin_right = 260.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 128, 128 )
+texture_normal = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+
+[node name="Transporter" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_top = 264.0
+margin_right = 128.0
+margin_bottom = 392.0
+rect_min_size = Vector2( 128, 128 )
+texture_normal = ExtResource( 8 )
+expand = true
+stretch_mode = 5
+
+[node name="Bar" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 132.0
+margin_top = 264.0
+margin_right = 260.0
+margin_bottom = 392.0
+rect_min_size = Vector2( 128, 128 )
+texture_normal = ExtResource( 9 )
+expand = true
+stretch_mode = 5
+
+[node name="Save" type="TextureButton" parent="CanvasLayer"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -69.0
+margin_top = -68.0
+margin_right = -5.0
+margin_bottom = -4.0
+texture_normal = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Instructions" type="RichTextLabel" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -236.0
+margin_top = -103.0
+margin_right = -8.0
+margin_bottom = -10.0
+text = "INSTRUCTIONS
+Tab                  Show/Hide UI
+Mouse Drag    Move Part
+QE                   Rotate Part
+RF                   Change Part Anchor
+WASD             Move Camera"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 512, 300 )
+current = true
+script = ExtResource( 5 )
+Speed = 512
+
+[node name="Screenshot Viewport" type="Viewport" parent="."]
+size = Vector2( 256, 256 )
+usage = 0
+
+[node name="Screenshotter" type="Node2D" parent="Screenshot Viewport"]
+script = ExtResource( 3 )
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Test Room" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Test Room.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bridge 1" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bridge 1/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Hallway 1" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Hallway 1/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Hallway T" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Hallway T/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Transporter" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Transporter Room/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bar" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bar/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/Save" to="Screenshot Viewport/Screenshotter" method="Png"]
