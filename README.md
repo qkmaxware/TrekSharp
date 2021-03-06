@@ -1,5 +1,5 @@
 # TrekSharp
-TrekSharp is a Blazor WebAssembly project designed to create tools for assisting players of Modiphius's <a href="https://www.modiphius.net/collections/star-trek-adventures" target="_blank"> Star Trek Adventures </a> Tabletop RPG. This repository is grouped into two directories, `TrekSharp` contains the core classes and data-structures and `TrekSharp.AdventureTools` contains the actual Blazor application. 
+TrekSharp is a Blazor WebAssembly project designed to create tools for assisting players of Modiphius's <a href="https://www.modiphius.net/collections/star-trek-adventures" target="_blank"> Star Trek Adventures </a> Tabletop RPG. This repository is grouped into three directories, `TrekSharp` contains the core classes and data-structures, `TrekSharp.AdventureTools` contains the actual Blazor application and `TrekSharp.Godot` contains Godot game engine apps which are integrated into the Blazor application for some of the more "interactive" components. 
 
 ## License
 This site is intended for personal and non-profit use only and is not sponsored, sanctioned, or affiliated with CBS Studios Inc., Paramount Pictures, Modiphius Entertainment, or the STAR TREK franchise. No copyright infringement is intended through the display of content on this site. Any copyrighted material is included under "fair use" principles. The Star Trek® franchise and related logos are owned by and are a registered trademark of Paramount Pictures & CBS Studios Inc. All Rights Reserved by their respective owners.
@@ -18,6 +18,7 @@ The code in this project is licensed under the following [LICENSE](LICENSE).
       - [Character Creator](#character-creator)
       - [Ship Creator](#ship-creator)
       - [Support Creator](#support-creator)
+      - [Battle Grid](#battle-grid)
     - [Management](#management)
       - [Characters](#characters)
       - [Ships](#ships)
@@ -49,6 +50,9 @@ The ship creator can be accessed by the navigation bar along the left hand side 
 
 #### Support Creator
 The support character creator can be accessed by the navigation bar along the left hand side of the app. The support creator operates similarly to the character creator, but is used for creating support characters rather than for player characters. 
+
+#### Battle Grid
+You can create battle grids for both space battles and starship interior combat using this creator. For space battle grids simply select a background image (nebula, asteroid belt...) and choose what kind of grid overlay you would like. For starship interiors, you can use a Godot app which allows for rooms and hallways to be snapped together to construct larger interior spaces. 
 
 ### Management
 #### Characters
