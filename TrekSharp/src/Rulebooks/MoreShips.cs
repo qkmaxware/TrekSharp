@@ -249,6 +249,67 @@ public class MoreAlphaCannonShips : UnofficialRulebook {
                     Medicine    = 0,
                 }
             },
+            new Spaceframe {
+                Name    = "California Class",
+                DesignDate = new System.DateTime(2359, 1, 1),
+                Scale   = 4,
+                Weapons = new List<string> {
+                    "Phaser Arrays",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 3)", 
+                },
+                StartingTalents = new List<string> {
+                    "Secondary Reactors",
+                    "Rugged Design",
+                },
+                Systems = new Systems{
+                    Comms       = 09,
+                    Engines     = 10,
+                    Structure   = 10,
+                    Computers   = 09,
+                    Sensors     = 09,
+                    Weapons     = 09,
+                },
+                Departments= new Disciplines {
+                    Command     = 0,
+                    Security    = 1,
+                    Science     = 1,
+                    Conn        = 0,
+                    Engineering = 1,
+                    Medicine    = 0,
+                }
+            },
+            new Spaceframe {
+                Name    = "Parliament Class",
+                DesignDate = new System.DateTime(2372, 1, 1),
+                Scale   = 5,
+                Weapons = new List<string> {
+                    "Phaser Arrays",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 4)", 
+                },
+                StartingTalents = new List<string> {
+                    "Advanced Research Facilities",
+                    "Advanced Sensor Suites",
+                    "Dedicated Personnel (Engineering)"
+                },
+                Systems = new Systems{
+                    Comms       = 08,
+                    Engines     = 10,
+                    Structure   = 10,
+                    Computers   = 09,
+                    Sensors     = 10,
+                    Weapons     = 09,
+                },
+                Departments= new Disciplines {
+                    Command     = 1,
+                    Security    = 0,
+                    Science     = 1,
+                    Conn        = 0,
+                    Engineering = 1,
+                    Medicine    = 0,
+                }
+            },
         }
     };
 
