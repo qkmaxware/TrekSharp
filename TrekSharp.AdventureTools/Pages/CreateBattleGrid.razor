@@ -43,24 +43,18 @@
     </div>
 </div>
 
-<div class="@SpaceCssClass">
-    <SpaceBattleGridMaker/>
-</div>
-<div class="@GroundCssClass">
-</div>
-<div class="@SpaceshipCssClass">
-    <SpacecraftBattleGridMaker/>
-</div>
+@if(type == GridType.Space) {
+    <SpaceBattleGridMaker></SpaceBattleGridMaker>
+} else if (type == GridType.Ground) {
+
+} else if (type == GridType.Spaceship) {
+    <SpacecraftBattleGridMaker></SpacecraftBattleGridMaker>
+}
 
 @code {
-
     enum GridType {
         Spaceship, Ground, Space
     }
-
-    private string SpaceshipCssClass => type == GridType.Spaceship ? "w3-show" : "w3-hide";
-    private string GroundCssClass => type == GridType.Ground ? "w3-show" : "w3-hide";
-    private string SpaceCssClass => type == GridType.Space ? "w3-show" : "w3-hide";
 
     private GridType type = GridType.Space;
 
