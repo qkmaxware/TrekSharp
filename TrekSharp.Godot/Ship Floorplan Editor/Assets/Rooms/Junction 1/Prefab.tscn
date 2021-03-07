@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Sprites/Hardpoint.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Rooms/Junction 1/Sprite.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Door.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Room.cs" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 30.5659, 33.1211 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 32.0
+
+[node name="Example Room" type="KinematicBody2D"]
+position = Vector2( 822.266, 181.904 )
+input_pickable = true
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="Door 1" type="Area2D" parent="Doors"]
+position = Vector2( 0, -28 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/Door 1"]
+modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Doors/Door 1"]
+modulate = Color( 1, 1, 1, 0.490196 )
+texture = ExtResource( 1 )
+[connection signal="input_event" from="." to="." method="OnNodeInput"]
+[connection signal="body_entered" from="Doors/Door 1" to="Doors/Door 1" method="OnEnter"]
+[connection signal="body_exited" from="Doors/Door 1" to="Doors/Door 1" method="OnExit"]

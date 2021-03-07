@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Rooms/Bridge 1/Sprite.png" type="Texture" id=2]
@@ -9,6 +9,15 @@
 [ext_resource path="res://Assets/Rooms/Hallway 1/Sprite.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Rooms/Transporter Room/Transporter Room.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Rooms/Bar/Bar.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Rooms/Hallway Curved/Sprite.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Rooms/Food Closet/Sprite.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Rooms/Hallway 2/Sprite.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Rooms/Junction 4/Sprite.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Rooms/Junction 3/Sprite.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Rooms/Junction 2/Sprite.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Rooms/Junction 1/Sprite.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Rooms/Bedroom/Sprite Up.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Rooms/Bedroom/Sprite Down.png" type="Texture" id=18]
 
 [node name="Example Room Editor" type="Node2D"]
 
@@ -20,68 +29,155 @@ scale = Vector2( 0.315381, 0.851603 )
 texture = ExtResource( 4 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
-margin_left = 47.1752
-margin_top = 61.575
-margin_right = 303.175
-margin_bottom = 540.575
+margin_left = 39.0
+margin_top = 62.0
+margin_right = 311.0
+margin_bottom = 541.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GridContainer" type="GridContainer" parent="CanvasLayer/ScrollContainer"]
-margin_right = 260.0
-margin_bottom = 392.0
-columns = 2
+margin_right = 268.0
+margin_bottom = 268.0
+columns = 4
 
 [node name="Test Room" type="Button" parent="CanvasLayer/ScrollContainer/GridContainer"]
-margin_right = 128.0
-margin_bottom = 128.0
-text = "Add Test Room"
+visible = false
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+text = "Test "
 
 [node name="Bridge 1" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
-margin_left = 132.0
-margin_right = 260.0
-margin_bottom = 128.0
-rect_min_size = Vector2( 128, 128 )
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
 texture_normal = ExtResource( 2 )
 expand = true
 stretch_mode = 5
 
 [node name="Hallway 1" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
-margin_top = 132.0
-margin_right = 128.0
-margin_bottom = 260.0
-rect_min_size = Vector2( 128, 128 )
+margin_left = 68.0
+margin_right = 132.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
 texture_normal = ExtResource( 7 )
 expand = true
 stretch_mode = 5
 
+[node name="Hallway 2" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 136.0
+margin_right = 200.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 12 )
+expand = true
+stretch_mode = 5
+
 [node name="Hallway T" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
-margin_left = 132.0
-margin_top = 132.0
-margin_right = 260.0
-margin_bottom = 260.0
-rect_min_size = Vector2( 128, 128 )
+margin_left = 204.0
+margin_right = 268.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
 texture_normal = ExtResource( 6 )
 expand = true
 stretch_mode = 5
 
+[node name="Hallway Curved" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_top = 68.0
+margin_right = 64.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 10 )
+expand = true
+stretch_mode = 5
+
+[node name="Junction 4" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 68.0
+margin_top = 68.0
+margin_right = 132.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 13 )
+expand = true
+stretch_mode = 5
+
+[node name="Junction 3" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 136.0
+margin_top = 68.0
+margin_right = 200.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 14 )
+expand = true
+stretch_mode = 5
+
+[node name="Junction 2" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 204.0
+margin_top = 68.0
+margin_right = 268.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 15 )
+expand = true
+stretch_mode = 5
+
+[node name="Junction 1" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_top = 136.0
+margin_right = 64.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 16 )
+expand = true
+stretch_mode = 5
+
 [node name="Transporter" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
-margin_top = 264.0
-margin_right = 128.0
-margin_bottom = 392.0
-rect_min_size = Vector2( 128, 128 )
+margin_left = 68.0
+margin_top = 136.0
+margin_right = 132.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 64, 64 )
 texture_normal = ExtResource( 8 )
 expand = true
 stretch_mode = 5
 
 [node name="Bar" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
-margin_left = 132.0
-margin_top = 264.0
-margin_right = 260.0
-margin_bottom = 392.0
-rect_min_size = Vector2( 128, 128 )
+margin_left = 136.0
+margin_top = 136.0
+margin_right = 200.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 64, 64 )
 texture_normal = ExtResource( 9 )
+expand = true
+stretch_mode = 5
+
+[node name="Food Store" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 204.0
+margin_top = 136.0
+margin_right = 268.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 11 )
+expand = true
+stretch_mode = 5
+
+[node name="Bedroom Up" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_top = 204.0
+margin_right = 64.0
+margin_bottom = 268.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 17 )
+expand = true
+stretch_mode = 5
+
+[node name="Bedroom Down" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_left = 68.0
+margin_top = 204.0
+margin_right = 132.0
+margin_bottom = 268.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 18 )
 expand = true
 stretch_mode = 5
 
@@ -110,6 +206,7 @@ margin_left = -236.0
 margin_top = -103.0
 margin_right = -8.0
 margin_bottom = -10.0
+custom_colors/default_color = Color( 0.945098, 0.556863, 0.215686, 1 )
 text = "INSTRUCTIONS
 Tab                  Show/Hide UI
 Mouse Drag    Move Part
@@ -135,7 +232,16 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Test Room" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Test Room.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bridge 1" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bridge 1/Prefab.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Hallway 1" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Hallway 1/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Hallway 2" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Hallway 2/Prefab.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Hallway T" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Hallway T/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Hallway Curved" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Hallway Curved/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Junction 4" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Junction 4/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Junction 3" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Junction 3/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Junction 2" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Junction 2/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Junction 1" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Junction 1/Prefab.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Transporter" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Transporter Room/Prefab.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bar" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bar/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Food Store" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Food Closet/Prefab.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bedroom Up" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bedroom/Prefab Up.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bedroom Down" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bedroom/Prefab Down.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/Save" to="Screenshot Viewport/Screenshotter" method="Png"]
