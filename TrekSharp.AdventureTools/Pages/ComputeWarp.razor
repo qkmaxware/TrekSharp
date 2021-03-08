@@ -25,13 +25,19 @@
                     <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
                 </div>
                 <div class="w3-row w3-margin-bottom">
-                    <div class="w3-third w3-padding">
+                    <div class="w3-quarter w3-padding">
                         <input type="number" class="w3-grey" style="width:100%;" @bind="factor">
                     </div>
-                    <div class="w3-third w3-padding">
+                    <div class="w3-quarter w3-padding">
+                        <select @bind="scale" style="width:100%;background-color: black;border: 1px solid #FF9104;">
+                            <option>TNG</option>
+                            <option>TOS</option>
+                        </select>
+                    </div>
+                    <div class="w3-quarter w3-padding">
                         <input type="text" style="width:100%;" readonly value="@(warp.LightSpeedFactor()) C">
                     </div>
-                    <div class="w3-third w3-padding">
+                    <div class="w3-quarter w3-padding">
                         <input type="text" style="width:100%;" readonly value="@(warp.MetresPerSecond()) m/s">
                     </div>
                 </div>
@@ -145,6 +151,10 @@
     private double factor {
         get => warp.Factor;
         set => warp = new WarpFactor(Math.Min(Math.Max(0, value), 10));
+    }
+    private string scale {
+        get => warp.Scale.ToString();
+        set => warp = new WarpFactor(warp.Factor, value == "TNG" ? WarpScale.TNG : WarpScale.TOS);
     }
     private WarpFactor warp = new WarpFactor(1);
 

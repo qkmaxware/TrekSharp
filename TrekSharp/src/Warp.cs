@@ -2,9 +2,17 @@ using System;
 
 namespace TrekSharp {
 
+public enum WarpScale {
+    TOS,
+    TNG
+}
+
 public class WarpFactor {
     public double Factor {get; private set;}
-    public WarpFactor(double factor) {
+    public WarpScale Scale {get; private set;}
+    public WarpFactor(double factor) : this(factor, WarpScale.TNG) {}
+    public WarpFactor(double factor, WarpScale scale) {
+        this.Scale = scale;
         this.Factor = factor;
     }
 
@@ -31,7 +39,11 @@ public class WarpFactor {
     /// </summary>
     /// <returns>multiples of the speed of light</returns>
     public double LightSpeedFactor() {
-        return Math.Pow(Factor, 10d/3d + fw());
+        return Scale switch {
+            WarpScale.TNG => Math.Pow(Factor, 10d/3d + fw()),
+            WarpScale.TOS => Math.Pow(Factor, 3),              
+            _ => throw new ArgumentException($"Invalid warp scale {Scale}")
+        };
     }
 
     /// <summary>
