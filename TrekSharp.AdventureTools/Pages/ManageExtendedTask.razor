@@ -64,11 +64,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="w3-row w3-padding w3-row-padding">
+                            <div class="w3-half">
+                                <input type="number" @bind="task.RollsAgainst"/>
+                                <button @onclick="@(() => { task.ApplyRollsAgainst(); StateHasChanged(); })">+ Work</button>
+                            </div>
+                            <div class="w3-half w3-right-align">
+                                <button class="w3-red" @onclick="@(() => { Data.Tasks.Remove(task); })">Delete</button>
+                            </div>
+                        </div>
                         <!-- Footer -->
                         <div class="row">
-                            <div class="hbar knee-left elbow-left row-fill knee-right elbow-right w3-right-align">
-                                <input type="number" @bind="task.RollsAgainst"/>
-                                <button class="w3-small" @onclick="@(() => { task.ApplyRollsAgainst(); StateHasChanged(); })">+</button>
+                            <div class="hbar knee-left elbow-left row-fill knee-right elbow-right w3-right-align">   
                             </div>
                         </div>
                     </div>

@@ -8,8 +8,10 @@
     </div>
     <div class="w3-row w3-margin-bottom">
         <ul class="w3-ul w3-small">
-            @foreach (var value in Values) {
-                <li>@value &nbsp;</li>
+            @if (Values != null) {
+                foreach (var value in Values) {
+                    <li>@value &nbsp;</li>
+                }
             }
         </ul>
         <div>

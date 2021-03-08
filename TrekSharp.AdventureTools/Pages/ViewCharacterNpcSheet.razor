@@ -1,8 +1,12 @@
-@page "/manage/characters/support/{PlayerId}"
+@page "/manage/characters/npc/{PlayerId}"
 @inherits AppComponentBase
 
 @if (HasCharacter) {
 <PrintNotification/>
+
+<div class="w3-container no-print lcars" style="text-align: right;">
+    <button @onclick="Delete" class="w3-red">Delete</button>
+</div>
 
 <div id="character-sheet" class="lcars">
     <!-- Header -->
@@ -22,14 +26,6 @@
                             @Player.Rank @Player.Name
                         </div>
                     </div>
-                    <div class="w3-row">
-                        <div class="w3-col" style="width: 96px;">
-                            <h4 class="text-secondary typeface" style="margin: 0;">SPECIES:</h4>
-                        </div>
-                        <div class="w3-rest w3-white">
-                            @Player.Species
-                        </div>
-                    </div> 
                 </div>
             </div>
         </div>
@@ -53,11 +49,12 @@
                 <div class="w3-col s6 w3-padding">
                     <AttributeDrawer Attributes="Player.Attributes"/>
                     <DisciplineDrawer Disciplines="Player.Disciplines"/>
+                    <ListDrawer Title="VALUES" List="Player.Values"/>
                     <FocusDrawer Focuses="Player.Focuses"/>
                 </div>
                 <div class="w3-col s6 w3-padding">
                     <InjuryDrawer Player="Player"/>
-                    <EquipmentDrawer Player="Player"/>
+                    <ListDrawer Title="SPECIAL RULES" List="Player.SpecialRules"/>
                 </div>
             </div>
         </div>
@@ -69,7 +66,7 @@
     </div>
 </div>
 } else {
-    <span>No support player "@(PlayerId)"</span>
+    <span>No npc "@(PlayerId)"</span>
 }
 
 @code {
@@ -86,7 +83,14 @@
             }
         }
     }
-    public SupportCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.Supports.Count ? Data.Supports[PlayerIndex] : null;
+    public NpcCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.NPCs.Count ? Data.NPCs[PlayerIndex] : null;
     public bool HasCharacter => Player != null;
+
+    public void Delete() {
+        if (HasCharacter) {
+            Data.NPCs.Remove(this.Player);
+            NavigationManager.NavigateTo("/manage/characters");
+        }
+    }
 
 }

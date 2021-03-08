@@ -85,7 +85,7 @@
                 @foreach (var group in Data.NPCShips.ByN(4)) {
                     <div class="w3-row-padding">
                         @foreach (var character in group) {
-                        <div class="w3-col s3">
+                        <div class="w3-col s3" @onclick="@(() => navigateToNpcCharacter(character))">
                             <div class="row">
                                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
@@ -171,10 +171,17 @@
         this.StateHasChanged();
     }
 
+    private void navigateToNpcCharacter(Vessel vessel) {
+        var id = Data.NPCShips.IndexOf(vessel);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"/manage/ships/npc/{id}");
+        }
+    }
+
     private void navigateToPlayerCharacter(PlayerVessel character) {
         var id = Data.Ships.IndexOf(character);
         if (id >= 0) {
-            NavigationManager.NavigateTo($"/manage/ships/{id}");
+            NavigationManager.NavigateTo($"/manage/ships/vessel/{id}");
         }
     }
 

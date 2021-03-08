@@ -2,15 +2,15 @@
     <div class="row w3-margin-bottom">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
         <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-            FOCUSES 
+            @Title 
         </div>
         <div class="hbar row-fill elbow-right knee-right"></div>
     </div>
     <div class="w3-row w3-margin-bottom">
         <ul class="w3-ul w3-small">
-            @if (Focuses != null) {
-                foreach (var focus in Focuses) {
-                    <li>@focus &nbsp;</li>
+            @if (List != null) {
+                foreach (var value in List) {
+                    <li>@value &nbsp;</li>
                 }
             }
         </ul>
@@ -19,5 +19,7 @@
 
 @code {
     [Parameter]
-    public List<string> Focuses {get; set;}
+    public string Title {get; set;}
+    [Parameter]
+    public List<string> List {get; set;}
 }

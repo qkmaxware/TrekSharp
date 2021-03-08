@@ -1,11 +1,10 @@
-@page "/manage/ships/vessel/{ShipId}"
+@page "/manage/ships/npc/{ShipId}"
 @inherits AppComponentBase
 
 @if (HasShip) {
 <PrintNotification/>
 
 <div class="w3-container no-print lcars" style="text-align: right;">
-    <button @onclick="Export">Export Json</button>
     <button @onclick="Delete" class="w3-red">Delete</button>
 </div>
 
@@ -27,33 +26,15 @@
                             @Ship.Name
                         </div>
                     </div>
-                    <div class="w3-row">
-                        <div class="w3-col" style="width: 150px;">
-                            <h4 class="text-secondary typeface" style="margin: 0;">DESIGNATION:</h4>
-                        </div>
-                        <div class="w3-rest w3-white">
-                            @Ship.Registry
-                        </div>
-                    </div> 
                 </div>
                 <div class="w3-row">
-                    <div class="w3-col s6">
+                    <div class="w3-col s12">
                         <div class="w3-row">
                             <div class="w3-col" style="width: 150px;">
                                 <h4 class="text-secondary typeface" style="margin: 0;">SPACEFRAME:</h4>
                             </div>
                             <div class="w3-rest w3-white">
                                 @Ship.Frame.Name
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w3-col s6">
-                        <div class="w3-row">
-                            <div class="w3-col" style="width: 150px;">
-                                <h4 class="text-secondary typeface" style="margin: 0;">PROFILE:</h4>
-                            </div>
-                            <div class="w3-rest w3-white">
-                                @Ship.MissionProfile.Name
                             </div>
                         </div>
                     </div>
@@ -83,7 +64,7 @@
                     <!-- Departments -->
                     <DisciplineDrawer Disciplines="Ship.Departments" Title="DEPARTMENTS"/>
                     <!-- Image/Scale/Resistance -->
-                    <img src="@Ship.GetShipImageUrl()" style="display: block; margin-left: auto; margin-right: auto; width: 100%; max-width: 640px; height: auto; max-height:100%;">
+                    
                     <div class="w3-row w3-margin">
                         <div class="w3-row w3-col s6">
                             <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
@@ -176,20 +157,13 @@
             }
         }
     }
-    public PlayerVessel Ship => ShipIndex >=0 && ShipIndex < Data.Ships.Count ? Data.Ships[ShipIndex] : null;
+    public Vessel Ship => ShipIndex >=0 && ShipIndex < Data.NPCShips.Count ? Data.NPCShips[ShipIndex] : null;
     public bool HasShip => Ship != null;
 
     public void Delete() {
         if (HasShip) {
-            Data.Ships.Remove(this.Ship);
+            Data.NPCShips.Remove(this.Ship);
             NavigationManager.NavigateTo("/manage/ships");
-        }
-    }
-
-    public async Task Export() {
-        if (HasShip) {
-            var ship = this.Ship;
-            await this.DownloadJson($"{ship.Name}.{ship.Registry}.vessel", ship);
         }
     }
 }

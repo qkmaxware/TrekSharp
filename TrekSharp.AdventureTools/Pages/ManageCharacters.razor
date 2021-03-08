@@ -26,7 +26,7 @@
                     <div class="w3-row-padding">
                         @foreach (var character in group) {
                         <div class="w3-col s3">
-                            <div class="row">
+                            <div class="row" @onclick="@(() => navigateToPlayerCharacter(character))">
                                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                                     @character.Rank @character.Name 
@@ -81,7 +81,7 @@
                     <div class="w3-row-padding">
                         @foreach (var character in group) {
                         <div class="w3-col s3">
-                            <div class="row">
+                            <div class="row" @onclick="@(() => navigateToSupportCharacter(character))">
                                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                                     @character.Rank @character.Name 
@@ -136,7 +136,7 @@
                     <div class="w3-row-padding">
                         @foreach (var character in group) {
                         <div class="w3-col s3">
-                            <div class="row">
+                            <div class="row" @onclick="@(() => navigateToNpcCharacter(character))">
                                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                                     @character.Rank @character.Name 
@@ -200,6 +200,12 @@
         var id = Data.Supports.IndexOf(character);
         if (id >= 0) {
             NavigationManager.NavigateTo($"/manage/characters/support/{id}");
+        }
+    }
+    private void navigateToNpcCharacter(NpcCharacter character) {
+        var id = Data.NPCs.IndexOf(character);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"/manage/characters/npc/{id}");
         }
     }
 
@@ -596,6 +602,9 @@
             d.Focuses = new List<string>(c.Focuses);
         if (c.SpecialRules != null)
             d.SpecialRules = new List<string>(c.SpecialRules);
+
+        d.Attributes = c.Attributes;
+        d.Disciplines = c.Disciplines;
 
         return d;
     }

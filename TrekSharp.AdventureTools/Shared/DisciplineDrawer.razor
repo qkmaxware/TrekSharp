@@ -1,65 +1,64 @@
-
-    <div class="w3-margin-bottom">
-        <div class="row w3-margin-bottom">
-            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                @Title 
-            </div>
-            <div class="hbar row-fill elbow-right knee-right"></div>
+<div class="w3-margin-bottom">
+    <div class="row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            @Title 
         </div>
-        <div class="w3-row w3-margin-bottom">
-            <div class="w3-row w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    COMMAND
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Disciplines.Command
-                </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+        <div class="w3-row w3-col s4">
+            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                COMMAND
             </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    SECURITY
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Disciplines.Security
-                </div>
-            </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    SCIENCE
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Disciplines.Science
-                </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @Disciplines?.Command
             </div>
         </div>
-        <div class="w3-row">
-            <div class="w3-row w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    CONN
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Disciplines.Conn
-                </div>
+        <div class="w3-col s4">
+            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                SECURITY
             </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    ENGINEERING
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Disciplines.Engineering
-                </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @Disciplines?.Security
             </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    MEDICINE
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Disciplines.Medicine
-                </div>
+        </div>
+        <div class="w3-col s4">
+            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                SCIENCE
+            </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @Disciplines?.Science
             </div>
         </div>
     </div>
+    <div class="w3-row">
+        <div class="w3-row w3-col s4">
+            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                CONN
+            </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @Disciplines?.Conn
+            </div>
+        </div>
+        <div class="w3-col s4">
+            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                ENGINEERING
+            </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @Disciplines?.Engineering
+            </div>
+        </div>
+        <div class="w3-col s4">
+            <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                MEDICINE
+            </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @Disciplines?.Medicine
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
 
