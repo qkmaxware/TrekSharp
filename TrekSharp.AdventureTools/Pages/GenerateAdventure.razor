@@ -27,9 +27,16 @@
                     </span>
                     <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
                 </div>
-                <div class="w3-center">
-                    <div class="w3-container w3-padding w3-margin">@statement</div>
-                    <button class="w3-button w3-blue" @onclick="generate"> Generate New </button>
+                <div class="w3-center w3-padding">
+                    <span class="spacer typeface text-primary w3-large">
+                        INTRO
+                    </span>
+                    <div class="w3-container w3-padding w3-margin">@plotSetup</div>
+                    <span class="spacer typeface text-primary w3-large">
+                        INCITING INCIDENT
+                    </span>
+                    <div class="w3-container w3-padding w3-margin">@incitingIncident</div>
+                    <button class="w3-button w3-blue" @onclick="RegenerateAll"> Generate New </button>
                 </div>
             </div>
         </div>
@@ -45,30 +52,19 @@
 @code {
     RulebookPicker Rulebooks;
 
-    private string statement;
-
-    private string pluralize(string value) {
-        if (value.Length < 1)
-            return value;
-
-        var last_letter = value[value.Length - 1];
-        switch (last_letter) {
-            case 's':
-            case 'h':
-            case 'x':
-            case 'z':
-                return value + "es";
-            default:
-                return value + "s";
-        }
-    }
-
-    private void generate() {
+    public Dictionary<string, List<string>> GetGenerator() {
         var rulebooks = Rulebooks.EnabledRulebooks.ToList();
 
         var generator = new Dictionary<string, List<string>>();
 
-        generator["template"] = new List<string>{
+        generator["template-setup"] = new List<string>{
+            "When en-route to <a> @location to investigate <a> @anomaly",
+            "While meeting with <a> @character",
+            "When rendezvousing with <a> @ship vessel",
+            "While providing aid to a @species colony",
+        };
+
+        generator["template-inciting"] = new List<string>{
             "<a> @location where <a> @character has @action",
             "<a> @character aboard <a> @ship vessel has @action",
             "@entity has @action",
@@ -80,7 +76,7 @@
             "@entity has established first contact with a new species",
             "@entity has encountered <a> @anomaly at <a> @location",
             "Contact lost with @entity at <a> @coordinate",
-            "<a> @mcguffin is found located near <a> @coordinate"
+            "<a> @mcguffin is found located near <a> @coordinate",
         };
 
         generator["entity"] = new List<string> {
@@ -400,13 +396,35 @@
             "Gorn Hegemony",
             "Dominion",
         };
+        return generator;
+    }
 
+    private string plotSetup;
+    private string incitingIncident;
+
+    private string pluralize(string value) {
+        if (value.Length < 1)
+            return value;
+
+        var last_letter = value[value.Length - 1];
+        switch (last_letter) {
+            case 's':
+            case 'h':
+            case 'x':
+            case 'z':
+                return value + "es";
+            default:
+                return value + "s";
+        }
+    }
+
+    public string Generate(List<string> templates, Dictionary<string, List<string>> generator) {
         // Generate
         // 1. Pick template
-        var template = generator["template"].Random();
+        var template = templates.Random();
 
         // 2. While subcomponents exist, substitute
-        Regex replacement = new Regex(@"\@\w+(?:\(s\))?");
+        Regex replacement = new Regex(@"\@[\w-]+(?:\(s\))?");
         while (replacement.IsMatch(template)) {
             template = replacement.Replace(template, (match) => {
                 var property = match.Value.Substring(1); // without the @
@@ -453,6 +471,12 @@
         // 4. Capitalize first letter
         template = char.ToUpper(template[0]).ToString() + template.Substring(1);
 
-        this.statement = template;
+        return template;
+    }
+
+    public void RegenerateAll() {
+        var Generator = GetGenerator();
+        this.plotSetup = Generate(Generator["template-setup"], Generator);
+        this.incitingIncident = Generate(Generator["template-inciting"], Generator);
     }
 }
