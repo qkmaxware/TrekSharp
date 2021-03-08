@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Rooms/Bridge 1/Sprite.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Assets/Rooms/Holodeck/Sprite.png" type="Texture" id=22]
 [ext_resource path="res://Assets/Rooms/Bridge 2/Sprite.png" type="Texture" id=23]
 [ext_resource path="res://Assets/Rooms/Junction 45deg/Sprite.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Rooms/Sickbay/Sprite.png" type="Texture" id=25]
 
 [node name="Example Room Editor" type="Node2D"]
 
@@ -45,7 +46,7 @@ __meta__ = {
 
 [node name="GridContainer" type="GridContainer" parent="CanvasLayer/ScrollContainer"]
 margin_right = 268.0
-margin_bottom = 336.0
+margin_bottom = 404.0
 columns = 4
 
 [node name="Test Room" type="Button" parent="CanvasLayer/ScrollContainer/GridContainer"]
@@ -236,11 +237,20 @@ texture_normal = ExtResource( 18 )
 expand = true
 stretch_mode = 5
 
-[node name="Warp Core" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+[node name="Sickbay" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
 margin_left = 204.0
 margin_top = 272.0
 margin_right = 268.0
 margin_bottom = 336.0
+rect_min_size = Vector2( 64, 64 )
+texture_normal = ExtResource( 25 )
+expand = true
+stretch_mode = 5
+
+[node name="Warp Core" type="TextureButton" parent="CanvasLayer/ScrollContainer/GridContainer"]
+margin_top = 340.0
+margin_right = 64.0
+margin_bottom = 404.0
 rect_min_size = Vector2( 64, 64 )
 texture_normal = ExtResource( 21 )
 expand = true
@@ -315,5 +325,6 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Food Store" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Food Closet/Prefab.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bedroom Up" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bedroom/Prefab Up.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Bedroom Down" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Bedroom/Prefab Down.tscn" ]]
+[connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Sickbay" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Sickbay/Prefab.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/ScrollContainer/GridContainer/Warp Core" to="Camera" method="OnCreateResource" binds= [ "Assets/Rooms/Warp Core/Prefab.tscn" ]]
 [connection signal="pressed" from="CanvasLayer/Save" to="Screenshot Viewport/Screenshotter" method="Png"]
