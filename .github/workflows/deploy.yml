@@ -30,6 +30,9 @@ jobs:
       - name: Change base-tag
         run: sed -i 's/<base href="\/" \/>/<base href="\/TrekSharp\/" \/>/g' .release/wwwroot/index.html
 
+      - name: Custom 404
+        run: cp .release/wwwroot/index.html .release/wwwroot/404.html
+
       - name: Commit to Github Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
