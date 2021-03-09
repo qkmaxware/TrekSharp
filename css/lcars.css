@@ -1,0 +1,258 @@
+body {
+    background-color: rgb(4, 19, 34);
+    color: white;
+}
+
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+}
+
+.lcars {
+    padding: 0;
+    margin: 0;
+}
+
+.lcars .typeface {
+    font-family: 'Impact';
+    color: #FF9104;
+    letter-spacing: 1px;
+}
+
+.viewport {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.lcars .padding {
+    padding: 5px 5px;
+}
+
+.lcars .primary {
+    background-color: #FF9104 !important;
+    color: black;
+}
+
+.lcars-primary {
+    background-color: #FF9104 !important;
+    color: black;
+}
+    
+.lcars .border-primary {
+    border-color: #FF9104 !important;
+}
+.lcars-border-primary {
+    border: 1px solid #FF9104 !important;
+}
+
+
+.lcars .text-primary {
+    color: #FF9104 !important;
+}
+
+.lcars .secondary {
+    background-color: #CC99CC !important;
+    color: black;
+}
+
+.lcars-secondary {
+    background-color: #CC99CC !important;
+    color: black;
+}
+
+.lcars .border-secondary {
+    border: 1px solid #CC99CC !important;
+}
+
+.lcars .text-secondary {
+    color: #CC99CC !important;
+}
+    
+
+.lcars .highlight {
+background-color: #4455BB !important;
+color: black;
+}
+
+.lcars .border-highlight {
+border-color: #4455BB !important;
+}
+
+.lcars .text-highlight {
+color: #4455BB !important;
+}
+
+.lcars .row {
+    display: flex;
+    flex-direction: row;
+}
+
+.lcars .row .row-fill {
+    flex: 1;
+}
+
+.lcars .wide {
+    width: 100%;
+}
+
+.lcars .spacer {
+    margin-left: 2px;
+    padding-left: 4px;
+    margin-right: 2px;
+    padding-right: 4px;
+}
+
+.split {
+display: inline-block;
+width: 49%;
+}
+
+.left {
+float: left;
+}
+
+.right {
+float: right;
+}
+
+.lcars {
+padding: 5px 5px;
+}
+
+.lcars .panel {
+    display: inline-block;
+}
+
+.lcars .container {
+padding: 5px 5px;
+}
+
+.lcars .rbar {
+border-right: 10px solid #FF9104;
+}
+
+.lcars .lbar {
+border-left: 10px solid #FF9104;
+}
+
+.lcars .hbar {
+background-color: #FF9104;
+color: black;
+text-align: right;
+min-height: 10px;
+}
+
+.lcars .knee-right {
+border-top-right-radius: 10px;
+padding-right: 12px;
+}
+
+.lcars .knee-left {
+border-top-left-radius: 10px;
+padding-left: 12px;
+}
+
+.lcars .elbow-left {
+border-bottom-left-radius: 10px;
+padding-left: 12px;
+}
+
+.lcars .elbow-right {
+border-bottom-right-radius: 10px;
+padding-right: 12px;
+}
+
+.lcars button {
+font-family: 'Impact';
+background-color: #CB99CC;
+color: black;
+border-radius: 20px;
+font-size: 21px;
+user-select: none;
+}
+
+.lcars button:focus {
+    outline: none !important;
+}
+
+.lcars button:hover {
+background-color: #FF9104;
+}
+
+.lcars select {
+    border: none;
+    color: #FF9104;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-family: 'Impact';
+    font-size: large;
+}
+
+.lcars select:focus {
+    outline: none !important;
+}
+
+.lcars input {
+    border: 1px solid #FF9104;
+    color: #FF9104;
+    background-color: black;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-family: 'Impact';
+    font-size: large;
+}
+
+.lcars input:focus {
+    outline: none !important;
+}
+
+
+
+.sensor-grid {
+background-color: black;
+background-image: -webkit-linear-gradient(rgb(255,145,4) 2px, transparent 2px),
+-webkit-linear-gradient(left, rgb(255,145,4) 2px, transparent 2px),
+-webkit-linear-gradient(rgba(256,145,4,.3) 1px, transparent 1px),
+-webkit-linear-gradient(left, rgba(255,145,4,.3) 1px, transparent 1px);
+background-image: -moz-linear-gradient(rgb(255,145,4) 2px, transparent 2px),
+-moz-linear-gradient(left, rgb(255,145,4) 2px, transparent 2px),
+-moz-linear-gradient(rgba(256,145,4,.3) 1px, transparent 1px),
+-moz-linear-gradient(left, rgba(255,145,4,.3) 1px, transparent 1px);
+background-image: -o-linear-gradient(rgb(255,145,4) 2px, transparent 2px),
+-o-linear-gradient(left, rgb(255,145,4) 2px, transparent 2px),
+-o-linear-gradient(rgba(256,145,4,.3) 1px, transparent 1px),
+-o-linear-gradient(left, rgba(255,145,4,.3) 1px, transparent 1px);
+background-image: linear-gradient(rgb(255,145,4) 2px, transparent 2px),
+linear-gradient(to right, rgb(255,145,4) 2px, transparent 2px),
+linear-gradient(rgba(256,145,4,.3) 1px, transparent 1px),
+linear-gradient(to right, rgba(255,145,4,.3) 1px, transparent 1px);
+background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
+border: 2px solid white;
+float: right;
+margin-right: 250px;
+margin-top: 10px;
+animation: pulse-magnification 8s infinite;
+}
+
+@keyframes pulse-magnification {
+0% { background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px; }
+50% { background-size:200px 200px, 200px 200px, 40px 40px, 40px 40px;}
+100% { background-size:100px 100px, 100px 100px, 40px 40px, 20px 20px; }
+}

@@ -1,0 +1,38 @@
+.print {
+    display: none;
+}
+
+.pagebreak {
+    width: 0px;
+    height: 0px;
+    display: block;
+    visibility: hidden;
+    page-break-after: always; 
+    content: "\\pagebreak";
+}
+
+.page-A4 {
+    width: 210mm;
+    height: 279mm;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    .print-small {
+        font-size: x-small;
+    }
+
+    .print {
+        display: block;
+    }
+
+    .print-A4 {
+        width: 210mm;
+        height: 279mm;
+        margin: 0; /* Browser will apply the correct margins when it prints */
+        page-break-after: always;
+    }
+}
