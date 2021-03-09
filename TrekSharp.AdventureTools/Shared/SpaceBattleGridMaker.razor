@@ -35,12 +35,12 @@
 <div style="position: relative; width: 100%; padding-bottom: 100%;">
     <img 
         style="width: 100%; position: absolute; height: 100%; object-fit: cover; object-position: center;" 
-        src="@(!string.IsNullOrEmpty(customUrl) ? customUrl : "/assets/artwork/grids/space/default background.png")" 
+        src="@(!string.IsNullOrEmpty(customUrl) ? customUrl : "assets/artwork/grids/space/default background.png")" 
     >
     @if(grid != null) {
     <img 
         style="width: 100%; position: absolute; left: 0; right: 0; bottom: 0; top: 0; object-fit: cover; object-position: center;" 
-        src="/assets/artwork/grids/space/@(grid).svg" 
+        src="assets/artwork/grids/space/@(grid).svg" 
     />
     }
 </div>

@@ -16,19 +16,19 @@
     </button>
     <div id="CreateAccordion" class="@(CreateMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
         <div class="lbar">
-            <NavLink class="w3-button w3-block" href="/new/random/plot" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="new/random/plot" Match="NavLinkMatch.All">
                 Plot
             </NavLink>
-            <NavLink class="w3-button w3-block" href="/new/player" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="new/player" Match="NavLinkMatch.All">
                 Player
             </NavLink>
-            <NavLink class="w3-button w3-block" href="/new/support" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="new/support" Match="NavLinkMatch.All">
                 Support Character
             </NavLink>
-            <NavLink class="w3-button w3-block" href="/new/ship" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="new/ship" Match="NavLinkMatch.All">
                 Ship
             </NavLink>
-            <NavLink class="w3-button w3-block" href="/new/grid" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="new/grid" Match="NavLinkMatch.All">
                 Battle Grid
             </NavLink>
         </div>
@@ -44,13 +44,13 @@
     </button>
     <div id="PlayAccordion" class="@(PlayMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
         <div class="lbar">
-            <NavLink class="w3-button w3-block" href="/manage/characters" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="manage/characters" Match="NavLinkMatch.All">
                 Characters
             </NavLink>
-            <NavLink class="w3-button w3-block" href="/manage/ships" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="manage/ships" Match="NavLinkMatch.All">
                 Ships
             </NavLink>
-            <NavLink class="w3-button w3-block" href="/manage/task/extended" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="manage/task/extended" Match="NavLinkMatch.All">
                 Extended Tasks
             </NavLink>
         </div>
@@ -66,10 +66,10 @@
     </button>
     <div id="CalculatorAccordion" class="@(CalculatorCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
         <div class="lbar">
-            <NavLink class="w3-button w3-block" href="/calculate/stardate" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="calculate/stardate" Match="NavLinkMatch.All">
                 Stardate
             </NavLink>
-            <NavLink class="w3-button w3-block" href="/calculate/warpspeed" Match="NavLinkMatch.All">
+            <NavLink class="w3-button w3-block" href="calculate/warpspeed" Match="NavLinkMatch.All">
                 Warp Speed
             </NavLink>
         </div>
@@ -80,14 +80,14 @@
             title="Save"
             @onclick="downloadDataJson"
         >
-            <img src="/assets/save.png" width="32" height="32">
+            <img src="assets/save.png" width="32" height="32">
         </button>
         <button 
             style="border: 0; padding: 0; background-color: inherit;"
             title="Load"
             @onclick="@(() => importer?.Open())"
         >
-            <img src="/assets/load.png" width="32" height="32">
+            <img src="assets/load.png" width="32" height="32">
         </button>
         <a 
             href="https://github.com/qkmaxware/TrekSharp"
@@ -95,7 +95,7 @@
             style="border: 0; padding: 0; background-color: inherit;"
             title="Contribute"
         >
-            <img src="/assets/github.png" width="32" height="32">
+            <img src="assets/github.png" width="32" height="32">
         </a>
     </div>
 </div>
@@ -147,7 +147,7 @@
 
     private void loadAppData(AppData newData) {
         this.Data.Overwrite(newData);
-        this.NavigationManager.NavigateTo("/");
+        this.NavigationManager.NavigateTo("");
     }
 
     private async Task downloadDataJson() {

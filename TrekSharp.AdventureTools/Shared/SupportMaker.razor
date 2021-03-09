@@ -280,7 +280,7 @@
     private void Save() {
         Data.Supports.Add(FinalCharacter);
         var id = Data.Supports.Count - 1;
-        NavigationManager.NavigateTo($"/manage/characters/support/{id}");
+        NavigationManager.NavigateTo($"manage/characters/support/{id}");
     }
 
     public async Task Export() {

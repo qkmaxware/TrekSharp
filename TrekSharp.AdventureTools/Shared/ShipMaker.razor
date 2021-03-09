@@ -346,7 +346,7 @@
     public void Save() {
         Data.Ships.Add(this.FinalShip);
         var id = Data.Ships.Count - 1;
-        NavigationManager.NavigateTo($"/manage/ships/{id}");
+        NavigationManager.NavigateTo($"manage/ships/{id}");
     }
 
     public async Task Export() {

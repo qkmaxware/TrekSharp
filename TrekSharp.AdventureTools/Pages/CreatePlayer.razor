@@ -1175,7 +1175,7 @@
     public void Save() {
         Data.Party.Add(this.FinalCharacter);
         var id = Data.Party.Count - 1;
-        NavigationManager.NavigateTo($"/manage/characters/player/{id}");
+        NavigationManager.NavigateTo($"manage/characters/player/{id}");
     }
 
     public async Task ExportJson() {
@@ -1198,7 +1198,7 @@
     private RulebookPicker Rulebooks;
     private IEnumerable<Rulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
 
-    private int era = 24;
+    //private int era = 24;
     #endregion
 
     #region Select Species

@@ -1,6 +1,8 @@
 name: Deploy
 on:
   release: 
+    types:
+    - released
     branches: 
     - "root"
 jobs:

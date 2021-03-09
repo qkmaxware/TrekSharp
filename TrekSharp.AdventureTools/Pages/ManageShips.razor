@@ -174,14 +174,14 @@
     private void navigateToNpcCharacter(Vessel vessel) {
         var id = Data.NPCShips.IndexOf(vessel);
         if (id >= 0) {
-            NavigationManager.NavigateTo($"/manage/ships/npc/{id}");
+            NavigationManager.NavigateTo($"manage/ships/npc/{id}");
         }
     }
 
     private void navigateToPlayerCharacter(PlayerVessel character) {
         var id = Data.Ships.IndexOf(character);
         if (id >= 0) {
-            NavigationManager.NavigateTo($"/manage/ships/vessel/{id}");
+            NavigationManager.NavigateTo($"manage/ships/vessel/{id}");
         }
     }
 

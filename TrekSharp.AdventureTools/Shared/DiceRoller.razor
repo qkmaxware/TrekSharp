@@ -21,11 +21,11 @@
                 <div class="w3-center noselect" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; line-height: 64px;">
                     @if (die is ChallengeDice cd) {
                         if (cd.ChallengeValue == ChallengeDiceResult.One) {
-                            <img src="/assets/challenge-1.png"/>
+                            <img src="assets/challenge-1.png"/>
                         } else if (cd.ChallengeValue == ChallengeDiceResult.Two) {
-                            <img src="/assets/challenge-2.png"/>
+                            <img src="assets/challenge-2.png"/>
                         } else if (cd.ChallengeValue == ChallengeDiceResult.Effect) {
-                            <img src="/assets/challenge-effect.png"/>
+                            <img src="assets/challenge-effect.png"/>
                         } else if (cd.ChallengeValue == ChallengeDiceResult.None) {
 
                         }
@@ -72,8 +72,8 @@
 
     private string getDiceImage(Dice dice) {
         return dice switch {
-            D20 d20 => "/assets/d20.png",
-            _ => "/assets/d6.png",
+            D20 d20 => "assets/d20.png",
+            _ => "assets/d6.png",
         };
     }
 

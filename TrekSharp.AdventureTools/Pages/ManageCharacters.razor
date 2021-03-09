@@ -193,19 +193,19 @@
     private void navigateToPlayerCharacter(PlayerCharacter character) {
         var id = Data.Party.IndexOf(character);
         if (id >= 0) {
-            NavigationManager.NavigateTo($"/manage/characters/player/{id}");
+            NavigationManager.NavigateTo($"manage/characters/player/{id}");
         }
     }
     private void navigateToSupportCharacter(SupportCharacter character) {
         var id = Data.Supports.IndexOf(character);
         if (id >= 0) {
-            NavigationManager.NavigateTo($"/manage/characters/support/{id}");
+            NavigationManager.NavigateTo($"manage/characters/support/{id}");
         }
     }
     private void navigateToNpcCharacter(NpcCharacter character) {
         var id = Data.NPCs.IndexOf(character);
         if (id >= 0) {
-            NavigationManager.NavigateTo($"/manage/characters/npc/{id}");
+            NavigationManager.NavigateTo($"manage/characters/npc/{id}");
         }
     }
 

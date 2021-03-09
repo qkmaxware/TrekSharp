@@ -163,7 +163,7 @@
     public void Delete() {
         if (HasShip) {
             Data.NPCShips.Remove(this.Ship);
-            NavigationManager.NavigateTo("/manage/ships");
+            NavigationManager.NavigateTo("manage/ships");
         }
     }
 }
