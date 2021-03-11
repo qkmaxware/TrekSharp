@@ -1,4 +1,5 @@
 @page "/calculate/warpspeed"
+@using Qkmaxware.Astro
 
 <div class="lcars">
     <div class="container">
@@ -81,53 +82,89 @@
                     <p>
                         The stellar distances used here are computed using their J2000 Epoch values.
                     </p>
-                    <table>
-                        <thead>
-                            <th>
-                               Departure 
-                            </th>
-                            <th>
-                                Destination
-                            </th>
-                            <th></th>
-                        </thead>
-                        <tbody>
-                            @for (var i = 0; i < travelRoute.Count; i++) {
-                                var row = i;
-                                @if (row + 1 < travelRoute.Count) {
-                                var ly = Math.Round(Stars[travelRoute[row]].LightYearsTo(Stars[travelRoute[row + 1]]), 2, MidpointRounding.ToEven);
-                                <tr>
-                                    <td>
-                                        <select style="background-color: black; width: 100%;" @bind="travelRoute[row]">
-                                            @foreach (var star in Stars){
-                                                <option value="@star.Key">@star.Key</option>
-                                            }
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select style="background-color: black; width: 100%;" @bind="travelRoute[row + 1]">
-                                            @foreach (var star in Stars){
-                                                <option value="@star.Key">@star.Key</option>
-                                            }
-                                        </select>
-                                    </td>
-                                    <td>
-                                        + @(ly) LY
-                                    </td>
-                                </tr>
+                    @if (travelRoute.Count < 2) {
+                    <div>
+                        <button @onclick="addStop" style="font-size: medium">Start Planning</button>
+                    </div>
+                    } else {
+                    <div>
+                        <button @onclick="clearStops" style="font-size: medium">Reset</button>
+                        <div style="display: inline-block">
+                            <span class="typeface text-secondary">
+                                DEPARTURE
+                            </span><br>
+                            <p>
+                                <select style="background-color: black; width: 100%;" @bind="travelRoute[0]">
+                                    @foreach (var star in Stars){
+                                        <option value="@star.Name">@star.Name</option>
+                                    }
+                                </select>
+                            </p>
+                        </div>
+                        @for (var i = 1; i < travelRoute.Count; i++) {
+                        var row = i;
+                        var ly = Math.Round(getStar(travelRoute[row - 1]).DistanceTo(getStar(travelRoute[row])).TotalLightYears, 2, MidpointRounding.ToEven);
+                        <span>&rarr;</span>
+                        @if(row == travelRoute.Count - 1) {
+                        <div style="display: inline-block">
+                            <button @onclick="addStop" style="font-size: medium">+ Layover</button>
+                        </div>
+                        <span>&rarr;</span>
+                        }
+                        <div style="display: inline-block">
+                            <span class="typeface text-secondary">
+                                @if(row == travelRoute.Count - 1) {
+                                    <text>DESTINATION</text>
+                                } else {
+                                    <text>STOP @i</text>
                                 }
-                            }
+                            </span>
+                            <span class="w3-small">
+                                + @ly LY
+                            </span>
+                            <br>
+                            <p>
+                                <select style="background-color: black; width: 100%;" @bind="travelRoute[row]">
+                                    @foreach (var star in Stars){
+                                        <option value="@star.Name">@star.Name</option>
+                                    }
+                                </select><br>
+                            </p>
+                        </div>
+                        }
+                    </div>
+                    <div style="margin-left: 60px;">
+                        <span class="typeface text-secondary">
+                            TRIP SUMMARY
+                        </span><br>
+                        <table class="w3-table w3-hoverable">
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
                                 <td>
-                                    = @totalDistance() LY over @timeString(totalDistance())
+                                    STOPS
+                                </td>
+                                <td>
+                                    @travelRoute.Count
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                    <button @onclick="clearStops" class="w3-small">Clear</button>
-                    <button @onclick="addStop" class="w3-small">Add Destination</button>
+                            <tr>
+                                <td>
+                                    DISTANCE
+                                </td>
+                                <td>
+                                    @totalDistance() LY
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    TRAVEL TIME
+                                </td>
+                                <td>
+                                    @timeString(totalDistance())
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -160,41 +197,16 @@
 
     private string timeString(double i) {
         var timespan = warp.TimeOfFlight(i * lyToM);
-        return string.Format("{0:D2} days {1:D2} hours {0:D2} minutes {0:D2} seconds", timespan.Days, timespan.Hours, timespan.Minutes, timespan.Seconds);
+        return string.Format("{0:D2} days {1:D2} hours {2:D2} minutes {3:D2} seconds", timespan.Days, timespan.Hours, timespan.Minutes, timespan.Seconds);
     }
-
-    private class StarData {
-        public double A;
-        public double D;
-        public double R;
-
-        private double deg2rad = (Math.PI * 2.0) / 360.0;
-
-        public double LightYearsTo(StarData star) {
-            var x1 = this.R * Math.Cos(deg2rad * this.A) * Math.Cos(deg2rad * this.D);
-            var y1 = this.R * Math.Sin(deg2rad * this.A) * Math.Cos(deg2rad * this.D);
-            var z1 = this.R * Math.Sin(deg2rad * this.D);
-
-            var x2 = star.R * Math.Cos(deg2rad * star.A) * Math.Cos(deg2rad * star.D);
-            var y2 = star.R * Math.Sin(deg2rad * star.A) * Math.Cos(deg2rad * star.D);
-            var z2 = star.R * Math.Sin(deg2rad * star.D);
-
-            return Math.Sqrt(
-                  (x2 - x1) * (x2 - x1)
-                + (y2 - y1) * (y2 - y1)
-                + (z2 - z1) * (z2 -z1)
-            );
-        }
-    }
-
 
     private List<string> travelRoute = new List<string>();
     private void addStop() {
         if(travelRoute.Count < 1) {
             travelRoute.Add("Sol");
-            travelRoute.Add("Sirius");
+            travelRoute.Add("Proxima Centauri");
         } else {
-            travelRoute.Add("Sirius");
+            travelRoute.Add("Proxima Centauri");
         }
     }
     private void clearStops() {
@@ -207,23 +219,249 @@
             return distance;
 
         for(var i = 0; i < travelRoute.Count - 1; i++) {
-            var start = Stars[travelRoute[i]];
-            var end = Stars[travelRoute[i+1]];
-            distance += start.LightYearsTo(end);
+            var start = getStar(travelRoute[i]);
+            var end = getStar(travelRoute[i+1]);
+            distance += start.DistanceTo(end).TotalLightYears;
         }
         return distance;
     }
 
-    private Dictionary<string, StarData> Stars = new Dictionary<string, StarData> {
-        {"Sol", new StarData{ A=0, D=0, R=0 }}, // Origin
-        {"Alpha Centari", new StarData{ A=219.8750, D=-60.8322, R=4.3 }},
-        {"Barnard's Star", new StarData{ A=269.4500, D=+4.6933, R=5.96 }},
-        {"Wolf 359", new StarData{ A=164.1208, D=+7.0144, R=7.78 }},
-        {"Sirius", new StarData{ A=101.2870833, D=-16.7161111, R=8.6 }},
-        {"Epsilon Eridani", new StarData{ A=53.2333, D=-9.4583, R=10.52 }},
-        {"Procyon", new StarData{ A=114.8250, D=+5.2250, R=11.4 }},
-        {"Epsilon Indi", new StarData{ A=330.8417, D=-56.7861, R=11.82 }},
-        {"Vega", new StarData { A=279.2345833, D=+38.7836111, R=25.3}},
+    private AstronomicalEntity getStar(string name) {
+        return Stars.Where(ent => ent.Name == name).First();
+    }
+
+    private List<AstronomicalEntity> Stars = new List<AstronomicalEntity> {
+        // Origin
+        new AstronomicalEntity (
+            name: "Sol",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(0),
+                ra: new RightAscension(0),
+                dec: new Declination(0),
+                motion: null
+            )
+        ), 
+        new AstronomicalEntity (
+            name: "Proxima Centauri",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(40150836687615.36),
+                ra: new RightAscension(14.495262534294692),
+                dec: new Declination(-62.6794918941408),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Barnard's star",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(56362986699660.48),
+                ra: new RightAscension(17.963472166500935),
+                dec: new Declination(4.6933642650633),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Wolf  359",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(61713551625600),
+                ra: new RightAscension(10.941340613333333),
+                dec: new Declination(7.01454),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Lalande 21185",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(78623064771014.4),
+                ra: new RightAscension(11.055609444),
+                dec: new Declination(35.96988004),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Sirius",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Lightyears(8.58),
+                ra: new RightAscension(6.752477022),
+                dec: new Declination(-16.71611586),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Ross 154",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(91801993720661.28),
+                ra: new RightAscension(18.830378833550245),
+                dec: new Declination(-23.8362371023813),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Ross 248",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(97353127689384),
+                ra: new RightAscension(23.698621144067086),
+                dec: new Declination(44.1774514415269),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Epsilon Eridani",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(98828081573235.84),
+                ra: new RightAscension(3.5488458231666664),
+                dec: new Declination(-9.4582586569),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Lacaille 9352",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(101429307774254.89),
+                ra: new RightAscension(23.097787626264502),
+                dec: new Declination(-35.8530718770889),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Ross 128",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(104135447013037.44),
+                ra: new RightAscension(11.79566579633806),
+                dec: new Declination(0.8045569253625),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "EZ Aquarii",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(104913037763520),
+                ra: new RightAscension(22.64266),
+                dec: new Declination(-15.2999325),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Procyon",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Lightyears(11.40),
+                ra: new RightAscension(7.655033194),
+                dec: new Declination(5.22498756),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "61 Cygni",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Lightyears(11.4),
+                ra: new RightAscension(21.114986),
+                dec: new Declination(38.74942),
+                motion: null
+            )
+        ),
+         new AstronomicalEntity (
+            name: "Groombridge 34",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(109930349510681.28),
+                ra: new RightAscension(0.3063569352203333),
+                dec: new Declination(44.0229547977553),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Epsilon Indi",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(112284721505197.92),
+                ra: new RightAscension(22.056015063749467),
+                dec: new Declination(-56.7859825050536),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "DX Cancri",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(110482685797730.39),
+                ra: new RightAscension(8.49704245104376),
+                dec: new Declination(26.7760074370336),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Tau Ceti",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(111186220286262.23),
+                ra: new RightAscension(1.7344676173866667),
+                dec: new Declination(-15.9374795978),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "YZ Ceti",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(114552694527438.72),
+                ra: new RightAscension(1.20851021503778),
+                dec: new Declination(-16.9989892538028),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Luyten's Star",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(92570327438400),
+                ra: new RightAscension(7.4568054859999995),
+                dec: new Declination(5.22578699),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Teegarden's Star",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(118218479493999.36),
+                ra: new RightAscension(2.883580924750587),
+                dec: new Declination(16.8812894684074),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Kapteyn's Star",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Kilometres(121375127659648.8),
+                ra: new RightAscension(5.19460814376278),
+                dec: new Declination(-45.0184316544094),
+                motion: null
+            )
+        ),
+        new AstronomicalEntity (
+            name: "Vega",
+            epoch: Moment.J2000,
+            coordinate: new CelestialCoordinate(
+                distance: Distance.Lightyears(25.3),
+                ra: new RightAscension(18.6156388867),
+                dec: new Declination(+38.7836111),
+                motion: null
+            )
+        ),
     };
 
 }

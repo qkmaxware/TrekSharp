@@ -22,6 +22,9 @@ jobs:
           dotnet-version: '3.1.x' # SDK Version to use; x will use the latest version of the 3.1 channel
 
       - name: Build Site
+        env: 
+          GITHUB_USERNAME: qkmaxware
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: dotnet publish TrekSharp.AdventureTools/TrekSharp.AdventureTools.csproj -c Release -o .release
 
       - name: Add .nojekyll file
