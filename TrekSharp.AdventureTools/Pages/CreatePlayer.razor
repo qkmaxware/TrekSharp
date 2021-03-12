@@ -1,4 +1,4 @@
-@page "/new/player"
+@page "/new/player/lifepath"
 @using System.Globalization
 
 @inherits AppComponentBase
@@ -22,42 +22,6 @@
                 @if(ShowRulebookSelector) {
                 <div>
                     <RulebookPicker @ref="Rulebooks"></RulebookPicker>
-                    @* <div class="row">
-                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                        <span class="spacer typeface text-secondary w3-large">
-                            ERA
-                        </span>
-                        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                    </div>
-                    <div>
-                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
-                            <div class="w3-half">
-                                <label>Enterprise (mid-22nd century)</label>
-                            </div>
-                            <div class="w3-half w3-right-align">
-                                <input type="radio" value="22" 
-                                    checked="@(era.Equals(22))" @onchange="@(() => era = 22)" />
-                            </div>
-                        </div>
-                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
-                            <div class="w3-half">
-                                <label>Original Series (mid-23rd century)</label>
-                            </div>
-                            <div class="w3-half w3-right-align">
-                                <input type="radio" value="23" 
-                                    checked="@(era.Equals(23))" @onchange="@(() => era = 23)" />
-                            </div>
-                        </div>
-                        <div class="w3-padding w3-margin w3-row w3-border-bottom">
-                            <div class="w3-half">
-                                <label>Next Generation (mid-24th century)</label>
-                            </div>
-                            <div class="w3-half w3-right-align">
-                                <input type="radio" value="24" 
-                                    checked="@(era.Equals(24))" @onchange="@(() => era = 24)" />
-                            </div>
-                        </div>
-                    </div> *@
                 </div>
                 } else if (ShowSpeciesSelector) {
                 <div>

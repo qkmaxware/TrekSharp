@@ -1,80 +1,108 @@
 ﻿@inherits AppComponentBase
 
-<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:200px; z-index: 101;" id="mySidebar">
-    <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
-    <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
-        Home
-    </NavLink>
-    <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCreateMenu = !collapseCreateMenu)"  style="padding-bottom: 0px;">
-        <div class="row">
-            <div class="hbar knee-left" style="margin-right:10px;"></div>
-            <div>
-                Create <i class="fa fa-caret-down"></i>
+<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:250px; z-index: 101;" id="mySidebar">
+    <div style="min-height: calc(100vh - 48px);">
+        <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
+        <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
+            Home
+        </NavLink>
+        <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCreateMenu = !collapseCreateMenu)"  style="padding-bottom: 0px;">
+            <div class="row">
+                <div class="hbar knee-left" style="margin-right:10px;"></div>
+                <div>
+                    Create <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
             </div>
-            <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
+        </button>
+        <div id="CreateAccordion" class="@(CreateMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
+            <div class="lbar">
+                <NavLink class="w3-button w3-block" href="new/random/plot" Match="NavLinkMatch.All">
+                    Plot
+                </NavLink>
+                <div class="w3-margin-left">
+                    <div class="row">
+                        <div class="hbar secondary elbow-left knee-left" style="margin-right:10px; width: 10px;"></div>
+                        <div>
+                            Player Character
+                        </div>
+                        <div class="hbar secondary knee-right row-fill" style="margin-left:10px;"></div>
+                    </div>
+                    <div class="rbar" style="border-color: #CC99CC !important;">
+                        <NavLink class="w3-button w3-block" href="new/player/lifepath" Match="NavLinkMatch.All">
+                            Lifepath Creation
+                        </NavLink>
+                        <NavLink class="w3-button w3-block" href="/new/player/random" Match="NavLinkMatch.All">
+                            Random 
+                        </NavLink>
+                    </div>
+                    <div class="row">
+                        <div class="hbar secondary elbow-left knee-left elbow-right row-fill"></div>
+                    </div>
+                </div>
+                <NavLink class="w3-button w3-block" href="new/support" Match="NavLinkMatch.All">
+                    Support Character
+                </NavLink>
+                <NavLink class="w3-button w3-block" href="new/ship" Match="NavLinkMatch.All">
+                    Ship
+                </NavLink>
+                <NavLink class="w3-button w3-block" href="new/grid" Match="NavLinkMatch.All">
+                    Battle Grid
+                </NavLink>
+            </div>
+            <div class="row">
+                <div class="hbar elbow-left knee-right elbow-right row-fill"></div>
+            </div>
         </div>
-    </button>
-    <div id="CreateAccordion" class="@(CreateMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
-        <div class="lbar">
-            <NavLink class="w3-button w3-block" href="new/random/plot" Match="NavLinkMatch.All">
-                Plot
-            </NavLink>
-            <NavLink class="w3-button w3-block" href="new/player" Match="NavLinkMatch.All">
-                Player
-            </NavLink>
-            <NavLink class="w3-button w3-block" href="new/support" Match="NavLinkMatch.All">
-                Support Character
-            </NavLink>
-            <NavLink class="w3-button w3-block" href="new/ship" Match="NavLinkMatch.All">
-                Ship
-            </NavLink>
-            <NavLink class="w3-button w3-block" href="new/grid" Match="NavLinkMatch.All">
-                Battle Grid
-            </NavLink>
+        <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapsePlayMenu = !collapsePlayMenu)" style="padding-bottom: 0px;">
+            <div class="row">
+                <div class="hbar knee-left" style="margin-right:10px;"></div>
+                <div>
+                    Manage <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
+            </div>
+        </button>
+        <div id="PlayAccordion" class="@(PlayMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
+            <div class="lbar">
+                <NavLink class="w3-button w3-block" href="manage/characters" Match="NavLinkMatch.All">
+                    Characters
+                </NavLink>
+                <NavLink class="w3-button w3-block" href="manage/ships" Match="NavLinkMatch.All">
+                    Ships
+                </NavLink>
+                <NavLink class="w3-button w3-block" href="manage/task/extended" Match="NavLinkMatch.All">
+                    Extended Tasks
+                </NavLink>
+            </div>
+            <div class="row">
+                <div class="hbar elbow-left knee-right elbow-right row-fill"></div>
+            </div>
+        </div>
+        <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCalcMenu = !collapseCalcMenu)" style="padding-bottom: 0px;">
+            <div class="row">
+                <div class="hbar knee-left" style="margin-right:10px;"></div>
+                <div>
+                    Calculate <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
+            </div>
+        </button>
+        <div id="CalculatorAccordion" class="@(CalculatorCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
+            <div class="lbar">
+                <NavLink class="w3-button w3-block" href="calculate/stardate" Match="NavLinkMatch.All">
+                    Stardate
+                </NavLink>
+                <NavLink class="w3-button w3-block" href="calculate/warpspeed" Match="NavLinkMatch.All">
+                    Warp Speed
+                </NavLink>
+            </div>
+            <div class="row">
+                <div class="hbar elbow-left knee-right elbow-right row-fill"></div>
+            </div>
         </div>
     </div>
-    <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapsePlayMenu = !collapsePlayMenu)" style="padding-bottom: 0px;">
-        <div class="row">
-            <div class="hbar knee-left" style="margin-right:10px;"></div>
-            <div>
-                Manage <i class="fa fa-caret-down"></i>
-            </div>
-            <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
-        </div>
-    </button>
-    <div id="PlayAccordion" class="@(PlayMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
-        <div class="lbar">
-            <NavLink class="w3-button w3-block" href="manage/characters" Match="NavLinkMatch.All">
-                Characters
-            </NavLink>
-            <NavLink class="w3-button w3-block" href="manage/ships" Match="NavLinkMatch.All">
-                Ships
-            </NavLink>
-            <NavLink class="w3-button w3-block" href="manage/task/extended" Match="NavLinkMatch.All">
-                Extended Tasks
-            </NavLink>
-        </div>
-    </div>
-    <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCalcMenu = !collapseCalcMenu)" style="padding-bottom: 0px;">
-        <div class="row">
-            <div class="hbar knee-left" style="margin-right:10px;"></div>
-            <div>
-                Calculate <i class="fa fa-caret-down"></i>
-            </div>
-            <div class="hbar knee-right elbow-right row-fill" style="margin-left:10px;"></div>
-        </div>
-    </button>
-    <div id="CalculatorAccordion" class="@(CalculatorCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
-        <div class="lbar">
-            <NavLink class="w3-button w3-block" href="calculate/stardate" Match="NavLinkMatch.All">
-                Stardate
-            </NavLink>
-            <NavLink class="w3-button w3-block" href="calculate/warpspeed" Match="NavLinkMatch.All">
-                Warp Speed
-            </NavLink>
-        </div>
-    </div>
-    <div class="w3-padding w3-center" style="position: absolute; bottom: 0; width: 100%; overflow: hidden;">
+    <div class="w3-padding w3-center" style="width: 100%; overflow: hidden;">
         <button 
             style="border: 0; padding: 0; background-color: inherit;"
             title="Save"

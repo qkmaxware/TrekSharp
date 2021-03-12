@@ -1,0 +1,576 @@
+@page "/new/player/random"
+@inherits AppComponentBase
+
+<div class="lcars">
+    <div class="container">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">NEW PLAYER</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                <RulebookPicker @ref="Rulebooks"/>
+
+                <div class="row">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <span class="spacer typeface text-secondary w3-large">
+                        RANDOMIZER SETTINGS
+                    </span>
+                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                </div>
+                <div class="w3-center w3-padding" style="text-align: left!important;">
+                    <p>
+                        Every character needs a name.
+                    </p>
+                    <div class="row w3-padding">
+                        <span class="hbar elbow-left knee-left w3-padding">Name</span>
+                        <span class="hbar row-fill row" style="margin-left: 10px;">
+                            <input type="text" class="w3-padding row-fill"  @bind="name"/>
+                        </span>
+                    </div>
+
+                    <p>
+                        You can choose what species you want this character to be a member of. This option is desirable if if have a particular species and name in mind.
+                    </p>
+                    <div class="row  w3-padding">
+                        <span class="hbar elbow-left knee-left w3-padding">Species</span>
+                        <span class="hbar row-fill row" style="margin-left: 10px;">
+                            <select class="w3-black row-fill" @bind="selectedSpecies">
+                                <option value="">ANY</option>
+                                @if (this.Rulebooks != null) {
+                                    foreach (var species in this.Rulebooks.EnabledRulebooks.SelectMany(book => book.Species)) {
+                                        <option value="@species.Name">@species.Name</option>
+                                    }
+                                }
+                            </select>
+                        </span>
+                    </div>
+
+                    <p>
+                        What type of role do you want this character to fullfill? Leave as "ANY" for the role to be randomly chosen as well.
+                    </p>
+                    <div class="row  w3-padding">
+                        <span class="hbar elbow-left knee-left w3-padding">Role</span>
+                        <span class="hbar row-fill row" style="margin-left: 10px;">
+                            <select class="w3-black row-fill" @bind="selectedRole">
+                                <option value="">ANY</option>
+                                @foreach (var role in this.weigths) {
+                                    <option value="@role.Key">@role.Key</option>
+                                }
+                            </select>
+                        </span>
+                    </div>
+
+                    <div class="w3-right-align">
+                        <button class="w3-button w3-blue" @onclick="generateAndShow"> Generate New </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private RulebookPicker _books;
+    RulebookPicker Rulebooks {
+        get {
+            return _books;
+        }
+        set {
+            _books = value;
+            _books.OnChange = refresh;
+        }
+    }
+
+    private void refresh() {
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender) {
+        if (firstRender) {
+            StateHasChanged();
+        }
+    }
+
+    private string name = null;
+
+    private string selectedRole = null;
+    private Dictionary<string, Disciplines> weigths = new Dictionary<string, Disciplines> {
+        {"Commanding Officer", new Disciplines { Command = 1 }},
+        {"Pilot", new Disciplines { Conn = 1 }},
+        {"Security Officer", new Disciplines { Security = 1 }},
+        {"Science Officer", new Disciplines { Science = 1 }},
+        {"Engineer", new Disciplines { Engineering = 1 }},
+        {"Medical Officer", new Disciplines { Medicine = 1 }},
+    };
+
+    private string selectedSpecies = null;
+
+    private void generateAndShow() {
+        var character = generate();
+        Data.Party.Add(character);
+        var id = Data.Party.Count - 1;
+        NavigationManager.NavigateTo($"manage/characters/player/{id}");
+    }
+
+    private PlayerCharacter generate() {
+        // Configure possible options
+        var random = new System.Random();
+        var species = Rulebooks.EnabledRulebooks.SelectMany(book => book.Species).ToList();
+        var talents = Rulebooks.EnabledRulebooks.SelectMany(book => book.Talents).ToList();
+        var environments = Rulebooks.EnabledRulebooks.SelectMany(book => book.Environments).ToList();
+        var upbringings = Rulebooks.EnabledRulebooks.SelectMany(book => book.Upbringings).ToList();
+        var careerEvents = Rulebooks.EnabledRulebooks.SelectMany(book => book.CareerEvents).ToList();
+
+        // Base "character"
+        var character = new PlayerCharacter {
+            Name = name,
+            Rank = ranks.Random(),
+            Species = null,
+            Attributes = new Attributes {
+                Control     = 7,
+                Fitness     = 7,
+                Presence    = 7,
+                Daring      = 7,
+                Insight     = 7,
+                Reason      = 7,          
+            },
+            Disciplines = new Disciplines {
+                Command     = 1,
+                Security    = 1,
+                Science     = 1,
+                Conn        = 1,
+                Engineering = 1,
+                Medicine    = 1,
+            },
+            Equipment = new List<Item>() {
+                Rulebook.Core.Items[0],
+                Rulebook.Core.Items[1],
+                Rulebook.Core.Items[2],
+                Rulebook.Core.Items[3],
+                Rulebook.Core.Items[4]
+            },
+            Values = new List<string>(),
+            Focuses = new List<string>(),
+            Talents = new List<CharacterTalent>(),
+        };
+
+        // Start with a random "Role" to influence our generation
+        Disciplines roleWeight = null;
+        if (!string.IsNullOrEmpty(selectedRole)) {
+            roleWeight = weigths[selectedRole];
+            character.Assignment = selectedRole;
+        } else {
+            var select = weigths.ToList().Random();
+            character.Assignment = select.Key; 
+            roleWeight = select.Value;
+        }
+
+        // Pick a random species
+        if (string.IsNullOrEmpty(selectedSpecies)) {
+            character.Species = species.Random();
+        } else {
+            character.Species = species.Where(species => species.Name == selectedSpecies).FirstOrDefault();
+            if (character.Species == null) {
+                character.Species = species.Random();
+            }
+        }
+        if (character.Species.AttributeModifiers == null) {
+            // Randomly pick 3 attributes to increase
+            character.Attributes.RandomlyIncrement(3);
+        } else {
+            // Increment based on species template
+            character.Attributes.Add(character.Species.AttributeModifiers);
+        }
+
+        // Pick first talent (TODO filter to those that benefit the role first)
+        var firstTalent = talents.Where(talent => talent.CanBeUsedBy(character)).ToList().Random();
+        character.Talents.Add(firstTalent);
+
+        // Pick an environment
+        var playerEnvironment = environments.Where(environment => environment.DisciplineSelectionMask.SharesDisciplinesWith(roleWeight)).ToList().Random();
+        character.Environment = playerEnvironment.ToString();
+        character.Attributes.RandomlyIncrement(playerEnvironment.AttributeSelectionMask ?? character.Species.AttributeModifiers);
+        character.Disciplines.RandomlyIncrement(playerEnvironment.DisciplineSelectionMask);
+        
+        // Pick first value
+        var firstValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        character.Values.Add(firstValue);
+
+        // Pick upbringing
+        bool acceptsUpbringing = random.NextDouble() > 0.5;
+        var playerUpbringing = upbringings.Where(upbringing => upbringing.DisciplineMask.SharesDisciplinesWith(roleWeight)).ToList().Random();
+        character.Attributes.Add(acceptsUpbringing ? playerUpbringing.AcceptAttributeModifier : playerUpbringing.RejectAttributeModifier);
+        character.Disciplines.RandomlyIncrement(playerUpbringing.DisciplineMask);
+        character.Upbringing = playerUpbringing.Name;
+
+        // Pick upbringing focus
+        var upbriningFocus = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        character.Focuses.Add(upbriningFocus);
+
+        // Pick upbringing talent
+        var upbringingTalent = talents.Where(talent => talent.CanBeUsedBy(character)).ToList().Random();
+        character.Talents.Add(upbringingTalent);
+
+        // Starfleet academy
+        var track = tracks.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).Select(kv => kv.Value).ToList().Random();
+        character.Attributes.RandomlyIncrement(3);
+        var majorIndex = random.NextDouble() < 0.7 ? track.firstMajor : track.secondMajor; // bias towards the first major
+        character.Disciplines[majorIndex] += 2;
+        character.Disciplines[random.NextExcept(6, majorIndex)] += 1;
+        character.Disciplines[random.NextExcept(6, majorIndex)] += 1;
+
+        // Starfleet academy value
+        var academyValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        character.Values.Add(academyValue);
+
+        // Starfleet academy focuses
+        var academyFocus1 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var academyFocus2 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var academyFocus3 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        character.Focuses.Add(academyFocus1);
+        character.Focuses.Add(academyFocus2);
+        character.Focuses.Add(academyFocus3);
+
+        // Starfleet academy talent
+        var academyTalent = talents.Where(talent => talent.CanBeUsedBy(character)).ToList().Random();
+        character.Talents.Add(academyTalent);
+
+        // Career value
+        var careerValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        character.Values.Add(careerValue);
+
+        // Career talent
+        var careerTalent = talents.Where(talent => talent.CanBeUsedBy(character)).ToList().Random();
+        character.Talents.Add(careerTalent);
+
+        // Career focuses
+        var careerFocus1 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var careerFocus2 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        character.Focuses.Add(careerFocus1);
+        character.Focuses.Add(careerFocus2);
+
+        // Career events
+        for (var evt = 0; evt < 2; evt ++) {
+            var e = careerEvents.Random();
+            character.Attributes.RandomlyIncrement(e.AttributeSelectionMask);
+            character.Disciplines.RandomlyIncrement(e.DisciplineSelectionMask);
+        }
+
+        // Last value
+        var relationshipValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        character.Values.Add(relationshipValue);
+
+        // Cleanup
+        // Clamp attributes to 12
+        for (var i = 0; i < 6; i++) {
+            if (character.Attributes[i] > 12) {
+                var difference = character.Attributes[i] - 12;
+                character.Attributes[i] = 12;
+                // redistribute to lowest
+                var parts = new int[]{0, 1, 2, 3, 4, 5};
+                for (var j = 0; j < difference; j++) {
+                    var index = parts.OrderBy(index => character.Attributes[i]).First();
+                    character.Attributes[index] += 1;
+                }
+            }
+        }
+        // Clamp disciplines to 5 (4 for the rest)
+        for (var i = 0; i < 6; i++) {
+            if (character.Disciplines[i] > 4) {
+                var difference = character.Attributes[i] - 4;
+                character.Attributes[i] = 4;
+                // redistribute
+                var parts = new int[]{0, 1, 2, 3, 4, 5};
+                for (var j = 0; j < difference; j++) {
+                    var index = parts.OrderBy(index => character.Disciplines[i]).First();
+                    character.Disciplines[index] += 1;
+                }
+            }
+        }
+
+        // Done
+        return character;
+    }
+
+    private class academyTrack {
+        public int firstMajor;
+        public int secondMajor;
+    }
+
+    private Dictionary<Disciplines, academyTrack> tracks = new Dictionary<Disciplines, academyTrack> {
+        {new Disciplines { Command = 1 }, new academyTrack{
+            firstMajor = 0,
+            secondMajor = 3
+        }},
+        {new Disciplines { Security = 1 }, new academyTrack{
+            firstMajor = 1,
+            secondMajor = 4
+        }},
+        {new Disciplines { Science = 1 }, new academyTrack{
+            firstMajor = 2,
+            secondMajor = 5
+        }},
+        {new Disciplines { Conn = 1 }, new academyTrack{
+            firstMajor = 3,
+            secondMajor = 0
+        }},
+        {new Disciplines { Engineering = 1 }, new academyTrack{
+            firstMajor = 4,
+            secondMajor = 1
+        }},
+        {new Disciplines { Medicine = 1 }, new academyTrack{
+            firstMajor = 5,
+            secondMajor = 2
+        }}
+    };
+
+    private List<Rank> ranks = new List<Rank> {
+        Rank.Ensign, Rank.LieutenantJuniorGrade, Rank.Lieutenant, Rank.LieutenantCommander, Rank.Commander
+    };
+
+    private Dictionary<Disciplines, List<string>> values = new Dictionary<Disciplines, List<string>>{
+        {new Disciplines { Command = 1 }, new List<string>{
+            "Doesn’t Believe in a No-Win Situation",
+            "Risk is Our Business",
+            "Seek Out New Life, and New Civilizations",
+            "Compassion through Understanding",
+            "The Drive for Exploration",
+            "The Needs of the Many Outweigh the Needs of the Few, or the One",
+            "A Starship is a Home, it’s Crew a Family",
+            "Most Comfortable in a Crowd",
+            "Serving Starfleet is a Family Tradition",
+            "Indefatigable Confidence",
+            "Proud and Honest",
+            "A Responsibility to the Truth",
+            "Inexperienced and Idealistic",
+            "Fast Ships and Strange New Worlds",
+            "Exploring to Test New Theories",
+            "Seen Too Much to be Surprised",
+            "Holds Everyone to the Highest Standards",
+            "We Endure Hardship, So That Others Do Not Have To",
+            "A Failure to Act Can Be As Dangerous As Acting Rashly",
+        }},
+        {new Disciplines { Security = 1 }, new List<string>{
+            "Risk is Our Business",
+            "Safety in Numbers",
+            "The Needs of the Many Outweigh the Needs of the Few, or the One",
+            "A Starship is a Home, it’s Crew a Family",
+            "Most Comfortable in a Crowd",
+            "Body and Mind Alike Must Be Healthy",
+            "No Stranger to Violence",
+            "Emotion in a Crisis only Makes Things Worse",
+            "Serving Starfleet is a Family Tradition",
+            "Indefatigable Confidence",
+            "Inexperienced and Idealistic",
+            "Always Prepared, Always Vigilant",
+            "Seen Too Much to be Surprised",
+            "The Price of Peace is Vigilance",
+            "Living with Your Ideals is Harder than Dying for Them",
+            "There Is No Higher Calling Than to Serve",
+            "We Endure Hardship, So That Others Do Not Have To",
+            "A Failure to Act Can Be As Dangerous As Acting Rashly",
+        }},
+        {new Disciplines { Science = 1 }, new List<string>{
+            "There’s No Such Thing as The Unknown — Only the Temporarily Hidden",
+            "Logic is the Beginning, not the end, of Wisdom",
+            "Seek Out New Life, and New Civilizations",
+            "Compassion through Understanding",
+            "The Drive for Exploration",
+            "All Ideas must Withstand Scrutiny",
+            "A Starship is a Home, it’s Crew a Family",
+            "Most Comfortable in a Crowd",
+            "Engineer at Heart",
+            "Serving Starfleet is a Family Tradition",
+            "Indefatigable Confidence",
+            "Proud and Honest",
+            "Insatiable Curiosity",
+            "Understands Technology Better Than People",
+            "A Responsibility to the Truth",
+            "Inexperienced and Idealistic",
+            "Precise to a Fault",
+            "Exploring to Test New Theories",
+            "A Theory For Every Situation",
+            "Seen Too Much to be Surprised",
+            "Nothing Better Than Practical Experience",
+        }},
+        {new Disciplines { Conn = 1 }, new List<string>{
+            "Compassion through Understanding",
+            "A Starship is a Home, it’s Crew a Family",
+            "Most Comfortable in a Crowd",
+            "Serving Starfleet is a Family Tradition",
+            "Indefatigable Confidence",
+            "Proud and Honest",
+            "Inexperienced and Idealistic",
+            "Always Prepared, Always Vigilant",
+            "Fast Ships and Strange New Worlds",
+            "Seen Too Much to be Surprised",
+        }},
+        {new Disciplines { Engineering = 1 }, new List<string>{
+            "Risk is Our Business",
+            "Logic is the Beginning, not the end, of Wisdom",
+            "Compassion through Understanding",
+            "All Ideas must Withstand Scrutiny",
+            "A Starship is a Home, it’s Crew a Family",
+            "Most Comfortable in a Crowd",
+            "Serving Starfleet is a Family Tradition",
+            "Indefatigable Confidence",
+            "Proud and Honest",
+            "Insatiable Curiosity",
+            "Understands Technology Better Than People",
+            "Inexperienced and Idealistic",
+            "Threw Out The Handbook and Wrote My Own",
+            "Precise to a Fault",
+            "A Theory For Every Situation",
+            "Seen Too Much to be Surprised",
+            "Nothing Better Than Practical Experience",
+        }},
+        {new Disciplines { Medicine = 1 }, new List<string>{
+            "Compassion through Understanding",
+            "All Ideas must Withstand Scrutiny",
+            "The Needs of the Many Outweigh the Needs of the Few, or the One",
+            "A Starship is a Home, it’s Crew a Family",
+            "Most Comfortable in a Crowd",
+            "Body and Mind Alike Must Be Healthy",
+            "Serving Starfleet is a Family Tradition",
+            "Indefatigable Confidence",
+            "Proud and Honest",
+            "Insatiable Curiosity",
+            "A Responsibility to the Truth",
+            "Inexperienced and Idealistic",
+            "Threw Out The Handbook and Wrote My Own",
+            "Precise to a Fault",
+            "Seen Too Much to be Surprised",
+            "Driven to Ease Suffering",
+            "Rough and Tumble Doctor",
+        }},
+    };
+
+    private Dictionary<Disciplines, List<string>> focuses = new Dictionary<Disciplines, List<string>> {
+        {new Disciplines { Command = 1 }, new List<string>{
+            "Negotiation",
+            "Athletics",
+            "Endurance",
+            "Music",
+            "Observation",
+            "Persuasion",
+            "Composure",
+            "Debate",
+            "Diplomacy",
+            "Starfleet Protocol",
+            "Composure",
+            "Inspiration",
+            "Team Dynamics",
+        }},
+        {new Disciplines { Security = 1 }, new List<string>{
+            "Athletics",
+            "Endurance",
+            "Music",
+            "Observation",
+            "Composure",
+            "Espionage",
+            "Interrogation",
+            "Law",
+            "Starfleet Protocol",
+            "Composure",
+            "Inspiration",
+            "Team Dynamics",
+            "Tactical Systems",
+        }},
+        {new Disciplines { Science = 1 }, new List<string>{
+            "Geology",
+            "Linguistics",
+            "Finances",
+            "Survey",
+            "Athletics",
+            "Endurance",
+            "Astrophysics",
+            "Astronavigation",
+            "Botany",
+            "Cultural Studies",
+            "Music",
+            "Observation",
+            "Psychology",
+            "Philosophy",
+            "Starfleet Protocol",
+            "Composure",
+            "Inspiration",
+            "Team Dynamics",
+            "Warp Dynamics",
+            "Quantum Mechanics",
+        }},
+        {new Disciplines { Conn = 1 }, new List<string>{
+            "Athletics",
+            "Ground Vehicles",
+            "Endurance",
+            "Navigation",
+            "Music",
+            "Observation",
+            "Starfleet Protocol",
+            "Composure",
+            "Extra-Vehicular Activity",
+            "Evasive Action",
+            "Helm Operations",
+            "Small Craft",
+            "Starship Recognition",
+            "Inspiration",
+            "Team Dynamics",
+        }},
+        {new Disciplines { Engineering = 1 }, new List<string>{
+            "Manufacturing",
+            "Metallurgy",
+            "Athletics",
+            "Endurance",
+            "Computers",
+            "Cybernetics",
+            "Holoprogramming",
+            "Music",
+            "Observation",
+            "Starfleet Protocol",
+            "Composure",
+            "Inspiration",
+            "Team Dynamics",
+            "Power Systems",
+            "Transporters",
+            "Replicators",
+        }},
+        {new Disciplines { Medicine = 1 }, new List<string>{
+            "Animal Handing",
+            "Athletics",
+            "Emergency Medicine",
+            "Endurance",
+            "Infectious Diseases",
+            "Toxicology",
+            "Music",
+            "Observation",
+            "Psychology",
+            "Debate",
+            "Starfleet Protocol",
+            "Composure",
+            "Inspiration",
+            "Team Dynamics",
+            "Trauma Surgery",
+            "Virology",
+            "Xenobiology",
+            "Genetics",
+        }}
+    };
+
+}

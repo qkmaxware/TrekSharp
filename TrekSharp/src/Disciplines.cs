@@ -125,6 +125,16 @@ public class Disciplines {
         this[4] = values;
         this[5] = values;
     }
+
+    public bool SharesDisciplinesWith(Disciplines other) {
+        foreach (var discipline in this.Enumerate()) {
+            var disciplineInOther = other[discipline.Index];
+            if (discipline.Value > 0 && disciplineInOther > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 }

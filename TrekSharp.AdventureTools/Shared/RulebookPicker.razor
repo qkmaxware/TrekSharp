@@ -18,7 +18,7 @@
     <div class="w3-padding">
     @foreach (var kv in Rulebooks.AllRulebooks) {
         if (!(kv.Value is UnofficialRulebook)) {
-            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Rulebooks.ToggleRulebook(kv.Key))">@kv.Key</button>
+            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
         }
     }
     </div>
@@ -28,7 +28,7 @@
     <div class="w3-padding">
     @foreach (var kv in Rulebooks.AllRulebooks) {
         if (kv.Value is UnofficialRulebook) {
-            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Rulebooks.ToggleRulebook(kv.Key))">@kv.Key</button>
+            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
         }
     }
     </div>
@@ -38,18 +38,30 @@
 
     private RulebookContainer Rulebooks = new RulebookContainer();
 
+    public Action OnChange;
+
     public IEnumerable<Rulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
+
+    private void Toggle(string name) {
+        Rulebooks.ToggleRulebook(name);
+        if (OnChange != null)
+            OnChange();
+    }
 
     private void EnableAll() {
         foreach (var book in Rulebooks.AllRulebooks) {
             Rulebooks.UseRulebook(book.Key);
         }
+        if (OnChange != null)
+            OnChange();
     }
 
     private void DisableAll() {
         foreach (var book in Rulebooks.AllRulebooks) {
             Rulebooks.DoNotUseRulebook(book.Key);
         }
+        if (OnChange != null)
+            OnChange();
     }
 
 }
