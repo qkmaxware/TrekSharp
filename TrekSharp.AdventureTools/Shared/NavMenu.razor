@@ -1,6 +1,6 @@
 ﻿@inherits AppComponentBase
 
-<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:250px; z-index: 101;" id="mySidebar">
+<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:250px; z-index: 2;" id="mySidebar">
     <div style="min-height: calc(100vh - 48px);">
         <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
         <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
@@ -17,10 +17,27 @@
         </button>
         <div id="CreateAccordion" class="@(CreateMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
             <div class="lbar">
-                <NavLink class="w3-button w3-block" href="new/random/plot" Match="NavLinkMatch.All">
-                    Plot
-                </NavLink>
-                <div class="w3-margin-left">
+                <div class="vertical-space w3-margin-left w3-margin-right">
+                    <div class="row">
+                        <div class="hbar secondary elbow-left knee-left" style="margin-right:10px; width: 10px;"></div>
+                        <div>
+                            Plot
+                        </div>
+                        <div class="hbar secondary knee-right row-fill" style="margin-left:10px;"></div>
+                    </div>
+                    <div class="rbar" style="border-color: #CC99CC !important;">
+                        <NavLink class="w3-button w3-block" href="/new/plot/random" Match="NavLinkMatch.All">
+                            Idea Generator
+                        </NavLink>
+                        <NavLink class="w3-button w3-block" href="/new/plot/writer" Match="NavLinkMatch.All">
+                            Write
+                        </NavLink>
+                    </div>
+                    <div class="row">
+                        <div class="hbar secondary elbow-left knee-left elbow-right row-fill"></div>
+                    </div>
+                </div>
+                <div class="vertical-space w3-margin-left w3-margin-right">
                     <div class="row">
                         <div class="hbar secondary elbow-left knee-left" style="margin-right:10px; width: 10px;"></div>
                         <div>
@@ -131,7 +148,7 @@
 <div class="lcars no-print" style="position: absolute;">
 <div 
     class="w3-button lcars-primary w3-large w3-hide-large w3-padding elbow-right knee-right" 
-    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed; z-index: 100;" 
+    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed; z-index: 1;" 
     @onclick="OpenNavMenu"
 > Menu
 </div>

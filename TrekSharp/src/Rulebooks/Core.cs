@@ -981,7 +981,12 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Cannons",
+                    "Phaser Banks",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 3)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1003,7 +1008,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Cannons",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 4)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1025,7 +1034,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Cannons",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 2)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1047,7 +1060,12 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Cannons",
+                    "Disruptor Banks",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 4)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1069,7 +1087,10 @@ public class CoreRulebook : Rulebook {
                     Engineering = 03,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Banks",
+                    "Plasma Torpedoes",
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1091,7 +1112,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 03,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Banks",
+                    "Plasma Torpedoes",
+                    "Tractor Beam (Strength 5)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1113,7 +1138,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Banks",
+                    "Phaser Arrays",
+                    "Tractor Beam (Strength 3)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1135,7 +1164,12 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 01
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Disruptor Cannon",
+                    "Phased Polaron Bank",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 2)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1157,7 +1191,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 01
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Phased Polaron Array",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 5)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1179,7 +1217,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 03,
                     Medicine = 03
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Cutting Beam",
+                    "Energy Drain Beam",
+                    "Tractor Beam (Strength 5)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1201,7 +1243,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 03,
                     Medicine = 03
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Cutting Beam",
+                    "Energy Drain Beam",
+                    "Tractor Beam (Strength 5)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1223,7 +1269,12 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 02
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Phaser Banks",
+                    "Electro-Magnetic Pulse",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 4)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1245,7 +1296,11 @@ public class CoreRulebook : Rulebook {
                     Engineering = 02,
                     Medicine = 01
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Phaser Banks",
+                    "Photon Torpedoes",
+                    "Tractor Beam (Strength 2)"
+                },
                 StartingTalents = new List<string> {},
             },
             new Spaceframe {
@@ -1267,7 +1322,10 @@ public class CoreRulebook : Rulebook {
                     Engineering = 01,
                     Medicine = 00
                 },
-                Weapons = new List<string> {},
+                Weapons = new List<string> {
+                    "Phaser Banks",
+                    "Photon Torpedoes",
+                },
                 StartingTalents = new List<string> {},
             },
         },

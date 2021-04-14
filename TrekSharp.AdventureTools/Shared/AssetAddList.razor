@@ -78,6 +78,10 @@
     private bool isOpen = false;
     private string CssClass => isOpen ? "w3-show" : "w3-hide";
 
+    public void ChangeAddListener(Action<TItem> action) {
+        this.OnAdd = action;
+    }
+
     public void Open() {
         isOpen = true;
         filter = null;
@@ -90,7 +94,7 @@
     private void add() {
         if (hasItem) {
             Close();
-            if (OnAdd != null) {
+            if (OnAdd != null && item != null) {
                 OnAdd(item);
             }
         }

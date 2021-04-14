@@ -1,65 +1,40 @@
 @page "/calculate/stardate"
 
-<div class="lcars">
-    <div class="container">
-        <!-- Titlebar -->
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span class="w3-xlarge">STARDATE</span>
-            </div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+<LCARS Title="STARDATE">
+    <div class="w3-panel typeface">
+        Stardates across the franchise are inconsistent at best. The calculator below is based on the TNG calculation determined by <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> which starts at Stardate 0 being Friday, July 5, 2318, around noon. Visit <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> for more calculators including those for the original series and the movie era.
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            TO STARDATE
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+        <div class="w3-half w3-padding">
+            <input type="date" style="width:100%;" class="w3-grey" required @bind="to_stardate" />
         </div>
-        <!-- Body -->
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content Pane -->
-            <div class="w3-padding row-fill">
-                <div class="w3-panel typeface">
-                    Stardates across the franchise are inconsistent at best. The calculator below is based on the TNG calculation determined by <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> which starts at Stardate 0 being Friday, July 5, 2318, around noon. Visit <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> for more calculators including those for the original series and the movie era.
-                </div>
-                <div class="row">
-                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                    <span class="spacer typeface text-secondary w3-large">
-                        TO STARDATE
-                    </span>
-                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                </div>
-                <div class="w3-row w3-margin-bottom">
-                    <div class="w3-half w3-padding">
-                        <input type="date" style="width:100%;" class="w3-grey" required @bind="to_stardate" />
-                    </div>
-                    <div class="w3-half w3-padding">
-                        <input type="number" style="width:100%;" readonly value="@stardate">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                    <span class="spacer typeface text-secondary w3-large">
-                        FROM STARDATE
-                    </span>
-                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                </div>
-                <div class="w3-row">
-                    <div class="w3-half w3-padding">
-                        <input type="number" style="width:100%;" class="w3-grey" required @bind="to_datetime" />
-                    </div>
-                    <div class="w3-half w3-padding">
-                        <input type="text" style="width:100%;" readonly value="@datetime">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer -->
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        <div class="w3-half w3-padding">
+            <input type="number" style="width:100%;" readonly value="@stardate">
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            FROM STARDATE
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-row">
+        <div class="w3-half w3-padding">
+            <input type="number" style="width:100%;" class="w3-grey" required @bind="to_datetime" />
+        </div>
+        <div class="w3-half w3-padding">
+            <input type="text" style="width:100%;" readonly value="@datetime">
+        </div>
+    </div>
+</LCARS>
 
 @code {
     DateTime to_stardate = new DateTime(2371, 1, 1);

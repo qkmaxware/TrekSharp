@@ -1,0 +1,472 @@
+@page "/new/plot/writer"
+@inject AppData Data
+
+<PrintNotification/>
+
+<LCARS Title="PLOT WRITER">
+    <!-- Title Page -->
+    <div class="print-A4" style="position:relative;">
+        <div class="print lcars typeface w3-center">
+            <h1 class="w3-jumbo">
+                STAR TREK
+            </h1>
+            <h2 style="w3-xxxlarge">
+                ADVENTURES
+            </h2>
+        </div>
+        <div class="no-print">
+            <div class="row">
+                <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+                <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                    <span>MISSION DETAILS</span>
+                </div>
+                <div class="hbar secondary knee-right elbow-right row-fill"></div>
+            </div>
+            <div class="row w3-padding">
+                <span class="hbar elbow-left knee-left w3-padding">Attribution</span>
+                <span class="hbar row-fill row w3-row" style="margin-left: 10px;">
+                    <input type="text" class="w3-half" @bind=mission.MissionTitle placeholder="Title"/>
+                    <input type="text" class="w3-half" @bind=mission.MissionAuthor placeholder="Author"/>
+                </span>
+            </div>
+            <div class="w3-padding">
+                <div class="w3-padding knee-left knee-right elbow-left elbow-right lcars-primary">
+                    <div>
+                        Synopsis
+                    </div>
+                    <div>
+                        <textarea class="text-primary" @bind=mission.Synopsis style="width: 100%; resize: vertical; background-color: black;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="print w3-center lcars typeface" style="position:absolute; left: 0; right: 0; bottom: 0;">
+            <h3 class="w3-xxlarge" style="color: black;">
+                @mission.MissionTitle
+            </h3>
+            <h4 class="w3-xlarge" style="color: black;">
+                @mission.MissionAuthor (@(DateTime.Now.Year))
+            </h4>
+        </div>
+    </div>
+    <!-- Table of Contents -->
+    <div class="print print-A4">
+        <!-- Titlebar -->
+        <div class="row">
+            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">@mission.MissionTitle</span>
+            </div>
+            <div class="hbar secondary knee-right elbow-right row-fill"></div>
+        </div>
+        <div class="row w3-padding">
+            <div class="hbar knee-left elbow-left primary" style="width: 40px;"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span >By @mission.MissionAuthor</span>
+            </div>
+            <div class="hbar primary knee-right elbow-right row-fill"></div>
+        </div>
+        <!-- TOC -->
+        <div class="w3-margin">
+            <b class="w3-large">Content</b>
+        </div>
+        <ul class="w3-ul w3-right-align">
+            <li><a href="#synopsis">SYNOPSIS</a></li>
+            @for(var i = 0; i < mission.Acts.Count; i++) {
+                <li><a href="#a-@(i)">ACT @(i + 1): @mission.Acts[i].Title?.ToUpper()</a></li>
+            }
+            <li><a href="#conclusion">CONCLUSION</a></li>
+            <li><a href="#characters">PRE-GENERATED CHARACTERS</a></li>
+        </ul>
+    </div>
+    <!-- Synopsis -->
+    <a name="synopsis"></a>
+    <div class="print">
+        <div class="row">
+            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">SYNOPSIS</span>
+            </div>
+            <div class="hbar secondary knee-right elbow-right row-fill"></div>
+        </div>
+        <div class="w3-padding two-column-text" style="white-space: pre-wrap;">
+            @mission.Synopsis
+        </div>
+    </div>
+    <!-- Acts -->
+    <div class="no-print">
+        <div class="row">
+            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span>ACTS</span>
+            </div>
+            <div class="hbar secondary knee-right elbow-right row-fill"></div>
+        </div>
+    </div>
+    @for (var i = 0; i < mission.Acts.Count; i++) {
+        var scene = mission.Acts[i];
+        <a name="a-@(i)"></a>
+        <div class="no-print">
+            <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-border-primary">
+                <div class="w3-row w3-padding">
+                    <div class="w3-col s6">
+                        <b>@(i + 1)</b>
+                    </div>
+                    <div class="w3-col s6 w3-right-align">
+                        <button class="w3-red w3-medium" @onclick=@(() => mission.Acts.Remove(scene))>Delete</button>
+                    </div>
+                </div>
+                <div class="no-print">
+                    <div class="row">
+                        <div class="hbar knee-left elbow-left highlight" style="width: 56px;"></div>
+                        <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                            <span>ACT DETAILS</span>
+                        </div>
+                        <div class="hbar highlight knee-right elbow-right row-fill"></div>
+                    </div>
+                </div>
+                <div class="row w3-padding">
+                    <span class="hbar elbow-left knee-left w3-padding secondary">Title</span>
+                    <span class="hbar row-fill row secondary" style="margin-left: 10px;">
+                        <input type="text" style="width:100%;" @bind=scene.Title placeholder="Title"/>
+                    </span>
+                </div>
+                <div class="w3-padding">
+                    <div class="w3-padding knee-left knee-right elbow-left elbow-right lcars-secondary">
+                        <div>
+                            Description
+                        </div>
+                        <div>
+                            <textarea class="text-primary" @bind=scene.Description style="width: 100%; resize: vertical; background-color: black;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="no-print">
+                    <div class="row">
+                        <div class="hbar knee-left elbow-left highlight" style="width: 56px;"></div>
+                        <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                            <span>PARTICIPANTS</span>
+                        </div>
+                        <div class="hbar highlight knee-right elbow-right row-fill"></div>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-third">
+                        <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-secondary">
+                            <div>
+                                <b>Ships</b>
+                                <button class="w3-button" @onclick=@(() => openAddShipList(scene))>+</button>
+                            </div>
+                            <ul class="w3-ul">
+                                @foreach (var name in scene.LinkedShips) {
+                                    <li class="w3-display-container">
+                                        @name
+                                        <span class="w3-button w3-display-right" @onclick=@(() => scene.LinkedShips.Remove(name))>&times;</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w3-third ">
+                        <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-secondary">
+                            <div>
+                                <b>Support</b>
+                                <button class="w3-button" @onclick=@(() => openAddSupport(scene))>+</button>
+                            </div>
+                            <ul class="w3-ul">
+                                @foreach (var name in scene.LinkedSupports) {
+                                    <li class="w3-display-container">
+                                        @name
+                                        <span class="w3-button w3-display-right" @onclick=@(() => scene.LinkedSupports.Remove(name))>&times;</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w3-third">
+                        <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-secondary">
+                            <div>
+                                <b>NPC</b>
+                                <button class="w3-button" @onclick=@(() => openAddNpc(scene))>+</button>
+                            </div>
+                            <ul class="w3-ul">
+                                @foreach (var name in scene.LinkedNPCs) {
+                                    <li class="w3-display-container">
+                                        @name
+                                        <span class="w3-button w3-display-right" @onclick=@(() => scene.LinkedNPCs.Remove(name))>&times;</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="print">
+            <div class="row">
+                <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+                <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                    <span class="w3-xlarge">ACT @(i+1): @mission.Acts[i].Title?.ToUpper()</span>
+                </div>
+                <div class="hbar secondary knee-right elbow-right row-fill"></div>
+            </div>
+            <div class="w3-padding two-column-text" style="white-space: pre-wrap;">
+                @scene.Description
+            </div>
+            <div class="w3-row">
+                <!-- Ships -->
+                @foreach (var vessel in uniqueShipsInScene(scene)) {
+                    <div class="w3-padding w3-col s6" style="page-break-inside: avoid;">
+                        <div>
+                            <div class="lcars-primary w3-padding w3-large knee-left knee-right" style="display: inline-block;">
+                                @vessel.Frame.Name
+                            </div>
+                        </div>
+                        <div class="knee-right elbow-left elbow-right lcars-border-primary">
+                            <div class="w3-row">
+                                <div class="w3-col s6">
+                                    <span class="text-primary">Power:</span> @vessel.Power
+                                </div>
+                                <div class="w3-col s6">
+                                    <span class="text-primary">Scale:</span> @vessel.Scale
+                                </div>
+                            </div>
+                            <div class="w3-row">
+                                <div class="w3-col s6">
+                                    <span class="text-primary">Shields:</span> @vessel.Shields
+                                </div>
+                                <div class="w3-col s6">
+                                    <span class="text-primary">Resistance:</span> @vessel.Resistance
+                                </div>
+                            </div>
+                            <SystemsDrawer Systems=vessel.Systems></SystemsDrawer>
+                            <DisciplineDrawer Disciplines=vessel.Departments></DisciplineDrawer>
+                            <ShipWeaponsDrawer Ship=vessel></ShipWeaponsDrawer>
+                        </div>
+                    </div>
+                }
+                <!-- Supporting Cast -->
+                @foreach (var character in uniqueSupportsInScene(scene)) {
+                    <div class="w3-padding w3-col s6" style="page-break-inside: avoid;">
+                        <div>
+                            <div class="lcars-primary w3-padding w3-large knee-left knee-right" style="display: inline-block;">
+                                @character.Rank @character.Name
+                            </div>
+                        </div>
+                        <div class="knee-right elbow-left elbow-right lcars-border-primary">
+                            <div class="w3-row-padding">
+                                <span class="text-primary">Species:</span> @character.Species?.Name
+                            </div>
+                            <InjuryDrawer Player="character"/>
+                            <AttributeDrawer Attributes="character.Attributes"/>
+                            <DisciplineDrawer Disciplines="character.Disciplines"/>
+                            <FocusDrawer Focuses=character.Focuses></FocusDrawer>
+                        </div>
+                    </div>
+                }
+                <!-- Enemy NPCs -->
+                @foreach (var character in uniqueNpcsInScene(scene)) {
+                    <div class="w3-padding w3-col s6" style="page-break-inside: avoid;">
+                        <div>
+                            <div class="lcars-primary w3-padding w3-large knee-left knee-right" style="display: inline-block;">
+                                @character.Name
+                            </div>
+                        </div>
+                        <div class="knee-right elbow-left elbow-right lcars-border-primary">
+                            <div class="w3-row-padding">
+                                &nbsp;
+                            </div>
+                            <InjuryDrawer Player="character"/>
+                            <AttributeDrawer Attributes="character.Attributes"/>
+                            <DisciplineDrawer Disciplines="character.Disciplines"/>
+                            <ListDrawer Title="SPECIAL RULES" List="character.SpecialRules"/>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <div class="no-print w3-right-align w3-padding">
+        <button class="w3-blue" @onclick="addAct">New Act</button>
+    </div>
+    <!-- Conclusion -->
+    <a name="conclusion"></a>
+    <div class="no-print">
+        <div class="row">
+            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span>CONCLUSION</span>
+            </div>
+            <div class="hbar secondary knee-right elbow-right row-fill"></div>
+        </div>
+        <div class="w3-padding">
+            <div class="w3-padding knee-left knee-right elbow-left elbow-right lcars-primary">
+                <div>
+                    Concluding Remarks
+                </div>
+                <div>
+                    <textarea class="text-primary" @bind=mission.Conclusion style="width: 100%; resize: vertical; background-color: black;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="print">
+        <div class="row">
+            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">CONCLUSION</span>
+            </div>
+            <div class="hbar secondary knee-right elbow-right row-fill"></div>
+        </div>
+        <div class="w3-padding two-column-text" style="white-space: pre-wrap;">
+            @mission.Conclusion
+        </div>
+    </div>
+    <!-- Player Characters -->
+    <div class="pagebreak"></div>
+    <a name="characters"></a>
+    <div class="no-print">
+    </div>
+    <div class="print">
+        <div class="row">
+            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">PRE-GENERATED CHARACTERS</span>
+            </div>
+            <div class="hbar secondary knee-right elbow-right row-fill"></div>
+        </div>
+        @foreach (var character in Data.Party) {
+            <div class="w3-margin" style="page-break-inside: avoid;">
+                <div>
+                    <div class="lcars-primary w3-padding w3-large knee-left knee-right" style="display: inline-block;">
+                        @character.Rank @character.Name [@character.Assignment]
+                    </div>
+                </div>
+                <div class="knee-right elbow-left elbow-right lcars-border-primary">
+                    <div class="w3-padding">
+                        <div class="w3-row">
+                            <div class="w3-col s6">
+                                <div class="row">
+                                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                        TRAITS 
+                                    </div>
+                                    <div class="hbar row-fill elbow-right knee-right"></div>
+                                </div>
+                                <div class="w3-row w3-padding">
+                                    @character.Species
+                                </div>
+                                <InjuryDrawer Player="character"/>
+                                <AttributeDrawer Attributes="character.Attributes"/>
+                                <DisciplineDrawer Disciplines="character.Disciplines"/>
+                                <ValueDrawer Values="character.Values"/>
+                            </div>
+                            <div class="w3-col s6">
+                                <div class="w3-margin-bottom">
+                                    <div class="row w3-margin-bottom">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            TALENTS 
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right"></div>
+                                    </div>
+                                    <div class="w3-row w3-margin-bottom">
+                                        <ul class="w3-ul w3-small">
+                                            @foreach (var characterTalent in character.Talents) {
+                                                <li><b>@characterTalent.Name</b> <small>@characterTalent.Description</small></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <EquipmentDrawer Player="character"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</LCARS>
+<div class="pagebreak"></div>
+
+<AssetAddList Store=Data.NPCShips ListingFunction=@((item) => item.Name) @ref=addShip></AssetAddList>
+<AssetAddList Store=Data.Supports ListingFunction=@((item) => item.Name) @ref=addSupport></AssetAddList>
+<AssetAddList Store=Data.NPCs ListingFunction=@((item) => item.Name) @ref=addNpc></AssetAddList>
+
+
+@code {
+    AssetAddList<Vessel> addShip;
+    AssetAddList<SupportCharacter> addSupport;
+    AssetAddList<NpcCharacter> addNpc;
+
+    public Mission mission => Data.Mission;
+    private void addAct() {
+        mission.Acts.Add(new Act());
+    }
+
+    private IEnumerable<Vessel> uniqueShipsInScene(Act scene) {
+        HashSet<string> visited = new HashSet<string>();
+        foreach (var name in scene.LinkedShips) {
+            var vessel = Data.NPCShips.Where(ship => ship.Name == name).FirstOrDefault();
+            if (vessel == null)
+                continue;
+
+            var simpleName = vessel.Frame.Name;
+            if (!visited.Contains(simpleName)) {
+                visited.Add(simpleName);
+                yield return vessel;
+            }
+        }
+    }
+
+    private IEnumerable<SupportCharacter> uniqueSupportsInScene(Act scene) {
+        foreach (var name in scene.LinkedSupports) {
+            var support = Data.Supports.Where(support => support.Name == name).FirstOrDefault();
+            if (support == null)
+                continue;
+            yield return support;
+        }
+    }
+
+    private IEnumerable<NpcCharacter> uniqueNpcsInScene(Act scene) {
+        HashSet<string> visited = new HashSet<string>();
+        foreach (var name in scene.LinkedNPCs) {
+            var npc = Data.NPCs.Where(c => c.Name == name).FirstOrDefault();
+            if (npc == null)
+                continue;
+
+            var simpleName = name.Split('(', 2)[0].Trim();
+            if (!visited.Contains(simpleName)) {
+                visited.Add(simpleName);
+                yield return npc;
+            }
+        }
+    }
+
+    private void openAddShipList(Act scene) {
+        addShip.ChangeAddListener((ship) => linkShip(scene, ship));
+        addShip.Open();
+    }
+    private void linkShip(Act scene, Vessel vessel) {
+        scene.LinkedShips.Add(vessel.Name);
+        StateHasChanged();
+    }
+
+    private void openAddSupport(Act scene) {
+        addSupport.ChangeAddListener((support) => linkSupport(scene, support));
+        addSupport.Open();
+    }
+    private void linkSupport(Act scene, SupportCharacter vessel) {
+        scene.LinkedSupports.Add(vessel.Name);
+        StateHasChanged();
+    }
+
+    private void openAddNpc(Act scene) {
+        addNpc.ChangeAddListener((npc) => linkNpc(scene, npc));
+        addNpc.Open();
+    }
+    private void linkNpc(Act scene, NpcCharacter vessel) {
+        scene.LinkedNPCs.Add(vessel.Name);
+        StateHasChanged();
+    }
+}

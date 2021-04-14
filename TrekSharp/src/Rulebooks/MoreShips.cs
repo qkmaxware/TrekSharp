@@ -315,4 +315,20 @@ public class MoreAlphaCannonShips : UnofficialRulebook {
 
 }
 
+public class More32ndCenturyShips : UnofficialRulebook {
+
+    private More32ndCenturyShips() {}
+    public static readonly More32ndCenturyShips Instance = new More32ndCenturyShips {
+        Spaceframes = new List<Spaceframe>{
+            /*new Spaceframe {
+                Name = "Janeway Class"
+            },
+            new Spaceframe {
+                Name = "Eisenburg Class"
+            }*/
+        }
+    };
+
+}
+
 }

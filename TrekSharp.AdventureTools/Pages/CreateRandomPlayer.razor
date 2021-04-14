@@ -1,90 +1,64 @@
 @page "/new/player/random"
 @inherits AppComponentBase
 
-<div class="lcars">
-    <div class="container">
-        <!-- Titlebar -->
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span class="w3-xlarge">NEW PLAYER</span>
-            </div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+<LCARS Title="RANDOM PLAYER">
+    <RulebookPicker @ref="Rulebooks"/>
+
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            RANDOMIZER SETTINGS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-center w3-padding" style="text-align: left!important;">
+        <p>
+            Every character needs a name.
+        </p>
+        <div class="row w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Name</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <input type="text" class="w3-padding row-fill"  @bind="name"/>
+            </span>
         </div>
-        <!-- Body -->
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content Pane -->
-            <div class="w3-padding row-fill">
-                <RulebookPicker @ref="Rulebooks"/>
 
-                <div class="row">
-                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                    <span class="spacer typeface text-secondary w3-large">
-                        RANDOMIZER SETTINGS
-                    </span>
-                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                </div>
-                <div class="w3-center w3-padding" style="text-align: left!important;">
-                    <p>
-                        Every character needs a name.
-                    </p>
-                    <div class="row w3-padding">
-                        <span class="hbar elbow-left knee-left w3-padding">Name</span>
-                        <span class="hbar row-fill row" style="margin-left: 10px;">
-                            <input type="text" class="w3-padding row-fill"  @bind="name"/>
-                        </span>
-                    </div>
-
-                    <p>
-                        You can choose what species you want this character to be a member of. This option is desirable if if have a particular species and name in mind.
-                    </p>
-                    <div class="row  w3-padding">
-                        <span class="hbar elbow-left knee-left w3-padding">Species</span>
-                        <span class="hbar row-fill row" style="margin-left: 10px;">
-                            <select class="w3-black row-fill" @bind="selectedSpecies">
-                                <option value="">ANY</option>
-                                @if (this.Rulebooks != null) {
-                                    foreach (var species in this.Rulebooks.EnabledRulebooks.SelectMany(book => book.Species)) {
-                                        <option value="@species.Name">@species.Name</option>
-                                    }
-                                }
-                            </select>
-                        </span>
-                    </div>
-
-                    <p>
-                        What type of role do you want this character to fullfill? Leave as "ANY" for the role to be randomly chosen as well.
-                    </p>
-                    <div class="row  w3-padding">
-                        <span class="hbar elbow-left knee-left w3-padding">Role</span>
-                        <span class="hbar row-fill row" style="margin-left: 10px;">
-                            <select class="w3-black row-fill" @bind="selectedRole">
-                                <option value="">ANY</option>
-                                @foreach (var role in this.weigths) {
-                                    <option value="@role.Key">@role.Key</option>
-                                }
-                            </select>
-                        </span>
-                    </div>
-
-                    <div class="w3-right-align">
-                        <button class="w3-button w3-blue" @onclick="generateAndShow"> Generate New </button>
-                    </div>
-                </div>
-                
-            </div>
+        <p>
+            You can choose what species you want this character to be a member of. This option is desirable if if have a particular species and name in mind.
+        </p>
+        <div class="row  w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Species</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <select class="w3-black row-fill" @bind="selectedSpecies">
+                    <option value="">ANY</option>
+                    @if (this.Rulebooks != null) {
+                        foreach (var species in this.Rulebooks.EnabledRulebooks.SelectMany(book => book.Species)) {
+                            <option value="@species.Name">@species.Name</option>
+                        }
+                    }
+                </select>
+            </span>
         </div>
-        <!-- Footer -->
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+
+        <p>
+            What type of role do you want this character to fullfill? Leave as "ANY" for the role to be randomly chosen as well.
+        </p>
+        <div class="row  w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Role</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <select class="w3-black row-fill" @bind="selectedRole">
+                    <option value="">ANY</option>
+                    @foreach (var role in this.weigths) {
+                        <option value="@role.Key">@role.Key</option>
+                    }
+                </select>
+            </span>
+        </div>
+
+        <div class="w3-right-align">
+            <button class="w3-button w3-blue" @onclick="generateAndShow"> Generate New </button>
         </div>
     </div>
-</div>
+</LCARS>
 
 @code {
 
@@ -192,9 +166,11 @@
                 character.Species = species.Random();
             }
         }
+        var rng_attr_mask = new Attributes(0);
+        rng_attr_mask.RandomlyIncrement(3);
         if (character.Species.AttributeModifiers == null) {
             // Randomly pick 3 attributes to increase
-            character.Attributes.RandomlyIncrement(3);
+            character.Attributes.Add(rng_attr_mask);
         } else {
             // Increment based on species template
             character.Attributes.Add(character.Species.AttributeModifiers);
@@ -207,7 +183,7 @@
         // Pick an environment
         var playerEnvironment = environments.Where(environment => environment.DisciplineSelectionMask.SharesDisciplinesWith(roleWeight)).ToList().Random();
         character.Environment = playerEnvironment.ToString();
-        character.Attributes.RandomlyIncrement(playerEnvironment.AttributeSelectionMask ?? character.Species.AttributeModifiers);
+        character.Attributes.RandomlyIncrement(playerEnvironment.AttributeSelectionMask ?? character.Species.AttributeModifiers ?? rng_attr_mask);
         character.Disciplines.RandomlyIncrement(playerEnvironment.DisciplineSelectionMask);
         
         // Pick first value

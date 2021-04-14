@@ -11,6 +11,16 @@
     content: "\\pagebreak";
 }
 
+.two-column-text {
+ -webkit-column-count: 2;
+    -moz-column-count: 2;
+         column-count: 2;
+
+ -webkit-column-gap: 20px;
+    -moz-column-gap: 20px;
+         column-gap: 20px; 
+}
+
 .page-A4 {
     width: 210mm;
     height: 279mm;
@@ -18,7 +28,7 @@
 
 @media print {
     .no-print {
-        display: none;
+        display: none !important;
     }
 
     .print-small {

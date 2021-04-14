@@ -1,53 +1,28 @@
-@page "/new/random/plot"
+@page "/new/plot/random"
 @using System.Text.RegularExpressions
 
-<div class="lcars">
-    <div class="container">
-        <!-- Titlebar -->
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span class="w3-xlarge">PLOT</span>
-            </div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-        <!-- Body -->
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content Pane -->
-            <div class="w3-padding row-fill">
-                <RulebookPicker @ref="Rulebooks"/>
+<LCARS Title="PLOT IDEA GENERATOR">
+    <RulebookPicker @ref="Rulebooks"/>
 
-                <div class="row">
-                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                    <span class="spacer typeface text-secondary w3-large">
-                        MISSION STATEMENT
-                    </span>
-                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                </div>
-                <div class="w3-center w3-padding">
-                    <span class="spacer typeface text-primary w3-large">
-                        INTRO
-                    </span>
-                    <div class="w3-container w3-padding w3-margin">@plotSetup</div>
-                    <span class="spacer typeface text-primary w3-large">
-                        INCITING INCIDENT
-                    </span>
-                    <div class="w3-container w3-padding w3-margin">@incitingIncident</div>
-                    <button class="w3-button w3-blue" @onclick="RegenerateAll"> Generate New </button>
-                </div>
-            </div>
-        </div>
-        <!-- Footer -->
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            MISSION STATEMENT
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
     </div>
-</div>
+    <div class="w3-center w3-padding">
+        <span class="spacer typeface text-primary w3-large">
+            INTRO
+        </span>
+        <div class="w3-container w3-padding w3-margin">@plotSetup</div>
+        <span class="spacer typeface text-primary w3-large">
+            INCITING INCIDENT
+        </span>
+        <div class="w3-container w3-padding w3-margin">@incitingIncident</div>
+        <button class="w3-button w3-blue" @onclick="RegenerateAll"> Generate New </button>
+    </div>
+</LCARS>
 
 @code {
     RulebookPicker Rulebooks;

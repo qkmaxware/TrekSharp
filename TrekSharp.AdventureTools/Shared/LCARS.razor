@@ -1,0 +1,34 @@
+<div class="lcars">
+    <div class="container">
+        <!-- Titlebar -->
+        <div class="row no-print">
+            <div class="hbar knee-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary"></div>
+            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                <span class="w3-xlarge">@Title</span>
+            </div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+        <!-- Body -->
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="secondary" style="width: 120px"></div>
+            <!-- Content Pane -->
+            <div class="w3-padding row-fill">
+                @ChildContent
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="row no-print">
+            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
+            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
+            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title {get; set;}
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+}

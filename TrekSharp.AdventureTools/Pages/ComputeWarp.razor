@@ -1,181 +1,156 @@
 @page "/calculate/warpspeed"
 @using Qkmaxware.Astro
 
-<div class="lcars">
-    <div class="container">
-        <!-- Titlebar -->
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span class="w3-xlarge">WARP SPEED</span>
-            </div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+<LCARS title="WARP SPEED">
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            WARP FACTOR
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-row w3-margin-bottom">
+        <div class="w3-quarter w3-padding">
+            <input type="number" class="w3-grey" style="width:100%;" @bind="factor">
         </div>
-        <!-- Body -->
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content Pane -->
-            <div class="w3-padding row-fill">
-                <div class="row">
-                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                    <span class="spacer typeface text-secondary w3-large">
-                        WARP FACTOR
-                    </span>
-                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                </div>
-                <div class="w3-row w3-margin-bottom">
-                    <div class="w3-quarter w3-padding">
-                        <input type="number" class="w3-grey" style="width:100%;" @bind="factor">
-                    </div>
-                    <div class="w3-quarter w3-padding">
-                        <select class="w3-grey" @bind="scale" style="width:100%; border: 1px solid #FF9104; padding-top: 2px; padding-bottom: 2px;">
-                            <option>TNG</option>
-                            <option>TOS</option>
-                        </select>
-                    </div>
-                    <div class="w3-quarter w3-padding">
-                        <input type="text" style="width:100%;" readonly value="@(warp.LightSpeedFactor()) C">
-                    </div>
-                    <div class="w3-quarter w3-padding">
-                        <input type="text" style="width:100%;" readonly value="@(warp.MetresPerSecond()) m/s">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                    <span class="spacer typeface text-secondary w3-large">
-                        TIME OF FLIGHT
-                    </span>
-                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                </div>
-                <div class="w3-margin-bottom">
-                    <table class="w3-table">
-                        <thead>
-                            <th>Distance (LY)</th>
-                            <th>Time Of Flight</th>
-                        </thead>
-                        <tbody>
-                            @for (var i = 1; i <= lightyears; i++) {
-                                <tr>
-                                    <td>@i</td>
-                                    <td>@timeString(i)</td>
-                                </tr>
-                            }
-                            <tr>
-                                <td><input type="number" style="width:100%;" @bind="customLightyears"><br></td>
-                                <td>@timeString(customLightyears)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="row">
-                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                    <span class="spacer typeface text-secondary w3-large">
-                        FLIGHT PLANNER
-                    </span>
-                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-                </div>
-                <div>
-                    <p>
-                        The stellar distances used here are computed using their J2000 Epoch values.
-                    </p>
-                    @if (travelRoute.Count < 2) {
-                    <div>
-                        <button @onclick="addStop" style="font-size: medium">Start Planning</button>
-                    </div>
-                    } else {
-                    <div>
-                        <button @onclick="clearStops" style="font-size: medium">Reset</button>
-                        <div style="display: inline-block">
-                            <span class="typeface text-secondary">
-                                DEPARTURE
-                            </span><br>
-                            <p>
-                                <select style="background-color: black; width: 100%;" @bind="travelRoute[0]">
-                                    @foreach (var star in Stars){
-                                        <option value="@star.Name">@star.Name</option>
-                                    }
-                                </select>
-                            </p>
-                        </div>
-                        @for (var i = 1; i < travelRoute.Count; i++) {
-                        var row = i;
-                        var ly = Math.Round(getStar(travelRoute[row - 1]).DistanceTo(getStar(travelRoute[row])).TotalLightYears, 2, MidpointRounding.ToEven);
-                        <span>&rarr;</span>
-                        @if(row == travelRoute.Count - 1) {
-                        <div style="display: inline-block">
-                            <button @onclick="addStop" style="font-size: medium">+ Layover</button>
-                        </div>
-                        <span>&rarr;</span>
-                        }
-                        <div style="display: inline-block">
-                            <span class="typeface text-secondary">
-                                @if(row == travelRoute.Count - 1) {
-                                    <text>DESTINATION</text>
-                                } else {
-                                    <text>STOP @i</text>
-                                }
-                            </span>
-                            <span class="w3-small">
-                                + @ly LY
-                            </span>
-                            <br>
-                            <p>
-                                <select style="background-color: black; width: 100%;" @bind="travelRoute[row]">
-                                    @foreach (var star in Stars){
-                                        <option value="@star.Name">@star.Name</option>
-                                    }
-                                </select><br>
-                            </p>
-                        </div>
-                        }
-                    </div>
-                    <div style="margin-left: 60px;">
-                        <span class="typeface text-secondary">
-                            TRIP SUMMARY
-                        </span><br>
-                        <table class="w3-table w3-hoverable">
-                            <tr>
-                                <td>
-                                    STOPS
-                                </td>
-                                <td>
-                                    @travelRoute.Count
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    DISTANCE
-                                </td>
-                                <td>
-                                    @totalDistance() LY
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    TRAVEL TIME
-                                </td>
-                                <td>
-                                    @timeString(totalDistance())
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    }
-                </div>
-            </div>
+        <div class="w3-quarter w3-padding">
+            <select class="w3-grey" @bind="scale" style="width:100%; border: 1px solid #FF9104; padding-top: 2px; padding-bottom: 2px;">
+                <option>TNG</option>
+                <option>TOS</option>
+            </select>
         </div>
-        <!-- Footer -->
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+        <div class="w3-quarter w3-padding">
+            <input type="text" style="width:100%;" readonly value="@(warp.LightSpeedFactor()) C">
+        </div>
+        <div class="w3-quarter w3-padding">
+            <input type="text" style="width:100%;" readonly value="@(warp.MetresPerSecond()) m/s">
         </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            TIME OF FLIGHT
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div class="w3-margin-bottom">
+        <table class="w3-table">
+            <thead>
+                <th>Distance (LY)</th>
+                <th>Time Of Flight</th>
+            </thead>
+            <tbody>
+                @for (var i = 1; i <= lightyears; i++) {
+                    <tr>
+                        <td>@i</td>
+                        <td>@timeString(i)</td>
+                    </tr>
+                }
+                <tr>
+                    <td><input type="number" style="width:100%;" @bind="customLightyears"><br></td>
+                    <td>@timeString(customLightyears)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            FLIGHT PLANNER
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <p>
+            The stellar distances used here are computed using their J2000 Epoch values.
+        </p>
+        @if (travelRoute.Count < 2) {
+        <div>
+            <button @onclick="addStop" style="font-size: medium">Start Planning</button>
+        </div>
+        } else {
+        <div>
+            <button @onclick="clearStops" style="font-size: medium">Reset</button>
+            <div style="display: inline-block">
+                <span class="typeface text-secondary">
+                    DEPARTURE
+                </span><br>
+                <p>
+                    <select style="background-color: black; width: 100%;" @bind="travelRoute[0]">
+                        @foreach (var star in Stars){
+                            <option value="@star.Name">@star.Name</option>
+                        }
+                    </select>
+                </p>
+            </div>
+            @for (var i = 1; i < travelRoute.Count; i++) {
+            var row = i;
+            var ly = Math.Round(getStar(travelRoute[row - 1]).DistanceTo(getStar(travelRoute[row])).TotalLightYears, 2, MidpointRounding.ToEven);
+            <span>&rarr;</span>
+            @if(row == travelRoute.Count - 1) {
+            <div style="display: inline-block">
+                <button @onclick="addStop" style="font-size: medium">+ Layover</button>
+            </div>
+            <span>&rarr;</span>
+            }
+            <div style="display: inline-block">
+                <span class="typeface text-secondary">
+                    @if(row == travelRoute.Count - 1) {
+                        <text>DESTINATION</text>
+                    } else {
+                        <text>STOP @i</text>
+                    }
+                </span>
+                <span class="w3-small">
+                    + @ly LY
+                </span>
+                <br>
+                <p>
+                    <select style="background-color: black; width: 100%;" @bind="travelRoute[row]">
+                        @foreach (var star in Stars){
+                            <option value="@star.Name">@star.Name</option>
+                        }
+                    </select><br>
+                </p>
+            </div>
+            }
+        </div>
+        <div style="margin-left: 60px;">
+            <span class="typeface text-secondary">
+                TRIP SUMMARY
+            </span><br>
+            <table class="w3-table w3-hoverable">
+                <tr>
+                    <td>
+                        STOPS
+                    </td>
+                    <td>
+                        @travelRoute.Count
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        DISTANCE
+                    </td>
+                    <td>
+                        @totalDistance() LY
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        TRAVEL TIME
+                    </td>
+                    <td>
+                        @timeString(totalDistance())
+                    </td>
+                </tr>
+            </table>
+        </div>
+        }
+    </div>
+</LCARS>
 
 @code {
 
