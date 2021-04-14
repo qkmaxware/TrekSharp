@@ -25,6 +25,10 @@ body {
     margin: 0;
 }
 
+.lcars .vertical-space {
+    padding-top: 8px;
+}
+
 .lcars .typeface {
     font-family: 'Impact';
     color: #FF9104;
