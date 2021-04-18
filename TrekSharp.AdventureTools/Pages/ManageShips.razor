@@ -23,38 +23,34 @@
                 <div class="w3-container w3-right no-print">
                     <button @onclick="@(() => importer.Open())">Import Json</button>
                 </div>
-                @foreach (var group in Data.Ships.ByN(4)) {
-                    <div class="w3-row-padding">
-                        @foreach (var character in group) {
-                        <div class="w3-col s3" @onclick="@(() => navigateToPlayerCharacter(character))">
-                            <div class="row">
-                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                    @character.Name
-                                </div>
-                                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;">
-                                    <small>scale @(character.Scale)</small>
-                                </div>
+                <Col4Layout Items=Data.Ships>
+                    <Template>
+                        <div class="row" @onclick="@(() => navigateToPlayerCharacter(context))">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
                             </div>
-                            <div style="width: 100%; height: 100px; display: table-cell; vertical-align: middle;">
-                                <img src="@character.GetShipImageUrl()" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-width: 640px; height: auto; max-height: 100px;">
-                            </div>
-                            <div class="w3-padding row">
-                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                    <b>Shields</b> 
-                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@character.ShieldsRemaining"/> / @character.Shields
-                                </div>
-                            </div>
-                            <div class="w3-padding row">
-                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                    <b>Power</b> 
-                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@character.PowerRemaining"/> / @character.Power
-                                </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;">
+                                <small>scale @(context.Scale)</small>
                             </div>
                         </div>
-                        }
-                    </div>
-                }
+                        <div style="width: 100%; height: 100px; display: table-cell; vertical-align: middle;" @onclick="@(() => navigateToPlayerCharacter(context))">
+                            <img src="@context.GetShipImageUrl()" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-width: 640px; height: auto; max-height: 100px;">
+                        </div>
+                        <div class="w3-padding row">
+                            <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                <b>Shields</b> 
+                                <input type="number" class="w3-small" style="width: 64px;" @bind="@context.ShieldsRemaining"/> / @context.Shields
+                            </div>
+                        </div>
+                        <div class="w3-padding row">
+                            <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
+                                <b>Power</b> 
+                                <input type="number" class="w3-small" style="width: 64px;" @bind="@context.PowerRemaining"/> / @context.Power
+                            </div>
+                        </div>
+                    </Template>
+                </Col4Layout>
             </div>
         </div>
         <!-- Footer -->
@@ -82,33 +78,31 @@
             <div class="secondary" style="width: 120px"></div>
             <!-- Content Pane -->
             <div class="w3-padding row-fill">
-                @foreach (var group in Data.NPCShips.ByN(4)) {
-                    <div class="w3-row-padding">
-                        @foreach (var character in group) {
-                        <div class="w3-col s3" @onclick="@(() => navigateToNpcCharacter(character))">
+                <Col4Layout Items=Data.NPCShips>
+                    <Template>
+                        <div @onclick="@(() => navigateToNpcCharacter(context))">
                             <div class="row">
                                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                    @character.Name 
+                                    @context.Name 
                                 </div>
                                 <div class="hbar row-fill elbow-right knee-right"></div>
                             </div>
                             <div class="w3-padding row">
                                 <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
                                     <b>Shields</b> 
-                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@character.ShieldsRemaining"/> / @character.Shields
+                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@context.ShieldsRemaining"/> / @context.Shields
                                 </div>
                             </div>
                             <div class="w3-padding row">
                                 <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
                                     <b>Power</b> 
-                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@character.PowerRemaining"/> / @character.Power
+                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@context.PowerRemaining"/> / @context.Power
                                 </div>
                             </div>
                         </div>
-                        }
-                    </div>
-                }
+                    </Template>
+                </Col4Layout>
                 <div class="w3-container w3-right no-print">
                     <button @onclick="@(() => npcList?.Open())">Add NPC</button>
                 </div>

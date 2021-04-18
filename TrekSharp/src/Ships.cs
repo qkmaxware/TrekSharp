@@ -49,11 +49,17 @@ public class SystemsEnumerator : IEnumerable<SystemReference> {
 
 public class Systems {
     public int Comms {get; set;}
+    public SystemReference CommsReference => new SystemReference(this, 0);
     public int Engines {get; set;}
+    public SystemReference EnginesReference => new SystemReference(this, 1);
     public int Structure {get; set;}
+    public SystemReference StructureReference => new SystemReference(this, 2);
     public int Computers {get; set;}
+    public SystemReference ComputersReference => new SystemReference(this, 3);
     public int Sensors {get; set;}
+    public SystemReference SensorsReference => new SystemReference(this, 4);
     public int Weapons {get; set;}
+    public SystemReference WeaponsReference => new SystemReference(this, 5);
 
     public int this[int index] {
         get {

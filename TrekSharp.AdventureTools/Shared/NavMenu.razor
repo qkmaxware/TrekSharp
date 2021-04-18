@@ -1,6 +1,10 @@
 ﻿@inherits AppComponentBase
 
-<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" style="width:250px; z-index: 2;" id="mySidebar">
+<div 
+    class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" 
+    style="width:250px; max-width: 100%; z-index: 2;" 
+    id="mySidebar" 
+>
     <div style="min-height: calc(100vh - 48px);">
         <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
         <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">

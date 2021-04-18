@@ -28,6 +28,7 @@ public class Rank {
         return this.Title;
     }
 
+    public static readonly Rank Cadet = new Rank(Faction.Starfleet, -1, "Cadet");
     public static readonly Rank Ensign = new Rank(Faction.Starfleet, 0, "Ensign");
     public static readonly Rank LieutenantJuniorGrade = new Rank(Faction.Starfleet, 1, "Lieutenant Junior Grade");
     public static readonly Rank Lieutenant = new Rank(Faction.Starfleet, 2, "Lieutenant");

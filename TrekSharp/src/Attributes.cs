@@ -33,12 +33,12 @@ public class AttributeEnumerator : IEnumerable<AttributeReference> {
     }
 
     public IEnumerator<AttributeReference> GetEnumerator() {
-        yield return new AttributeReference(Value, 0);
-        yield return new AttributeReference(Value, 1);
-        yield return new AttributeReference(Value, 2);
-        yield return new AttributeReference(Value, 3);
-        yield return new AttributeReference(Value, 4);
-        yield return new AttributeReference(Value, 5);
+        yield return Value.ControlReference;
+        yield return Value.DaringReference;
+        yield return Value.FitnessReference;
+        yield return Value.InsightReference;
+        yield return Value.PresenceReference;
+        yield return Value.ReasonReference;
     }
 
     IEnumerator IEnumerable.GetEnumerator() {
@@ -48,11 +48,17 @@ public class AttributeEnumerator : IEnumerable<AttributeReference> {
 
 public class Attributes {
     public int Control {get; set;}
-    public int Fitness  {get; set;}
-    public int Presence {get; set;}
+    public AttributeReference ControlReference => new AttributeReference(this, 0);
     public int Daring {get; set;} 
+    public AttributeReference DaringReference => new AttributeReference(this, 1);
+    public int Fitness  {get; set;}
+    public AttributeReference FitnessReference => new AttributeReference(this, 2);
     public int Insight {get; set;}
+    public AttributeReference InsightReference => new AttributeReference(this, 3);
+    public int Presence {get; set;}
+    public AttributeReference PresenceReference => new AttributeReference(this, 4);
     public int Reason {get; set;}
+    public AttributeReference ReasonReference => new AttributeReference(this, 5);
 
     public int this[int index] {
         get {

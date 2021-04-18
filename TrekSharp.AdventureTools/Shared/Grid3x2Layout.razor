@@ -1,0 +1,74 @@
+@typeparam T
+
+<div>
+    <div class="row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            @Title()
+        </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <div class="no-print">
+        <div class="w3-row">
+            <div class="w3-third" style="padding: 0px 8px 16px">
+                @Template(Item00)
+            </div>
+            <div class="w3-third" style="padding: 0px 8px 16px">
+                @Template(Item01)
+            </div>
+            <div class="w3-third" style="padding: 0px 8px 16px">
+                @Template(Item02)
+            </div>
+        </div>
+        <div class="w3-row">
+            <div class="w3-third" style="padding: 0px 8px 16px">
+                @Template(Item10)
+            </div>
+            <div class="w3-third" style="padding: 0px 8px 16px">
+                @Template(Item11)
+            </div>
+            <div class="w3-third" style="padding: 0px 8px 16px">
+                @Template(Item02)
+            </div>
+        </div>
+    </div>
+    <div class="print">
+        <div class="w3-row">
+            <div class="w3-col s4" style="padding: 0px 8px 16px">
+                @Template(Item00)
+            </div>
+            <div class="w3-col s4" style="padding: 0px 8px 16px">
+                @Template(Item01)
+            </div>
+            <div class="w3-col s4" style="padding: 0px 8px 16px">
+                @Template(Item02)
+            </div>
+        </div>
+        <div class="w3-row">
+            <div class="w3-col s4" style="padding: 0px 8px 16px">
+                @Template(Item10)
+            </div>
+            <div class="w3-col s4" style="padding: 0px 8px 16px">
+                @Template(Item11)
+            </div>
+            <div class="w3-col s4" style="padding: 0px 8px 16px">
+                @Template(Item02)
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Func<string> Title {get; set;}
+
+    [Parameter] public Systems Systems {get; set;}
+
+    [Parameter] public RenderFragment<T> Template { get; set; }
+    
+    [Parameter] public T Item00 {get; set;}
+    [Parameter] public T Item01 {get; set;}
+    [Parameter] public T Item02 {get; set;}
+    [Parameter] public T Item10 {get; set;}
+    [Parameter] public T Item11 {get; set;}
+    [Parameter] public T Item12 {get; set;}
+}

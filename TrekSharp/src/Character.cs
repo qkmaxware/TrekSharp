@@ -21,7 +21,7 @@ public class NpcCharacter : Character {
 
 public class Character {
     public virtual string Name {get; set;}
-    public Faction Faction => Rank.Faction;
+    public Faction Faction => Rank?.Faction;
     public Rank Rank {get; set;}
     public string Assignment {get; set;}
     public Species Species {get; set;}
@@ -61,6 +61,12 @@ public class PlayerCharacter : Character {
 
     public string Environment {get; set;}
     public string Upbringing {get; set;}
+
+    private int _det = 1;
+    public int Determination {
+        get => _det;
+        set => _det = (value < 0 ? 0 : value);
+    }
 
     public override int BonusStress => Talents.Select(talent => talent.StressModifier).Sum();
 

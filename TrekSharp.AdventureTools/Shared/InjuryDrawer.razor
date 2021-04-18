@@ -2,7 +2,7 @@
     <div class="row w3-margin-bottom">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
         <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-            INJURIES 
+            HEALTH 
         </div>
         <div class="hbar row-fill elbow-right knee-right"></div>
     </div>
@@ -19,7 +19,7 @@
             RESISTANCE
         </div>
         <div class="w3-col s6 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-            + @Player.Resistance
+            + <input type="number" class="no-print w3-small" @bind="Player.UsedStress" style="width: 48px;"/> <span class="print"> @Player.Resistance </span>
         </div>
     </div>
 </div>

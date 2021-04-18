@@ -12,31 +12,21 @@
                 <img src="assets/starfleet.svg" style="display: block; width: 60%; height: auto; margin-left: auto; margin-right: auto; margin-top: 32px;">
             </div>
             <div class="w3-padding row-fill">
-                <h2 class="w3-right-align text-primary typeface">STARFLEET PERSONNEL RECORD</h2>
+                <h2 class="w3-right-align text-primary typeface">PERSONNEL RECORD</h2>
                 <div class="w3-row">
-                    <div class="w3-row">
-                        <div class="w3-col w3-wide" style="width: 96px;">
-                            <h4 class="text-secondary typeface" style="margin: 0;">NAME:</h4>
-                        </div>
-                        <div class="w3-rest w3-white">
-                            @Player.Rank @Player.Name
-                        </div>
-                    </div>
-                    <div class="w3-row">
-                        <div class="w3-col" style="width: 96px;">
-                            <h4 class="text-secondary typeface" style="margin: 0;">SPECIES:</h4>
-                        </div>
-                        <div class="w3-rest w3-white">
-                            @Player.Species
-                        </div>
-                    </div> 
+                    <div class="w3-quarter text-secondary typeface">NAME:</div> 
+                    <div class="w3-threequarter w3-border-bottom">@Player.Rank @Player.Name</div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-quarter text-secondary typeface">SPECIES:</div> 
+                    <div class="w3-threequarter w3-border-bottom">@Player.Species</div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="hbar elbow-left" style="width: 56px;"></div>
             <div class="hbar row-fill" style="margin-right: 10px;"></div>
-            <div class="hbar" style="width: 240px; max-width: 100%;"></div>
+            <div class="hbar" style="width: 240px; max-width: calc(100% - 130px);"></div>
         </div>
     </div>
     <!-- Body -->
@@ -49,16 +39,18 @@
         <div class="row">
             <div class="secondary" style="width: 120px"></div>
             <!-- Content -->
-            <div class="w3-row row-fill">
-                <div class="w3-col s6 w3-padding">
-                    <AttributeDrawer Attributes="Player.Attributes"/>
-                    <DisciplineDrawer Disciplines="Player.Disciplines"/>
-                    <FocusDrawer Focuses="Player.Focuses"/>
-                </div>
-                <div class="w3-col s6 w3-padding">
-                    <InjuryDrawer Player="Player"/>
-                    <EquipmentDrawer Player="Player"/>
-                </div>
+            <div class="row-fill">
+                <SplitLayout>
+                    <Left>
+                        <InjuryDrawer Player="Player"/>
+                        <AttributeDrawer Attributes="Player.Attributes"/>
+                        <DisciplineDrawer Disciplines="Player.Disciplines"/>
+                        <EquipmentDrawer Player="Player"/>
+                    </Left>
+                    <Right>
+                        <FocusDrawer Focuses="Player.Focuses"/>
+                    </Right>
+                </SplitLayout>
             </div>
         </div>
         <div class="row">

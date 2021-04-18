@@ -36,7 +36,7 @@
     }
 
     .print {
-        display: block;
+        display: initial;
     }
 
     .print-A4 {

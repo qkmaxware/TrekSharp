@@ -48,11 +48,17 @@ public class DisciplineEnumerator : IEnumerable<DisciplineReference> {
 
 public class Disciplines {
     public int Command {get; set;}
+    public DisciplineReference CommandReference => new DisciplineReference(this, 0);
     public int Security {get; set;}
+    public DisciplineReference SecurityReference => new DisciplineReference(this, 1);
     public int Science {get; set;}
+    public DisciplineReference ScienceReference => new DisciplineReference(this, 2);
     public int Conn {get; set;}
+    public DisciplineReference ConnReference => new DisciplineReference(this, 3);
     public int Engineering {get; set;}
+    public DisciplineReference EngineeringReference => new DisciplineReference(this, 4);
     public int Medicine {get; set;}
+    public DisciplineReference MedicineReference => new DisciplineReference(this, 5);
 
     public int this[int index] {
         get {

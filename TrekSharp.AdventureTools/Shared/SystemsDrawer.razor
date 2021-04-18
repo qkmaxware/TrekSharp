@@ -1,65 +1,16 @@
-
-    <div class="w3-margin-bottom">
-        <div class="row w3-margin-bottom">
-            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                SYSTEMS 
-            </div>
-            <div class="hbar row-fill elbow-right knee-right"></div>
+<Grid3x2Layout Title=@(() => "SYSTEMS")
+    Item00=Systems.CommsReference Item01=Systems.EnginesReference Item02=Systems.StructureReference
+    Item10=Systems.ComputersReference Item11=Systems.SensorsReference Item12=Systems.WeaponsReference
+>
+    <Template>
+        <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+            @context?.Name?.ToUpper()
         </div>
-        <div class="w3-row w3-margin-bottom">
-            <div class="w3-row w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    COMMS
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Systems?.Comms
-                </div>
-            </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    ENGINES
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Systems?.Engines
-                </div>
-            </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    STRUCTURE
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Systems?.Structure
-                </div>
-            </div>
+        <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+            @context?.Value
         </div>
-        <div class="w3-row">
-            <div class="w3-row w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    COMPUTERS
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Systems?.Computers
-                </div>
-            </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    SENSORS
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Systems?.Sensors
-                </div>
-            </div>
-            <div class="w3-col s4">
-                <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-                    WEAPONS
-                </div>
-                <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-                    @Systems?.Weapons
-                </div>
-            </div>
-        </div>
-    </div>
+    </Template>
+</Grid3x2Layout>
 
 @code {
 

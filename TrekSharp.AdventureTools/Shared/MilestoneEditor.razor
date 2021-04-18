@@ -1,0 +1,55 @@
+<div class="no-print w3-modal no-print @(CssClass)">
+    <div class="w3-modal-content">
+        <div class="lcars w3-container w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
+            <div class="w3-center typeface">
+                <p class="w3-large">
+                    Milestones describe events in which a character has grown. There are 3 types of milestones. Select the milestone appropriate to this character's growth. 
+                </p>
+                <hr>
+                <div class="w3-padding">
+                    <p>
+                        Awarded to a character who has challenged a value, been injured by a lethal attack, or has used on value positively or negatively
+                    </p>
+                    <button>
+                        Normal Milestone
+                    </button>
+                </div>
+                <div class="w3-padding">
+                    <p>
+                        Awarded to a character that has significant impact to a mission or has reached a key level of character development.
+                    </p>
+                    <button>
+                        Spotlight Milestone
+                    </button>
+                </div>
+                <div class="w3-padding">
+                    <p>
+                        Awarded to a character when they reach a significant point in a story arc.
+                    </p>
+                    <button>
+                        Arc Milestone
+                    </button>
+                </div>
+            </div>
+            <button class="w3-red" @onclick=@(() => Close())>
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool isOpen = false;
+    private string CssClass => isOpen ? "w3-show" : "w3-hide";
+
+    public void Open() {
+        isOpen = true;
+        StateHasChanged();
+    }
+
+    public void Close() {
+        isOpen = false;
+        StateHasChanged();
+    }
+
+}
