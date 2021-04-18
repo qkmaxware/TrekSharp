@@ -139,7 +139,7 @@
 </div>
 }
 
-<MilestoneEditor @ref=milestones></MilestoneEditor>
+<MilestoneEditor @ref=milestones OnSave=@(() => StateHasChanged())></MilestoneEditor>
 
 @code {
 
@@ -175,7 +175,8 @@
     private MilestoneEditor milestones;
 
     private void AddMilestone() {
-        milestones.Open();
+        if (this.HasCharacter)
+            milestones.Open(this.Player);
     }
 
 }

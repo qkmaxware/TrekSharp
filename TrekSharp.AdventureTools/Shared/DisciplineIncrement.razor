@@ -7,7 +7,7 @@
             </div>
             <div class="hbar w3-black" style="margin-left: 10px; width: 256px;">
                 + @Reference[attr.Index]
-                @if(Reference[attr.Index] > 0) {
+                @if(Reference[attr.Index] > MinPointsPerItem) {
                     <button @onclick="@(() => { Reference[attr.Index] -= Increment; if (OnClick != null) { OnClick();} })">-</button>
                 }
                 @if(PointsRemaining > 0 && Reference[attr.Index] < MaxPointsPerItem) {
@@ -23,6 +23,8 @@
     public int Points {get; set;}
     [Parameter]
     public int MaxPointsPerItem {get; set;} = Int32.MaxValue;
+    [Parameter]
+    public int MinPointsPerItem {get; set;} = 0;
     public int PointsRemaining => Points - PointsUsed;
     public int PointsUsed => Reference.Enumerate().Select(r => r.Value).Sum();
     public bool HasPointsRemaining => PointsRemaining > 0;

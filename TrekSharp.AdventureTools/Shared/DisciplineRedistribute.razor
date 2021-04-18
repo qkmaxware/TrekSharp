@@ -6,7 +6,7 @@
         </div>
         <div class="hbar w3-black" style="margin-left: 10px; width: 256px;">
             @(Count(attr)) / @(MaxValue)
-            @if(Count(attr) > MaxValue || Reference[attr.Index] > MinValue) {
+            @if(Count(attr) > MinValue && Points < MaxChanges) {
                 <button @onclick="@(() => RemovePoint(attr))">-</button>
             }
             @if(Points > 0 && (Count(attr)) < MaxValue) {
@@ -32,12 +32,14 @@
     }
 
     [Parameter]
-    public Disciplines ToBalance {get; set;}
+    public int MaxChanges {get; set;} = Int32.MaxValue;
     [Parameter]
     public int MaxValue {get; set;}
     [Parameter]
-    public Disciplines Reference {get; set;}
-    [Parameter]
     public int MinValue {get; set;} = 0;
+    [Parameter]
+    public Disciplines ToBalance {get; set;}
+    [Parameter]
+    public Disciplines Reference {get; set;}
 
 }

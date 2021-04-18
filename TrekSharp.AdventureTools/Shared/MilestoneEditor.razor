@@ -1,6 +1,7 @@
 <div class="no-print w3-modal no-print @(CssClass)">
     <div class="w3-modal-content">
         <div class="lcars w3-container w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
+            @if (mode == ModeState.None) {
             <div class="w3-center typeface">
                 <p class="w3-large">
                     Milestones describe events in which a character has grown. There are 3 types of milestones. Select the milestone appropriate to this character's growth. 
@@ -10,7 +11,7 @@
                     <p>
                         Awarded to a character who has challenged a value, been injured by a lethal attack, or has used on value positively or negatively
                     </p>
-                    <button>
+                    <button @onclick=@(() => mode = ModeState.Normal)>
                         Normal Milestone
                     </button>
                 </div>
@@ -18,7 +19,7 @@
                     <p>
                         Awarded to a character that has significant impact to a mission or has reached a key level of character development.
                     </p>
-                    <button>
+                    <button @onclick=@(() => mode = ModeState.Spotlight)>
                         Spotlight Milestone
                     </button>
                 </div>
@@ -26,7 +27,7 @@
                     <p>
                         Awarded to a character when they reach a significant point in a story arc.
                     </p>
-                    <button>
+                    <button @onclick=@(() => mode = ModeState.Arc)>
                         Arc Milestone
                     </button>
                 </div>
@@ -34,6 +35,83 @@
             <button class="w3-red" @onclick=@(() => Close())>
                 Cancel
             </button>
+            } else {
+                if (mode == ModeState.Normal) {
+                <TabLayout>
+                    <TabPage Title="Redistribute Disciplines">
+                        <DisciplineRedistribute 
+                            MaxChanges=1
+                            MaxValue=5
+                            MinValue=1
+                            ToBalance="Character.Disciplines"
+                            Reference="normalDisciplineDelta"
+                        />
+                    </TabPage>
+                    <TabPage Title="Change Value">
+                        <StringEditor Items=Character.Values></StringEditor>
+                    </TabPage>
+                    <TabPage Title="Change Focus">
+                        <StringEditor Items=Character.Focuses></StringEditor>
+                    </TabPage>
+                </TabLayout>
+                } else if (mode == ModeState.Spotlight) {
+                    <TabLayout>
+                        <TabPage Title="Redistribute Attributes">
+                            <AttributeRedistribute
+                                MaxChanges=1
+                                MaxValue=11
+                                MinValue=7
+                                ToBalance="Character.Attributes"
+                                Reference="spotlightAttributeDelta"
+                            />
+                        </TabPage>
+                        <TabPage Title="Change Talent">
+                            <TalentPicker @ref=spotlightTalentSwap RequireDelete=true GetPlayer=@(() => this.Character)></TalentPicker>
+                        </TabPage>
+                    </TabLayout>
+                } else if (mode == ModeState.Arc) {
+                    <TabLayout>
+                        <TabPage Title="Increment Attribute">
+                            <AttributeIncrement
+                                Points=1
+                                MaxPointsPerItem=12
+                                Mask=allAttributeMask
+                                Reference=arcAttributeDelta
+                            />
+                        </TabPage>
+                        <TabPage Title="Increment Discipline">
+                            <DisciplineIncrement
+                                Points=1
+                                MaxPointsPerItem=5
+                                Mask=allDisciplineMask
+                                Reference=arcDisciplineDelta
+                            />
+                        </TabPage>
+                        <TabPage Title="Add Talent">
+                            <TalentPicker @ref=arcNewTalent GetPlayer=@(() => this.Character)></TalentPicker>
+                        </TabPage>
+                        <TabPage Title="Add Focus">
+                            <input class="w3-input" placeholder="New Focus" @bind=arcNewFocus />
+                        </TabPage>
+                        <TabPage Title="Add Value">
+                            <input class="w3-input" placeholder="New Value" @bind=arcNewValue />
+                        </TabPage>
+                    </TabLayout>
+                }
+                <div class="w3-row">
+                    <div class="w3-half w3-left-align">
+                        <button class="w3-red" @onclick=@(() => Close())>
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="w3-half w3-right-align">
+                        <button class="w3-green" @onclick=@(() => Save())>
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            }
+            
         </div>
     </div>
 </div>
@@ -42,14 +120,80 @@
     private bool isOpen = false;
     private string CssClass => isOpen ? "w3-show" : "w3-hide";
 
-    public void Open() {
+    private PlayerCharacter Character;
+    [Parameter] public Action OnSave {get; set;}
+
+    public void Open(PlayerCharacter character) {
         isOpen = true;
+        this.Character = character;
+        normalDisciplineDelta = new Disciplines(0);
+
+        spotlightAttributeDelta = new Attributes(0);
+        if (spotlightTalentSwap != null) {
+            spotlightTalentSwap.DeletedTalent = null;
+            spotlightTalentSwap.SelectedTalent = null;
+        }
+
+        arcDisciplineDelta = new Disciplines(0);
+        arcAttributeDelta = new Attributes(0);
+        arcNewFocus = null;
+        arcNewValue = null;
+        if (arcNewTalent != null)
+            arcNewTalent.SelectedTalent = null;
         StateHasChanged();
     }
 
     public void Close() {
         isOpen = false;
+        mode = ModeState.None;
         StateHasChanged();
     }
+    public void Save() {
+        Close();
+        Character.Disciplines.Add(normalDisciplineDelta);
+
+        Character.Attributes.Add(spotlightAttributeDelta);
+        if (spotlightTalentSwap != null && spotlightTalentSwap.DeletedTalent != null && spotlightTalentSwap.SelectedTalent != null) {
+            Character.Talents.Remove(spotlightTalentSwap.DeletedTalent);
+            Character.Talents.Add(spotlightTalentSwap.SelectedTalent);
+        }
+
+        Character.Disciplines.Add(arcDisciplineDelta);
+        Character.Attributes.Add(arcAttributeDelta);
+
+        if (!string.IsNullOrEmpty(arcNewFocus)) {
+            Character.Focuses.Add(arcNewFocus);
+        }
+        if (!string.IsNullOrEmpty(arcNewValue)) {
+            Character.Values.Add(arcNewValue);
+        }
+        if (arcNewTalent != null && arcNewTalent.SelectedTalent != null) {
+            Character.Talents.Add(arcNewTalent.SelectedTalent);
+        }
+        OnSave?.Invoke();
+    }
+
+    private enum ModeState {
+        None, Normal, Spotlight, Arc
+    }
+    private ModeState mode = ModeState.None;
+
+    private int MaxAttributes => 12;
+    private int MaxDisciplines => 5;
+
+    private Disciplines allDisciplineMask = new Disciplines(1);
+    private Attributes allAttributeMask = new Attributes(1);
+
+    private Disciplines normalDisciplineDelta = new Disciplines(0);
+    
+    private Attributes spotlightAttributeDelta = new Attributes(0);
+    private TalentPicker spotlightTalentSwap;
+
+
+    private Disciplines arcDisciplineDelta = new Disciplines(0);
+    private Attributes arcAttributeDelta = new Attributes(0);
+    private string arcNewFocus = null;
+    private string arcNewValue = null;
+    private TalentPicker arcNewTalent;
 
 }

@@ -1,0 +1,34 @@
+<div class="w3-container lcars">
+    <div class="row">
+        <div class="hbar knee-left elbow-left primary" style="width: 56px; margin-right: 10px;"></div>
+        @for (var i = 0; i < Pages.Count; i++) {
+        var this_page = i;
+        <div class="typeface w3-center w3-padding w3-margin-left @(i == activePage ? "highlight" : "secondary")" @onclick=@(() => activePage = this_page)>
+            <span>@Pages[i]?.Title</span>
+        </div>
+        }
+        <div class="w3-margin-left hbar row-fill primary"></div>
+        <div class="hbar primary knee-right elbow-right" style="width: 240px; max-width: 100%;"></div>
+    </div>
+    <div class="w3-padding">
+        <CascadingValue Value=this>
+            @ChildContent
+        </CascadingValue>
+    </div>
+</div>
+
+@code {
+
+    private int activePage = -1;
+    public TabPage ActivePage => activePage >=0 && activePage < Pages.Count ? Pages[activePage] : null;
+    private List<TabPage> Pages = new List<TabPage>();
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    public void AddPage(TabPage page) {
+        Pages.Add(page);
+        if (Pages.Count == 1) {
+            activePage = 0;
+        }
+        StateHasChanged();
+    }
+}

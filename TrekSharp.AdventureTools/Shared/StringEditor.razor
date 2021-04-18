@@ -1,0 +1,13 @@
+<ul class="w3-ul">
+    @for (var i = 0; i < Items.Count; i++){
+        var this_index = i;
+        <li style="border: none;">
+            @(this_index). <input class="w3-input" @bind=Items[this_index] />
+        </li>
+    }
+</ul>
+
+
+@code {
+    [Parameter] public List<string> Items {get; set;}
+}
