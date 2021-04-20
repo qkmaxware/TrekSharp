@@ -22,12 +22,18 @@
                 </div>
                 <div class="hbar secondary knee-right elbow-right row-fill"></div>
             </div>
-            <div class="row w3-padding">
-                <span class="hbar elbow-left knee-left w3-padding">Attribution</span>
-                <span class="hbar row-fill row w3-row" style="margin-left: 10px;">
-                    <input type="text" class="w3-half" @bind=mission.MissionTitle placeholder="Title"/>
-                    <input type="text" class="w3-half" @bind=mission.MissionAuthor placeholder="Author"/>
-                </span>
+            <div class="w3-row w3-padding">
+                <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                    <span>Attribution</span>
+                </div>
+                <div class="w3-threequarter w3-row" style="padding-left: 10px">
+                    <div class="w3-half">
+                        <input type="text" class="w3-input" @bind=mission.MissionTitle placeholder="Title"/>
+                    </div>
+                    <div class="w3-half">
+                        <input type="text" class="w3-input" @bind=mission.MissionAuthor placeholder="Author"/>
+                    </div>
+                </div>
             </div>
             <div class="w3-padding">
                 <div class="w3-padding knee-left knee-right elbow-left elbow-right lcars-primary">

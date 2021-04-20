@@ -1,17 +1,17 @@
 @foreach (var attr in usedMask.Enumerate()) {
     if (attr.Value > 0) {
         <div class="row w3-margin-bottom">
-            <div class="hbar elbow-left knee-left secondary" style="width: 32px;"></div>
-            <div class="hbar w3-padding typeface secondary" style="width: 125px;">
+            <div class="hbar elbow-left knee-left secondary" style="width: 16px;"></div>
+            <div class="hbar w3-padding typeface secondary" style="width: 112px;">
                 @attr.Name
             </div>
-            <div class="hbar w3-black" style="margin-left: 10px; width: 256px;">
+            <div class="hbar row-fill w3-black" style="margin-left: 10px;">
                 + @Reference[attr.Index]
                 @if(Reference[attr.Index] > MinPointsPerItem) {
-                    <button @onclick="@(() => { Reference[attr.Index] -= Increment; if (OnClick != null) { OnClick();} })">-</button>
+                    <button @onclick="@(() => { Reference[attr.Index] -= Increment; if (OnChange != null) { OnChange();} })">-</button>
                 }
                 @if(PointsRemaining > 0 && Reference[attr.Index] < MaxPointsPerItem) {
-                    <button @onclick="@(() => { Reference[attr.Index] += Increment; if (OnClick != null) { OnClick();} })">+</button>
+                    <button @onclick="@(() => { Reference[attr.Index] += Increment; if (OnChange != null) { OnChange();} })">+</button>
                 }
             </div>
         </div>
@@ -42,7 +42,7 @@
     [Parameter]
     public Disciplines Reference {get; set;}
 
-    [Parameter] public Action OnClick { get; set; }
+    [Parameter] public Action OnChange { get; set; }
 
     public void UpdateMask(Disciplines mask) {
         this.Mask = mask;

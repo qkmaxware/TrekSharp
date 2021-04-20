@@ -1,17 +1,17 @@
 @foreach (var attr in Mask.Enumerate()) {
     if (attr.Value > 0) {
         <div class="row w3-margin-bottom">
-            <div class="hbar elbow-left knee-left secondary" style="width: 32px;"></div>
-            <div class="hbar w3-padding typeface secondary" style="width: 125px;">
+            <div class="hbar elbow-left knee-left secondary" style="width: 16px;"></div>
+            <div class="hbar w3-padding typeface secondary" style="width: 112px;">
                 @attr.Name
             </div>
-            <div class="hbar w3-black" style="margin-left: 10px; width: 256px;">
+            <div class="hbar row-fill w3-black" style="margin-left: 10px;">
                 + @Reference[attr.Index]
                 @if(Reference[attr.Index] > 0) {
-                    <button @onclick="@(() => Reference[attr.Index] -= 1)">-</button>
+                    <button @onclick="@(() => { Reference[attr.Index] -= 1; OnChange?.Invoke(); })">-</button>
                 }
                 @if(PointsRemaining > 0 && Reference[attr.Index] < MaxPointsPerItem) {
-                    <button @onclick="@(() => Reference[attr.Index] += 1)">+</button>
+                    <button @onclick="@(() => { Reference[attr.Index] += 1; OnChange?.Invoke(); })">+</button>
                 }
             </div>
         </div>
@@ -31,5 +31,8 @@
     public Attributes Mask {get; set;}
     [Parameter]
     public Attributes Reference {get; set;}
+
+    [Parameter]
+    public Action OnChange {get; set;}
 
 }

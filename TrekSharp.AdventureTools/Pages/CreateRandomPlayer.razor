@@ -9,16 +9,16 @@
         <span class="spacer typeface text-secondary w3-large">
             RANDOMIZER SETTINGS
         </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
     </div>
-    <div class="w3-center w3-padding" style="text-align: left!important;">
+    <div class="w3-padding">
         <p>
             Every character needs a name.
         </p>
         <div class="row w3-padding">
             <span class="hbar elbow-left knee-left w3-padding">Name</span>
             <span class="hbar row-fill row" style="margin-left: 10px;">
-                <input type="text" class="w3-padding row-fill"  @bind="name"/>
+                <input type="text" class="w3-padding w3-input"  @bind="name"/>
             </span>
         </div>
 
@@ -28,7 +28,7 @@
         <div class="row  w3-padding">
             <span class="hbar elbow-left knee-left w3-padding">Species</span>
             <span class="hbar row-fill row" style="margin-left: 10px;">
-                <select class="w3-black row-fill" @bind="selectedSpecies">
+                <select class="w3-black w3-input lcars-border-primary" @bind="selectedSpecies">
                     <option value="">ANY</option>
                     @if (this.Rulebooks != null) {
                         foreach (var species in this.Rulebooks.EnabledRulebooks.SelectMany(book => book.Species)) {
@@ -45,7 +45,7 @@
         <div class="row  w3-padding">
             <span class="hbar elbow-left knee-left w3-padding">Role</span>
             <span class="hbar row-fill row" style="margin-left: 10px;">
-                <select class="w3-black row-fill" @bind="selectedRole">
+                <select class="w3-black w3-input lcars-border-primary" @bind="selectedRole">
                     <option value="">ANY</option>
                     @foreach (var role in this.weigths) {
                         <option value="@role.Key">@role.Key</option>
@@ -54,7 +54,7 @@
             </span>
         </div>
 
-        <div class="w3-right-align">
+        <div class="w3-right-align w3-padding">
             <button class="w3-button w3-blue" @onclick="generateAndShow"> Generate New </button>
         </div>
     </div>
