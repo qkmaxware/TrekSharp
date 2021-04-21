@@ -43,6 +43,9 @@
                     <div>
                         <textarea class="text-primary" @bind=mission.Synopsis style="width: 100%; resize: vertical; background-color: black;"></textarea>
                     </div>
+                    <div class="w3-padding w3-right-align">
+                        <button @onclick="showRandomIdeaGenerator">Random</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,7 +296,7 @@
         </div>
     }
     <div class="no-print w3-right-align w3-padding">
-        <button class="w3-blue" @onclick="addAct">New Act</button>
+        <button @onclick="addAct">New Act</button>
     </div>
     <!-- Conclusion -->
     <a name="conclusion"></a>
@@ -399,11 +402,13 @@
 <AssetAddList Store=Data.Supports ListingFunction=@((item) => item.Name) @ref=addSupport></AssetAddList>
 <AssetAddList Store=Data.NPCs ListingFunction=@((item) => item.Name) @ref=addNpc></AssetAddList>
 
+<IdeaGenerator @ref=ideas OnConfirm=@((story) => { mission.Synopsis = story; StateHasChanged(); })></IdeaGenerator>
 
 @code {
     AssetAddList<Vessel> addShip;
     AssetAddList<SupportCharacter> addSupport;
     AssetAddList<NpcCharacter> addNpc;
+    IdeaGenerator ideas;
 
     public Mission mission => Data.Mission;
     private void addAct() {
@@ -449,6 +454,9 @@
         }
     }
 
+    private void showRandomIdeaGenerator() {
+        ideas.Open();
+    }
     private void openAddShipList(Act scene) {
         addShip.ChangeAddListener((ship) => linkShip(scene, ship));
         addShip.Open();

@@ -2,46 +2,93 @@
 
 <LCARS Title="STARDATE">
     <div class="w3-panel typeface">
-        Stardates across the franchise are inconsistent at best. The calculator below is based on the TNG calculation determined by <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> which starts at Stardate 0 being Friday, July 5, 2318, around noon. Visit <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> for more calculators including those for the original series and the movie era.
-    </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            TO STARDATE
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+        Stardates across the franchise are inconsistent at best. The calculator below is based on the TNG calculation determined by <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> which starts at Stardate 0 being Friday, July 5, 2318, around noon. Visit <a target="_blank" href="https://trekguide.com/Stardates.htm">trekguides.com</a> for more calculators including those for the original series and the movie era. Additionally, dates for events in the timeline are also subject to error and are only meant as approximations.
     </div>
     <div class="w3-row w3-margin-bottom">
-        <div class="w3-half w3-padding">
-            <input type="date" style="width:100%;" class="w3-grey" required @bind="to_stardate" />
+        <div class="w3-half">
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <span class="spacer typeface text-secondary w3-large">
+                    TO STARDATE
+                </span>
+                <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+            </div>
+            <div class="w3-padding">
+                <input type="date" style="width:100%;" class="w3-grey" @bind="datetime" />
+            </div>
         </div>
-        <div class="w3-half w3-padding">
-            <input type="number" style="width:100%;" readonly value="@stardate">
+        <div class="w3-half">
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <span class="spacer typeface text-secondary w3-large">
+                    FROM STARDATE
+                </span>
+                <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+            </div>
+            <div class="w3-row">
+                <div class="w3-padding">
+                    <input type="number" style="width:100%;" class="w3-grey" @bind="stardate" />
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            FROM STARDATE
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-    </div>
-    <div class="w3-row">
-        <div class="w3-half w3-padding">
-            <input type="number" style="width:100%;" class="w3-grey" required @bind="to_datetime" />
+
+    <div>
+        <div class="row">
+            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+            <span class="spacer typeface text-secondary w3-large">
+                RECENT EVENTS
+            </span>
+            <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
         </div>
-        <div class="w3-half w3-padding">
-            <input type="text" style="width:100%;" readonly value="@datetime">
+        <ul class="w3-ul">
+            @foreach (var item in prime) {
+                var difference = (to_stardate - item.Timestamp).TotalDays;
+                if (difference > 0 && difference <= 730) {
+                    <li>-@(difference) Days - @item.Title</li>
+                }
+            }
+        </ul>
+        <div class="row">
+            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+            <span class="spacer typeface text-secondary w3-large">
+                UPCOMING EVENTS
+            </span>
+            <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
         </div>
+        <ul class="w3-ul">
+            @foreach (var item in prime.FromDate(to_stardate)) {
+                var difference = (item.Timestamp - to_stardate).TotalDays;
+                @if (difference <= (365*5)) {
+                <li>+@(difference) Days - @item.Title</li>
+                }
+            }
+        </ul>
     </div>
 </LCARS>
 
 @code {
     DateTime to_stardate = new DateTime(2371, 1, 1);
-    double stardate => to_stardate.Stardate();
-
     double to_datetime = 48200.345782455;
-    DateTime datetime => to_datetime.AsStardate();
 
+
+    double stardate {
+        get => to_datetime;
+        set {
+            to_datetime = value;
+            to_stardate = value.AsStardate();
+            StateHasChanged();
+        }
+    }
+    DateTime datetime {
+        get => to_stardate;
+        set {
+            to_stardate = value;
+            to_datetime = value.Stardate();
+            StateHasChanged();
+        }
+    }
+
+    Timeline prime = Timeline.PrimeTimeline();
 
 }

@@ -1,9 +1,10 @@
-@page "/new/plot/random"
 @using System.Text.RegularExpressions
-
-<LCARS Title="PLOT IDEA GENERATOR">
+<Popup @ref=popup>
     <RulebookPicker @ref="Rulebooks"/>
 
+    <div class="w3-center w3-padding">
+        <button class="w3-button w3-blue w3-normal" @onclick="RegenerateAll"> Generate New </button>
+    </div>
     <div class="row">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
         <span class="spacer typeface text-secondary w3-large">
@@ -12,19 +13,35 @@
         <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
     </div>
     <div class="w3-center w3-padding">
-        <span class="spacer typeface text-primary w3-large">
-            INTRO
-        </span>
-        <div class="w3-container w3-padding w3-margin">@plotSetup</div>
-        <span class="spacer typeface text-primary w3-large">
-            INCITING INCIDENT
-        </span>
-        <div class="w3-container w3-padding w3-margin">@incitingIncident</div>
-        <button class="w3-button w3-blue" @onclick="RegenerateAll"> Generate New </button>
+        <p>
+            @fullStoryString
+        </p>
+        <div class="w3-row">
+            <div class="w3-half w3-left-align">
+                <button class="w3-red" @onclick="cancel">Cancel</button>
+            </div>
+            <div class="w3-half w3-right-align">
+                <button class="w3-green" @onclick="confirm">Confirm</button>
+            </div>
+        </div>
     </div>
-</LCARS>
+</Popup>
 
 @code {
+    Popup popup;
+    [Parameter] public Action<string> OnConfirm {get; set;}
+    public void Open() {
+        popup.Open();
+    }
+    
+    private void cancel() {
+        popup.Close();
+    }
+    private void confirm() {
+        OnConfirm?.Invoke(this.fullStoryString);
+        popup.Close();
+    }
+
     RulebookPicker Rulebooks;
 
     public Dictionary<string, List<string>> GetGenerator() {
@@ -33,25 +50,25 @@
         var generator = new Dictionary<string, List<string>>();
 
         generator["template-setup"] = new List<string>{
-            "When en-route to <a> @location to investigate <a> @anomaly",
-            "While meeting with <a> @character",
-            "When rendezvousing with <a> @ship vessel",
-            "While providing aid to a @species colony",
+            "When en-route to <a> @location to investigate <a> @anomaly.",
+            "While meeting with <a> @character.",
+            "When rendezvousing with <a> @ship vessel.",
+            "While providing aid to a @species colony.",
         };
 
         generator["template-inciting"] = new List<string>{
-            "<a> @location where <a> @character has @action",
-            "<a> @character aboard <a> @ship vessel has @action",
-            "@entity has @action",
-            "@entity has discovered <a> @location",
-            "The @faction is causing trouble at <a> @location",
-            "<a> @role has <a> @personality clone who has @action",
-            "<a> @character, disguised as <a> @character, has @action",
-            "<a> @location is overrun by @personality @creature(s)",
-            "@entity has established first contact with a new species",
-            "@entity has encountered <a> @anomaly at <a> @location",
-            "Contact lost with @entity at <a> @coordinate",
-            "<a> @mcguffin is found located near <a> @coordinate",
+            "<a> @location where <a> @character has @action.",
+            "<a> @character aboard <a> @ship vessel has @action.",
+            "@entity has @action.",
+            "@entity has discovered <a> @location.",
+            "The @faction is causing trouble at <a> @location.",
+            "<a> @role has <a> @personality clone who has @action.",
+            "<a> @character, disguised as <a> @character, has @action.",
+            "<a> @location is overrun by @personality @creature(s).",
+            "@entity has established first contact with a new species.",
+            "@entity has encountered <a> @anomaly at <a> @location.",
+            "Contact lost with @entity at <a> @coordinate.",
+            "<a> @mcguffin is found located near <a> @coordinate.",
         };
 
         generator["entity"] = new List<string> {
@@ -376,6 +393,7 @@
 
     private string plotSetup;
     private string incitingIncident;
+    private string fullStoryString => plotSetup + " " + incitingIncident;
 
     private string pluralize(string value) {
         if (value.Length < 1)

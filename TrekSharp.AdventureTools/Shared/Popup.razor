@@ -1,0 +1,23 @@
+<div class="w3-modal no-print @(CssClass)">
+    <div class="w3-modal-content">
+        <div class="w3-container lcars w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    private bool isOpen = false;
+    private string CssClass => isOpen ? "w3-show" : "w3-hide";
+
+    public void Open() {
+        isOpen = true;
+        StateHasChanged();
+    }
+
+    public void Close() {
+        isOpen = false;
+        StateHasChanged();
+    }
+}

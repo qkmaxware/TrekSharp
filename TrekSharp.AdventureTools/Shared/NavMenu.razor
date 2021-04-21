@@ -14,8 +14,8 @@
                 </NavLink>
             </div>
             <div class="w3-rest w3-right-align w3-row">
-                <button class="w3-half w3-button @(Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = true)>GM</button>
-                <button class="w3-half w3-button @(!Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = false)>Player</button>
+                <button class="w3-col s6 w3-button @(Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = true)>GM</button>
+                <button class="w3-col s6 w3-button @(!Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = false)>Player</button>
             </div>
         </div>
         <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCreateMenu = !collapseCreateMenu)"  style="padding-bottom: 0px;">
@@ -30,26 +30,9 @@
         <div id="CreateAccordion" class="@(CreateMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
             <div class="lbar">
                 @if (Data.IsGm) {
-                <div class="vertical-space w3-margin-left w3-margin-right">
-                    <div class="row">
-                        <div class="hbar secondary elbow-left knee-left" style="margin-right:10px; width: 10px;"></div>
-                        <div>
-                            Plot
-                        </div>
-                        <div class="hbar secondary knee-right row-fill" style="margin-left:10px;"></div>
-                    </div>
-                    <div class="rbar" style="border-color: #CC99CC !important;">
-                        <NavLink class="w3-button w3-block" href="new/plot/random" Match="NavLinkMatch.All">
-                            Idea Generator
-                        </NavLink>
-                        <NavLink class="w3-button w3-block" href="new/plot/writer" Match="NavLinkMatch.All">
-                            Write
-                        </NavLink>
-                    </div>
-                    <div class="row">
-                        <div class="hbar secondary elbow-left knee-left elbow-right row-fill"></div>
-                    </div>
-                </div>
+                <NavLink class="w3-button w3-block" href="new/plot/writer" Match="NavLinkMatch.All">
+                    Write Plot
+                </NavLink>
                 }
                 <div class="vertical-space w3-margin-left w3-margin-right">
                     <div class="row">
@@ -134,9 +117,6 @@
                 <NavLink class="w3-button w3-block" href="calculate/stardate" Match="NavLinkMatch.All">
                     Stardate
                 </NavLink>
-                @* <NavLink class="w3-button w3-block" href="calculate/timeline" Match="NavLinkMatch.All">
-                    Timeline Position
-                </NavLink> *@
                 <NavLink class="w3-button w3-block" href="calculate/warpspeed" Match="NavLinkMatch.All">
                     Warp Speed
                 </NavLink>
