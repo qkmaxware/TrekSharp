@@ -7,6 +7,24 @@ public class TokenCollection {
     public int Threat {get; set;}
 }
 
+public class UserCustomSpecies {
+    public List<CustomSpecies> Definitions {get; set;}
+    public List<SpeciesRestrictedTalent> Talents {get; set;}
+
+    public UserCustomSpecies() {
+        Definitions = new List<CustomSpecies>();
+        Talents = new List<SpeciesRestrictedTalent>();
+    }
+}
+
+public class UserCustomData {
+    public UserCustomSpecies Species {get; set;}
+
+    public UserCustomData() {
+        Species = new UserCustomSpecies();
+    }
+}
+
 public class Mission {
     public string MissionTitle {get; set;}
     public string MissionAuthor {get; set;}
@@ -25,6 +43,7 @@ public class Act {
 }
 
 public class AppData {
+    public bool IsGm = true;
 
     public Mission Mission {get; set;} = new Mission();
     public TokenCollection Tokens {get; set;} = new TokenCollection();
@@ -36,7 +55,10 @@ public class AppData {
 
     public List<ExtendedTask> Tasks {get; set;} = new List<ExtendedTask>();
 
+    public UserCustomData Custom {get; set;} = new UserCustomData();
+
     public void Overwrite(AppData @new) {
+        this.IsGm = @new.IsGm;
         this.Mission = @new.Mission ?? new Mission();
         this.Tokens = @new.Tokens ?? new TokenCollection();
         this.Ships = @new.Ships ?? new List<PlayerVessel>();
@@ -45,6 +67,7 @@ public class AppData {
         this.NPCs = @new.NPCs ?? new List<NpcCharacter>();
         this.NPCShips = @new.NPCShips ?? new List<Vessel>();
         this.Tasks = @new.Tasks ?? new List<ExtendedTask>();
+        this.Custom = @new.Custom ?? new UserCustomData();
     }
 }
 

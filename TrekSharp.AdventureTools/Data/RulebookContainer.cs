@@ -4,8 +4,9 @@ using System.Linq;
 namespace TrekSharp.AdventureTools.Data {
 
 public class RulebookContainer {
-    private Dictionary<string, Rulebook> rulebooks = new Dictionary<string, Rulebook> {
-        {"Core", Rulebook.Core},
+    private Dictionary<string, IRulebook> rulebooks = new Dictionary<string, IRulebook> {
+        // Default rulebooks, always here
+        {"Core", Rulebooks.CoreRulebook.Instance},
         {"Command Division", Rulebooks.CommandDivision.Instance }, 
         {"Operations Division", Rulebooks.OperationsDivision.Instance },   
         {"Science Division", Rulebooks.ScienceDivision.Instance },   
@@ -17,8 +18,12 @@ public class RulebookContainer {
     };
     private List<string> _enabled = new List<string>();
     
-    public IEnumerable<KeyValuePair<string,Rulebook>> AllRulebooks => rulebooks;
-    public IEnumerable<Rulebook> EnabledRulebooks => AllRulebooks.Where(kv => IsRulebookEnabled(kv.Key)).Select(kv => kv.Value);
+    public IEnumerable<KeyValuePair<string,IRulebook>> AllRulebooks => rulebooks;
+    public IEnumerable<IRulebook> EnabledRulebooks => AllRulebooks.Where(kv => IsRulebookEnabled(kv.Key)).Select(kv => kv.Value);
+
+    public void AddRulebook(string name, IRulebook book) {
+        this.rulebooks[name] = book;
+    }
 
     public bool IsRulebookEnabled(string name) {
         return _protected.Contains(name) || _enabled.Contains(name);

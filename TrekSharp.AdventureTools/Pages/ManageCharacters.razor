@@ -32,7 +32,7 @@
                             <div class="hbar row-fill elbow-right knee-right"></div>
                         </div>
                         <div style="width: 100%; height: 125px;" @onclick="@(() => navigateToPlayerCharacter(context))">
-                            <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.style.display='none'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
+                            <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
                         </div>
                         <div class="w3-padding row">
                             <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
@@ -83,7 +83,7 @@
                             <div class="hbar row-fill elbow-right knee-right"></div>
                         </div>
                         <div style="width: 100%; height: 125px;" @onclick="@(() => navigateToSupportCharacter(context))">
-                            <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.style.display='none'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
+                            <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
                         </div>
                         <div class="w3-padding row">
                             <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
@@ -208,7 +208,7 @@
         new NpcCharacter {
             Name = "Minor Starfleet Conn Officer",
             BaseStress = 9,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Human").FirstOrDefault(),
             Attributes = new Attributes {
                 Control = 10,
                 Fitness = 10,
@@ -229,7 +229,7 @@
         new NpcCharacter {
             Name = "Minor Starfleet Security Officer",
             BaseStress = 11,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Human").FirstOrDefault(),
             Attributes = new Attributes {
                 Control = 10,
                 Fitness = 09,
@@ -250,7 +250,7 @@
         new NpcCharacter {
             Name = "Minor Starfleet Engineer",
             BaseStress = 10,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Human").FirstOrDefault(),
             Attributes = new Attributes {
                 Control = 10,
                 Fitness = 09,
@@ -271,7 +271,7 @@
         new NpcCharacter {
             Name = "Minor Starfleet Science Officer",
             BaseStress = 9,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Human").FirstOrDefault(),
             Attributes = new Attributes {
                 Control = 09,
                 Fitness = 08,
@@ -292,7 +292,7 @@
         new NpcCharacter {
             Name = "Notable Section 31 Operative",
             BaseStress = 11,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Human").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Human").FirstOrDefault(),
             Values = new List<string> {
                 "The Ends Justify the Means"
             },
@@ -325,7 +325,7 @@
             Name = "Minor Klingon Warrior",
             BaseStress = 13,
             Resistance = 1,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Klingon").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Klingon").FirstOrDefault(),
             Attributes = new Attributes {
                 Control = 09,
                 Fitness = 11,
@@ -358,7 +358,7 @@
                 "Hand-toHand Combat",
                 "Resilience"
             },
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Klingon").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Klingon").FirstOrDefault(),
             Attributes = new Attributes {
                 Control = 09,
                 Fitness = 11,
@@ -385,7 +385,7 @@
             Name = "Minor Romulan Uhlan",
             BaseStress = 11,
             Resistance = 0,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Romulan").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Romulan").FirstOrDefault(),
             Attributes = new Attributes {
                 Control = 11,
                 Fitness = 09,
@@ -411,7 +411,7 @@
             Name = "Notable Romulan Centurion",
             BaseStress = 11,
             Resistance = 0,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Romulan").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Romulan").FirstOrDefault(),
             Values = new List<string> {
                 "I Will Not Fail in My Duty to the Empire"
             },
@@ -445,7 +445,7 @@
             Name = "Minor Ferengi Menial",
             BaseStress = 9,
             Resistance = 0,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Ferengi").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Ferengi").FirstOrDefault(),
             Values = new List<string> {
                 
             },
@@ -476,7 +476,7 @@
             Name = "Minor Ferengi Salesman",
             BaseStress = 9,
             Resistance = 0,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Ferengi").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Ferengi").FirstOrDefault(),
             Values = new List<string> {
                 "First Rule of Acquisition - Once You Have Their Money, Never Give It Back"
             },
@@ -509,7 +509,7 @@
             Name = "Minor Cardassian Soldier",
             BaseStress = 11,
             Resistance = 1,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Cardassian").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Cardassian").FirstOrDefault(),
             Values = new List<string> {
                
             },
@@ -541,7 +541,7 @@
             Name = "Notable Cardassian Glinn",
             BaseStress = 12,
             Resistance = 1,
-            Species = Rulebook.Core.Species.Where(species => species.Name == "Cardassian").FirstOrDefault(),
+            Species = TrekSharp.Rulebooks.CoreRulebook.Instance.Species.Where(species => species.Name == "Cardassian").FirstOrDefault(),
             Values = new List<string> {
                "Cardassians Dot Not Choose to Be Superior, Fate Made Us This Way"
             },

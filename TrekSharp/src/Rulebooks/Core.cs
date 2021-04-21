@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TrekSharp.Rulebooks {
 
-public class CoreRulebook : Rulebook {
+public class CoreRulebook : BaseRulebook {
     private CoreRulebook(
         List<Species> species, 
         List<CharacterTalent> talents, 
@@ -27,7 +27,7 @@ public class CoreRulebook : Rulebook {
         items
     ){}
 
-    public static readonly Rulebook Instance = new CoreRulebook(
+    public static readonly IRulebook Instance = new CoreRulebook(
         new List<Species> {
             new Species(
                 "Andorian", 

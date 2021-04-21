@@ -7,9 +7,17 @@
 >
     <div style="min-height: calc(100vh - 48px);">
         <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
-        <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
-            Home
-        </NavLink>
+        <div class="w3-row">
+            <div class="w3-col" style="width: 48px;">
+                <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
+                    <img src="assets/home.png" width=16 height=16>
+                </NavLink>
+            </div>
+            <div class="w3-rest w3-right-align w3-row">
+                <button class="w3-half w3-button @(Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = true)>GM</button>
+                <button class="w3-half w3-button @(!Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = false)>Player</button>
+            </div>
+        </div>
         <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCreateMenu = !collapseCreateMenu)"  style="padding-bottom: 0px;">
             <div class="row">
                 <div class="hbar knee-left" style="margin-right:10px;"></div>
@@ -21,6 +29,7 @@
         </button>
         <div id="CreateAccordion" class="@(CreateMenuCssClass) lcars w3-margin-bottom" style="padding-top: 0px;">
             <div class="lbar">
+                @if (Data.IsGm) {
                 <div class="vertical-space w3-margin-left w3-margin-right">
                     <div class="row">
                         <div class="hbar secondary elbow-left knee-left" style="margin-right:10px; width: 10px;"></div>
@@ -41,6 +50,7 @@
                         <div class="hbar secondary elbow-left knee-left elbow-right row-fill"></div>
                     </div>
                 </div>
+                }
                 <div class="vertical-space w3-margin-left w3-margin-right">
                     <div class="row">
                         <div class="hbar secondary elbow-left knee-left" style="margin-right:10px; width: 10px;"></div>
@@ -64,12 +74,17 @@
                 <NavLink class="w3-button w3-block" href="new/support" Match="NavLinkMatch.All">
                     Support Character
                 </NavLink>
+                @if (Data.IsGm) {
                 <NavLink class="w3-button w3-block" href="new/ship" Match="NavLinkMatch.All">
                     Ship
+                </NavLink>
+                <NavLink class="w3-button w3-block" href="new/species" Match="NavLinkMatch.All">
+                    Species
                 </NavLink>
                 <NavLink class="w3-button w3-block" href="new/grid" Match="NavLinkMatch.All">
                     Battle Grid
                 </NavLink>
+                }
             </div>
             <div class="row">
                 <div class="hbar elbow-left knee-right elbow-right row-fill"></div>
@@ -89,12 +104,17 @@
                 <NavLink class="w3-button w3-block" href="manage/characters" Match="NavLinkMatch.All">
                     Characters
                 </NavLink>
+                @if (Data.IsGm) {
                 <NavLink class="w3-button w3-block" href="manage/ships" Match="NavLinkMatch.All">
                     Ships
+                </NavLink>
+                <NavLink class="w3-button w3-block" href="manage/species" Match="NavLinkMatch.All">
+                    Custom Species
                 </NavLink>
                 <NavLink class="w3-button w3-block" href="manage/task/extended" Match="NavLinkMatch.All">
                     Extended Tasks
                 </NavLink>
+                }
             </div>
             <div class="row">
                 <div class="hbar elbow-left knee-right elbow-right row-fill"></div>
@@ -114,6 +134,9 @@
                 <NavLink class="w3-button w3-block" href="calculate/stardate" Match="NavLinkMatch.All">
                     Stardate
                 </NavLink>
+                @* <NavLink class="w3-button w3-block" href="calculate/timeline" Match="NavLinkMatch.All">
+                    Timeline Position
+                </NavLink> *@
                 <NavLink class="w3-button w3-block" href="calculate/warpspeed" Match="NavLinkMatch.All">
                     Warp Speed
                 </NavLink>
@@ -152,7 +175,7 @@
 <div class="lcars no-print" style="position: absolute;">
 <div 
     class="w3-button lcars-primary w3-large w3-hide-large w3-padding elbow-right knee-right" 
-    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed; z-index: 1;" 
+    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed; z-index: 1; border: 1px solid black;" 
     @onclick="OpenNavMenu"
 > Menu
 </div>

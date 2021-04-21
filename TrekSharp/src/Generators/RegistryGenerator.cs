@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TrekSharp {
+namespace TrekSharp.Generators {
 
 /// <summary>
 /// Interface for any class that can generate ship registry data

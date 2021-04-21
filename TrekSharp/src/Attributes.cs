@@ -133,6 +133,8 @@ public class Attributes {
         this[4] = values;
         this[5] = values;
     }
+
+    public static Attributes AllAttributesMask => new Attributes(1);
 }
 
 }

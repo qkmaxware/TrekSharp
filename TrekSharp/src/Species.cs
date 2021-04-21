@@ -1,5 +1,12 @@
 namespace TrekSharp {
 
+public class CustomSpecies : Species {
+    public string Homeworld {get; set;}
+    public string Description {get; set;}
+
+    public CustomSpecies() : base(null, new Attributes(0)) {}
+}
+
 public class Species : IResearchableEntity {
 
     public string Name {get; set;}

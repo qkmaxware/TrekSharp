@@ -4,6 +4,11 @@
 @if (HasCharacter) {
 <PrintNotification/>
 
+<div class="w3-container no-print lcars" style="text-align: right;">
+    <button @onclick="confirmDelete" class="w3-red">Delete</button>
+</div>
+
+
 <div id="character-sheet" class="lcars">
     <!-- Header -->
     <div id="player-info" class="container">
@@ -64,7 +69,12 @@
     <span>No support player "@(PlayerId)"</span>
 }
 
+<ConfirmationDialog @ref="confirm">
+</ConfirmationDialog>
+
 @code {
+
+    private ConfirmationDialog confirm;
 
     [Parameter]
     public string PlayerId { get; set; }
@@ -80,5 +90,16 @@
     }
     public SupportCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.Supports.Count ? Data.Supports[PlayerIndex] : null;
     public bool HasCharacter => Player != null;
+
+    private void confirmDelete() {
+        confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
+    }
+
+    public void Delete() {
+        if (HasCharacter) {
+            Data.Supports.Remove(this.Player);
+            NavigationManager.NavigateTo("manage/characters");
+        }
+    }
 
 }

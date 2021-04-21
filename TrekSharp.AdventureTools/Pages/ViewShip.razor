@@ -6,7 +6,7 @@
 
 <div class="w3-container no-print lcars" style="text-align: right;">
     <button @onclick="Export">Export Json</button>
-    <button @onclick="Delete" class="w3-red">Delete</button>
+    <button @onclick="confirmDelete" class="w3-red">Delete</button>
 </div>
 
 <div id="character-sheet" class="lcars">
@@ -141,7 +141,12 @@
     <span>No ship "@(ShipId)"</span>
 }
 
+<ConfirmationDialog @ref="confirm">
+</ConfirmationDialog>
+
 @code {
+    private ConfirmationDialog confirm;
+
     [Parameter]
     public string ShipId { get; set; }
     public int ShipIndex {
@@ -156,6 +161,10 @@
     }
     public PlayerVessel Ship => ShipIndex >=0 && ShipIndex < Data.Ships.Count ? Data.Ships[ShipIndex] : null;
     public bool HasShip => Ship != null;
+
+    private void confirmDelete() {
+        confirm.Open($"Are you sure you want to delete the ship '{this.Ship.Name}'?", () => Delete());
+    }
 
     public void Delete() {
         if (HasShip) {

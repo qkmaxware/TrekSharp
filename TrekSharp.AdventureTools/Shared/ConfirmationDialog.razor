@@ -1,0 +1,44 @@
+<div class="w3-modal no-print @(CssClass)">
+    <div class="w3-modal-content">
+        <div class="w3-container lcars w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
+            <div class="w3-padding w3-xlarge w3-center">
+                @question
+            </div>
+            <div class="w3-row">
+                <div class="w3-half w3-left-align">
+                    <button class="w3-red" @onclick=@(() => Cancel())>Cancel</button>
+                </div>
+                <div class="w3-half w3-right-align">
+                    <button class="w3-green" @onclick=@(() => Confirm())>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool isOpen = false;
+    private string CssClass => isOpen ? "w3-show" : "w3-hide";
+
+    private string question;
+    private Action onConfirm;
+
+    public void Open(string question, Action onConfirm = null) {
+        isOpen = true;
+        this.question = question;
+        this.onConfirm = onConfirm;
+        StateHasChanged();
+    }
+
+    public void Cancel() {
+        isOpen = false;
+        this.onConfirm = null;
+        StateHasChanged();
+    }
+    public void Confirm() {
+        isOpen = false;
+        this.onConfirm?.Invoke();
+        this.onConfirm = null;
+        StateHasChanged();
+    }
+}

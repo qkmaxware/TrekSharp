@@ -18,7 +18,11 @@
         @foreach (var s in AllSpecies) {
         <div class="w3-padding w3-margin w3-row w3-border-bottom">
             <div class="w3-half">
-                <a href="@(s.GetMemoryAlphaSearchLink())" target="_blank">@s.Name</a>
+                @if (s is CustomSpecies) {
+                    <b>@s.Name</b>
+                } else {
+                    <a href="@(s.GetMemoryAlphaSearchLink())" target="_blank"><b>@s.Name</b></a>
+                }
             </div>
             <div class="w3-half w3-right-align">
                 <input type="radio"
@@ -268,11 +272,11 @@
                 Attributes = a,
                 Disciplines = d,
                 Equipment = new List<Item> {
-                    Rulebook.Core.Items[0],
-                    Rulebook.Core.Items[1],
-                    Rulebook.Core.Items[2],
-                    Rulebook.Core.Items[3],
-                    Rulebook.Core.Items[4]
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(1),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(2),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
                 }
             };
         }

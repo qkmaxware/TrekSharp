@@ -6,7 +6,7 @@ public class MoreAlphaCannonRaces : UnofficialRulebook {
 
     private MoreAlphaCannonRaces() : base(){}
 
-    public static readonly Rulebook Instance = new MoreAlphaCannonRaces(){
+    public static readonly IRulebook Instance = new MoreAlphaCannonRaces(){
         Species = new List<Species> () {
             new Species(
                 "Aenar",

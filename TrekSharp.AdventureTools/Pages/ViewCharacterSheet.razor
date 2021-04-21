@@ -11,7 +11,7 @@
     </div>
     <div class="w3-half w3-right-align">
         <button @onclick="Export">Export Json</button>
-        <button @onclick="Delete" class="w3-red">Delete</button>
+        <button @onclick="confirmDelete" class="w3-red">Delete</button>
     </div>
 </div>
 
@@ -141,7 +141,12 @@
 
 <MilestoneEditor @ref=milestones OnSave=@(() => StateHasChanged())></MilestoneEditor>
 
+<ConfirmationDialog @ref="confirm">
+</ConfirmationDialog>
+
 @code {
+
+    private ConfirmationDialog confirm;
 
     [Parameter]
     public string PlayerId { get; set; }
@@ -157,6 +162,10 @@
     }
     public PlayerCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.Party.Count ? Data.Party[PlayerIndex] : null;
     public bool HasCharacter => Player != null;
+
+    private void confirmDelete() {
+        confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
+    }
 
     public void Delete() {
         if (HasCharacter) {

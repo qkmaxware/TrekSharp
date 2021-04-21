@@ -2,19 +2,39 @@ using System.Collections.Generic;
 
 namespace TrekSharp {
 
-public class Rulebook {
-    public List<CharacterTalent> Talents;
-    public List<Environment> Environments;
-    public List<Species> Species;
-    public List<Upbringing> Upbringings;
-    public List<CareerEvent> CareerEvents;
-    public List<Spaceframe> Spaceframes;
-    public List<Spaceframe> NpcSpaceframes;
-    public List<MissionProfile> MissionProfiles;
-    public List<ShipTalent> ShipTalents;
-    public List<Item> Items;
+/// <summary>
+/// Generic interface for all data that a source rulebook must provide
+/// </summary>
+public interface IRulebook {
+    IEnumerable<CharacterTalent> Talents {get;}
+    IEnumerable<Environment> Environments {get;}
+    IEnumerable<Species> Species {get;}
+    IEnumerable<Upbringing> Upbringings {get;}
+    IEnumerable<CareerEvent> CareerEvents {get;}
+    IEnumerable<Spaceframe> Spaceframes {get;}
+    IEnumerable<Spaceframe> NpcSpaceframes {get;}
+    IEnumerable<MissionProfile> MissionProfiles {get;}
+    IEnumerable<ShipTalent> ShipTalents {get;}
+    IEnumerable<Item> Items {get;}
+}
 
-    public Rulebook() : this(
+/// <summary>
+/// Base class for rulebook instances
+/// </summary>
+public class BaseRulebook : IRulebook {
+    public static IRulebook Core => TrekSharp.Rulebooks.CoreRulebook.Instance;
+    public IEnumerable<CharacterTalent> Talents {get; protected set;}
+    public IEnumerable<Environment> Environments {get; protected set;}
+    public IEnumerable<Species> Species {get; protected set;}
+    public IEnumerable<Upbringing> Upbringings {get; protected set;}
+    public IEnumerable<CareerEvent> CareerEvents {get; protected set;}
+    public IEnumerable<Spaceframe> Spaceframes {get; protected set;}
+    public IEnumerable<Spaceframe> NpcSpaceframes {get; protected set;}
+    public IEnumerable<MissionProfile> MissionProfiles {get; protected set;}
+    public IEnumerable<ShipTalent> ShipTalents {get; protected set;}
+    public IEnumerable<Item> Items {get; protected set;}
+
+    public BaseRulebook() : this(
         new List<Species> (), 
         new List<CharacterTalent> (), 
         new List<Environment> (), 
@@ -27,7 +47,7 @@ public class Rulebook {
         new List<Item> ()
     ) {}
 
-    public Rulebook (
+    public BaseRulebook (
         List<Species> species, 
         List<CharacterTalent> talents, 
         List<Environment> environments, 
@@ -50,11 +70,12 @@ public class Rulebook {
         this.ShipTalents = shipTalents;
         this.Items = items;
     }
-
-    public static Rulebook Core => TrekSharp.Rulebooks.CoreRulebook.Instance;
 }
 
-public class UnofficialRulebook : Rulebook {
+/// <summary>
+/// Base class for user created source rulebooks
+/// </summary>
+public class UnofficialRulebook : BaseRulebook {
     public UnofficialRulebook() : base() {}
     public UnofficialRulebook(
         List<Species> species, 

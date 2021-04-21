@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TrekSharp.Rulebooks {
     
-public class OperationsDivision : Rulebook {
+public class OperationsDivision : BaseRulebook {
     private OperationsDivision() {}
 
     public static OperationsDivision Instance = new OperationsDivision() {

@@ -1,4 +1,5 @@
 @using Data
+@inject AppData data;
 
 <div class="row">
     <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
@@ -17,7 +18,7 @@
     </div>
     <div class="w3-padding">
     @foreach (var kv in Rulebooks.AllRulebooks) {
-        if (!(kv.Value is UnofficialRulebook)) {
+        if (!(kv.Value is UnofficialRulebook) && kv.Value is BaseRulebook) {
             <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
         }
     }
@@ -27,7 +28,7 @@
     </div>
     <div class="w3-padding">
     @foreach (var kv in Rulebooks.AllRulebooks) {
-        if (kv.Value is UnofficialRulebook) {
+        if (kv.Value is UnofficialRulebook || !(kv.Value is BaseRulebook)) {
             <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
         }
     }
@@ -40,7 +41,12 @@
 
     public Action OnChange;
 
-    public IEnumerable<Rulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
+    public IEnumerable<IRulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
+
+    protected override void OnInitialized() {
+        // Add the user created data to the rulebook picker
+        Rulebooks.AddRulebook("User Created", new UserCreatedSpeciesRulebook(data));
+    }
 
     private void Toggle(string name) {
         Rulebooks.ToggleRulebook(name);

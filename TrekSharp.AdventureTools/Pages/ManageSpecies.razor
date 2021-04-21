@@ -1,0 +1,53 @@
+@page "/manage/species"
+@inherits AppComponentBase
+
+<LCARS Title="CUSTOM SPECIES">
+    @if (Data.Custom != null && Data.Custom.Species != null && Data.Custom.Species.Definitions != null) {
+    <Col4Layout Items="Data.Custom.Species.Definitions">
+        <Template>
+            <div>
+                <div class="row">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                        @context.Name 
+                        <button class="w3-red" @onclick=@(() => confirmDeleteSpecies(context))>&times;</button>
+                    </div>
+                    <div class="hbar row-fill elbow-right knee-right"></div>
+                </div>
+                <ul>
+                    @if (Data.Custom.Species.Talents != null) {
+                        foreach (var talent in Data.Custom.Species.Talents) {
+                            if (talent.species == context.Name) {
+                                <li>@talent.Name</li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </Template>
+    </Col4Layout>
+    }
+</LCARS>
+
+<ConfirmationDialog @ref="confirm">
+</ConfirmationDialog>
+
+@code {
+
+    ConfirmationDialog confirm;
+
+    private void confirmDeleteSpecies(CustomSpecies species) {
+        confirm.Open($"Are you sure you want to delete the species '{species.Name}'?", () => deleteSpecies(species));
+    }
+
+    private void deleteSpecies(CustomSpecies species) {
+        if (Data.Custom != null && Data.Custom.Species != null && Data.Custom.Species.Definitions != null) {
+            Data.Custom.Species.Definitions.Remove(species);
+            if (Data.Custom.Species.Talents != null) {
+                Data.Custom.Species.Talents.RemoveAll((talent) => talent.species == species.Name);
+            }
+        }
+        StateHasChanged();
+    }
+
+}

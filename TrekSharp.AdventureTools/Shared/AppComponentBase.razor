@@ -10,4 +10,8 @@
         byte[] file = System.Text.Encoding.UTF8.GetBytes(json);
         await JSRuntime.InvokeVoidAsync("BlazorDownloadFile", $"{filename}.json", "text/json", file);
     }
+
+    public void ResetScrollPosition() {
+        JSRuntime.InvokeVoidAsync("resetScroll");
+    }
 }

@@ -2,6 +2,9 @@
 @inherits AppComponentBase
 
 <LCARS Title="RANDOM PLAYER">
+    <div class="w3-panel typeface">
+        This tool will randomly generate the Lifepath of a player character. Simply select your desired options below and press 'Generate New' button to create your character.
+    </div>
     <RulebookPicker @ref="Rulebooks"/>
 
     <div class="row">
@@ -135,11 +138,11 @@
                 Medicine    = 1,
             },
             Equipment = new List<Item>() {
-                Rulebook.Core.Items[0],
-                Rulebook.Core.Items[1],
-                Rulebook.Core.Items[2],
-                Rulebook.Core.Items[3],
-                Rulebook.Core.Items[4]
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(1),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(2),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
             },
             Values = new List<string>(),
             Focuses = new List<string>(),

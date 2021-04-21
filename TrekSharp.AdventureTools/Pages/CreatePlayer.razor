@@ -7,6 +7,9 @@
 <LCARS Title="NEW PLAYER">
 @if(ShowRulebookSelector) {
 <div>
+    <div class="w3-panel typeface">
+        This tool will guide you through the process of creating a player character using the Lifepath creation rules. Please fill out every field from the top to the bottom of each page. Use the 'Next' buttons to advance the process from one stage in your character's life to another.
+    </div>
     <RulebookPicker @ref="Rulebooks"></RulebookPicker>
 </div>
 } else if (ShowSpeciesSelector) {
@@ -25,7 +28,11 @@
         @foreach (var species in AllSpecies) {
         <div class="w3-padding w3-margin w3-row w3-border-bottom">
             <div class="w3-half">
-                <a href="@(species.GetMemoryAlphaSearchLink())" target="_blank"><b>@species.Name</b></a>
+                @if (species is CustomSpecies) {
+                    <b>@species.Name</b>
+                } else {
+                    <a href="@(species.GetMemoryAlphaSearchLink())" target="_blank"><b>@species.Name</b></a>
+                }
             </div>
             <div class="w3-half w3-right-align">
                 <input type="radio"
@@ -995,8 +1002,8 @@
 
     private CharacterTalent characterCareerExperienceExperiencedTalent = null;
     private CharacterTalent caracterCareerAgeTalent => experience switch {
-        CareerAge.Young => Rulebook.Core.Talents.Where(talent => talent.Name == "Untapped Potential").First(),
-        CareerAge.Veteran => Rulebook.Core.Talents.Where(talent => talent.Name == "Veteran").First(),
+        CareerAge.Young => TrekSharp.Rulebooks.CoreRulebook.Instance.Talents.Where(talent => talent.Name == "Untapped Potential").First(),
+        CareerAge.Veteran => TrekSharp.Rulebooks.CoreRulebook.Instance.Talents.Where(talent => talent.Name == "Veteran").First(),
         _ => characterCareerExperienceExperiencedTalent
     };
     private string characterCareerExperienceValue = null;
@@ -1068,11 +1075,11 @@
     };
     private Attributes allAttributesMask = new Attributes(1);
     private List<Item> characterEquipment = new List<Item>() {
-        Rulebook.Core.Items[0],
-        Rulebook.Core.Items[1],
-        Rulebook.Core.Items[2],
-        Rulebook.Core.Items[3],
-        Rulebook.Core.Items[4]
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(1),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(2),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
     };
     private List<string> characterValues => new List<string>() {
         characterEnvironmentValue,
@@ -1136,13 +1143,13 @@
         if (!ShowPersonalization) {
             current_subpage ++;
         }
-        JsRuntime.InvokeVoidAsync("resetScroll");
+        this.ResetScrollPosition();
     }
 
     #region Rulebook Page
     public bool ShowRulebookSelector => current_subpage == 0;
     private RulebookPicker Rulebooks;
-    private IEnumerable<Rulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
+    private IEnumerable<IRulebook> EnabledRulebooks => Rulebooks.EnabledRulebooks;
 
     //private int era = 24;
     #endregion

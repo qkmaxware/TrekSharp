@@ -232,6 +232,7 @@
         if (!LastState()) {
             state = (State)((int)state + 1);
         }
+        this.ResetScrollPosition();
     }
 
     private RulebookPicker Rulebooks;
@@ -271,7 +272,7 @@
     private string Name = "USS ";
     private string Registry = "NCC ";
 
-    private UfpRegistryGenerator generator = new UfpRegistryGenerator();
+    private Generators.UfpRegistryGenerator generator = new Generators.UfpRegistryGenerator();
     private void randomName() {
         this.Name = generator.RandomName();
     }
