@@ -59,34 +59,36 @@
         </div>
     </div>
     <!-- Table of Contents -->
-    <div class="print print-A4">
-        <!-- Titlebar -->
-        <div class="row">
-            <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span class="w3-xlarge">@mission.MissionTitle</span>
+    <div class="print-A4">
+        <div class="print">
+            <!-- Titlebar -->
+            <div class="row">
+                <div class="hbar knee-left elbow-left secondary" style="width: 56px;"></div>
+                <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                    <span class="w3-xlarge">@mission.MissionTitle</span>
+                </div>
+                <div class="hbar secondary knee-right elbow-right row-fill"></div>
             </div>
-            <div class="hbar secondary knee-right elbow-right row-fill"></div>
-        </div>
-        <div class="row w3-padding">
-            <div class="hbar knee-left elbow-left primary" style="width: 40px;"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span >By @mission.MissionAuthor</span>
+            <div class="row w3-padding">
+                <div class="hbar knee-left elbow-left primary" style="width: 40px;"></div>
+                <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
+                    <span >By @mission.MissionAuthor</span>
+                </div>
+                <div class="hbar primary knee-right elbow-right row-fill"></div>
             </div>
-            <div class="hbar primary knee-right elbow-right row-fill"></div>
+            <!-- TOC -->
+            <div class="w3-margin">
+                <b class="w3-large">Content</b>
+            </div>
+            <ul class="w3-ul w3-right-align">
+                <li><a href="#synopsis">SYNOPSIS</a></li>
+                @for(var i = 0; i < mission.Acts.Count; i++) {
+                    <li><a href="#a-@(i)">ACT @(i + 1): @mission.Acts[i].Title?.ToUpper()</a></li>
+                }
+                <li><a href="#conclusion">CONCLUSION</a></li>
+                <li><a href="#characters">PRE-GENERATED CHARACTERS</a></li>
+            </ul>
         </div>
-        <!-- TOC -->
-        <div class="w3-margin">
-            <b class="w3-large">Content</b>
-        </div>
-        <ul class="w3-ul w3-right-align">
-            <li><a href="#synopsis">SYNOPSIS</a></li>
-            @for(var i = 0; i < mission.Acts.Count; i++) {
-                <li><a href="#a-@(i)">ACT @(i + 1): @mission.Acts[i].Title?.ToUpper()</a></li>
-            }
-            <li><a href="#conclusion">CONCLUSION</a></li>
-            <li><a href="#characters">PRE-GENERATED CHARACTERS</a></li>
-        </ul>
     </div>
     <!-- Synopsis -->
     <a name="synopsis"></a>

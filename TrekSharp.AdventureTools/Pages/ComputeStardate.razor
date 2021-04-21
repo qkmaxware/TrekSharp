@@ -41,11 +41,11 @@
             </span>
             <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
         </div>
-        <ul class="w3-ul">
+        <ul class="w3-ul w3-margin">
             @foreach (var item in prime) {
                 var difference = (to_stardate - item.Timestamp).TotalDays;
                 if (difference > 0 && difference <= 730) {
-                    <li>-@(difference) Days - @item.Title</li>
+                    <li>-@(difference.ToString("0.0")) Days - @item.Title</li>
                 }
             }
         </ul>
@@ -56,11 +56,11 @@
             </span>
             <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
         </div>
-        <ul class="w3-ul">
+        <ul class="w3-ul w3-margin">
             @foreach (var item in prime.FromDate(to_stardate)) {
                 var difference = (item.Timestamp - to_stardate).TotalDays;
                 @if (difference <= (365*5)) {
-                <li>+@(difference) Days - @item.Title</li>
+                <li>+@(difference.ToString("0.0")) Days - @item.Title</li>
                 }
             }
         </ul>

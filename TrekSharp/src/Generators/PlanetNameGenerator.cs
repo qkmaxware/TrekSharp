@@ -67,6 +67,10 @@ public class PlanetNameGenerator {
         new Phenome("ER", "ir", "ur")
     };
 
+    public int RandomPlanetNumber() {
+        return r.Next(1, 10);
+    }
+
     /// <summary>
     /// Create a name with a length between min and max
     /// </summary>

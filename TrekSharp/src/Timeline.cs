@@ -31,10 +31,10 @@ public class Timeline : IList<TimelineEvent> {
         timeline.Add(new TimelineEvent(new DateTime(year: 2285, month: 01, day: 01), "Khan Defeated"));
         timeline.Add(new TimelineEvent(new DateTime(year: 2286, month: 01, day: 01), "Whale Probe Disaster Averted"));
         timeline.Add(new TimelineEvent(new DateTime(year: 2293, month: 01, day: 01), "Praxis Destroyed"));
-        timeline.Add(new TimelineEvent(new DateTime(year: 2364, month: 01, day: 01), "First Contact with the Q"));
-        timeline.Add(new TimelineEvent(new DateTime(year: 2365, month: 01, day: 01), "First Contact with the Borg"));
-        timeline.Add(new TimelineEvent(new DateTime(year: 2367, month: 01, day: 01), "Battle of Wolf 359"));
-        timeline.Add(new TimelineEvent(new DateTime(year: 2369, month: 01, day: 01), "Bajoran Wormhole Discovered"));
+        timeline.Add(new TimelineEvent(new DateTime(year: 2363, month: 04, day: 30), "First Contact with the Q"));
+        timeline.Add(new TimelineEvent(new DateTime(year: 2365, month: 01, day: 28), "First Contact with the Borg"));
+        timeline.Add(new TimelineEvent(new DateTime(year: 2366, month: 06, day: 06), "Battle of Wolf 359"));
+        timeline.Add(new TimelineEvent(new DateTime(year: 2369, month: 01, day: 06), "Bajoran Wormhole Discovered"));
         timeline.Add(new TimelineEvent(new DateTime(year: 2371, month: 02, day: 12), "USS Voyager is Lost"));
         timeline.Add(new TimelineEvent(new DateTime(year: 2371, month: 06, day: 28), "USS Enterprise-D Destroyed"));
         timeline.Add(new TimelineEvent(new DateTime(year: 2373, month: 07, day: 29), "Cardassia Joins the Dominion"));

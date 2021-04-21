@@ -110,7 +110,7 @@
 
     private void randomHomeworld() {
         var generator = new Generators.PlanetNameGenerator();
-        this.customSpecies.Homeworld = generator.Generate(4, 12);
+        this.customSpecies.Homeworld = generator.Generate(2, 6) + " " + generator.Generate(2, 6) + " " + generator.RandomPlanetNumber();
     }
 
     private void addTalent() {

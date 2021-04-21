@@ -1,48 +1,46 @@
 @using System.Globalization
 @typeparam TItem
 
-<div class="w3-modal no-print @(CssClass)">
-    <div class="w3-modal-content">
-        <div class="w3-container w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
-            <div class="lcars">
-                <div class="secondary elbow-left elbow-right knee-left knee-right">
-                    <h3>@Title</h3>
-                </div>
-                <div class="w3-container">
-                    Click one of the items below to select it, then press "Add" to confirm.
-                </div>
-            </div>
-            <div class="lcars">
-                <div class="w3-padding">
-                    <input type="text" placeholder="filter" @bind="filter" style="width: 100%;"/>
-                </div>
-                <div>
-                @if (Store != null) {
-                    for (var i = 0; i < Store.Count; i++) {
-                        var capture = i;
-                        if (matchesFilter(Store[i])) {
-                        <button style="width: 100%" class="@(capture == index ? "secondary" : "primary")" @onclick="@(() => index = capture)">
-                            @ListingFunction(Store[i])            
-                        </button>
-                        }
-                    }
-                }
-                </div>
-            </div>
-            
-            <div class="w3-row">
-                <div class="w3-half">
-                    <button class="w3-button" @onclick="Close"> Cancel</button>
-                </div>
-                <div class="w3-half w3-right-align">
-                    <button class="w3-button" @onclick="add"> Add</button>
-                </div>
-            </div>
+<Popup @ref=popup>
+    <div class="lcars">
+        <div class="secondary elbow-left elbow-right knee-left knee-right">
+            <h3>@Title</h3>
+        </div>
+        <div class="w3-container">
+            Click one of the items below to select it, then press "Add" to confirm.
         </div>
     </div>
-</div>
+    <div class="lcars">
+        <div class="w3-padding">
+            <input type="text" placeholder="filter" @bind="filter" style="width: 100%;"/>
+        </div>
+        <div>
+        @if (Store != null) {
+            for (var i = 0; i < Store.Count; i++) {
+                var capture = i;
+                if (matchesFilter(Store[i])) {
+                <button style="width: 100%" class="@(capture == index ? "secondary" : "primary")" @onclick="@(() => index = capture)">
+                    @ListingFunction(Store[i])            
+                </button>
+                }
+            }
+        }
+        </div>
+    </div>
+    
+    <div class="w3-row">
+        <div class="w3-half">
+            <button class="w3-button" @onclick="Close"> Cancel</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button class="w3-button" @onclick="add"> Add</button>
+        </div>
+    </div>
+</Popup>
 
 @code {
+    private Popup popup;
+
     [Parameter]
     public string Title {get; set;} = "Add";
     [Parameter]
@@ -75,20 +73,16 @@
 
     private string filter;
 
-    private bool isOpen = false;
-    private string CssClass => isOpen ? "w3-show" : "w3-hide";
-
     public void ChangeAddListener(Action<TItem> action) {
         this.OnAdd = action;
     }
 
     public void Open() {
-        isOpen = true;
-        filter = null;
+        popup.Open();
     }
 
     public void Close() {
-        isOpen = false;
+        popup.Close();
     }
 
     private void add() {
