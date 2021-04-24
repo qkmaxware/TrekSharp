@@ -44,3 +44,25 @@ function base64DecToArr(sBase64, nBlocksSize) {
   }
   return taBytes;
 }
+
+async function BlazorReadFileAsString(file) {
+  return await new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+        resolve(evt.target.result);
+      } else {
+        reject("");
+      }
+    }
+    var blob = file.slice(0, file.size);
+    reader.readAsText(blob);
+  });
+}
+
+async function BlazorHandleFileSelect(input) {
+  var files = input.files;
+  var file = files[0];
+
+  return await BlazorReadFileAsString(file);
+}
