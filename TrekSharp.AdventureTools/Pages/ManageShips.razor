@@ -21,6 +21,7 @@
             <!-- Content Pane -->
             <div class="w3-padding row-fill">
                 <div class="w3-container w3-right no-print">
+                    <button @onclick="@(() => raw.Open())">+ Sheet</button>
                     <button @onclick="@(() => importer.Open())">+ Json</button>
                 </div>
                 <Col4Layout Items=Data.Ships>
@@ -133,8 +134,10 @@
     OnAdd = "addNpc"
 />
 
-@code {
+<RawShipCreator @ref="raw"></RawShipCreator>
 
+@code {
+    private RawShipCreator raw;
     private AssetImporter<PlayerVessel> importer;
     private void onShipLoaded(PlayerVessel vessel) {
         this.Data.Ships.Add(vessel);

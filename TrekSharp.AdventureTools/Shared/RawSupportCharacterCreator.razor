@@ -45,22 +45,6 @@
                 <input type="text" class="w3-input" @bind=character.Species.Name placeholder="Species Name"/>
             </div>
         </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Environment</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="text" class="w3-input" @bind=character.Environment placeholder="Environment"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Upbringing</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="text" class="w3-input" @bind=character.Upbringing placeholder="Upbringing"/>
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
@@ -179,7 +163,7 @@
     <div class="row">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
         <span class="spacer typeface text-secondary w3-large">
-            VALUES
+            FOCUSES
         </span>
         <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
     </div>
@@ -191,68 +175,6 @@
             </div>
             <div class="w3-half w3-right-align">
                 <button class="w3-blue" @onclick=@(() => character.Focuses.Add(string.Empty))>+</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            FOCUSES
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-    </div>
-    <div>
-        
-    </div>
-    <div>
-        <StringEditor Items=character.Values></StringEditor>
-        <div class="w3-row w3-padding">
-            <div class="w3-half w3-left-align">
-                <button class="w3-red" @onclick=@(() => { if (character.Values.Count > 0) { character.Values.RemoveAt(character.Values.Count - 1); } })>-</button>
-            </div>
-            <div class="w3-half w3-right-align">
-                <button class="w3-blue" @onclick=@(() => character.Values.Add(string.Empty))>+</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            TALENTS
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-    </div>
-    <div>
-        <ul class="w3-ul">
-            @for(var i = 0 ; i < character.Talents.Count; i++) {
-                var this_index = i;
-                <li style="border: none;">
-                    @(this_index). 
-                    <div class="w3-row w3-padding">
-                        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                            <span>Name</span>
-                        </div>
-                        <div class="w3-threequarter" style="padding-left: 10px">
-                            <input type="text" class="w3-input" @bind=character.Talents[this_index].Name placeholder="Talent Name"/>
-                        </div>
-                    </div>
-                    <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-primary">
-                        <div>
-                            Talent Description
-                        </div>
-                        <div>
-                            <textarea class="text-primary" @bind=character.Talents[this_index].Description style="width: 100%; resize: vertical; background-color: black;"></textarea>
-                        </div>
-                    </div>
-                </li>
-            }
-        </ul>
-        <div class="w3-row w3-padding">
-            <div class="w3-half w3-left-align">
-                <button class="w3-red" @onclick=@(() => { if (character.Talents.Count > 0) { character.Talents.RemoveAt(character.Talents.Count - 1); } })>-</button>
-            </div>
-            <div class="w3-half w3-right-align">
-                <button class="w3-blue" @onclick=@(() => character.Talents.Add(new CharacterTalent()))>+</button>
             </div>
         </div>
     </div>
@@ -272,14 +194,14 @@
 
     [Parameter] public Action OnImport {get; set;}
 
-    private PlayerCharacter character;
+    private SupportCharacter character;
 
     private void Cancel() {
         popup.Close();
     }
     private void Confirm() {
         if (character != null) {
-            Data.Party.Add(character);
+            Data.Supports.Add(character);
             OnImport?.Invoke();
         }
         popup.Close();
@@ -287,7 +209,7 @@
 
     public void Open() {
         // Base "character"
-        character = new PlayerCharacter {
+        character = new SupportCharacter {
             Name = string.Empty,
             Rank = new Rank {
                 Faction = Faction.Starfleet,
@@ -299,8 +221,6 @@
                 AttributeModifiers = null
             },
             Assignment = string.Empty,
-            Environment = string.Empty,
-            Upbringing = string.Empty,
             Attributes = new Attributes {
                 Control     = 7,
                 Fitness     = 7,
@@ -324,9 +244,7 @@
                 TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
                 TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
             },
-            Values = new List<string>(),
             Focuses = new List<string>(),
-            Talents = new List<CharacterTalent>(),
         };
 
         popup.Open();

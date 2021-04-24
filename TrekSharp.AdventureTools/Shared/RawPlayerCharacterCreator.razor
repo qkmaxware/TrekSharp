@@ -1,0 +1,335 @@
+@inherits AppComponentBase;
+
+<Popup @ref=popup>
+    <p class="w3-center">
+        If you used another character creator, but want to use TrekSharp to manage that character, simply enter the character's data from your character sheet to the appropriate fields below then press "Import".
+    </p>
+    @if (character != null) {
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            DETAILS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Name</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=character.Name placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Rank</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=character.Rank.Title placeholder="Rank Title"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Assignment</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=character.Assignment placeholder="Assignment"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Species</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=character.Species.Name placeholder="Species Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Environment</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=character.Environment placeholder="Environment"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Upbringing</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=character.Upbringing placeholder="Upbringing"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            ATTRIBUTES
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Control</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Attributes[0] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Fitness</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Attributes[2] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Presence</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Attributes[4] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Daring</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Attributes[1] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Insight</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Attributes[3] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Reason</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Attributes[5] placeholder="Name"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            DISCIPLINES
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Command</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Disciplines[0] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Security</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Disciplines[1] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Science</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Disciplines[2] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Conn</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Disciplines[3] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Engineering</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Disciplines[4] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Medicine</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=character.Disciplines[5] placeholder="Name"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            VALUES
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <StringEditor Items=character.Values></StringEditor>
+        <div class="w3-row w3-padding">
+            <div class="w3-half w3-left-align">
+                <button class="w3-red" @onclick=@(() => { if (character.Values.Count > 0) { character.Values.RemoveAt(character.Values.Count - 1); } })>-</button>
+            </div>
+            <div class="w3-half w3-right-align">
+                <button class="w3-blue" @onclick=@(() => character.Values.Add(string.Empty))>+</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            FOCUSES
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <StringEditor Items=character.Focuses></StringEditor>
+        <div class="w3-row w3-padding">
+            <div class="w3-half w3-left-align">
+                <button class="w3-red" @onclick=@(() => { if (character.Focuses.Count > 0) { character.Focuses.RemoveAt(character.Focuses.Count - 1); } })>-</button>
+            </div>
+            <div class="w3-half w3-right-align">
+                <button class="w3-blue" @onclick=@(() => character.Focuses.Add(string.Empty))>+</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            TALENTS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <ul class="w3-ul">
+            @for(var i = 0 ; i < character.Talents.Count; i++) {
+                var this_index = i;
+                <li style="border: none;">
+                    @(this_index). 
+                    <div class="w3-row w3-padding">
+                        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                            <span>Name</span>
+                        </div>
+                        <div class="w3-threequarter" style="padding-left: 10px">
+                            <input type="text" class="w3-input" @bind=character.Talents[this_index].Name placeholder="Talent Name"/>
+                        </div>
+                    </div>
+                    <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-primary">
+                        <div>
+                            Talent Description
+                        </div>
+                        <div>
+                            <textarea class="text-primary" @bind=character.Talents[this_index].Description style="width: 100%; resize: vertical; background-color: black;"></textarea>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="w3-row w3-padding">
+            <div class="w3-half w3-left-align">
+                <button class="w3-red" @onclick=@(() => { if (character.Talents.Count > 0) { character.Talents.RemoveAt(character.Talents.Count - 1); } })>-</button>
+            </div>
+            <div class="w3-half w3-right-align">
+                <button class="w3-blue" @onclick=@(() => character.Talents.Add(new CharacterTalent()))>+</button>
+            </div>
+        </div>
+    </div>
+    }
+    <div class="w3-row w3-padding">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => Cancel())>Cancel</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button class="w3-green" @onclick=@(() => Confirm())>Import</button>
+        </div>
+    </div>
+</Popup>
+
+@code {
+    Popup popup;
+
+    [Parameter] public Action OnImport {get; set;}
+
+    private PlayerCharacter character;
+
+    private void Cancel() {
+        popup.Close();
+    }
+    private void Confirm() {
+        if (character != null) {
+            Data.Party.Add(character);
+            OnImport?.Invoke();
+        }
+        popup.Close();
+    }
+
+    public void Open() {
+        // Base "character"
+        character = new PlayerCharacter {
+            Name = string.Empty,
+            Rank = new Rank {
+                Faction = Faction.Starfleet,
+                Order = -1, // Unknown
+                Title = string.Empty,
+            },
+            Species = new Species {
+                Name = string.Empty,
+                AttributeModifiers = null
+            },
+            Assignment = string.Empty,
+            Environment = string.Empty,
+            Upbringing = string.Empty,
+            Attributes = new Attributes {
+                Control     = 7,
+                Fitness     = 7,
+                Presence    = 7,
+                Daring      = 7,
+                Insight     = 7,
+                Reason      = 7,          
+            },
+            Disciplines = new Disciplines {
+                Command     = 1,
+                Security    = 1,
+                Science     = 1,
+                Conn        = 1,
+                Engineering = 1,
+                Medicine    = 1,
+            },
+            Equipment = new List<Item>() {
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(1),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(2),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
+            },
+            Values = new List<string>(),
+            Focuses = new List<string>(),
+            Talents = new List<CharacterTalent>(),
+        };
+
+        popup.Open();
+        StateHasChanged();
+    }
+}

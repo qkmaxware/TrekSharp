@@ -97,6 +97,16 @@ public class Systems {
     public SystemsEnumerator Enumerate() {
         return new SystemsEnumerator(this);
     }
+
+    public Systems() {}
+    public Systems(int value) {
+        this[0] = value;
+        this[1] = value;
+        this[2] = value;
+        this[3] = value;
+        this[4] = value;
+        this[5] = value;
+    }
 }
 
 public class StarshipWeapon : IResearchableEntity {

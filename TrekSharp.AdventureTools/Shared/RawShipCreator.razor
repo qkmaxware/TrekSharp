@@ -1,0 +1,325 @@
+@inherits AppComponentBase;
+
+<Popup @ref=popup>
+    <p class="w3-center">
+        If you used another ship creator, but want to use TrekSharp to manage that starship, simply enter the starship's data from your ship's data sheet to the appropriate fields below then press "Import".
+    </p>
+    @if (ship != null) {
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            DETAILS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Name</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=ship.Name placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Registry</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=ship.Registry placeholder="Registry Number"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Mission Profile</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=ship.MissionProfile.Name placeholder="Profile Name"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            CLASS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Name</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="text" class="w3-input" @bind=ship.Frame.Name placeholder="Class Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Scale</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Frame.Scale placeholder="Size"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Design Date</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="date" class="w3-input" @bind=ship.Frame.DesignDate placeholder="Size"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            SYSTEMS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Engines</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Systems[1] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Computers</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Systems[3] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Weapons</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Systems[5] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Structure</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Systems[2] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Sensors</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Systems[4] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Communications</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Systems[0] placeholder="Name"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            DEPARTMENTS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Command</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Departments[0] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Security</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Departments[1] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Science</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Departments[2] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Conn</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Departments[3] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Engineering</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Departments[4] placeholder="Name"/>
+            </div>
+        </div>
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>Medicine</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=ship.Departments[5] placeholder="Name"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            WEAPONS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <StringEditor Items=ship.Frame.Weapons></StringEditor>
+        <div class="w3-row w3-padding">
+            <div class="w3-half w3-left-align">
+                <button class="w3-red" @onclick=@(() => { if (ship.Frame.Weapons.Count > 0) { ship.Frame.Weapons.RemoveAt(ship.Frame.Weapons.Count - 1); } })>-</button>
+            </div>
+            <div class="w3-half w3-right-align">
+                <button class="w3-blue" @onclick=@(() => ship.Frame.Weapons.Add(string.Empty))>+</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            TALENTS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+    </div>
+    <div>
+        <ul class="w3-ul">
+            @for(var i = 0 ; i < ship.Talents.Count; i++) {
+                var this_index = i;
+                <li style="border: none;">
+                    @(this_index). 
+                    <div class="w3-row w3-padding">
+                        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                            <span>Name</span>
+                        </div>
+                        <div class="w3-threequarter" style="padding-left: 10px">
+                            <input type="text" class="w3-input" @bind=ship.Talents[this_index].Name placeholder="Talent Name"/>
+                        </div>
+                    </div>
+                    <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-primary">
+                        <div>
+                            Talent Description
+                        </div>
+                        <div>
+                            <textarea class="text-primary" @bind=ship.Talents[this_index].Description style="width: 100%; resize: vertical; background-color: black;"></textarea>
+                        </div>
+                    </div>
+                    <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-primary">
+                        <div>
+                            Modifiers
+                        </div>
+                        <div class="w3-row">
+                            <div class="w3-third">
+                                + Resistance
+                                <input class="w3-input" type="number" @bind=ship.Talents[this_index].ResistanceModifier/>
+                            </div>
+                            <div class="w3-third">
+                                + Shields
+                                <input class="w3-input" type="number" @bind=ship.Talents[this_index].ShieldModifier/>
+                            </div>
+                            <div class="w3-third">
+                                + Power
+                                <input class="w3-input" type="number" @bind=ship.Talents[this_index].PowerModifier/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="w3-row w3-padding">
+            <div class="w3-half w3-left-align">
+                <button class="w3-red" @onclick=@(() => { if (ship.Talents.Count > 0) { ship.Talents.RemoveAt(ship.Talents.Count - 1); } })>-</button>
+            </div>
+            <div class="w3-half w3-right-align">
+                <button class="w3-blue" @onclick=@(() => ship.Talents.Add(new ShipTalent()))>+</button>
+            </div>
+        </div>
+    </div>
+    }
+    <div class="w3-row w3-padding">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => Cancel())>Cancel</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button class="w3-green" @onclick=@(() => Confirm())>Import</button>
+        </div>
+    </div>
+</Popup>
+
+@code {
+    Popup popup;
+
+    [Parameter] public Action OnImport {get; set;}
+
+    private PlayerVessel ship;
+
+    private void Cancel() {
+        popup.Close();
+    }
+    private void Confirm() {
+        if (ship != null) {
+            Data.Ships.Add(ship);
+            OnImport?.Invoke();
+        }
+        popup.Close();
+    }
+
+    public void Open() {
+        // Base "character"
+        ship = new PlayerVessel {
+            Name = string.Empty,
+            Registry = string.Empty,
+            MissionProfile = new MissionProfile {
+                Name = string.Empty,
+                Description = string.Empty,
+                Systems = null,
+                Departments = null,
+                MissionProfileTalents = new List<string>()
+            },
+            Frame = new Spaceframe {
+                Name = string.Empty,
+                Scale = 1,
+                DesignDate = new DateTime(2371, 1, 1),
+                Systems = null,
+                Departments = null,
+                Weapons = new List<string>(),
+                StartingTalents = new List<string>()
+            },
+            Systems = new Systems(7),
+            Departments = new Disciplines(1),
+            Talents = new List<ShipTalent>{
+            }
+        };
+
+        popup.Open();
+        StateHasChanged();
+    }
+}

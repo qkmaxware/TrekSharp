@@ -5,6 +5,7 @@
 <PrintNotification/>
 
 <div class="w3-container no-print lcars" style="text-align: right;">
+    <button @onclick="Export">Export Json</button>
     <button @onclick="confirmDelete" class="w3-red">Delete</button>
 </div>
 
@@ -93,6 +94,13 @@
 
     private void confirmDelete() {
         confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
+    }
+
+    public async Task Export() {
+        if (HasCharacter) {
+            var character = this.Player;
+            await this.DownloadJson($"{character.Name}.character", character);
+        }
     }
 
     public void Delete() {
