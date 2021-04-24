@@ -20,7 +20,8 @@
             <!-- Content Pane -->
             <div class="w3-padding row-fill">
                 <div class="w3-container w3-right no-print">
-                    <button @onclick="@(() => importer.Open())">Import Json</button>
+                    <button @onclick="@(() => raw.Open())">+ Sheet</button>
+                    <button @onclick="@(() => importer.Open())">+ Json</button>
                 </div>
                 <Col4Layout Items=Data.Party>
                     <Template>
@@ -73,6 +74,9 @@
             <div class="secondary" style="width: 120px"></div>
             <!-- Content Pane -->
             <div class="w3-padding row-fill">
+                <div class="w3-container w3-right no-print">
+                    
+                </div>
                 <Col4Layout Items=Data.Supports>
                     <Template>
                         <div class="row" @onclick="@(() => navigateToSupportCharacter(context))">
@@ -176,6 +180,8 @@
     OnAdd = "addCharacter"
 />
 
+<RawCharacterCreator @ref=raw OnImport=@(() => StateHasChanged())></RawCharacterCreator>
+
 @code {
 
     private void navigateToPlayerCharacter(PlayerCharacter character) {
@@ -197,6 +203,7 @@
         }
     }
 
+    private RawCharacterCreator raw;
     private AssetImporter<PlayerCharacter> importer;
     private void onCharacterLoaded(PlayerCharacter character) {
         this.Data.Party.Add(character);
