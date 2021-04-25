@@ -22,6 +22,8 @@ public class UserCreatedSpeciesRulebook : IRulebook {
     public IEnumerable<Spaceframe> Spaceframes => Enumerable.Empty<Spaceframe>();
 
     public IEnumerable<Spaceframe> NpcSpaceframes => Enumerable.Empty<Spaceframe>();
+    
+    public IEnumerable<NpcCharacter> NpcCharacters => data?.Custom?.NpcCharacterTypes ?? Enumerable.Empty<NpcCharacter>();
 
     public IEnumerable<MissionProfile> MissionProfiles => Enumerable.Empty<MissionProfile>();
 

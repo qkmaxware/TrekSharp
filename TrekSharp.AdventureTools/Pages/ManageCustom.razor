@@ -1,9 +1,9 @@
-@page "/manage/species"
+@page "/manage/custom"
 @inherits AppComponentBase
 
 <LCARS Title="CUSTOM SPECIES">
     @if (Data.Custom != null && Data.Custom.Species != null && Data.Custom.Species.Definitions != null) {
-    <Col4Layout Items="Data.Custom.Species.Definitions">
+    <Col3Layout Items="Data.Custom.Species.Definitions">
         <Template>
             <div>
                 <div class="row">
@@ -25,7 +25,26 @@
                 </ul>
             </div>
         </Template>
-    </Col4Layout>
+    </Col3Layout>
+    }
+</LCARS>
+
+<LCARS Title="CUSTOM NPC TYPES">
+    @if (Data.Custom != null && Data.Custom.NpcCharacterTypes != null) {
+        <Col3Layout Items="Data.Custom.NpcCharacterTypes">
+            <Template>
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                            @context.Name 
+                            <button class="w3-red" @onclick=@(() => confirmDeleteNpcType(context))>&times;</button>
+                        </div>
+                        <div class="hbar row-fill elbow-right knee-right"></div>
+                    </div>
+                </div>
+            </Template>
+        </Col3Layout>
     }
 </LCARS>
 
@@ -49,5 +68,17 @@
         }
         StateHasChanged();
     }
+
+    private void confirmDeleteNpcType(NpcCharacter character) {
+        confirm.Open($"Are you sure you want to delete the npc type '{character.Name}'?", () => deleteNpcType(character));
+    }
+
+    private void deleteNpcType(NpcCharacter character) {
+        if (Data.Custom != null && Data.Custom.NpcCharacterTypes != null) {
+            Data.Custom.NpcCharacterTypes.Remove(character);
+        }
+        StateHasChanged();
+    }
+
 
 }

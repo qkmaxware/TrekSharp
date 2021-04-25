@@ -17,6 +17,19 @@ public class NpcCharacter : Character {
     public List<string> SpecialRules {get; set;} 
     public int BaseStress {get; set;}
     public override int TotalStress => this.BaseStress + this.BonusStress;
+
+    public float PlayerDifficulty {
+        get {
+            var sum = Disciplines.Enumerate().Select(x => x.Value).Sum();
+            if (sum <= 8) {
+                return 0.6f;// Minor NPC (weaker than the player)
+            } else if (sum > 8 && sum < 16) {
+                return 1f;  // Notable NPC (equal to the player)
+            } else {
+                return 2f;  // Major NPC (stronger than the player)
+            }
+        }
+    } 
 }
 
 public class Character {

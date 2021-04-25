@@ -1,4 +1,4 @@
-@page "/manage/characters/npc/{PlayerId}"
+@page "/manage/characters/npc/{EncounterId}/{ListId}/{PlayerId}"
 @inherits AppComponentBase
 
 @if (HasCharacter) {
@@ -39,7 +39,7 @@
         <div class="row">
             <div class="secondary" style="width: 120px"></div>
             <!-- Content -->
-            <div class="row-fill">
+            <div class="w3-row row-fill">
                 <SplitLayout>
                     <Left>
                         <InjuryDrawer Player="Player"/>
@@ -73,8 +73,10 @@
 
     private ConfirmationDialog confirm;
 
-    [Parameter]
-    public string PlayerId { get; set; }
+    [Parameter] public string PlayerId { get; set; }
+    [Parameter] public string EncounterId {get; set;}
+    [Parameter] public string ListId {get; set;}
+
     public int PlayerIndex {
         get {
             int index;
@@ -85,7 +87,38 @@
             }
         }
     }
-    public NpcCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.NPCs.Count ? Data.NPCs[PlayerIndex] : null;
+
+    private Encounter Encounter {
+        get {
+            var e = EncounterId;
+            var encounter = Data.Encounters.Where(en => en.GUID == e).FirstOrDefault();
+            return encounter;
+        }
+    }
+    public NpcCharacter Player {
+        get {
+            var p = PlayerIndex;
+            var encounter = Encounter;
+            if (encounter == null) {
+                return null;
+            }
+            if (ListId == "ally") {
+                if (p < 0 || p >= encounter.AlliedInfrantry.Count) {
+                    return null;
+                } else {
+                    return encounter.AlliedInfrantry[p];
+                }
+            } else if (ListId == "enemy") {
+                if (p < 0 || p >= encounter.EnemyInfantry.Count) {
+                    return null;
+                } else {
+                    return encounter.EnemyInfantry[p];
+                }
+            } else {
+                return null;
+            }
+        }
+    }
     public bool HasCharacter => Player != null;
 
     private void confirmDelete() {
@@ -94,8 +127,13 @@
 
     public void Delete() {
         if (HasCharacter) {
-            Data.NPCs.Remove(this.Player);
-            NavigationManager.NavigateTo("manage/characters");
+            if (ListId == "ally") {
+                Encounter?.AlliedInfrantry.Remove(this.Player);
+            }
+            else if (ListId == "enemy") {
+                Encounter?.EnemyInfantry.Remove(this.Player);
+            }
+            NavigationManager.NavigateTo("manage/encounters");
         }
     }
 

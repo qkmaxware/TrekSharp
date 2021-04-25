@@ -26,13 +26,13 @@
 
     public void Cancel() {
         this.onConfirm = null;
-        popup.Open();
+        popup.Close();
         StateHasChanged();
     }
     public void Confirm() {
         this.onConfirm?.Invoke();
         this.onConfirm = null;
-        popup.Open();
+        popup.Close();
         StateHasChanged();
     }
 }

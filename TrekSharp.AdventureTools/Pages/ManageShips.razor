@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div style="width: 100%; height: 100px; display: table-cell; vertical-align: middle;" @onclick="@(() => navigateToPlayerCharacter(context))">
-                            <img src="@context.GetShipImageUrl()" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-width: 640px; height: auto; max-height: 100px;">
+                            <img src="@context.GetShipImageUrl()" onerror="this.src='assets/artwork/ships/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-width: 640px; height: auto; max-height: 100px;">
                         </div>
                         <div class="w3-padding row">
                             <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
@@ -60,62 +60,7 @@
             <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
             <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
         </div>
-    </div>
-
-    <!-- NPC -->
-    <div class="container w3-margin-bottom">
-        <!-- Titlebar -->
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span class="w3-xlarge">NPC</span>
-            </div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-        <!-- Body -->
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content Pane -->
-            <div class="w3-padding row-fill">
-                <Col4Layout Items=Data.NPCShips>
-                    <Template>
-                        <div @onclick="@(() => navigateToNpcCharacter(context))">
-                            <div class="row">
-                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                    @context.Name 
-                                </div>
-                                <div class="hbar row-fill elbow-right knee-right"></div>
-                            </div>
-                            <div class="w3-padding row">
-                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                    <b>Shields</b> 
-                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@context.ShieldsRemaining"/> / @context.Shields
-                                </div>
-                            </div>
-                            <div class="w3-padding row">
-                                <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                    <b>Power</b> 
-                                    <input type="number" class="w3-small" style="width: 64px;" @bind="@context.PowerRemaining"/> / @context.Power
-                                </div>
-                            </div>
-                        </div>
-                    </Template>
-                </Col4Layout>
-                <div class="w3-container w3-right no-print">
-                    <button @onclick="@(() => npcList?.Open())">Add NPC</button>
-                </div>
-            </div>
-        </div>
-        <!-- Footer -->
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-    </div>
+    </div> 
 </div>
 
 <AssetImporter
@@ -123,15 +68,6 @@
     TItem="PlayerVessel"
     Title="Import Vessel"
     OnLoad="onShipLoaded"
-/>
-
-<AssetAddList
-    @ref = "npcList"
-    TItem = "Spaceframe"
-    Title = "Add NPC"
-    Store = "npcs"
-    ListingFunction = "@(item => item.Name)"
-    OnAdd = "addNpc"
 />
 
 <RawShipCreator @ref="raw"></RawShipCreator>
@@ -142,37 +78,6 @@
     private void onShipLoaded(PlayerVessel vessel) {
         this.Data.Ships.Add(vessel);
         this.StateHasChanged();
-    }
-
-    private AssetAddList<Spaceframe> npcList;
-    private List<Spaceframe> npcs = new RulebookContainer().AllRulebooks.SelectMany(book => book.Value.NpcSpaceframes).ToList();
-
-    private void addNpc(Spaceframe npc) {
-        // hard copy
-        var copy = new Vessel();
-        copy.Frame = npc;
-        copy.Systems = npc.Systems;
-        copy.Departments = npc.Departments;
-        copy.Talents = new List<ShipTalent>();
-
-        var base_name = npc.Name;
-        var unique_name = npc.Name;
-        var id = 2;
-        while (Data.NPCShips.Select(ch => ch.Name).Contains(unique_name)) {
-            unique_name = base_name + " (" + (id++) + ")";
-        }
-        copy.Name = unique_name;
-
-        // save
-        this.Data.NPCShips.Add(copy);
-        this.StateHasChanged();
-    }
-
-    private void navigateToNpcCharacter(Vessel vessel) {
-        var id = Data.NPCShips.IndexOf(vessel);
-        if (id >= 0) {
-            NavigationManager.NavigateTo($"manage/ships/npc/{id}");
-        }
     }
 
     private void navigateToPlayerCharacter(PlayerVessel character) {

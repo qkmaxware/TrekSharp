@@ -11,6 +11,7 @@ public class CoreRulebook : BaseRulebook {
         List<CareerEvent> events,
         List<Spaceframe> spaceframes,
         List<Spaceframe> npcframes,
+        List<NpcCharacter> npcs,
         List<MissionProfile> profiles,
         List<ShipTalent> shipTalents,
         List<Item> items
@@ -22,6 +23,7 @@ public class CoreRulebook : BaseRulebook {
         events,
         spaceframes,
         npcframes,
+        npcs,
         profiles,
         shipTalents,
         items
@@ -1328,6 +1330,474 @@ public class CoreRulebook : BaseRulebook {
                 },
                 StartingTalents = new List<string> {},
             },
+        },
+        new List<NpcCharacter>() {
+            new NpcCharacter {
+                Name = "Minor Starfleet Conn Officer",
+                BaseStress = 9,
+                Species = new Species{ Name="Human" },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 10,
+                    Presence = 10,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 01
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Starfleet Security Officer",
+                BaseStress = 11,
+                Species = new Species{ Name="Human" },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 01
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Starfleet Engineer",
+                BaseStress = 10,
+                Species = new Species{ Name="Human" },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Starfleet Science Officer",
+                BaseStress = 9,
+                Species = new Species{ Name="Human" },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 08,
+                    Daring = 09,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 02
+                }
+            },
+            new NpcCharacter {
+                Name = "Notable Section 31 Operative",
+                BaseStress = 11,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "The Ends Justify the Means"
+                },
+                Focuses = new List<string> {
+                    "Espionage",
+                    "Infiltration"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 08,
+                    Presence = 10,
+                    Daring = 09,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Adaptable: May spend 2 Threat to immediately gain a single Focus for the remainder of the scene",
+                    "Covert: Whenever required to attempt a Task to conceal their activities, they may roll an aditional d20"
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Klingon Warrior",
+                BaseStress = 13,
+                Resistance = 1,
+                Species = new Species{ Name="Klingon" },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 11,
+                    Presence = 10,
+                    Daring = 11,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Brak'lul: Resistance increased by +2 against non-lethal attacks",
+                    "Warrior's Spirit: When attempting a melee attack, and purchases one or more dice, re-roll any number of dice."
+                }
+            },
+            new NpcCharacter {
+                Name = "Notable Klingon Warrior",
+                BaseStress = 14,
+                Resistance = 1,
+                Values = new List<string> {
+                    "Today is a Good Day to Die!"
+                },
+                Focuses = new List<string> {
+                    "Hand-toHand Combat",
+                    "Resilience"
+                },
+                Species = new Species{ Name="Klingon" },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 11,
+                    Presence = 10,
+                    Daring = 11,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "First into Battle: Spend 3 Momentum to assist andother Klingon's next attack using Daring + Command",
+                    "Brak'lul: Resistance increased by +2 against non-lethal attacks",
+                    "Warrior's Spirit: When attempting a melee attack, and purchases one or more dice, re-roll any number of dice."
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Romulan Uhlan",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 11
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Guile and Cunning: When attempting to remain hidden or unnoticed, spend one Threat to increase the difficulty of enemy detection Tasks",
+                    "Wary: When attempting to detect an enemy or hazard you may re-roll one d20"
+                }
+            },
+            new NpcCharacter {
+                Name = "Notable Romulan Centurion",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {
+                    "I Will Not Fail in My Duty to the Empire"
+                },
+                Focuses = new List<string> {
+                    "Paranoid",
+                    "Guerilla Tactics"
+                },
+                Attributes = new Attributes {
+                    Control = 12,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Ambush: When attacking an unaware opponent, spend 2 Threat to allow for all Centurion under their command to re-roll any number of d20 on attack rolls",
+                    "Guile and Cunning: When attempting to remain hidden or unnoticed, spend one Threat to increase the difficulty of enemy detection Tasks",
+                    "Wary: When attempting to detect an enemy or hazard you may re-roll one d20"
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Ferengi Menial",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Ferengi" },
+                Values = new List<string> {
+                    
+                },
+                Focuses = new List<string> {
+                    
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 08,
+                    Presence = 11,
+                    Daring = 08,
+                    Insight = 11,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Greed Is Eternal: When enraged in negotiations that have the potential for profit, spend 1 Threat during the Task to re-roll the dice pool"
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Ferengi Salesman",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Ferengi" },
+                Values = new List<string> {
+                    "First Rule of Acquisition - Once You Have Their Money, Never Give It Back"
+                },
+                Focuses = new List<string> {
+                    "Economics",
+                    "Negotiation"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 08,
+                    Presence = 12,
+                    Daring = 09,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Greed Is Eternal: When enraged in negotiations that have the potential for profit, spend 1 Threat during the Task to re-roll the dice pool",
+                    "Free Advice Is Seldom Cheap: Increase the difficulty og all social conflict to persuasion by 2. Remove this difficulty if something is offered in trade.",
+                }
+            },
+            new NpcCharacter {
+                Name = "Minor Cardassian Soldier",
+                BaseStress = 11,
+                Resistance = 1,
+                Species = new Species{ Name="Cardassian" },
+                Values = new List<string> {
+                
+                },
+                Focuses = new List<string> {
+                
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Ambushes and Traps: Whenever a Ready Task is used to ready a Ranged attack, that Ranged attack gets a bonus d20",
+                    "Loyal and Disciplined: Whenever a Cardassian recieves assistance from a superior, that Cardassian may re-roll a single d20"
+                }
+            },
+            new NpcCharacter {
+                Name = "Notable Cardassian Glinn",
+                BaseStress = 12,
+                Resistance = 1,
+                Species = new Species{ Name="Cardassian" },
+                Values = new List<string> {
+                "Cardassians Dot Not Choose to Be Superior, Fate Made Us This Way"
+                },
+                Focuses = new List<string> {
+                    "Military Tactics",
+                    "Willpower"
+                },
+                Attributes = new Attributes {
+                    Control = 12,
+                    Fitness = 09,
+                    Presence = 11,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Expects Success: Whenever a Glinn uses the Direct or Asssit Task to aid a subordinate, that Task may always Succeed at Cost",
+                    "Ambushes and Traps: Whenever a Ready Task is used to ready a Ranged attack, that Ranged attack gets a bonus d20",
+                    "Loyal and Disciplined: Whenever a Cardassian recieves assistance from a superior, that Cardassian may re-roll a single d20"
+                }
+            },
+            new NpcCharacter {
+                Name = "Borg Tactical Drone",
+                BaseStress = 14,
+                Resistance = 3,
+                Species = new Species{ Name="Borg" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 12,
+                    Presence = 06,
+                    Daring = 09,
+                    Insight = 06,
+                    Reason = 12
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Adaptive Shielding: Each time a drone is injured by energy based attacks, roll 1 challenge die for each drone effected. If an effect is rolled, all drones in the scene become immune to that type of weapon",
+                    "Assimilation: A character injured by assimilation tubules must fight off the injected nano-probes. If the character dies from the injury the character becomes a drone, otherwise add 1 threat to the begining of each scene to avoid succumbing to the nano-probes. This can be healed by a Control + Medicine task with difficulty 4.",
+                    "Immune to Fear",
+                    "Immune to Pain",
+                    "Machine 3",
+                    "Night Vision",
+                    "Threat Protocols: Drones do not attack until they see people as threats. In order to attack before being attacked, one threat per drone must be spent per scene.",
+                }
+            },
+            new NpcCharacter {
+                Name = "Borg Technical Drone",
+                BaseStress = 11,
+                Resistance = 2,
+                Species = new Species{ Name="Borg" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 10,
+                    Presence = 06,
+                    Daring = 09,
+                    Insight = 06,
+                    Reason = 12
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Adaptive Shielding: Each time a drone is injured by energy based attacks, roll 1 challenge die for each drone effected. If an effect is rolled, all drones in the scene become immune to that type of weapon",
+                    "Assimilation: A character injured by assimilation tubules must fight off the injected nano-probes. If the character dies from the injury the character becomes a drone, otherwise add 1 threat to the begining of each scene to avoid succumbing to the nano-probes. This can be healed by a Control + Medicine task with difficulty 4.",
+                    "Immune to Fear",
+                    "Immune to Pain",
+                    "Machine 2",
+                    "Night Vision",
+                    "Threat Protocols: Drones do not attack until they see people as threats. In order to attack before being attacked, one threat per drone must be spent per scene.",
+                }
+            },
+            new NpcCharacter {
+                Name = "Borg Medical Drone",
+                BaseStress = 11,
+                Resistance = 2,
+                Species = new Species{ Name="Borg" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 10,
+                    Presence = 06,
+                    Daring = 09,
+                    Insight = 06,
+                    Reason = 12
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 00, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Adaptive Shielding: Each time a drone is injured by energy based attacks, roll 1 challenge die for each drone effected. If an effect is rolled, all drones in the scene become immune to that type of weapon",
+                    "Assimilation: A character injured by assimilation tubules must fight off the injected nano-probes. If the character dies from the injury the character becomes a drone, otherwise add 1 threat to the begining of each scene to avoid succumbing to the nano-probes. This can be healed by a Control + Medicine task with difficulty 4.",
+                    "Immune to Fear",
+                    "Immune to Pain",
+                    "Machine 2",
+                    "Night Vision",
+                    "Threat Protocols: Drones do not attack until they see people as threats. In order to attack before being attacked, one threat per drone must be spent per scene.",
+                    "Reclamation: Drone may attempt a Reason + Medicine task with difficulty 0 on an injured drone within reach. If successful, the injured drone dies and its parts are reclaimed."
+                }
+            }
         },
         new List<MissionProfile> {
             new MissionProfile(

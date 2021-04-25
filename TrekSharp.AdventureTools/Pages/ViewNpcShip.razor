@@ -1,4 +1,4 @@
-@page "/manage/ships/npc/{ShipId}"
+@page "/manage/ships/npc/{EncounterId}/{ListId}/{ShipId}"
 @inherits AppComponentBase
 
 @if (HasShip) {
@@ -70,6 +70,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <img src="@Ship.GetShipImageUrl()" onerror="this.src='assets/artwork/ships/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto; width: 100%; max-width: 640px; height: auto; max-height:100%;">
                     </Left>
                     <Right>
                         <CrewSupportDrawer Ship="Ship" />
@@ -138,8 +140,9 @@
 @code {
     private ConfirmationDialog confirm;
     
-    [Parameter]
-    public string ShipId { get; set; }
+    [Parameter] public string ShipId { get; set; }
+    [Parameter] public string EncounterId {get; set;}
+    [Parameter] public string ListId {get; set;}
     public int ShipIndex {
         get {
             int index;
@@ -150,7 +153,39 @@
             }
         }
     }
-    public Vessel Ship => ShipIndex >=0 && ShipIndex < Data.NPCShips.Count ? Data.NPCShips[ShipIndex] : null;
+
+    private Encounter Encounter {
+        get {
+            var e = EncounterId;
+            var encounter = Data.Encounters.Where(en => en.GUID == e).FirstOrDefault();
+            return encounter;
+        }
+    }
+
+    public Vessel Ship {
+        get {
+            var p = ShipIndex;
+            var encounter = Encounter;
+            if (encounter == null) {
+                return null;
+            }
+            if (ListId == "ally") {
+                if (p < 0 || p >= encounter.AlliedShips.Count) {
+                    return null;
+                } else {
+                    return encounter.AlliedShips[p];
+                }
+            } else if (ListId == "enemy") {
+                if (p < 0 || p >= encounter.EnemyShips.Count) {
+                    return null;
+                } else {
+                    return encounter.EnemyShips[p];
+                }
+            } else {
+                return null;
+            }
+        }
+    }
     public bool HasShip => Ship != null;
 
     private void confirmDelete() {
@@ -159,8 +194,13 @@
 
     public void Delete() {
         if (HasShip) {
-            Data.NPCShips.Remove(this.Ship);
-            NavigationManager.NavigateTo("manage/ships");
+           if (ListId == "ally") {
+                Encounter?.AlliedShips.Remove(this.Ship);
+            }
+            else if (ListId == "enemy") {
+                Encounter?.EnemyShips.Remove(this.Ship);
+            }
+            NavigationManager.NavigateTo("manage/encounters");
         }
     }
 }

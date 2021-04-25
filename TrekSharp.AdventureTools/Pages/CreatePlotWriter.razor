@@ -156,60 +156,24 @@
                     <div class="row">
                         <div class="hbar knee-left elbow-left highlight" style="width: 56px;"></div>
                         <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                            <span>PARTICIPANTS</span>
+                            <span>ENCOUNTERS</span>
                         </div>
                         <div class="hbar highlight knee-right elbow-right row-fill"></div>
                     </div>
                 </div>
-                <div class="w3-row">
-                    <div class="w3-third">
-                        <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-secondary">
-                            <div>
-                                <b>Ships</b>
-                                <button class="w3-button" @onclick=@(() => openAddShipList(scene))>+</button>
-                            </div>
-                            <ul class="w3-ul">
-                                @foreach (var name in scene.LinkedShips) {
-                                    <li class="w3-display-container">
-                                        @name
-                                        <span class="w3-button w3-display-right" @onclick=@(() => scene.LinkedShips.Remove(name))>&times;</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
+                <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-secondary">
+                    <div>
+                        <b>Add</b>
+                        <button class="w3-button" @onclick=@(() => openAddEncounterList(scene))>+</button>
                     </div>
-                    <div class="w3-third ">
-                        <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-secondary">
-                            <div>
-                                <b>Support</b>
-                                <button class="w3-button" @onclick=@(() => openAddSupport(scene))>+</button>
-                            </div>
-                            <ul class="w3-ul">
-                                @foreach (var name in scene.LinkedSupports) {
-                                    <li class="w3-display-container">
-                                        @name
-                                        <span class="w3-button w3-display-right" @onclick=@(() => scene.LinkedSupports.Remove(name))>&times;</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="w3-third">
-                        <div class="w3-padding w3-margin knee-left knee-right elbow-left elbow-right lcars-secondary">
-                            <div>
-                                <b>NPC</b>
-                                <button class="w3-button" @onclick=@(() => openAddNpc(scene))>+</button>
-                            </div>
-                            <ul class="w3-ul">
-                                @foreach (var name in scene.LinkedNPCs) {
-                                    <li class="w3-display-container">
-                                        @name
-                                        <span class="w3-button w3-display-right" @onclick=@(() => scene.LinkedNPCs.Remove(name))>&times;</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
+                    <ul class="w3-ul">
+                        @foreach (var guid in scene.LinkedEncounters) {
+                            <li class="w3-display-container">
+                                @Data.Encounters.Where(encounter => encounter.GUID == guid).FirstOrDefault()?.Title
+                                <span class="w3-button w3-display-right" @onclick=@(() => scene.LinkedEncounters.Remove(guid))>&times;</span>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
@@ -253,25 +217,6 @@
                             <SystemsDrawer Systems=vessel.Systems></SystemsDrawer>
                             <DisciplineDrawer Disciplines=vessel.Departments></DisciplineDrawer>
                             <ShipWeaponsDrawer Ship=vessel></ShipWeaponsDrawer>
-                        </div>
-                    </div>
-                }
-                <!-- Supporting Cast -->
-                @foreach (var character in uniqueSupportsInScene(scene)) {
-                    <div class="w3-padding w3-col s6" style="page-break-inside: avoid;">
-                        <div>
-                            <div class="lcars-primary w3-padding w3-large knee-left knee-right" style="display: inline-block;">
-                                @character.Rank @character.Name
-                            </div>
-                        </div>
-                        <div class="knee-right elbow-left elbow-right lcars-border-primary">
-                            <div class="w3-row-padding">
-                                <span class="text-primary">Species:</span> @character.Species?.Name
-                            </div>
-                            <InjuryDrawer Player="character"/>
-                            <AttributeDrawer Attributes="character.Attributes"/>
-                            <DisciplineDrawer Disciplines="character.Disciplines"/>
-                            <FocusDrawer Focuses=character.Focuses></FocusDrawer>
                         </div>
                     </div>
                 }
@@ -400,16 +345,12 @@
 </LCARS>
 <div class="pagebreak"></div>
 
-<AssetAddList Store=Data.NPCShips ListingFunction=@((item) => item.Name) @ref=addShip></AssetAddList>
-<AssetAddList Store=Data.Supports ListingFunction=@((item) => item.Name) @ref=addSupport></AssetAddList>
-<AssetAddList Store=Data.NPCs ListingFunction=@((item) => item.Name) @ref=addNpc></AssetAddList>
+<AssetAddList @ref=addEncounters Store=Data.Encounters></AssetAddList>
 
 <IdeaGenerator @ref=ideas OnConfirm=@((story) => { mission.Synopsis = story; StateHasChanged(); })></IdeaGenerator>
 
 @code {
-    AssetAddList<Vessel> addShip;
-    AssetAddList<SupportCharacter> addSupport;
-    AssetAddList<NpcCharacter> addNpc;
+    AssetAddList<Encounter> addEncounters;
     IdeaGenerator ideas;
 
     public Mission mission => Data.Mission;
@@ -419,39 +360,34 @@
 
     private IEnumerable<Vessel> uniqueShipsInScene(Act scene) {
         HashSet<string> visited = new HashSet<string>();
-        foreach (var name in scene.LinkedShips) {
-            var vessel = Data.NPCShips.Where(ship => ship.Name == name).FirstOrDefault();
-            if (vessel == null)
+        foreach (var encounter in scene.LinkedEncounters) {
+            var asset = Data.Encounters.Where(e => e.GUID == encounter).FirstOrDefault();
+            if (asset == null)
                 continue;
-
-            var simpleName = vessel.Frame.Name;
-            if (!visited.Contains(simpleName)) {
-                visited.Add(simpleName);
-                yield return vessel;
+            
+            foreach (var vessel in asset.AllShips) {
+                var simpleName = vessel.Frame.Name;
+                if (!visited.Contains(simpleName)) {
+                    visited.Add(simpleName);
+                    yield return vessel;
+                }
             }
-        }
-    }
-
-    private IEnumerable<SupportCharacter> uniqueSupportsInScene(Act scene) {
-        foreach (var name in scene.LinkedSupports) {
-            var support = Data.Supports.Where(support => support.Name == name).FirstOrDefault();
-            if (support == null)
-                continue;
-            yield return support;
         }
     }
 
     private IEnumerable<NpcCharacter> uniqueNpcsInScene(Act scene) {
         HashSet<string> visited = new HashSet<string>();
-        foreach (var name in scene.LinkedNPCs) {
-            var npc = Data.NPCs.Where(c => c.Name == name).FirstOrDefault();
-            if (npc == null)
+        foreach (var encounter in scene.LinkedEncounters) {
+            var asset = Data.Encounters.Where(e => e.GUID == encounter).FirstOrDefault();
+            if (asset == null)
                 continue;
-
-            var simpleName = name.Split('(', 2)[0].Trim();
-            if (!visited.Contains(simpleName)) {
-                visited.Add(simpleName);
-                yield return npc;
+            
+            foreach (var npc in asset.AllCharacters) {
+                var simpleName = npc.Name.Split('(', 2)[0].Trim();
+                if (!visited.Contains(simpleName)) {
+                    visited.Add(simpleName);
+                    yield return npc;
+                }
             }
         }
     }
@@ -459,30 +395,12 @@
     private void showRandomIdeaGenerator() {
         ideas.Open();
     }
-    private void openAddShipList(Act scene) {
-        addShip.ChangeAddListener((ship) => linkShip(scene, ship));
-        addShip.Open();
+    private void openAddEncounterList(Act scene) {
+        addEncounters.ChangeAddListener((encounter) => linkEncounter(scene, encounter));
+        addEncounters.Open();
     }
-    private void linkShip(Act scene, Vessel vessel) {
-        scene.LinkedShips.Add(vessel.Name);
-        StateHasChanged();
-    }
-
-    private void openAddSupport(Act scene) {
-        addSupport.ChangeAddListener((support) => linkSupport(scene, support));
-        addSupport.Open();
-    }
-    private void linkSupport(Act scene, SupportCharacter vessel) {
-        scene.LinkedSupports.Add(vessel.Name);
-        StateHasChanged();
-    }
-
-    private void openAddNpc(Act scene) {
-        addNpc.ChangeAddListener((npc) => linkNpc(scene, npc));
-        addNpc.Open();
-    }
-    private void linkNpc(Act scene, NpcCharacter vessel) {
-        scene.LinkedNPCs.Add(vessel.Name);
+    private void linkEncounter(Act scene, Encounter encounter) {
+        scene.LinkedEncounters.Add(encounter.GUID);
         StateHasChanged();
     }
 }

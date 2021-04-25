@@ -1,0 +1,381 @@
+@page "/manage/encounters"
+@using System.Globalization
+@using Data
+@inherits AppComponentBase
+
+<LCARS Title="SAVED ENCOUNTERS">
+    <div style="overflow: auto; white-space: nowrap;">
+        @foreach (var encounter in Data.Encounters) {
+            var capture = encounter;
+            <div style="display: inline-block;">
+                <div class="row">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                        @encounter.Title
+                    </div>
+                    <div class="hbar row-fill elbow-right knee-right"></div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="w3-col s6">
+                        <button class="w3-button w3-red w3-small"  @onclick=@(() => delete(capture))>Delete</button>
+                    </div>
+                    <div class="w3-col s6">
+                        <button class="w3-button w3-small" @onclick=@(() => load(capture))>Load</button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="w3-padding" style="display: inline-block;" >
+            <button @onclick=create>+ Create</button>
+        </div>
+    </div>
+</LCARS>
+
+@if (encounter != null) {
+<LCARS Title="EDIT ENCOUNTER">
+    <div class="w3-row">
+        <div class="w3-third lcars-border-primary">
+            <div class="w3-row">
+                <button class="w3-col s6 w3-button @(!ShowShips ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => ShowShips = false)>Characters</button>
+                <button class="w3-col s6 w3-button @(ShowShips ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => ShowShips = true)>Ships</button>
+            </div>
+            <div class="w3-padding">
+                <input type="text" placeholder="filter" @bind="filter" style="width: 100%;"/>
+            </div>
+            <div class="w3-padding">
+            @if (books != null && !ShowShips) {
+                <div style="max-height: 480px; overflow:auto;">
+                @foreach (var character in FilteredCharacterOptions) {
+                    var capture = character;
+                    <button style="width: 100%; font-size:medium;" class="@(capture == SelectedCharacter ? "secondary" : "primary")" @onclick=@(() => SelectedCharacter = capture)>
+                        @capture.Name
+                    </button>
+                }
+                </div>
+                <div class="w3-row w3-margin-top">
+                    <div class="w3-half">
+                        <button style="width:100%;" @onclick=addAllyCharacter>+ Ally</button>
+                    </div>
+                    <div class="w3-half">
+                        <button style="width:100%;" @onclick=addEnemyCharacter>+ Enemy</button>
+                    </div>
+                </div>
+            }
+            @if (books != null && ShowShips) {
+                <div style="max-height: 480px; overflow:auto;">
+                @foreach (var ship in FilteredShipOptions) {
+                    var capture = ship;
+                    <button style="width: 100%; font-size:medium;" class="@(capture == SelectedShip ? "secondary" : "primary")" @onclick=@(() => SelectedShip = capture)>
+                        @capture.Name
+                    </button>
+                }
+                </div>
+                <div class="w3-row w3-margin-top">
+                    <div class="w3-half">
+                        <button style="width:100%;" @onclick=addAllyShip>+ Ally</button>
+                    </div>
+                    <div class="w3-half">
+                        <button style="width:100%;" @onclick=addEnemyShip>+ Enemy</button>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+        <div class="w3-twothird w3-padding">
+            @if (encounter != null) {
+            <div class="w3-row w3-padding">
+                <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                    <span>Title</span>
+                </div>
+                <div class="w3-threequarter" style="padding-left: 10px">
+                    <input type="text" class="w3-input" @bind=encounter.Title placeholder="Name"/>
+                </div>
+            </div>
+            }
+            @if(encounter != null && encounter.AllShips.Any()) {
+                <div class="w3-large typeface">
+                    SHIPS
+                </div>
+                <div class="w3-red">
+                    <div class="w3-green" style="min-height: 12px; width: @((AlliedSpaceStrength/TotalSpaceStrength) * 100)%;"></div>
+                </div>
+                <div class="w3-row w3-margin-top">
+                    <div class="w3-half">
+                        @foreach (var npc in encounter.AlliedShips) {
+                            var capture = npc;
+                            <div class="w3-row">
+                                <div class="w3-third w3-padding">
+                                    <img 
+                                        src="@npc.GetShipImageUrl()" 
+                                        onerror="this.src='assets/artwork/ships/Unknown.png'" 
+                                        style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px;"
+                                    />
+                                </div>
+                                <div class="w3-twothird">
+                                    <div class="row">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            @npc.Name
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right"></div>
+                                    </div>
+                                    <div class="w3-right-align">
+                                        <button class="w3-small" @onclick=@(() => viewAllyShip(capture))>view</button>
+                                        <button class="w3-small w3-red" @onclick=@(() => deleteAllyShip(capture))>x</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }    
+                    </div>
+                    <div class="w3-half">
+                        @foreach (var npc in encounter.EnemyShips) {
+                            var capture = npc;
+                            <div class="w3-row">
+                                <div class="w3-third w3-padding">
+                                    <img 
+                                        src="@npc.GetShipImageUrl()" 
+                                        onerror="this.src='assets/artwork/ships/Unknown.png'" 
+                                        style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px;"
+                                    />
+                                </div>
+                                <div class="w3-twothird">
+                                    <div class="row">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            @npc.Name
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right"></div>
+                                    </div>
+                                    <div class="w3-right-align">
+                                        <button class="w3-small" @onclick=@(() => viewEnemyShip(capture))>view</button>
+                                        <button class="w3-small w3-red" @onclick=@(() => deleteEnemyShip(capture))>x</button>
+                                    </div>
+                                </div>
+                            </div>
+                        } 
+                    </div>
+                </div>
+            }
+            @if(encounter != null && encounter.AllCharacters.Any()) {
+                <div class="w3-large typeface">
+                    PERSONNEL
+                </div>
+                <div class="w3-red">
+                    <div class="w3-green" style="min-height: 12px; width: @((AlliedInfantryStrength/TotalInfantryStrength) * 100)%;"></div>
+                </div>
+                <div class="w3-row w3-margin-top">
+                    <div class="w3-half">
+                        @foreach (var npc in encounter.AlliedInfrantry) {
+                            var capture = npc;
+                            <div class="w3-row">
+                                <div class="w3-third w3-padding">
+                                    <img 
+                                        src="@npc.Species.GetSpeciesImageUrl()" 
+                                        onerror="this.src='assets/artwork/species/Unknown.png'" 
+                                        style="display: block; margin-left: auto; margin-right: auto; width: 100%; height: auto;"
+                                    />
+                                </div>
+                                <div class="w3-twothird">
+                                    <div class="row">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            @npc.Name
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right"></div>
+                                    </div>
+                                    <div class="w3-padding">
+                                        Stress <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
+                                    </div>
+                                    <div class="w3-right-align">
+                                        <button class="w3-small" @onclick=@(() => viewAlly(capture))>view</button>
+                                        <button class="w3-small w3-red" @onclick=@(() => deleteAlly(capture))>x</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }    
+                    </div>
+                    <div class="w3-half">
+                        @foreach (var npc in encounter.EnemyInfantry) {
+                            var capture = npc;
+                            <div class="w3-row">
+                                <div class="w3-third w3-padding">
+                                    <img 
+                                        src="@npc.Species.GetSpeciesImageUrl()" 
+                                        onerror="this.src='assets/artwork/species/Unknown.png'" 
+                                        style="display: block; margin-left: auto; margin-right: auto;width: 100%; height: auto;"
+                                    />
+                                </div>
+                                <div class="w3-twothird">
+                                    <div class="row">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            @npc.Name
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right"></div>
+                                    </div>
+                                    <div class="w3-padding">
+                                        Stress <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
+                                    </div>
+                                    <div class="w3-right-align">
+                                        <button class="w3-small" @onclick=@(() => viewEnemy(capture))>view</button>
+                                        <button class="w3-small w3-red" @onclick=@(() => deleteEnemy(capture))>x</button>
+                                    </div>
+                                </div>
+                            </div>
+                        } 
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</LCARS>
+}
+
+@code {
+    protected override void OnInitialized() {
+        books.AddRulebook("User Created", new UserCreatedSpeciesRulebook(Data));
+    }
+    
+    private bool ShowShips = false;
+    private Encounter encounter = null;
+    private void load(Encounter encounter) {
+        this.encounter = encounter ?? new Encounter();
+    }
+    private void delete(Encounter encounter) {
+        Data.Encounters.Remove(encounter);
+    }
+    private void create() {
+        encounter = new Encounter();
+        encounter.Title = "New Encounter";
+        save();
+    }
+    private void save() {
+        delete(this.encounter);
+        Data.Encounters.Add(this.encounter);
+    }
+    private float AlliedSpaceStrength => Data.Ships.Select(ship => ship.Scale).Sum() + encounter.AlliedSpaceStrength;
+    private float AlliedInfantryStrength => Data.Party.Count() + encounter.AlliedInfantryStrength;
+    private float EnemySpaceStrength => encounter.EnemySpaceStrength;
+    private float EnemyInfantryStrength => encounter.EnemyInfantryStrength;
+    private float TotalSpaceStrength => AlliedSpaceStrength + EnemySpaceStrength;
+    private float TotalInfantryStrength => AlliedInfantryStrength + EnemyInfantryStrength;
+
+    private string filter;
+
+    private RulebookContainer books = new RulebookContainer();
+
+    private IEnumerable<NpcCharacter> AllCharacterOptions => books.AllRulebooks.SelectMany(book => book.Value.NpcCharacters);
+    private IEnumerable<NpcCharacter> FilteredCharacterOptions => AllCharacterOptions.Where(character => CultureInfo.InvariantCulture.CompareInfo.IndexOf(character.Name, filter ?? string.Empty, CompareOptions.IgnoreCase) >= 0);
+    private NpcCharacter SelectedCharacter;
+    private void addAllyCharacter() {
+        if (SelectedCharacter == null || encounter == null)
+            return;
+        var spawned = spawn(SelectedCharacter);
+        encounter.AlliedInfrantry?.Add(spawned);
+    }
+    private void addEnemyCharacter() {
+        if (SelectedCharacter == null || encounter == null)
+            return;
+        var spawned = spawn(SelectedCharacter);
+        encounter.EnemyInfantry?.Add(spawned);
+    }
+    private void viewAlly(NpcCharacter character) {
+        var guid = encounter.GUID;
+        var id = encounter.AlliedInfrantry.IndexOf(character);
+        NavigationManager.NavigateTo($"manage/characters/npc/{guid}/ally/{id}");
+    }
+    private void viewEnemy(NpcCharacter character) {
+        var guid = encounter.GUID;
+        var id = encounter.EnemyInfantry.IndexOf(character);
+        NavigationManager.NavigateTo($"manage/characters/npc/{guid}/enemy/{id}");
+    }
+    private void deleteAlly(NpcCharacter c) {
+        encounter.AlliedInfrantry.Remove(c);
+    }
+    private void deleteEnemy(NpcCharacter c) {
+        encounter.EnemyInfantry.Remove(c);
+    }
+    private NpcCharacter spawn(NpcCharacter c) {
+        NpcCharacter d = new NpcCharacter();
+        d.Name = c.Name;
+        d.Rank = c.Rank;
+        d.Assignment = c.Assignment;
+        d.Species = c.Species;
+        d.BaseStress = c.BaseStress;
+        d.UsedStress = c.UsedStress;
+        d.Resistance = c.Resistance;
+        if (c.Equipment != null)
+            d.Equipment = new List<Item>(c.Equipment);
+        if (c.Values != null)
+            d.Values = new List<string>(c.Values);
+        if (c.Focuses != null)
+            d.Focuses = new List<string>(c.Focuses);
+        if (c.SpecialRules != null)
+            d.SpecialRules = new List<string>(c.SpecialRules);
+
+        d.Attributes = c.Attributes;
+        d.Disciplines = c.Disciplines;
+
+        var base_name = d.Name;
+        var unique_name = d.Name;
+        var id = 2;
+        while (encounter.AllCharacters.Select(ch => ch.Name).Contains(unique_name)) {
+            unique_name = base_name + " (" + (id++) + ")";
+        }
+        d.Name = unique_name;
+
+        return d;
+    }
+
+    private IEnumerable<Spaceframe> AllShipOptions => books.AllRulebooks.SelectMany(book => book.Value.Spaceframes.Concat(book.Value.NpcSpaceframes));
+    private IEnumerable<Spaceframe> FilteredShipOptions => AllShipOptions.Where(ship => CultureInfo.InvariantCulture.CompareInfo.IndexOf(ship.Name, filter ?? string.Empty, CompareOptions.IgnoreCase) >= 0);
+    private Spaceframe SelectedShip;
+    private void addAllyShip() {
+        if (SelectedShip == null || encounter == null)
+            return;
+        var spawned = spawn(SelectedShip);
+        encounter.AlliedShips?.Add(spawned);
+    }
+    private void addEnemyShip() {
+        if (SelectedShip == null || encounter == null)
+            return;
+        var spawned = spawn(SelectedShip);
+        encounter.EnemyShips?.Add(spawned);
+    }
+    private void viewAllyShip(Vessel character) {
+        var guid = encounter.GUID;
+        var id = encounter.AlliedShips.IndexOf(character);
+        NavigationManager.NavigateTo($"manage/ships/npc/{guid}/ally/{id}");
+    }
+    private void viewEnemyShip(Vessel character) {
+        var guid = encounter.GUID;
+        var id = encounter.EnemyShips.IndexOf(character);
+        NavigationManager.NavigateTo($"manage/ships/npc/{guid}/enemy/{id}");
+    }
+    private void deleteAllyShip(Vessel c) {
+        encounter.AlliedShips.Remove(c);
+    }
+    private void deleteEnemyShip(Vessel c) {
+        encounter.EnemyShips.Remove(c);
+    }
+    private Vessel spawn(Spaceframe npc) {
+        // hard copy
+        var copy = new Vessel();
+        copy.Frame = npc;
+        copy.Systems = npc.Systems;
+        copy.Departments = npc.Departments;
+        copy.Talents = new List<ShipTalent>();
+
+        var base_name = npc.Name;
+        var unique_name = npc.Name;
+        var id = 2;
+        while (encounter.AllShips.Select(ch => ch.Name).Contains(unique_name)) {
+            unique_name = base_name + " (" + (id++) + ")";
+        }
+        copy.Name = unique_name;
+
+        return copy;
+    }
+
+    
+}

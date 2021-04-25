@@ -13,6 +13,7 @@ public interface IRulebook {
     IEnumerable<CareerEvent> CareerEvents {get;}
     IEnumerable<Spaceframe> Spaceframes {get;}
     IEnumerable<Spaceframe> NpcSpaceframes {get;}
+    IEnumerable<NpcCharacter> NpcCharacters {get;}
     IEnumerable<MissionProfile> MissionProfiles {get;}
     IEnumerable<ShipTalent> ShipTalents {get;}
     IEnumerable<Item> Items {get;}
@@ -30,6 +31,7 @@ public class BaseRulebook : IRulebook {
     public IEnumerable<CareerEvent> CareerEvents {get; protected set;}
     public IEnumerable<Spaceframe> Spaceframes {get; protected set;}
     public IEnumerable<Spaceframe> NpcSpaceframes {get; protected set;}
+    public IEnumerable<NpcCharacter> NpcCharacters {get; protected set;}
     public IEnumerable<MissionProfile> MissionProfiles {get; protected set;}
     public IEnumerable<ShipTalent> ShipTalents {get; protected set;}
     public IEnumerable<Item> Items {get; protected set;}
@@ -42,6 +44,7 @@ public class BaseRulebook : IRulebook {
         new List<CareerEvent> (),
         new List<Spaceframe> (),
         new List<Spaceframe> (),
+        new List<NpcCharacter>(),
         new List<MissionProfile> (),
         new List<ShipTalent> (),
         new List<Item> ()
@@ -55,6 +58,7 @@ public class BaseRulebook : IRulebook {
         List<CareerEvent> events,
         List<Spaceframe> spaceframes,
         List<Spaceframe> npsSpaceframes,
+        List<NpcCharacter> npcCharacters,
         List<MissionProfile> profiles,
         List<ShipTalent> shipTalents,
         List<Item> items
@@ -66,6 +70,7 @@ public class BaseRulebook : IRulebook {
         this.CareerEvents = events;
         this.Spaceframes = spaceframes;
         this.NpcSpaceframes = npsSpaceframes;
+        this.NpcCharacters = npcCharacters;
         this.MissionProfiles = profiles;
         this.ShipTalents = shipTalents;
         this.Items = items;
@@ -85,6 +90,7 @@ public class UnofficialRulebook : BaseRulebook {
         List<CareerEvent> events,
         List<Spaceframe> spaceframes,
         List<Spaceframe> npcSpaceframes,
+        List<NpcCharacter> npcCharacters,
         List<MissionProfile> profiles,
         List<ShipTalent> shipTalents,
         List<Item> items
@@ -96,6 +102,7 @@ public class UnofficialRulebook : BaseRulebook {
         events,
         spaceframes,
         npcSpaceframes,
+        npcCharacters,
         profiles,
         shipTalents,
         items

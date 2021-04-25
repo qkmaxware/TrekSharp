@@ -19,6 +19,7 @@ public class UserCustomSpecies {
 
 public class UserCustomData {
     public UserCustomSpecies Species {get; set;}
+    public List<NpcCharacter> NpcCharacterTypes {get; set;} = new List<NpcCharacter>();
 
     public UserCustomData() {
         Species = new UserCustomSpecies();
@@ -37,9 +38,7 @@ public class Mission {
 public class Act {
     public string Title {get; set;}
     public string Description {get; set;}
-    public List<string> LinkedNPCs {get; set;} = new List<string>();
-    public List<string> LinkedSupports {get; set;} = new List<string>();
-    public List<string> LinkedShips {get; set;} = new List<string>();
+    public List<string> LinkedEncounters {get; set;} = new List<string>();
 }
 
 public class AppData {
@@ -48,11 +47,9 @@ public class AppData {
     public Mission Mission {get; set;} = new Mission();
     public TokenCollection Tokens {get; set;} = new TokenCollection();
     public List<PlayerVessel> Ships {get; set;} = new List<PlayerVessel>();
-    public List<Vessel> NPCShips {get; set;} = new List<Vessel>();
     public List<PlayerCharacter> Party {get; set;} = new List<PlayerCharacter>();
     public List<SupportCharacter> Supports {get; set;} = new List<SupportCharacter>();
-    public List<NpcCharacter> NPCs {get; set;} = new List<NpcCharacter>();
-
+    public List<Encounter> Encounters {get; set;} = new List<Encounter>();
     public List<ExtendedTask> Tasks {get; set;} = new List<ExtendedTask>();
 
     public UserCustomData Custom {get; set;} = new UserCustomData();
@@ -64,8 +61,7 @@ public class AppData {
         this.Ships = @new.Ships ?? new List<PlayerVessel>();
         this.Party = @new.Party ?? new List<PlayerCharacter>();
         this.Supports = @new.Supports ?? new List<SupportCharacter>();
-        this.NPCs = @new.NPCs ?? new List<NpcCharacter>();
-        this.NPCShips = @new.NPCShips ?? new List<Vessel>();
+        this.Encounters = @new.Encounters ?? new List<Encounter>();
         this.Tasks = @new.Tasks ?? new List<ExtendedTask>();
         this.Custom = @new.Custom ?? new UserCustomData();
     }
