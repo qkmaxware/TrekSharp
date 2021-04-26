@@ -26,14 +26,14 @@
                 </div>
                 <Col4Layout Items=Data.Party>
                     <Template>
-                        <div class="row" @onclick="@(() => navigateToPlayerCharacter(context))">
+                        <div class="row" @onclick="@(() => NavigateToPlayerCharacter(context))">
                             <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                             <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                                 @context.Rank @context.Name 
                             </div>
                             <div class="hbar row-fill elbow-right knee-right"></div>
                         </div>
-                        <div style="width: 100%; height: 125px;" @onclick="@(() => navigateToPlayerCharacter(context))">
+                        <div style="width: 100%; height: 125px;" @onclick="@(() => NavigateToPlayerCharacter(context))">
                             <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
                         </div>
                         <div class="w3-padding row">
@@ -81,14 +81,14 @@
                 </div>
                 <Col4Layout Items=Data.Supports>
                     <Template>
-                        <div class="row" @onclick="@(() => navigateToSupportCharacter(context))">
+                        <div class="row" @onclick="@(() => NaviateToSupportCharacter(context))">
                             <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                             <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                                 @context.Rank @context.Name 
                             </div>
                             <div class="hbar row-fill elbow-right knee-right"></div>
                         </div>
-                        <div style="width: 100%; height: 125px;" @onclick="@(() => navigateToSupportCharacter(context))">
+                        <div style="width: 100%; height: 125px;" @onclick="@(() => NaviateToSupportCharacter(context))">
                             <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
                         </div>
                         <div class="w3-padding row">
@@ -132,25 +132,6 @@
 <RawSupportCharacterCreator @ref=rawSupport OnImport=@(() => StateHasChanged())></RawSupportCharacterCreator>
 
 @code {
-
-    private void navigateToPlayerCharacter(PlayerCharacter character) {
-        var id = Data.Party.IndexOf(character);
-        if (id >= 0) {
-            NavigationManager.NavigateTo($"manage/characters/player/{id}");
-        }
-    }
-    private void navigateToSupportCharacter(SupportCharacter character) {
-        var id = Data.Supports.IndexOf(character);
-        if (id >= 0) {
-            NavigationManager.NavigateTo($"manage/characters/support/{id}");
-        }
-    }
-    /*private void navigateToNpcCharacter(NpcCharacter character) {
-        var id = Data.NPCs.IndexOf(character);
-        if (id >= 0) {
-            NavigationManager.NavigateTo($"manage/characters/npc/{id}");
-        }
-    }*/
 
     private RawPlayerCharacterCreator raw;
     private AssetImporter<PlayerCharacter> importer;

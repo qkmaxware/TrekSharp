@@ -291,6 +291,39 @@
             </div>
             <div class="hbar secondary knee-right elbow-right row-fill"></div>
         </div>
+        @foreach (var character in Data.Supports) {
+            <div class="w3-margin" style="page-break-inside: avoid;">
+                <div>
+                    <div class="lcars-primary w3-padding w3-large knee-left knee-right" style="display: inline-block;">
+                        @character.Rank @character.Name [@character.Assignment]
+                    </div>
+                </div>
+                <div class="knee-right elbow-left elbow-right lcars-border-primary">
+                    <div class="w3-padding">
+                        <div class="w3-row">
+                            <div class="w3-col s6">
+                                <div class="row">
+                                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                        TRAITS 
+                                    </div>
+                                    <div class="hbar row-fill elbow-right knee-right"></div>
+                                </div>
+                                <div class="w3-row w3-padding">
+                                    @character.Species
+                                </div>
+                                <InjuryDrawer Player="character"/>
+                                <AttributeDrawer Attributes="character.Attributes"/>
+                                <DisciplineDrawer Disciplines="character.Disciplines"/>
+                            </div>
+                            <div class="w3-col s6">
+                                <EquipmentDrawer Player="character"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
         @foreach (var character in Data.Party) {
             <div class="w3-margin" style="page-break-inside: avoid;">
                 <div>

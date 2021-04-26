@@ -205,7 +205,7 @@
 
     private void loadAppData(AppData newData) {
         this.Data.Overwrite(newData);
-        this.NavigationManager.NavigateTo("");
+        this.NavigateHome();
     }
 
     private async Task downloadDataJson() {

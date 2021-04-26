@@ -101,12 +101,12 @@
                 </div>
                 <div class="w3-row w3-margin-top">
                     <div class="w3-half">
-                        @foreach (var npc in encounter.AlliedShips) {
-                            var capture = npc;
+                        @foreach (var vessel in Data.Ships) {
+                            var capture = vessel;
                             <div class="w3-row">
                                 <div class="w3-third w3-padding">
                                     <img 
-                                        src="@npc.GetShipImageUrl()" 
+                                        src="@capture.GetShipImageUrl()" 
                                         onerror="this.src='assets/artwork/ships/Unknown.png'" 
                                         style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px;"
                                     />
@@ -115,12 +115,36 @@
                                     <div class="row">
                                         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                                         <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                            @npc.Name
+                                            @capture.Name
                                         </div>
                                         <div class="hbar row-fill elbow-right knee-right"></div>
                                     </div>
                                     <div class="w3-right-align">
-                                        <button class="w3-small" @onclick=@(() => viewAllyShip(capture))>view</button>
+                                        <button class="w3-small" @onclick=@(() => NavigateToPlayerVessel(capture))>view</button>
+                                    </div>
+                                </div>
+                            </div>
+                        } 
+                        @foreach (var npc in encounter.AlliedShips) {
+                            var capture = npc;
+                            <div class="w3-row">
+                                <div class="w3-third w3-padding">
+                                    <img 
+                                        src="@capture.GetShipImageUrl()" 
+                                        onerror="this.src='assets/artwork/ships/Unknown.png'" 
+                                        style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px;"
+                                    />
+                                </div>
+                                <div class="w3-twothird">
+                                    <div class="row">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            @capture.Name
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right"></div>
+                                    </div>
+                                    <div class="w3-right-align">
+                                        <button class="w3-small" @onclick=@(() => NavigateToAlliedNpcVessel(encounter, capture))>view</button>
                                         <button class="w3-small w3-red" @onclick=@(() => deleteAllyShip(capture))>x</button>
                                     </div>
                                 </div>
@@ -133,7 +157,7 @@
                             <div class="w3-row">
                                 <div class="w3-third w3-padding">
                                     <img 
-                                        src="@npc.GetShipImageUrl()" 
+                                        src="@capture.GetShipImageUrl()" 
                                         onerror="this.src='assets/artwork/ships/Unknown.png'" 
                                         style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px;"
                                     />
@@ -142,12 +166,12 @@
                                     <div class="row">
                                         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                                         <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                            @npc.Name
+                                            @capture.Name
                                         </div>
                                         <div class="hbar row-fill elbow-right knee-right"></div>
                                     </div>
                                     <div class="w3-right-align">
-                                        <button class="w3-small" @onclick=@(() => viewEnemyShip(capture))>view</button>
+                                        <button class="w3-small" @onclick=@(() => NavigateToEnemyNpcVessel(encounter, capture))>view</button>
                                         <button class="w3-small w3-red" @onclick=@(() => deleteEnemyShip(capture))>x</button>
                                     </div>
                                 </div>
@@ -165,6 +189,33 @@
                 </div>
                 <div class="w3-row w3-margin-top">
                     <div class="w3-half">
+                        @foreach (var player in Data.Party) {
+                            var capture = player;
+                            <div class="w3-row">
+                                <div class="w3-third w3-padding">
+                                    <img 
+                                        src="@capture.Species.GetSpeciesImageUrl()" 
+                                        onerror="this.src='assets/artwork/species/Unknown.png'" 
+                                        style="display: block; margin-left: auto; margin-right: auto; width: 100%; height: auto;"
+                                    />
+                                </div>
+                                <div class="w3-twothird">
+                                    <div class="row">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            @capture.Rank @capture.Name
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right"></div>
+                                    </div>
+                                    <div class="w3-padding">
+                                        Stress <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
+                                    </div>
+                                    <div class="w3-right-align">
+                                        <button class="w3-small" @onclick=@(() => NavigateToPlayerCharacter(capture))>view</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                         @foreach (var npc in encounter.AlliedInfrantry) {
                             var capture = npc;
                             <div class="w3-row">
@@ -187,7 +238,7 @@
                                         Stress <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
                                     </div>
                                     <div class="w3-right-align">
-                                        <button class="w3-small" @onclick=@(() => viewAlly(capture))>view</button>
+                                        <button class="w3-small" @onclick=@(() => NavigateToAlliedNpc(encounter, capture))>view</button>
                                         <button class="w3-small w3-red" @onclick=@(() => deleteAlly(capture))>x</button>
                                     </div>
                                 </div>
@@ -217,7 +268,7 @@
                                         Stress <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
                                     </div>
                                     <div class="w3-right-align">
-                                        <button class="w3-small" @onclick=@(() => viewEnemy(capture))>view</button>
+                                        <button class="w3-small" @onclick=@(() => NavigateToEnemyNpc(encounter, capture))>view</button>
                                         <button class="w3-small w3-red" @onclick=@(() => deleteEnemy(capture))>x</button>
                                     </div>
                                 </div>
@@ -279,16 +330,6 @@
         var spawned = spawn(SelectedCharacter);
         encounter.EnemyInfantry?.Add(spawned);
     }
-    private void viewAlly(NpcCharacter character) {
-        var guid = encounter.GUID;
-        var id = encounter.AlliedInfrantry.IndexOf(character);
-        NavigationManager.NavigateTo($"manage/characters/npc/{guid}/ally/{id}");
-    }
-    private void viewEnemy(NpcCharacter character) {
-        var guid = encounter.GUID;
-        var id = encounter.EnemyInfantry.IndexOf(character);
-        NavigationManager.NavigateTo($"manage/characters/npc/{guid}/enemy/{id}");
-    }
     private void deleteAlly(NpcCharacter c) {
         encounter.AlliedInfrantry.Remove(c);
     }
@@ -341,16 +382,6 @@
             return;
         var spawned = spawn(SelectedShip);
         encounter.EnemyShips?.Add(spawned);
-    }
-    private void viewAllyShip(Vessel character) {
-        var guid = encounter.GUID;
-        var id = encounter.AlliedShips.IndexOf(character);
-        NavigationManager.NavigateTo($"manage/ships/npc/{guid}/ally/{id}");
-    }
-    private void viewEnemyShip(Vessel character) {
-        var guid = encounter.GUID;
-        var id = encounter.EnemyShips.IndexOf(character);
-        NavigationManager.NavigateTo($"manage/ships/npc/{guid}/enemy/{id}");
     }
     private void deleteAllyShip(Vessel c) {
         encounter.AlliedShips.Remove(c);

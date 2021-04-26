@@ -11,6 +11,70 @@
         await JSRuntime.InvokeVoidAsync("BlazorDownloadFile", $"{filename}.json", "text/json", file);
     }
 
+    protected void NavigateHome() {
+        NavigationManager.NavigateTo(string.Empty);
+    }
+
+    protected void NavigateToPlayerVessel(PlayerVessel vessel) {
+        var id = Data.Ships.IndexOf(vessel);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"manage/ships/vessel/{id}");
+        }
+    }
+
+    protected void NavigateToNpcVessel(Encounter encounter, Vessel vessel) {
+        if (encounter.AlliedShips.Contains(vessel)) {
+            NavigateToAlliedNpcVessel(encounter, vessel);
+        } else {
+            NavigateToEnemyNpcVessel(encounter, vessel);
+        }
+    }
+
+    protected void NavigateToAlliedNpcVessel(Encounter encounter, Vessel vessel) {
+        var guid = encounter.GUID;
+        var id = encounter.AlliedShips.IndexOf(vessel);
+        NavigationManager.NavigateTo($"manage/ships/npc/{guid}/ally/{id}");
+    }
+
+    protected void NavigateToEnemyNpcVessel(Encounter encounter, Vessel vessel) {
+        var guid = encounter.GUID;
+        var id = encounter.EnemyShips.IndexOf(vessel);
+        NavigationManager.NavigateTo($"manage/ships/npc/{guid}/enemy/{id}");
+    }
+
+    protected void NavigateToNpc(Encounter encounter, NpcCharacter character) {
+        if (encounter.AlliedInfrantry.Contains(character)) {
+            NavigateToAlliedNpc(encounter, character);
+        } else {
+            NavigateToEnemyNpc(encounter, character);
+        }
+    }
+
+    protected void NavigateToAlliedNpc(Encounter encounter, NpcCharacter character) {
+        var guid = encounter.GUID;
+        var id = encounter.AlliedInfrantry.IndexOf(character);
+        NavigationManager.NavigateTo($"manage/characters/npc/{guid}/ally/{id}");
+    }
+
+    protected void NavigateToEnemyNpc(Encounter encounter, NpcCharacter character) {
+        var guid = encounter.GUID;
+        var id = encounter.EnemyInfantry.IndexOf(character);
+        NavigationManager.NavigateTo($"manage/characters/npc/{guid}/enemy/{id}");
+    }
+
+    protected void NavigateToPlayerCharacter(PlayerCharacter character) {
+        var id = Data.Party.IndexOf(character);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"manage/characters/player/{id}");
+        }
+    }
+    protected void NaviateToSupportCharacter(SupportCharacter character) {
+        var id = Data.Supports.IndexOf(character);
+        if (id >= 0) {
+            NavigationManager.NavigateTo($"manage/characters/support/{id}");
+        }
+    }
+
     public void ResetScrollPosition() {
         JSRuntime.InvokeVoidAsync("resetScroll");
     }
