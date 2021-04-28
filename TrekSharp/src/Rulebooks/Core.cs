@@ -1798,6 +1798,7 @@ public class CoreRulebook : BaseRulebook {
                     "Reclamation: Drone may attempt a Reason + Medicine task with difficulty 0 on an injured drone within reach. If successful, the injured drone dies and its parts are reclaimed."
                 }
             }
+
         },
         new List<MissionProfile> {
             new MissionProfile(
@@ -2083,11 +2084,50 @@ public class CoreRulebook : BaseRulebook {
             ) {PowerModifier = 5}
         },
         new List<Item> {
-            new Item { Name = "Uniform" },
-            new Item { Name = "Communicator" },
-            new Item { Name = "Tricorder" },
-            new Item { Name = "Phaser Type 1", UsageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
-            new Item { Name = "Unarmed Strike", UsageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+            new Item { Name = "Uniform", Size = ItemSize.Worn },
+            new Item { Name = "Communicator", Size = ItemSize.Worn  },
+            new Item { Name = "Tricorder", Size = ItemSize.OneHanded },
+            new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+            new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+            new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+            new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+            new Item { Name = "Sword", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+            new Item { Name = "Mek'leth", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+            new Item { Name = "Heavy Sword", Size = ItemSize.TwoHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+            new Item { Name = "Bat'leth", Size = ItemSize.TwoHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+            new Item { Name = "Kzar'takin", Size = ItemSize.TwoHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+            new Item { Name = "Lirpa", Size = ItemSize.TwoHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+            new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+            new Item { Name = "Phaser Type 3", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate", "Charge" } },
+            new Item { Name = "Pulse Grenade", Size = ItemSize.OneHanded, DamageDice = 4, Qualities = new List<string>{ "Area", "Charge", "Grenade" } },
+            new Item { Name = "Andorian Plasma Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate", "Deadly" } },
+            new Item { Name = "Phase Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ } },
+            new Item { Name = "Particle Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate" } },
+            new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+            new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+            new Item { Name = "Jem'Hadar Plasma Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1", "Debilitating" } },
+            new Item { Name = "Jem'Hadar Plasma Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate", "Debilitating" } },
+            new Item { Name = "Body Armor", Size = ItemSize.Worn  },
+            new Item { Name = "Environmental Suit", Size = ItemSize.Worn  },
+            new Item { Name = "Personal Force Field", Size = ItemSize.Worn  },
+            new Item { Name = "Chronometer", Size = ItemSize.OneHanded  },
+            new Item { Name = "Engineering Toolkit", Size = ItemSize.OneHanded  },
+            new Item { Name = "Plasma Torch", Size = ItemSize.OneHanded  },
+            new Item { Name = "Portable Electron Microscope", Size = ItemSize.OneHanded  },
+            new Item { Name = "Portable Mass Spectrometer", Size = ItemSize.TwoHanded  },
+            new Item { Name = "Heartbeat Reader", Size = ItemSize.OneHanded  },
+            new Item { Name = "Tri-laser Connector", Size = ItemSize.OneHanded  },
+            new Item { Name = "Anabolic Protoplaser", Size = ItemSize.OneHanded  },
+            new Item { Name = "Dermal Regenerator", Size = ItemSize.OneHanded  },
+            new Item { Name = "Emergency Surgical Kit", Size = ItemSize.OneHanded  },
+            new Item { Name = "Laser Scalpel", Size = ItemSize.OneHanded  },
+            new Item { Name = "Hypospray", Size = ItemSize.OneHanded  },
+            new Item { Name = "Detronal Scanner", Size = ItemSize.OneHanded  },
+            new Item { Name = "Neurocortical Monitor", Size = ItemSize.OneHanded  },
+            new Item { Name = "Anti-grav Unit", Size = ItemSize.TwoHanded  },
+            new Item { Name = "Holographic Imager", Size = ItemSize.TwoHanded  },
+            new Item { Name = "PADD", Size = ItemSize.OneHanded  },
+            new Item { Name = "Pattern Enhancer", Size = ItemSize.TwoHanded  },
         }
     );
 }

@@ -181,6 +181,17 @@ public class OperationsDivision : BaseRulebook {
                 "Rocks Into Replicators",
                 "Starfleet engineers are famed for being able to build or create nearly anything needed from the most basic of available components. Once per session, you may destroy any single piece of equipment to create any other piece of equipment of an equal or lower Opportunity Cost. This new piece of equipment has a Complication range increase of 2, with the Complication being a malfunction that renders it useless. You should provide a reasonable explanation as to how a repurposed or cannibalized device could function and the Gamemaster has final say if there is any question about the “reasonableness” of the new device."
              )
+        },
+        Items = new List<Item> {
+            new Item { Name = "Micro-Optic Drill", Size = ItemSize.OneHanded  },
+            new Item { Name = "Phaser Drill", Size = ItemSize.TwoHanded  },
+            new Item { Name = "Engineering Tricorder", Size = ItemSize.OneHanded  },
+            new Item { Name = "Field Destabilizer", Size = ItemSize.OneHanded  },
+            new Item { Name = "Hyperspanner", Size = ItemSize.OneHanded  },
+            new Item { Name = "Magnetic Probe", Size = ItemSize.OneHanded  },
+            new Item { Name = "Sonic Driver", Size = ItemSize.OneHanded  },
+            new Item { Name = "Transport Inhibitor", Size = ItemSize.OneHanded  },
+            new Item { Name = "Chronometer", Size = ItemSize.OneHanded  },
         }
     };
 

@@ -1,4 +1,7 @@
-<div class="w3-margin-bottom">
+@using Data
+@inherits AppComponentBase
+
+<div class="w3-margin-bottom no-split">
     <div class="row w3-margin-bottom">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
         <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
@@ -10,27 +13,63 @@
         <ul class="w3-ul w3-small">
             @if (Player != null && Player.Equipment != null) {
             foreach (var item in Player.Equipment) {
+                var capture = item;
                 <li>
-                    @item.Name 
-                    @if(item.Qualities != null) {
+                    <span class="w3-button no-print" @onclick=@(() => removeItem(capture))>&times;</span>
+                    @capture.Name 
+                    @if(capture.Qualities != null && capture.Qualities.Count > 0) {
                         <small>(@string.Join(',', item.Qualities))</small>
                     }
-                    @if (item.UsageDice.HasValue) {
+                    @if (item.DamageDice.HasValue && item.DamageDice.Value != 0) {
                         <span class="w3-right">
-                            @(item.UsageDice.Value + Player.BonusDamageDice) 
+                            @(item.DamageDice.Value + Player.BonusDamageDice) 
                             <img src="assets/challenge-effect.png" width=12 height=12 />
                         </span>
+                    }
+                    @if(AllowEdit) {
+
                     }
                 </li>
             }
             }
         </ul>
+        @if(AllowEdit) {
+        <div class="no-print w3-right-align">
+            <button @onclick=@(() => itemList?.Open())>+</button>
+        </div>
+        }
     </div>
 </div>
 
+<AssetAddList
+    @ref=itemList
+    Title="Give Item"
+    Store=items
+    OnAdd=onAddItem
+>
+</AssetAddList>
+
 @code {
 
-    [Parameter]
-    public Character Player {get; set;}
+    private AssetAddList<Item> itemList;
+    private List<Item> items;
+
+    [Parameter] public Character Player {get; set;}
+    [Parameter] public bool AllowEdit {get; set;} = false;
+
+    protected override void OnInitialized() {
+        RulebookContainer books = new RulebookContainer();
+        books.AddRulebook("User Created", new UserCreatedSpeciesRulebook(Data));
+        items = books.AllRulebooks.SelectMany(book => book.Value.Items).OrderBy((item) => item.Name).ToList();
+    }
+    
+    private void removeItem(Item item) {
+        Player.Equipment.Remove(item);
+        StateHasChanged();
+    }
+    private void onAddItem(Item item) {
+        Player.Equipment.Add(item);
+        StateHasChanged();
+    }
 
 }

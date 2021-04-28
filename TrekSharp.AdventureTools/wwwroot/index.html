@@ -36,6 +36,9 @@
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         }
+        window.onbeforeunload = function() {
+            return "Unsaved app data will be lost if you leave the page, are you sure?";
+        };
     </script>
 </body>
 

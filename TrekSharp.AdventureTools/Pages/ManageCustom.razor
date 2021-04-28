@@ -48,6 +48,25 @@
     }
 </LCARS>
 
+<LCARS Title="CUSTOM ITEMS">
+    @if (Data.Custom != null && Data.Custom.Items != null) {
+        <Col3Layout Items="Data.Custom.Items">
+            <Template>
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                            @context.Name 
+                            <button class="w3-red" @onclick=@(() => confirmDeleteItem(context))>&times;</button>
+                        </div>
+                        <div class="hbar row-fill elbow-right knee-right"></div>
+                    </div>
+                </div>
+            </Template>
+        </Col3Layout>
+    }
+</LCARS>
+
 <ConfirmationDialog @ref="confirm">
 </ConfirmationDialog>
 
@@ -76,6 +95,17 @@
     private void deleteNpcType(NpcCharacter character) {
         if (Data.Custom != null && Data.Custom.NpcCharacterTypes != null) {
             Data.Custom.NpcCharacterTypes.Remove(character);
+        }
+        StateHasChanged();
+    }
+
+    private void confirmDeleteItem(Item character) {
+        confirm.Open($"Are you sure you want to delete the item '{character.Name}'?", () => deleteItem(character));
+    }
+
+    private void deleteItem(Item character) {
+        if (Data.Custom != null && Data.Custom.Items != null) {
+            Data.Custom.Items.Remove(character);
         }
         StateHasChanged();
     }

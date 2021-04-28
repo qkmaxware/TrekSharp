@@ -70,7 +70,7 @@
     OnLoad="onShipLoaded"
 />
 
-<RawShipCreator @ref="raw"></RawShipCreator>
+<RawShipCreator @ref="raw" OnImport=@(() => StateHasChanged())></RawShipCreator>
 
 @code {
     private RawShipCreator raw;

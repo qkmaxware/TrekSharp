@@ -19,10 +19,13 @@ public class UserCustomSpecies {
 
 public class UserCustomData {
     public UserCustomSpecies Species {get; set;}
-    public List<NpcCharacter> NpcCharacterTypes {get; set;} = new List<NpcCharacter>();
+    public List<NpcCharacter> NpcCharacterTypes {get; set;}
+    public List<Item> Items {get; set;}
 
     public UserCustomData() {
         Species = new UserCustomSpecies();
+        NpcCharacterTypes = new List<NpcCharacter>();
+        Items = new List<Item>();
     }
 }
 
