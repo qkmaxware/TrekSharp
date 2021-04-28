@@ -29,7 +29,7 @@ public class UserCreatedSpeciesRulebook : IRulebook {
 
     public IEnumerable<ShipTalent> ShipTalents => Enumerable.Empty<ShipTalent>();
 
-    public IEnumerable<Item> Items => Enumerable.Empty<Item>();
+    public IEnumerable<Item> Items => data?.Custom?.Items ?? Enumerable.Empty<Item>();
 }
 
 }
