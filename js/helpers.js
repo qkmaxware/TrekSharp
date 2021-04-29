@@ -62,7 +62,11 @@ async function BlazorReadFileAsString(file) {
 
 async function BlazorHandleFileSelect(input) {
   var files = input.files;
-  var file = files[0];
-
-  return await BlazorReadFileAsString(file);
+  if (files.length > 0) {
+    var file = files[0];
+    
+    return await BlazorReadFileAsString(file);
+  } else {
+    return "";
+  }
 }

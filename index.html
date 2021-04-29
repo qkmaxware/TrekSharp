@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>TrekSharp Tools</title>
+    <title>TrekSharp</title>
     <base href="/TrekSharp/" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon.png">
@@ -32,13 +32,27 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="js/helpers.js"></script>
     <script>
+        // Allow components to scroll to top
         function resetScroll() {
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         }
+        // Prevent accidental leaving
         window.onbeforeunload = function() {
             return "Unsaved app data will be lost if you leave the page, are you sure?";
         };
+        // Overload the save function
+        document.addEventListener("keydown", function(e) {
+            if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) {
+                e.preventDefault();
+                // Invoke the function to download the app's data
+                DotNet.invokeMethodAsync (
+                    "TrekSharp.AdventureTools",
+                    "DownloadAppData",
+                    null
+                );
+            }
+        }, false);
     </script>
 </body>
 
