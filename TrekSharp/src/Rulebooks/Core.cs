@@ -1351,6 +1351,10 @@ public class CoreRulebook : BaseRulebook {
                     Conn = 02, 
                     Engineering = 02,
                     Medicine = 01
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
                 }
             },
             new NpcCharacter {
@@ -1372,6 +1376,10 @@ public class CoreRulebook : BaseRulebook {
                     Conn = 01, 
                     Engineering = 01,
                     Medicine = 01
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
                 }
             },
             new NpcCharacter {
@@ -1393,6 +1401,10 @@ public class CoreRulebook : BaseRulebook {
                     Conn = 01, 
                     Engineering = 02,
                     Medicine = 01
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
                 }
             },
             new NpcCharacter {
@@ -1414,6 +1426,10 @@ public class CoreRulebook : BaseRulebook {
                     Conn = 01, 
                     Engineering = 01,
                     Medicine = 02
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
                 }
             },
             new NpcCharacter {
@@ -1446,6 +1462,10 @@ public class CoreRulebook : BaseRulebook {
                 SpecialRules = new List<string> {
                     "Adaptable: May spend 2 Threat to immediately gain a single Focus for the remainder of the scene",
                     "Covert: Whenever required to attempt a Task to conceal their activities, they may roll an aditional d20"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
                 }
             },
             new NpcCharacter {
@@ -1472,6 +1492,11 @@ public class CoreRulebook : BaseRulebook {
                 SpecialRules = new List<string> {
                     "Brak'lul: Resistance increased by +2 against non-lethal attacks",
                     "Warrior's Spirit: When attempting a melee attack, and purchases one or more dice, re-roll any number of dice."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "D'k tahg Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
                 }
             },
             new NpcCharacter {
@@ -1506,6 +1531,11 @@ public class CoreRulebook : BaseRulebook {
                     "First into Battle: Spend 3 Momentum to assist andother Klingon's next attack using Daring + Command",
                     "Brak'lul: Resistance increased by +2 against non-lethal attacks",
                     "Warrior's Spirit: When attempting a melee attack, and purchases one or more dice, re-roll any number of dice."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "D'k tahg Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1" } },
                 }
             },
             new NpcCharacter {
@@ -1532,6 +1562,11 @@ public class CoreRulebook : BaseRulebook {
                 SpecialRules = new List<string> {
                     "Guile and Cunning: When attempting to remain hidden or unnoticed, spend one Threat to increase the difficulty of enemy detection Tasks",
                     "Wary: When attempting to detect an enemy or hazard you may re-roll one d20"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
                 }
             },
             new NpcCharacter {
@@ -1566,6 +1601,11 @@ public class CoreRulebook : BaseRulebook {
                     "Ambush: When attacking an unaware opponent, spend 2 Threat to allow for all Centurion under their command to re-roll any number of d20 on attack rolls",
                     "Guile and Cunning: When attempting to remain hidden or unnoticed, spend one Threat to increase the difficulty of enemy detection Tasks",
                     "Wary: When attempting to detect an enemy or hazard you may re-roll one d20"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
                 }
             },
             new NpcCharacter {
@@ -1597,6 +1637,10 @@ public class CoreRulebook : BaseRulebook {
                 },
                 SpecialRules = new List<string> {
                     "Greed Is Eternal: When enraged in negotiations that have the potential for profit, spend 1 Threat during the Task to re-roll the dice pool"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
                 }
             },
             new NpcCharacter {
@@ -1630,6 +1674,9 @@ public class CoreRulebook : BaseRulebook {
                 SpecialRules = new List<string> {
                     "Greed Is Eternal: When enraged in negotiations that have the potential for profit, spend 1 Threat during the Task to re-roll the dice pool",
                     "Free Advice Is Seldom Cheap: Increase the difficulty og all social conflict to persuasion by 2. Remove this difficulty if something is offered in trade.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
                 }
             },
             new NpcCharacter {
@@ -1662,6 +1709,10 @@ public class CoreRulebook : BaseRulebook {
                 SpecialRules = new List<string> {
                     "Ambushes and Traps: Whenever a Ready Task is used to ready a Ranged attack, that Ranged attack gets a bonus d20",
                     "Loyal and Disciplined: Whenever a Cardassian recieves assistance from a superior, that Cardassian may re-roll a single d20"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
                 }
             },
             new NpcCharacter {
@@ -1696,6 +1747,10 @@ public class CoreRulebook : BaseRulebook {
                     "Expects Success: Whenever a Glinn uses the Direct or Asssit Task to aid a subordinate, that Task may always Succeed at Cost",
                     "Ambushes and Traps: Whenever a Ready Task is used to ready a Ranged attack, that Ranged attack gets a bonus d20",
                     "Loyal and Disciplined: Whenever a Cardassian recieves assistance from a superior, that Cardassian may re-roll a single d20"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
                 }
             },
             new NpcCharacter {
@@ -1729,6 +1784,9 @@ public class CoreRulebook : BaseRulebook {
                     "Machine 3",
                     "Night Vision",
                     "Threat Protocols: Drones do not attack until they see people as threats. In order to attack before being attacked, one threat per drone must be spent per scene.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
                 }
             },
             new NpcCharacter {
@@ -1762,6 +1820,10 @@ public class CoreRulebook : BaseRulebook {
                     "Machine 2",
                     "Night Vision",
                     "Threat Protocols: Drones do not attack until they see people as threats. In order to attack before being attacked, one threat per drone must be spent per scene.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Plasma Torch", Size = ItemSize.OneHanded , DamageDice = 5, Qualities = new List<string>{ "Piercing 3", "Cumbersome", "Deadly" } },
                 }
             },
             new NpcCharacter {
@@ -1796,9 +1858,417 @@ public class CoreRulebook : BaseRulebook {
                     "Night Vision",
                     "Threat Protocols: Drones do not attack until they see people as threats. In order to attack before being attacked, one threat per drone must be spent per scene.",
                     "Reclamation: Drone may attempt a Reason + Medicine task with difficulty 0 on an injured drone within reach. If successful, the injured drone dies and its parts are reclaimed."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
                 }
-            }
-
+            },
+            new NpcCharacter {
+                Name = "Minor Jem'Hadar Warrior",
+                BaseStress = 14,
+                Resistance = 2,
+                Species = new Species{ Name="Jem'Hadar" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 12,
+                    Presence = 07,
+                    Daring = 11,
+                    Insight = 10,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Immune to Fear",
+                    "Immune to Pain",
+                    "Brute Force: Jem'Hadar add the Vicious 1 effect to their Unarmed Strike, and remove the Non-lethal Quality.",
+                    "The Shroud: A Jem'Hadar may spend 2 Threat as a Minor Action to become virtually invisible, increasing the Difficulty of all Tasks to observe, locate, or target the Jem'Hadar by three. This effect ends when the Jem'Hadar makes an attack, or takes a Minor Action to end the effect. The Jem'Hadar loses this ability when deprived of ketracel-white."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Blade", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Jem'Hadar Plasma Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate", "Debilitating" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Notable Jem'Hadar First",
+                BaseStress = 14,
+                Resistance = 2,
+                Species = new Species{ Name="Jem'Hadar" },
+                Values = new List<string> {
+                    "We Are Now Dead; We Go into Battle to Reclaim Our Lives"
+                },
+                Focuses = new List<string> {
+                    "Combat Tactics",
+                    "Hand-to-Hand"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 12,
+                    Presence = 08,
+                    Daring = 11,
+                    Insight = 10,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Immune to Fear",
+                    "Immune to Pain",
+                    "Brute Force: Jem'Hadar add the Vicious 1 effect to their Unarmed Strike, and remove the Non-lethal Quality.",
+                    "The Shroud: A Jem'Hadar may spend 2 Threat as a Minor Action to become virtually invisible, increasing the Difficulty of all Tasks to observe, locate, or target the Jem'Hadar by three. This effect ends when the Jem'Hadar makes an attack, or takes a Minor Action to end the effect. The Jem'Hadar loses this ability when deprived of ketracel-white.",
+                    "Victory is Life: Whenever a Jem'Hadar First or one of its subordinates inflicts an Injury or achieves an objective, add 1 to Threat."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Blade", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Jem'Hadar Plasma Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate", "Debilitating" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Notable Vorta Overseer",
+                BaseStress = 14,
+                Resistance = 2,
+                Species = new Species{ Name="Vorta" },
+                Values = new List<string> {
+                    "I Live to Serve the Founders",
+                    "There Is Nothing I Will Not Do to Succeed"
+                },
+                Focuses = new List<string> {
+                    "Deception",
+                    "Diplomacy",
+                    "Observation",
+                    "Psychology"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 09,
+                    Presence = 12,
+                    Daring = 08,
+                    Insight = 11,
+                    Reason = 11
+                },
+                Disciplines = new Disciplines {
+                    Command = 04,
+                    Security = 01,
+                    Science = 03,
+                    Conn = 03, 
+                    Engineering = 02,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "In the Name of the Founders: When using the Direct or Assist Task to command other servants of the Dominion, a Vorta may roll 2d20 instead of 1d20.",
+                    "Manipulative: If a Vorta purchases one or more d20s when attempting a Task to deceive or intimidate another, they may re-roll their dice pool.",
+                    "Termination Implant: If a Vorta is captured, they may commit suicide by triggering a termination implant. This requires a Minor Action, and kills the Vorta immediately."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Targ",
+                BaseStress = 13,
+                Resistance = 2,
+                Species = new Species{ Name="Targ" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 04,
+                    Fitness = 11,
+                    Presence = 08,
+                    Daring = 10,
+                    Insight = 05,
+                    Reason = 02
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Boar Rush: The targ charges at the character, attempting to knock them to the ground. As a Task, the targ moves to within Reach of an enemy within Long range, and makes a melee attack with its Tusks."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Tusks", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown" } },
+                    new Item { Name = "Bite", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Cumbersome" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Sehlat",
+                BaseStress = 15,
+                Resistance = 2,
+                Species = new Species{ Name="Sehlat" },
+                Values = new List<string> {
+                    "Territorial Predator"
+                },
+                Focuses = new List<string> {
+                    "Stalking",
+                    "Clawing and Biting"
+                },
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 12,
+                    Presence = 09,
+                    Daring = 11,
+                    Insight = 05,
+                    Reason = 02
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Claws", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Piercing 1" } },
+                    new Item { Name = "Teeth", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1", "Cumbersome" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Mugato",
+                BaseStress = 13,
+                Resistance = 0,
+                Species = new Species{ Name="Mugato" },
+                Values = new List<string> {
+                    "Territorial Predator"
+                },
+                Focuses = new List<string> {
+                    "Melee",
+                    "Tracking"
+                },
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 11,
+                    Presence = 10,
+                    Daring = 08,
+                    Insight = 04,
+                    Reason = 06
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Inject Venom: When biting a victim, the mugato may choose to inject them with a venom. This venom will cause a slow, painful death to the victim should they not be cured."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Claws", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Intense" } },
+                    new Item { Name = "Bite", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1", "Cumbersome", "Deadly", "Debilitating" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Talarian Hook Spider",
+                BaseStress = 11,
+                Resistance = 1,
+                Species = new Species{ Name="Talarian Hook Spider" },
+                Values = new List<string> {
+                },
+                Focuses = new List<string> {
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 08,
+                    Presence = 02,
+                    Daring = 07,
+                    Insight = 02,
+                    Reason = 04
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Web: Should the hook spider be given enough time in a location, they will fill it with a sticky web-like substance. Characters moving through this substance cannot move more than one zone per turn."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Hook", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown" } },
+                    new Item { Name = "Bite", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Intense", "Deadly" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Berengarian Dragon",
+                BaseStress = 28,
+                Resistance = 5,
+                Species = new Species{ Name="Berengarian Dragon" },
+                Values = new List<string> {
+                    "Arboreal Hunter",
+                    "Pays Small Creatures Little Heed"
+                },
+                Focuses = new List<string> {
+                    "Hunting",
+                    "Melee",
+                    "Observant"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 12,
+                    Presence = 10,
+                    Daring = 13,
+                    Insight = 05,
+                    Reason = 04
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "The creature is massive. It has twice as much Stress as normal. Further, it takes 8 Stress to inflict an Injury, instead of 5."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Claws", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Area", "Vicious 1" } },
+                    new Item { Name = "Teeth", Size = ItemSize.OneHanded, DamageDice = 4, Qualities = new List<string>{ "Piercing 2", "Vicious 1", "Debilitating" } },
+                    new Item { Name = "Fire Breath", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Area", "Intense" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Denevan Neural Parasite",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Denevan Neural Parasite" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 05,
+                    Daring = 04,
+                    Insight = 04,
+                    Reason = 06
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Attach: Should the Neural Parasite become attached to an area on a host creature large enough to hold it (i.e., a humanoid torso), the parasite shall quickly become fused with the creature’s nervous system, in essence controlling the creature."
+                },
+                Equipment = new List<Item> {}
+            },
+            new NpcCharacter {
+                Name = "Nova Digger",
+                BaseStress = 10,
+                Resistance = 3,
+                Species = new Species{ Name="Nova Digger" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 03,
+                    Fitness = 10,
+                    Presence = 06,
+                    Daring = 04,
+                    Insight = 04,
+                    Reason = 04
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Burrow: So long as not engaged in melee, a Digger can burrow underground over the course of its turn."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Bite", Size = ItemSize.OneHanded, DamageDice = 1 },
+                }
+            },
+            new NpcCharacter {
+                Name = "Gunji Jackdaw",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Gunji Jackdaw" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 03,
+                    Fitness = 08,
+                    Presence = 06,
+                    Daring = 04,
+                    Insight = 04,
+                    Reason = 03
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {},
+                Equipment = new List<Item> {
+                    new Item { Name = "Claw", Size = ItemSize.OneHanded, DamageDice = 2 },
+                }
+            },
+            new NpcCharacter {
+                Name = "Palukoo",
+                BaseStress = 5,
+                Resistance = 0,
+                Species = new Species{ Name="Palukoo" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 06,
+                    Fitness = 05,
+                    Presence = 06,
+                    Daring = 04,
+                    Insight = 06,
+                    Reason = 05
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 00,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Web: Should the palukoo be given enough time in a location, they will fill it with a sticky web-like substance. Characters moving through this substance cannot move more than one zone per turn."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Bite", Size = ItemSize.OneHanded, DamageDice = 1 },
+                }
+            },
         },
         new List<MissionProfile> {
             new MissionProfile(
@@ -2091,6 +2561,7 @@ public class CoreRulebook : BaseRulebook {
             new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
             new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
             new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+            new Item { Name = "D'k tahg Dagger", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
             new Item { Name = "Sword", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
             new Item { Name = "Mek'leth", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
             new Item { Name = "Heavy Sword", Size = ItemSize.TwoHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
@@ -2112,7 +2583,7 @@ public class CoreRulebook : BaseRulebook {
             new Item { Name = "Personal Force Field", Size = ItemSize.Worn  },
             new Item { Name = "Chronometer", Size = ItemSize.OneHanded  },
             new Item { Name = "Engineering Toolkit", Size = ItemSize.OneHanded  },
-            new Item { Name = "Plasma Torch", Size = ItemSize.OneHanded  },
+            new Item { Name = "Plasma Torch", Size = ItemSize.OneHanded , DamageDice = 5, Qualities = new List<string>{ "Piercing 3", "Cumbersome", "Deadly" } },
             new Item { Name = "Portable Electron Microscope", Size = ItemSize.OneHanded  },
             new Item { Name = "Portable Mass Spectrometer", Size = ItemSize.TwoHanded  },
             new Item { Name = "Heartbeat Reader", Size = ItemSize.OneHanded  },

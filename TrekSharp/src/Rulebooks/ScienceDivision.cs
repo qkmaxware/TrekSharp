@@ -249,6 +249,35 @@ public class ScienceDivision : BaseRulebook {
                 "Surgery Savant",
                 "When attempting a Medicine Task during an Extended Task relating to surgery, the character gains the Triumphant Effect."
             )
+        },
+        Items = new List<Item> {
+            new Item { Name = "Blood Gas Infuser", Size = ItemSize.TwoHanded  },
+            new Item { Name = "Bone Regenerator", Size = ItemSize.TwoHanded  },
+            new Item { Name = "Blood Gas Infuser", Size = ItemSize.OneHanded  },
+            new Item { Name = "Cardiostimulator", Size = ItemSize.OneHanded  },
+            new Item { Name = "Cortical Scanner", Size = ItemSize.OneHanded  },
+            new Item { Name = "Blood Gas Infuser", Size = ItemSize.OneHanded  },
+            new Item { Name = "Cortical Stimulator", Size = ItemSize.OneHanded  },
+            new Item { Name = "Neural Caliper", Size = ItemSize.OneHanded  },
+            new Item { Name = "Neural Pad", Size = ItemSize.OneHanded  },
+            new Item { Name = "Pressor Field", Size = ItemSize.OneHanded  },
+            new Item { Name = "Stasis Unit", Size = ItemSize.TwoHanded  },
+            new Item { Name = "Steri-Field", Size = ItemSize.OneHanded  },
+            new Item { Name = "Subdermal Bioprobes", Size = ItemSize.OneHanded  },
+            new Item { Name = "Alkysine Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Anetrizine Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Arithrazine Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Axonol Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Cervaline Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Cordrazine Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Corophizine Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Cortolin Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Dermaline Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Dylovene Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Hydrocortiline Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Hydronalin Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Lectrazine Vial", Size = ItemSize.OneHanded  },
+            new Item { Name = "Tri-ox Compound Vial", Size = ItemSize.OneHanded  },
         }
     };
 }

@@ -59,7 +59,7 @@
 
     protected override void OnInitialized() {
         RulebookContainer books = new RulebookContainer();
-        books.AddRulebook("User Created", new UserCreatedSpeciesRulebook(Data));
+        books.AddRulebook("Homebrew", new UserCreatedSpeciesRulebook(Data));
         items = books.AllRulebooks.SelectMany(book => book.Value.Items).OrderBy((item) => item.Name).ToList();
     }
     

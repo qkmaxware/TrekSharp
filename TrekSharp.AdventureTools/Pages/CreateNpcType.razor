@@ -221,7 +221,7 @@
     private IEnumerable<Species> AllSpeciesOptions => books.AllRulebooks.SelectMany(book => book.Value.Species);
 
     protected override void OnInitialized() {
-        books.AddRulebook("User Created", new UserCreatedSpeciesRulebook(Data));
+        books.AddRulebook("Homebrew", new UserCreatedSpeciesRulebook(Data));
     }
 
     private NpcCharacter character = new NpcCharacter() {

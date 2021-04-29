@@ -284,16 +284,30 @@
 
 @code {
     protected override void OnInitialized() {
-        books.AddRulebook("User Created", new UserCreatedSpeciesRulebook(Data));
+        books.AddRulebook("Homebrew", new UserCreatedSpeciesRulebook(Data));
+        // Load last loaded guid automatically
+        if (!string.IsNullOrEmpty(lastGuid)) {
+            var guid_encounter = Data.Encounters.Where(enc => enc.GUID == lastGuid).FirstOrDefault();
+            if (guid_encounter != null) {
+                this.encounter = guid_encounter;
+                StateHasChanged();
+            }
+        }
     }
     
     private bool ShowShips = false;
+    private static string lastGuid = null;
     private Encounter encounter = null;
     private void load(Encounter encounter) {
         this.encounter = encounter ?? new Encounter();
+        lastGuid = this.encounter.GUID;
     }
     private void delete(Encounter encounter) {
         Data.Encounters.Remove(encounter);
+        // if the deleted encounter is the selected one, deselect it
+        if (encounter == this.encounter) {
+            this.encounter = null;
+        }
     }
     private void create() {
         encounter = new Encounter();
@@ -301,8 +315,10 @@
         save();
     }
     private void save() {
-        delete(this.encounter);
-        Data.Encounters.Add(this.encounter);
+        if (!Data.Encounters.Contains(this.encounter)) {
+            Data.Encounters.Add(this.encounter);
+        }
+        lastGuid = this.encounter?.GUID;
     }
     private float AlliedSpaceStrength => Data.Ships.Select(ship => ship.Scale).Sum() + encounter.AlliedSpaceStrength;
     private float AlliedInfantryStrength => Data.Party.Count() + encounter.AlliedInfantryStrength;

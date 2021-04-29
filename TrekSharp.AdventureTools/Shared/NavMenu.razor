@@ -62,7 +62,7 @@
                     Ship
                 </NavLink>
                 <NavLink class="w3-button w3-block" href="new/custom" Match="NavLinkMatch.All">
-                    Custom Data
+                    Homebrew Data
                 </NavLink>
                 <NavLink class="w3-button w3-block" href="new/grid" Match="NavLinkMatch.All">
                     Battle Grid
@@ -92,7 +92,7 @@
                     Ships
                 </NavLink>
                 <NavLink class="w3-button w3-block" href="manage/custom" Match="NavLinkMatch.All">
-                    Custom Data
+                    Homebrew Data
                 </NavLink>
                 <NavLink class="w3-button w3-block" href="manage/task/extended" Match="NavLinkMatch.All">
                     Extended Tasks
@@ -206,7 +206,8 @@
     }
 
     private async Task downloadDataJson() {
+        await Program.DownloadAppData(this.Data);
         // Generate a text file
-        await this.DownloadJson("adventure", Data);
+        //await this.DownloadJson("adventure", Data);
     }
 }
