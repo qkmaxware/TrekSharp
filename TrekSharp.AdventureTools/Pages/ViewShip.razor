@@ -95,16 +95,14 @@
                 <div class="hbar row-fill elbow-right knee-right"></div>
             </div>
             <div class="w3-padding row-fill">
-                @foreach (var group in Ship.Talents.ByN(3)) {
-                    <div class="w3-row-padding">
-                        @foreach (var talent in group) {
-                            <div class="w3-col s4 w3-border-bottom">
-                                <b>@talent.Name</b>
-                                <p class="w3-small">@talent.Description</p>
-                            </div>
-                        }
-                    </div>
-                }
+                <Col3Layout Items=Ship.Talents>
+                    <Template>
+                        <div class="w3-border-bottom">
+                            <b>@context.Name</b>
+                            <p class="w3-small">@context.Description</p>
+                        </div>
+                    </Template>
+                </Col3Layout>
             </div>
         </div>
     </LCARS>
