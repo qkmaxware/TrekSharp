@@ -3,6 +3,7 @@
 @inject NavigationManager AppNavigationManager;
 
 @code {
+
     protected AppData Data => AppDataService;
     protected NavigationManager NavigationManager => AppNavigationManager;
     public async Task DownloadJson<T>(string filename, T data) {
@@ -11,6 +12,11 @@
         await JSRuntime.InvokeVoidAsync("BlazorDownloadFile", $"{filename}.json", "text/json", file);
     }
 
+    protected async Task SetPageTitle(string title) {
+        Console.WriteLine("Setting Page Title To: " + title);
+        await JSRuntime.InvokeVoidAsync("BlazorSetPageTitle", title);
+    }
+    
     protected void NavigateHome() {
         NavigationManager.NavigateTo(string.Empty);
     }

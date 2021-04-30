@@ -1,0 +1,11 @@
+@inherits AppComponentBase
+
+@code {
+    public virtual string PageTitle => null; 
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender) {
+            await SetPageTitle(PageTitle);
+        }
+    }
+}

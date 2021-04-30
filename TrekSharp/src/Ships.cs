@@ -140,7 +140,7 @@ public class Vessel {
             this.UsedShields = Shields - value;
         }
     }
-    public int Shields => Systems.Structure + (Talents == null ? 0 : Talents.Select(talent => talent.ShieldModifier).Sum());
+    public int Shields => Systems.Structure + Departments.Security + (Talents == null ? 0 : Talents.Select(talent => talent.ShieldModifier).Sum());
     public int UsedPower;
     public int PowerRemaining {
         get => Math.Max(0, Power - UsedPower);

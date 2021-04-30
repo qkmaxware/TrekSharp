@@ -1,5 +1,5 @@
 @page "/manage/characters/npc/{EncounterId}/{ListId}/{PlayerId}"
-@inherits AppComponentBase
+@inherits Page
 
 @if (HasCharacter) {
 <PrintNotification/>
@@ -120,6 +120,8 @@
         }
     }
     public bool HasCharacter => Player != null;
+
+    public override string PageTitle => Player?.Name;
 
     private void confirmDelete() {
         confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());

@@ -1,5 +1,5 @@
 @page "/manage/characters/support/{PlayerId}"
-@inherits AppComponentBase
+@inherits Page
 
 @if (HasCharacter) {
 <PrintNotification/>
@@ -91,6 +91,8 @@
     }
     public SupportCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.Supports.Count ? Data.Supports[PlayerIndex] : null;
     public bool HasCharacter => Player != null;
+
+    public override string PageTitle => Player?.Name;
 
     private void confirmDelete() {
         confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());

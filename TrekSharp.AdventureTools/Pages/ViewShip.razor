@@ -1,5 +1,5 @@
 @page "/manage/ships/vessel/{ShipId}"
-@inherits AppComponentBase
+@inherits Page
 
 @if (HasShip) {
 <PrintNotification/>
@@ -161,6 +161,8 @@
     }
     public PlayerVessel Ship => ShipIndex >=0 && ShipIndex < Data.Ships.Count ? Data.Ships[ShipIndex] : null;
     public bool HasShip => Ship != null;
+    
+    public override string PageTitle => Ship?.Name;
 
     private void confirmDelete() {
         confirm.Open($"Are you sure you want to delete the ship '{this.Ship.Name}'?", () => Delete());

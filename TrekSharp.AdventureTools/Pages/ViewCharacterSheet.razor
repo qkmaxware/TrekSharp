@@ -1,5 +1,5 @@
 @page "/manage/characters/player/{PlayerId}"
-@inherits AppComponentBase
+@inherits Page
 
 @if (HasCharacter) {
 <PrintNotification/>
@@ -163,6 +163,8 @@
     public PlayerCharacter Player => PlayerIndex >=0 && PlayerIndex < Data.Party.Count ? Data.Party[PlayerIndex] : null;
     public bool HasCharacter => Player != null;
 
+    public override string PageTitle => Player?.Name;
+
     private void confirmDelete() {
         confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
     }
@@ -189,3 +191,7 @@
     }
 
 }
+
+        protected override string
+
+        public override string

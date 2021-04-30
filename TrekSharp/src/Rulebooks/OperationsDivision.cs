@@ -183,6 +183,7 @@ public class OperationsDivision : BaseRulebook {
              )
         },
         Items = new List<Item> {
+            new Item { Name = "Engineering Tricorder", Size = ItemSize.OneHanded },
             new Item { Name = "Micro-Optic Drill", Size = ItemSize.OneHanded  },
             new Item { Name = "Phaser Drill", Size = ItemSize.TwoHanded  },
             new Item { Name = "Engineering Tricorder", Size = ItemSize.OneHanded  },

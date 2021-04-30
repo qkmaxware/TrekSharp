@@ -251,6 +251,7 @@ public class ScienceDivision : BaseRulebook {
             )
         },
         Items = new List<Item> {
+            new Item { Name = "Medical Tricorder", Size = ItemSize.OneHanded },
             new Item { Name = "Blood Gas Infuser", Size = ItemSize.TwoHanded  },
             new Item { Name = "Bone Regenerator", Size = ItemSize.TwoHanded  },
             new Item { Name = "Blood Gas Infuser", Size = ItemSize.OneHanded  },
