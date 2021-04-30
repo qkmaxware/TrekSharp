@@ -49,4 +49,8 @@
         margin: 0; /* Browser will apply the correct margins when it prints */
         page-break-after: always;
     }
+
+    .print-without-borders {
+        border: 0 none !important;
+    }
 }
