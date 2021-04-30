@@ -1,3 +1,11 @@
+function BlazorSetPageTitle(title) {
+  if (title && title.length > 0) {
+    document.title = "TrekSharp - " + title;
+  } else {
+    document.title = "TrekSharp";
+  }
+}
+
 function BlazorDownloadFile(filename, contentType, content) {
     // Blazor marshall byte[] to a base64 string, so we first need to convert the string (content) to a Uint8Array to create the File
     const data = base64DecToArr(content);
