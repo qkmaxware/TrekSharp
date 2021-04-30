@@ -1,0 +1,90 @@
+<div class="w3-panel typeface">
+    This tool will allow you to create custom Items which players can collect and use throughout a campaign.
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        DETAILS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>
+    <div class="w3-row w3-padding">
+        <button class="w3-col s4 w3-button @(IsClothing ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => makeClothing())>Clothing</button>
+        <button class="w3-col s4 w3-button @(IsTool ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => makeTool())>Tool</button>
+        <button class="w3-col s4 w3-button @(IsWeapon ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => makeWeapon())>Weapon</button>
+    </div>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Name</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="text" class="w3-padding w3-input"  @bind="Item.Name"/>
+        </span>
+    </div>
+    @if (!IsClothing) {
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Size</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <select class="w3-padding w3-input lcars-border-primary" style="background-color:black;" @bind=size>
+                @foreach (var Item in Enum.GetValues(typeof(ItemSize))) {
+                    <option>@Item?.ToString()</option>
+                }
+            </select>
+        </span>
+    </div>
+    }
+    @if (IsWeapon) {
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Damage Rating</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="text" class="w3-padding w3-input" @bind="Item.DamageDice"/>
+        </span>
+    </div>
+    }
+</div>
+<div class="row">
+<div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        QUALITIES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+</div>
+<div>
+    <StringEditor Items=Item.Qualities></StringEditor>
+    <div class="w3-row w3-padding">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => { if (Item.Qualities.Count > 0) { Item.Qualities.RemoveAt(Item.Qualities.Count - 1); } })>-</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button class="w3-blue" @onclick=@(() => Item.Qualities.Add(string.Empty))>+</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Item Item {get; set;}
+
+    private string size {
+        get => Item.Size.ToString();
+        set {
+            Item.Size = Enum.Parse<ItemSize>(value);
+        }
+    }
+    private bool IsClothing => Item.Size == ItemSize.Worn && !IsWeapon;
+    private bool IsTool => Item.Size != ItemSize.Worn && !IsWeapon;
+    private bool IsWeapon => Item.DamageDice.HasValue;
+
+    private void makeClothing() {
+        Item.DamageDice = null;
+        Item.Size = ItemSize.Worn;
+    }
+
+    private void makeTool() {
+        Item.DamageDice = null;
+        Item.Size = ItemSize.OneHanded;
+    }
+
+    private void makeWeapon() {
+        Item.DamageDice = 0;
+        Item.Size = ItemSize.OneHanded;
+    }
+}

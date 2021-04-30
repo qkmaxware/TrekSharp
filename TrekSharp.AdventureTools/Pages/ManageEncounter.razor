@@ -363,12 +363,24 @@
         d.Resistance = c.Resistance;
         if (c.Equipment != null)
             d.Equipment = new List<Item>(c.Equipment);
+        if (d.Equipment == null) {
+            d.Equipment = new List<Item>();
+        }
         if (c.Values != null)
             d.Values = new List<string>(c.Values);
+        if (d.Values == null) {
+            d.Values = new List<string>();
+        }
         if (c.Focuses != null)
             d.Focuses = new List<string>(c.Focuses);
+        if (d.Focuses == null) {
+            d.Focuses = new List<string>();
+        }
         if (c.SpecialRules != null)
             d.SpecialRules = new List<string>(c.SpecialRules);
+        if (d.SpecialRules == null) {
+            d.SpecialRules = new List<string>();
+        }
 
         d.Attributes = c.Attributes;
         d.Disciplines = c.Disciplines;

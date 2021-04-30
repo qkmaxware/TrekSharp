@@ -10,7 +10,6 @@
                     <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                     <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                         @context.Name 
-                        <button class="w3-red" @onclick=@(() => confirmDeleteSpecies(context))>&times;</button>
                     </div>
                     <div class="hbar row-fill elbow-right knee-right"></div>
                 </div>
@@ -23,6 +22,14 @@
                         }
                     }
                 </ul>
+                <div class="w3-row w3-margin-top w3-margin-bottom">
+                    <div class="w3-half w3-left-align">
+                        <button class="w3-small" @onclick=@(() => editSpecies(context))>edit</button>
+                    </div>
+                    <div class="w3-half w3-right-align">
+                        <button class="w3-small w3-red" @onclick=@(() => confirmDeleteSpecies(context))>delete</button>
+                    </div>
+                </div>
             </div>
         </Template>
     </Col3Layout>
@@ -38,9 +45,16 @@
                         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                         <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                             @context.Name 
-                            <button class="w3-red" @onclick=@(() => confirmDeleteNpcType(context))>&times;</button>
                         </div>
                         <div class="hbar row-fill elbow-right knee-right"></div>
+                    </div>
+                    <div class="w3-row w3-margin-top w3-margin-bottom">
+                        <div class="w3-half w3-left-align">
+                            <button class="w3-small" @onclick=@(() => editNpcType(context))>edit</button>
+                        </div>
+                        <div class="w3-half w3-right-align">
+                            <button class="w3-small w3-red" @onclick=@(() => confirmDeleteNpcType(context))>delete</button>
+                        </div>
                     </div>
                 </div>
             </Template>
@@ -57,9 +71,16 @@
                         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                         <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
                             @context.Name 
-                            <button class="w3-red" @onclick=@(() => confirmDeleteItem(context))>&times;</button>
                         </div>
                         <div class="hbar row-fill elbow-right knee-right"></div>
+                    </div>
+                    <div class="w3-row w3-margin-top w3-margin-bottom">
+                        <div class="w3-half w3-left-align">
+                            <button class="w3-small" @onclick=@(() => editItem(context))>edit</button>
+                        </div>
+                        <div class="w3-half w3-right-align">
+                            <button class="w3-small w3-red" @onclick=@(() => confirmDeleteItem(context))>delete</button>
+                        </div>
                     </div>
                 </div>
             </Template>
@@ -78,6 +99,13 @@
         confirm.Open($"Are you sure you want to delete the species '{species.Name}'?", () => deleteSpecies(species));
     }
 
+    private void editSpecies(CustomSpecies species) {
+        var Id = Data.Custom.Species?.Definitions?.IndexOf(species) ?? -1;
+        if (Id >= 0) {
+            NavigationManager.NavigateTo($"manage/custom/species/{Id}");
+        }
+    }
+
     private void deleteSpecies(CustomSpecies species) {
         if (Data.Custom != null && Data.Custom.Species != null && Data.Custom.Species.Definitions != null) {
             Data.Custom.Species.Definitions.Remove(species);
@@ -92,6 +120,13 @@
         confirm.Open($"Are you sure you want to delete the npc type '{character.Name}'?", () => deleteNpcType(character));
     }
 
+    private void editNpcType(NpcCharacter species) {
+        var Id = Data.Custom.NpcCharacterTypes?.IndexOf(species) ?? -1;
+        if (Id >= 0) {
+            NavigationManager.NavigateTo($"manage/custom/npc/{Id}");
+        }
+    }
+
     private void deleteNpcType(NpcCharacter character) {
         if (Data.Custom != null && Data.Custom.NpcCharacterTypes != null) {
             Data.Custom.NpcCharacterTypes.Remove(character);
@@ -101,6 +136,13 @@
 
     private void confirmDeleteItem(Item character) {
         confirm.Open($"Are you sure you want to delete the item '{character.Name}'?", () => deleteItem(character));
+    }
+
+    private void editItem(Item species) {
+        var Id = Data.Custom.Items?.IndexOf(species) ?? -1;
+        if (Id >= 0) {
+            NavigationManager.NavigateTo($"manage/custom/item/{Id}");
+        }
     }
 
     private void deleteItem(Item character) {

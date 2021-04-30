@@ -1,8 +1,9 @@
 ﻿@inherits AppComponentBase
+@implements IDisposable
 
 <div 
-    class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print @NavMenuCssClass" 
-    style="width:250px; max-width: 100%; z-index: 2;" 
+    class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left w3-black no-print navbar @NavMenuCssClass" 
+    style="z-index: 2;" 
     id="mySidebar" 
 >
     <div style="min-height: calc(100vh - 48px);">
@@ -209,5 +210,17 @@
         await Program.DownloadAppData(this.Data);
         // Generate a text file
         //await this.DownloadJson("adventure", Data);
+    }
+
+    protected override void OnInitialized() {
+        NavigationManager.LocationChanged += locationChanged;  
+        base.OnInitialized();  
+    }
+    void IDisposable.Dispose() {
+        NavigationManager.LocationChanged -= locationChanged;
+    }
+    private void locationChanged(object sender, LocationChangedEventArgs e) {
+        CloseNavMenu();
+        StateHasChanged();
     }
 }

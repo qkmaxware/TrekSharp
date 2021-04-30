@@ -84,6 +84,12 @@ body {
     border: 1px solid #CC99CC !important;
 }
 
+.lcars .border-secondary-left {
+    border-style: solid;
+    border-color: #CC99CC !important;
+    border-width: 0px 0px 0px 10px;
+}
+
 .lcars .text-secondary {
     color: #CC99CC !important;
 }

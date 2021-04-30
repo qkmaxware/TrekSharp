@@ -4,7 +4,7 @@
 <div class="w3-margin-bottom no-split">
     <div class="row w3-margin-bottom">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+        <div class="typeface @TitleCss" style="margin-left: 10px; margin-right: 10px;">
             EQUIPMENT 
         </div>
         <div class="hbar row-fill elbow-right knee-right"></div>
@@ -56,6 +56,7 @@
 
     [Parameter] public Character Player {get; set;}
     [Parameter] public bool AllowEdit {get; set;} = false;
+    [Parameter] public string TitleCss {get; set;} = "";
 
     protected override void OnInitialized() {
         RulebookContainer books = new RulebookContainer();

@@ -18,7 +18,7 @@
 <div id="character-sheet" class="lcars">
     <div id="player-info" class="container">
         <div class="row">
-            <div class="primary" style="width: 120px">
+            <div class="primary" style="width: calc(100% - 290px); max-width: 120px;">
                 <img src="assets/starfleet.svg" style="display: block; width: 60%; height: auto; margin-left: auto; margin-right: auto; margin-top: 32px;">
             </div>
             <div class="w3-padding row-fill">
@@ -54,82 +54,56 @@
         </div>
     </div>
     <!-- Body -->
-    <div id="body" class="container">
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+    <LCARS PrintBorders=true>
+        <div class="w3-row row-fill">
+            <SplitLayout>
+                <Left>
+                    <InjuryDrawer Player="Player"/>
+                    <AttributeDrawer Attributes="Player.Attributes"/>
+                    <DisciplineDrawer Disciplines="Player.Disciplines"/>
+                    <ValueDrawer Values="Player.Values"/>
+                    <div class="w3-margin-left">
+                        DETERMINATION <input class="no-print" type="number" @bind=Player.Determination/>
+                        <span class="print">
+                            <input type="checkbox" checked=@(Player.Determination > 0) /> 
+                            <input type="checkbox" checked=@(Player.Determination > 1) /> 
+                            <input type="checkbox" checked=@(Player.Determination > 2) />
+                        </span>
+                    </div>
+                </Left>
+                <Right>
+                    <FocusDrawer Focuses="Player.Focuses"/>
+                    <EquipmentDrawer Player="Player" AllowEdit=true/>
+                </Right>
+            </SplitLayout>
         </div>
-        <div class="row">
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content -->
-            <div class="w3-row row-fill">
-                <SplitLayout>
-                    <Left>
-                        <InjuryDrawer Player="Player"/>
-                        <AttributeDrawer Attributes="Player.Attributes"/>
-                        <DisciplineDrawer Disciplines="Player.Disciplines"/>
-                        <EquipmentDrawer Player="Player" AllowEdit=true/>
-                    </Left>
-                    <Right>
-                        <ValueDrawer Values="Player.Values"/>
-                        <div class="w3-padding">
-                            DETERMINATION <input class="no-print" type="number" @bind=Player.Determination/>
-                            <span class="print">
-                                <input type="checkbox" checked=@(Player.Determination > 0) /> 
-                                <input type="checkbox" checked=@(Player.Determination > 1) /> 
-                                <input type="checkbox" checked=@(Player.Determination > 2) />
-                            </span>
-                        </div>
-                        <FocusDrawer Focuses="Player.Focuses"/>
-                    </Right>
-                </SplitLayout>
-            </div>
-        </div>
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-    </div>
+    </LCARS>
+    
     <div class="pagebreak"></div>
-    <div id="body" class="container">
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-        <div class="row">
-            <div class="secondary" style="width: calc(100% - 290px); max-width: 120px"></div>
-            <!-- Content -->
-            <div class="row-fill">
-                <div class="w3-row w3-padding">
-                    <div class="row w3-margin-bottom row-fill">
-                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                            TALENTS 
-                        </div>
-                        <div class="hbar row-fill elbow-right knee-right"></div>
+    <LCARS PrintBorders=true>
+        <!-- Content -->
+        <div class="row-fill">
+            <div class="w3-row w3-padding">
+                <div class="row w3-margin-bottom row-fill">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                        TALENTS 
                     </div>
-                    <div class="row-fill">
-                        <Col3Layout Items=Player.Talents>
-                            <Template>
-                                <div class="w3-border-bottom">
-                                    <b>@context.Name</b>
-                                    <p class="w3-small">@context.Description</p>
-                                </div>
-                            </Template>
-                        </Col3Layout>
-                    </div>
+                    <div class="hbar row-fill elbow-right knee-right"></div>
+                </div>
+                <div class="row-fill">
+                    <Col3Layout Items=Player.Talents>
+                        <Template>
+                            <div class="w3-border-bottom">
+                                <b>@context.Name</b>
+                                <p class="w3-small">@context.Description</p>
+                            </div>
+                        </Template>
+                    </Col3Layout>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-    </div>
+    </LCARS>
 </div>
 
 

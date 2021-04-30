@@ -1,0 +1,216 @@
+<div class="w3-panel typeface">
+    This tool will allow you to create custom NPC types which can be used as allies or enemies for player encounters. When you are done, press the 'Save' button.
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        DETAILS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Name</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="text" class="w3-padding w3-input"  @bind="Character.Name"/>
+        </span>
+    </div>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Species</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <select class="w3-padding w3-input lcars-border-primary" style="background-color: black" @bind="Character.Species.Name">
+                @foreach(var species in AllSpeciesOptions) {
+                    <option>@species.Name</option>
+                }
+            </select>   
+        </span>
+    </div>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Max Stress</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="number" class="w3-padding w3-input"  @bind="Character.BaseStress"/>
+        </span>
+    </div>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Resistance</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="number" class="w3-padding w3-input"  @bind="Character.Resistance"/>
+        </span>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        ATTRIBUTES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Control</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Attributes[0] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Fitness</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Attributes[2] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Presence</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Attributes[4] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Daring</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Attributes[1] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Insight</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Attributes[3] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Reason</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Attributes[5] placeholder="Name"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        DISCIPLINES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Command</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Disciplines[0] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Security</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Disciplines[1] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Science</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Disciplines[2] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Conn</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Disciplines[3] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Engineering</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Disciplines[4] placeholder="Name"/>
+        </div>
+    </div>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Medicine</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="number" class="w3-input" @bind=Character.Disciplines[5] placeholder="Name"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        VALUES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>
+    <StringEditor Items=Character.Values></StringEditor>
+    <div class="w3-row w3-margin-top w3-margin-bottom">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => { if (Character.Values.Count > 0) { Character.Values.RemoveAt(Character.Values.Count - 1); } })>-</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button @onclick=@(() => Character.Values.Add(string.Empty))>+</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        FOCUSES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>
+    <StringEditor Items=Character.Focuses></StringEditor>
+    <div class="w3-row w3-margin-top w3-margin-bottom">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => { if (Character.Focuses.Count > 0) { Character.Focuses.RemoveAt(Character.Focuses.Count - 1); } })>-</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button @onclick=@(() => Character.Focuses.Add(string.Empty))>+</button>
+        </div>
+    </div>
+</div>
+<div>
+    <EquipmentDrawer TitleCss="text-secondary w3-large" Player="Character" AllowEdit=true></EquipmentDrawer>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        SPECIAL RULES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>
+    <StringEditor Items=Character.SpecialRules></StringEditor>
+    <div class="w3-row w3-margin-top w3-margin-bottom">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => { if (Character.SpecialRules.Count > 0) { Character.SpecialRules.RemoveAt(Character.SpecialRules.Count - 1); } })>-</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button @onclick=@(() => Character.SpecialRules.Add(string.Empty))>+</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public NpcCharacter Character {get; set;}
+    [Parameter] public IEnumerable<Species> AllSpeciesOptions {get; set;}
+}

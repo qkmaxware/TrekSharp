@@ -1,0 +1,123 @@
+<div class="w3-panel typeface">
+    This tool will allow you to create custom species which can be used to create supporting and player characters. Fill out all details below and press 'Save' when done.
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        DETAILS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div class="w3-padding">
+    <p>
+        Every species needs a name.
+    </p>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Name</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="text" class="w3-padding w3-input"  @bind="Species.Name"/>
+        </span>
+    </div>
+    <p>
+        What is the name of the planet that this species comes from.
+    </p>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Homeworld</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="text" class="w3-padding row-fill"  @bind="Species.Homeworld"/>
+            <button @onclick="randomHomeworld" style="width: 120px">Random</button>
+        </span>
+    </div>
+    <p>
+        Provide a brief description of this species including their general appearance and demeanor. 
+    </p>
+    <div class="w3-padding">
+        <div class="w3-padding knee-left knee-right elbow-left elbow-right lcars-primary">
+            <div>
+                Description
+            </div>
+            <div>
+                <textarea class="text-primary" @bind=Species.Description style="width: 100%; resize: vertical; background-color: black;"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row w3-margin-bottom">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        ATTRIBUTES
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div class="w3-padding">
+    <AttributeIncrement
+        Points=3
+        MaxPointsPerItem=1
+        Mask=Attributes.AllAttributesMask
+        Reference=Species.AttributeModifiers
+    />
+</div>
+<div class="row w3-margin-bottom">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        TALENTS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div>   
+    <div class="w3-right-align">
+        <button @onclick=addTalent>New Talent</button>
+    </div>
+    <ul class="w3-ul">
+        @foreach (var talent in Talents) {
+            var this_talent = talent;
+            <li>
+                <div>
+                    <div class="row w3-padding">
+                        <span class="hbar elbow-left knee-left w3-padding">Talent Name</span>
+                        <span class="hbar row-fill row" style="margin-left: 10px;">
+                            <input type="text" class="w3-padding w3-input" @bind="this_talent.Name"/>
+                            <button class="w3-red" @onclick=@(() => deleteTalent(this_talent))>&times;</button>
+                        </span>
+                    </div>
+                    <div class="w3-padding">
+                        <div class="w3-padding knee-left knee-right elbow-left elbow-right lcars-primary">
+                            <div>
+                                Talent Description
+                            </div>
+                            <div>
+                                <textarea class="text-primary" @bind=this_talent.Description style="width: 100%; resize: vertical; background-color: black;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter] public CustomSpecies Species {get; set;}
+    [Parameter] public List<SpeciesRestrictedTalent> Talents {get; set;}
+
+    [Parameter] public Action<SpeciesRestrictedTalent> OnTalentRemoved {get;set;}
+    [Parameter] public Action<SpeciesRestrictedTalent> OnTalentAdded {get;set;}
+
+    private void randomHomeworld() {
+        var generator = new Generators.PlanetNameGenerator();
+        this.Species.Homeworld = generator.Generate(2, 6) + " " + generator.Generate(2, 6) + " " + generator.RandomPlanetNumber();
+    }
+
+     private void addTalent() {
+        var talent = new SpeciesRestrictedTalent();
+        Talents.Add(talent);
+        OnTalentAdded?.Invoke(talent);
+    }
+
+    private void deleteTalent(SpeciesRestrictedTalent talent) {
+        if (talent != null) {
+            Talents.Remove(talent);
+            OnTalentRemoved?.Invoke(talent);
+        }
+    }
+}

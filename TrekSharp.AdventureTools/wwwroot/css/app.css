@@ -1,0 +1,11 @@
+.navbar {
+    width:250px; 
+    max-width: 100%; 
+}
+
+@media (max-width:601px){
+    .navbar {
+        width: 100%; 
+        max-width: 100%; 
+    }
+}

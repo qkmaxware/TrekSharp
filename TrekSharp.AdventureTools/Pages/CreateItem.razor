@@ -2,100 +2,14 @@
 @inherits Page
 
 <LCARS Title="NEW ITEM">
-    <div class="w3-panel typeface">
-        This tool will allow you to create custom items which players can collect and use throughout a campaign.
-    </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            DETAILS
-        </span>
-        <div class="hbar row-fill elbow-right knee-right"></div>
-    </div>
-    <div>
-        <div class="w3-row w3-padding">
-            <button class="w3-col s4 w3-button @(IsClothing ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => makeClothing())>Clothing</button>
-            <button class="w3-col s4 w3-button @(IsTool ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => makeTool())>Tool</button>
-            <button class="w3-col s4 w3-button @(IsWeapon ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => makeWeapon())>Weapon</button>
-        </div>
-        <div class="row w3-padding">
-            <span class="hbar elbow-left knee-left w3-padding">Name</span>
-            <span class="hbar row-fill row" style="margin-left: 10px;">
-                <input type="text" class="w3-padding w3-input"  @bind="item.Name"/>
-            </span>
-        </div>
-        @if (!IsClothing) {
-        <div class="row w3-padding">
-            <span class="hbar elbow-left knee-left w3-padding">Size</span>
-            <span class="hbar row-fill row" style="margin-left: 10px;">
-                <select class="w3-padding w3-input lcars-border-primary" style="background-color:black;" @bind=size>
-                    @foreach (var item in Enum.GetValues(typeof(ItemSize))) {
-                        <option>@item?.ToString()</option>
-                    }
-                </select>
-            </span>
-        </div>
-        }
-        @if (IsWeapon) {
-        <div class="row w3-padding">
-            <span class="hbar elbow-left knee-left w3-padding">Damage Rating</span>
-            <span class="hbar row-fill row" style="margin-left: 10px;">
-                <input type="text" class="w3-padding w3-input" @bind="item.DamageDice"/>
-            </span>
-        </div>
-        }
-    </div>
-    <div class="row">
-    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            QUALITIES
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-    </div>
-    <div>
-        <StringEditor Items=item.Qualities></StringEditor>
-        <div class="w3-row w3-padding">
-            <div class="w3-half w3-left-align">
-                <button class="w3-red" @onclick=@(() => { if (item.Qualities.Count > 0) { item.Qualities.RemoveAt(item.Qualities.Count - 1); } })>-</button>
-            </div>
-            <div class="w3-half w3-right-align">
-                <button class="w3-blue" @onclick=@(() => item.Qualities.Add(string.Empty))>+</button>
-            </div>
-        </div>
-    </div>
+    <ItemTypeEditor Item=item></ItemTypeEditor>
     <div class="w3-padding w3-right-align">
         <button class="w3-blue" @onclick=save>Save</button>
     </div>
 </LCARS>
 
 @code {
-    private Item item = new Item{};
-
-    private string size {
-        get => item.Size.ToString();
-        set {
-            item.Size = Enum.Parse<ItemSize>(value);
-        }
-    }
-    private bool IsClothing => item.Size == ItemSize.Worn && !IsWeapon;
-    private bool IsTool => item.Size != ItemSize.Worn && !IsWeapon;
-    private bool IsWeapon => item.DamageDice.HasValue;
-
-
-    private void makeClothing() {
-        item.DamageDice = null;
-        item.Size = ItemSize.Worn;
-    }
-
-    private void makeTool() {
-        item.DamageDice = null;
-        item.Size = ItemSize.OneHanded;
-    }
-
-    private void makeWeapon() {
-        item.DamageDice = 0;
-        item.Size = ItemSize.OneHanded;
-    }
+    private Item item = new Item();
 
     private void save() {
         if (Data.Custom == null)

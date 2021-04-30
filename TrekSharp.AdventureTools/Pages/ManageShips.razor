@@ -5,20 +5,7 @@
 <div class="lcars">
     <!-- Player Ships -->
     <div class="container w3-margin-bottom">
-        <!-- Titlebar -->
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary"></div>
-            <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
-                <span class="w3-xlarge">SHIPS</span>
-            </div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-        <!-- Body -->
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content Pane -->
+        <LCARS Title="SHIPS">
             <div class="w3-padding row-fill">
                 <div class="w3-container w3-right no-print">
                     <button @onclick="@(() => raw.Open())">+ Sheet</button>
@@ -53,13 +40,7 @@
                     </Template>
                 </Col4Layout>
             </div>
-        </div>
-        <!-- Footer -->
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
+        </LCARS>
     </div> 
 </div>
 

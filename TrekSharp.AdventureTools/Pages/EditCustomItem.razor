@@ -1,0 +1,24 @@
+@page "/manage/custom/item/{Id}"
+@inherits Page
+
+<LCARS Title="EDIT ITEM">
+    @if (HasContent) {
+    <ItemTypeEditor Item=Content></ItemTypeEditor>
+    }
+</LCARS>
+
+@code {
+    [Parameter] public string Id { get; set; }
+    public int HomebrewIndex {
+        get {
+            int index;
+            if (int.TryParse(Id, out index)) {
+                return index;
+            } else {
+                return -1;
+            }
+        }
+    }
+    public bool HasContent => Content != null;
+    public Item Content => HomebrewIndex >= 0 && HomebrewIndex < (Data.Custom.Items?.Count ?? 0) ? Data.Custom.Items[HomebrewIndex] : null;
+}

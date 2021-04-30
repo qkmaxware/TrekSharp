@@ -14,7 +14,7 @@
     <!-- Header -->
     <div id="player-info" class="container">
         <div class="row">
-            <div class="primary" style="width: 120px">
+            <div class="primary" style="width: calc(100% - 290px); max-width: 120px;">
                 <img src="assets/starfleet.svg" style="display: block; width: 60%; height: auto; margin-left: auto; margin-right: auto; margin-top: 32px;">
             </div>
             <div class="w3-padding row-fill">
@@ -36,35 +36,22 @@
         </div>
     </div>
     <!-- Body -->
-    <div id="body" class="container">
-        <div class="row">
-            <div class="hbar knee-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
+    <LCARS PrintBorders=true>
+        <!-- Content -->
+        <div class="row-fill">
+            <SplitLayout>
+                <Left>
+                    <InjuryDrawer Player="Player"/>
+                    <AttributeDrawer Attributes="Player.Attributes"/>
+                    <DisciplineDrawer Disciplines="Player.Disciplines"/>
+                </Left>
+                <Right>
+                    <FocusDrawer Focuses="Player.Focuses"/>
+                    <EquipmentDrawer Player="Player" AllowEdit=true/>
+                </Right>
+            </SplitLayout>
         </div>
-        <div class="row">
-            <div class="secondary" style="width: 120px"></div>
-            <!-- Content -->
-            <div class="row-fill">
-                <SplitLayout>
-                    <Left>
-                        <InjuryDrawer Player="Player"/>
-                        <AttributeDrawer Attributes="Player.Attributes"/>
-                        <DisciplineDrawer Disciplines="Player.Disciplines"/>
-                        <EquipmentDrawer Player="Player" AllowEdit=true/>
-                    </Left>
-                    <Right>
-                        <FocusDrawer Focuses="Player.Focuses"/>
-                    </Right>
-                </SplitLayout>
-            </div>
-        </div>
-        <div class="row">
-            <div class="hbar elbow-left secondary" style="width: 56px;"></div>
-            <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
-            <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
-        </div>
-    </div>
+    </LCARS>
 </div>
 } else {
     <span>No support player "@(PlayerId)"</span>

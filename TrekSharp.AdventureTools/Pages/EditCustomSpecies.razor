@@ -1,0 +1,84 @@
+@page "/manage/custom/species/{Id}"
+@implements IDisposable
+@inherits Page
+
+<LCARS Title="EDIT ITEM">
+    @if (HasContent) {
+    <CustomSpeciesEditor Species=Content Talents=updatedTalents OnTalentAdded=onTalentCountChange OnTalentRemoved=onTalentCountChange></CustomSpeciesEditor>
+    }
+</LCARS>
+
+@code {
+    [Parameter] public string Id { get; set; }
+    public int HomebrewIndex {
+        get {
+            int index;
+            if (int.TryParse(Id, out index)) {
+                return index;
+            } else {
+                return -1;
+            }
+        }
+    }
+    public bool HasContent => Content != null;
+    public CustomSpecies Content => HomebrewIndex >= 0 && HomebrewIndex < (Data.Custom.Species?.Definitions?. Count ?? 0) ? Data.Custom.Species.Definitions[HomebrewIndex] : null;
+    private List<SpeciesRestrictedTalent> originalTalents;
+    private List<SpeciesRestrictedTalent> updatedTalents;
+
+    protected override void OnInitialized() {
+        var speciesName = Content.Name;
+        originalTalents = Data.Custom.Species?.Talents?.Where(talent => talent.species == speciesName).ToList() ?? new List<SpeciesRestrictedTalent>();
+        updatedTalents = new List<SpeciesRestrictedTalent>(originalTalents);
+    }
+
+    private void validateCustomData() {
+        // Ensure the custom data blocks exists
+        if (Data.Custom == null) {
+            Data.Custom = new UserCustomData();
+        }
+        if (Data.Custom.Species == null) {
+            Data.Custom.Species = new UserCustomSpecies();
+        }
+        if (Data.Custom.Species.Definitions == null) {
+            Data.Custom.Species.Definitions = new List<CustomSpecies>();
+        }
+        if (Data.Custom.Species.Talents == null) {
+            Data.Custom.Species.Talents = new List<SpeciesRestrictedTalent>();
+        }
+    }
+
+    private void onTalentCountChange(SpeciesRestrictedTalent addedOrRemoved) {
+        if (Content == null) {
+            return;
+        }
+
+        validateCustomData();
+
+        // Update the talents to be restricted to only this species
+        foreach (var talent in updatedTalents) {
+            talent.species = Content.Name;
+        }
+
+        // Save the talents and the species to the app data
+        Data.Custom.Species.Talents.RemoveAll(talent => originalTalents.Contains(talent));  // Remove old talents
+        foreach (var talent in updatedTalents) {
+            Data.Custom.Species.Talents.Add(talent);                                        // Add new talents
+        }
+
+        // Swap lists
+        this.originalTalents = updatedTalents;
+        this.updatedTalents = new List<SpeciesRestrictedTalent>(this.originalTalents);
+
+        StateHasChanged();
+    }
+
+    public void Dispose() {
+        if (Content == null) {
+            return;
+        }
+
+        validateCustomData();
+
+        onTalentCountChange(null);
+    }
+}

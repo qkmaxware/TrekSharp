@@ -1,7 +1,7 @@
 <div class="lcars">
     <div class="container">
         <!-- Titlebar -->
-        <div class="row no-print">
+        <div class="row @(PrintBorders ? string.Empty : "no-print")">
             <div class="hbar knee-left secondary" style="width: 56px;"></div>
             <div class="hbar row-fill secondary"></div>
             <div class="typeface text-primary" style="margin-right: 10px; margin-left: 10px;">
@@ -12,14 +12,16 @@
         <!-- Body -->
         <div class="row">
             <!-- Sidebar -->
-            <div class="secondary" style="width: calc(100% - 290px); max-width: 120px"></div>
+            <div class="secondary w3-hide-small" style="width: calc(100% - 290px); max-width: 105px"></div>
             <!-- Content Pane -->
-            <div class="w3-padding row-fill">
+            <div class="row-fill border-secondary-left @(PrintBorders ? string.Empty : "print-without-borders")">
+                <div class="w3-padding">
                 @ChildContent
+                </div>
             </div>
         </div>
         <!-- Footer -->
-        <div class="row no-print">
+        <div class="row @(PrintBorders ? string.Empty : "no-print")">
             <div class="hbar elbow-left secondary" style="width: 56px;"></div>
             <div class="hbar row-fill secondary" style="margin-right: 10px;"></div>
             <div class="hbar highlight" style="width: 240px; max-width: 100%;"></div>
@@ -30,5 +32,7 @@
 @code {
     [Parameter] public string Title {get; set;} = String.Empty;
     [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public bool PrintBorders {get; set;} = false;
 
 }
