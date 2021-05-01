@@ -10,12 +10,16 @@
 </div>
 
 @code {
-    private D6 dice = new D6();
+    [Parameter] public D6 dice {get; set;}
     private string CssClass => "d6-show-" + dice.NumericValue;
 
     public override int NumericCount => dice.NumericValue;
 
-    public void Roll() {
+    protected override void OnInitialized() {
+        this.Roll();
+    }
+
+    public override void Roll() {
         dice.Roll();
         StateHasChanged();
     }

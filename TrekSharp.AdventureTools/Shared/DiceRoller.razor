@@ -1,3 +1,5 @@
+@using TrekSharp.AdventureTools.Shared.Dice3d;
+
 <div>
     <div class="lcars">
         <div class="row">
@@ -9,55 +11,52 @@
         </div>
     </div>
 
-    <div class="w3-center lcars">
-        <div class="secondary elbow-left elbow-right knee-left knee-right">
-            <b>Total:</b> @Total + @Effects Effect(s)
+    <div class="w3-row w3-padding lcars-primary lcars-elbow-left lcars-elbow-right w3-margin-left w3-margin-right">
+        <div class="w3-col s6 w3-text-white">
+            <button class="w3-button w3-display-container" style="padding:4px;" @onclick=AddChallengeDie>
+                <img src="assets/d6.png" width=40 height=40 />
+                <img class="w3-display-middle" src="assets/challenge-effect.png" width="40" height="40">
+            </button>
+            <button class="w3-button w3-display-container" style="padding:4px;" @onclick=AddD6>
+                <img src="assets/d6.png" width=40 height=40 />
+                <div class="w3-display-middle">
+                    6
+                </div>
+            </button>
+            <button class="w3-button w3-display-container" style="padding:4px;" @onclick=AddTaskDie>
+                <img src="assets/d20.png" width=40 height=40 />
+                <div class="w3-display-middle">
+                    20
+                </div>
+            </button>
+        </div>
+        <div class="w3-col s6 w3-right-align">
+            <button class="w3-button w3-round-xxlarge w3-red" @onclick=rerollAll>
+                Roll
+                <button class="w3-button w3-circle w3-dark-grey" @onclick=clear>
+                    &times;
+                </button>
+            </button>
         </div>
     </div>
+
     <div class="w3-padding noselect">
         @foreach (var die in this.dices) {
-            <div class="w3-margin" style="display:inline-block; position:relative; width: 64px; height: 64px;" @onclick="@(() => rerollDice(die))">
-                <img src="@getDiceImage(die)" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;">
-                <div class="w3-center noselect" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; line-height: 64px;">
-                    @if (die is ChallengeDice cd) {
-                        if (cd.ChallengeValue == ChallengeDiceResult.One) {
-                            <img src="assets/challenge-1.png"/>
-                        } else if (cd.ChallengeValue == ChallengeDiceResult.Two) {
-                            <img src="assets/challenge-2.png"/>
-                        } else if (cd.ChallengeValue == ChallengeDiceResult.Effect) {
-                            <img src="assets/challenge-effect.png"/>
-                        } else if (cd.ChallengeValue == ChallengeDiceResult.None) {
-
-                        }
-                    } else {
-                        <span>@die.NumericValue</span>
-                    }
-                </div>
+            <div style="padding: 8px; display: inline-block;">
+            @if (die is ChallengeDice cd) {
+                <DiceChallenge dice=cd></DiceChallenge>
+            } else if (die is D6 d6) {
+                <DiceD6 dice=d6></DiceD6>
+            } else if (die is D20 d20) {
+                <DiceD20 dice=d20></DiceD20>
+            }
             </div>
         }
     </div>
-    <div class="w3-padding w3-right-align lcars">
-        <button class="w3-small" @onclick="clear">clr</button>
-        <button class="w3-small" @onclick="rerollAll">re-roll</button>
-    </div>
-    <div class="w3-center w3-padding lcars-primary">
-        <div style="display:inline-block; position:relative; width: 32px; height: 32px;" @onclick="@(() => AddChallengeDie())">
-            <img src="assets/d6.png" style="position: absolute; left: 0; right: 0; width: 32px; height: 32px;">
-            <div class="w3-center noselect w3-text-white" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; line-height: 32px;">
-                <img src="assets/challenge-effect.png" width="32" height="32">
-            </div>
-        </div>
-        <div style="display:inline-block; position:relative; width: 32px; height: 32px;" @onclick="@(() => AddD6())">
-            <img src="assets/d6.png" style="position: absolute; left: 0; right: 0; width: 32px; height: 32px;">
-            <div class="w3-center noselect w3-text-white" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; line-height: 32px;">
-                6
-            </div>
-        </div>
-        <div style="display:inline-block; position:relative; width: 32px; height: 32px;" @onclick="@(() => AddTaskDie())">
-            <img src="assets/d20.png" style="position: absolute; left: 0; right: 0; width: 32px; height: 32px;">
-            <div class="w3-center noselect w3-text-white" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; line-height: 32px;">
-                20
-            </div>
+
+    <div class="w3-center lcars">
+        <div class="secondary elbow-left elbow-right knee-left knee-right">
+            <b>Total:</b> @Total + @Effects Effect(s)
         </div>
     </div>
 

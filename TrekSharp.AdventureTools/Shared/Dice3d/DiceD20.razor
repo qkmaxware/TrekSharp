@@ -24,14 +24,17 @@
 </div>
 
 @code {
-    private D20 dice = new D20();
+    [Parameter] public D20 dice {get;set;}
     private string CssClass => "d20-show-" + dice.NumericValue;
 
     public override int NumericCount => dice.NumericValue;
 
-    public void Roll() {
+    protected override void OnInitialized() {
+        this.Roll();
+    }
+
+    public override void Roll() {
         dice.Roll();
-        Console.WriteLine(dice.NumericValue);
         StateHasChanged();
     }
 }
