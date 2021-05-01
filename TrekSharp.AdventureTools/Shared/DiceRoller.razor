@@ -12,25 +12,25 @@
     </div>
 
     <div class="w3-row w3-padding lcars-primary lcars-elbow-left lcars-elbow-right w3-margin-left w3-margin-right">
-        <div class="w3-col s6 w3-text-white">
-            <button class="w3-button w3-display-container" style="padding:4px;" @onclick=AddChallengeDie>
+        <div class="w3-col s7 w3-text-white">
+            <button class="w3-button w3-display-container" style="padding:4px 4px;" @onclick=AddChallengeDie>
                 <img src="assets/d6.png" width=40 height=40 />
                 <img class="w3-display-middle" src="assets/challenge-effect.png" width="40" height="40">
             </button>
-            <button class="w3-button w3-display-container" style="padding:4px;" @onclick=AddD6>
+            <button class="w3-button w3-display-container" style="padding:4px 4px;" @onclick=AddD6>
                 <img src="assets/d6.png" width=40 height=40 />
                 <div class="w3-display-middle">
                     6
                 </div>
             </button>
-            <button class="w3-button w3-display-container" style="padding:4px;" @onclick=AddTaskDie>
+            <button class="w3-button w3-display-container" style="padding:4px 4px;" @onclick=AddTaskDie>
                 <img src="assets/d20.png" width=40 height=40 />
                 <div class="w3-display-middle">
                     20
                 </div>
             </button>
         </div>
-        <div class="w3-col s6 w3-right-align">
+        <div class="w3-col s5 w3-right-align">
             <button class="w3-button w3-round-xxlarge w3-red" @onclick=rerollAll>
                 Roll
                 <button class="w3-button w3-circle w3-dark-grey" @onclick=clear>
@@ -44,11 +44,11 @@
         @foreach (var die in this.dices) {
             <div style="padding: 8px; display: inline-block;">
             @if (die is ChallengeDice cd) {
-                <DiceChallenge dice=cd></DiceChallenge>
+                <DiceChallenge dice=cd OnDiceRoll=StateHasChanged></DiceChallenge>
             } else if (die is D6 d6) {
-                <DiceD6 dice=d6></DiceD6>
+                <DiceD6 dice=d6 OnDiceRoll=StateHasChanged></DiceD6>
             } else if (die is D20 d20) {
-                <DiceD20 dice=d20></DiceD20>
+                <DiceD20 dice=d20 OnDiceRoll=StateHasChanged></DiceD20>
             }
             </div>
         }

@@ -1,6 +1,6 @@
 @inherits BaseDice
 
-<div class="d20 @CssClass">
+<div class="d20 @CssClass" @onclick=Roll>
     <div class="face face-1"></div>
     <div class="face face-2"></div>
     <div class="face face-3"></div>
@@ -36,5 +36,6 @@
     public override void Roll() {
         dice.Roll();
         StateHasChanged();
+        OnDiceRoll?.Invoke();
     }
 }
