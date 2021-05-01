@@ -40,7 +40,7 @@
     font-weight: bold;
     color: white;
     text-align: center;
-    background: black;  opacity: 1;
+    background: rgb(34, 34, 34);
 }
 
 .d6 .face-1  { transform: rotateY(  0deg) translateZ(var(--d6-half-size)); }
