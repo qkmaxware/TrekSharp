@@ -13,7 +13,6 @@
     }
 
     protected async Task SetPageTitle(string title) {
-        Console.WriteLine("Setting Page Title To: " + title);
         await JSRuntime.InvokeVoidAsync("BlazorSetPageTitle", title);
     }
     

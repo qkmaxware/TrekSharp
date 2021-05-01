@@ -1,0 +1,37 @@
+@inherits BaseDice
+
+<div class="d20 @CssClass">
+    <div class="face face-1"></div>
+    <div class="face face-2"></div>
+    <div class="face face-3"></div>
+    <div class="face face-4"></div>
+    <div class="face face-5"></div>
+    <div class="face face-6"></div>
+    <div class="face face-7"></div>
+    <div class="face face-8"></div>
+    <div class="face face-9"></div>
+    <div class="face face-10"></div>
+    <div class="face face-11"></div>
+    <div class="face face-12"></div>
+    <div class="face face-13"></div>
+    <div class="face face-14"></div>
+    <div class="face face-15"></div>
+    <div class="face face-16"></div>
+    <div class="face face-17"></div>
+    <div class="face face-18"></div>
+    <div class="face face-19"></div>
+    <div class="face face-20"></div>
+</div>
+
+@code {
+    private D20 dice = new D20();
+    private string CssClass => "d20-show-" + dice.NumericValue;
+
+    public override int NumericCount => dice.NumericValue;
+
+    public void Roll() {
+        dice.Roll();
+        Console.WriteLine(dice.NumericValue);
+        StateHasChanged();
+    }
+}

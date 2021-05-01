@@ -1,0 +1,23 @@
+<div class="dicebox">
+    <DiceD6 @ref="d6"></DiceD6>
+    <DiceChallenge @ref="dc"></DiceChallenge>
+    <DiceD20 @ref="d20"></DiceD20>
+</div>
+<button class="w3-button w3-circle w3-blue" style="position: absolute; right: 6px; bottom: 6px;" @onclick=rollAll>
+    R
+</button>
+
+@code {
+
+    Dice3d.DiceD6 d6;
+    Dice3d.DiceChallenge dc;
+    Dice3d.DiceD20 d20;
+
+    private void rollAll() {
+        d6.Roll();
+        dc.Roll();
+        d20.Roll();
+        StateHasChanged();
+    }
+
+}

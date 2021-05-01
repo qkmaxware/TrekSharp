@@ -8,6 +8,7 @@
   <ItemGroup>
     <!-- extends watching group to include *.razor files -->
     <Watch Include="**\*.razor" />
+    <Watch Include="**\*.css" />
   </ItemGroup>
 
   <ItemGroup>

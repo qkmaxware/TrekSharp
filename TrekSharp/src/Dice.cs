@@ -38,9 +38,11 @@ public enum ChallengeDiceResult {
 }
 
 public class ChallengeDice : Dice {
+    public int D6Value {get; private set;}
     public ChallengeDiceResult ChallengeValue {get; private set;}
     public override void Roll() {
         var roll = this.RollNumeric(6);
+        D6Value = roll;
         ChallengeValue = roll switch {
             1 => ChallengeDiceResult.One,
             2 => ChallengeDiceResult.Two,
