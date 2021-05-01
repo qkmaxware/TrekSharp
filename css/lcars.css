@@ -172,21 +172,39 @@ min-height: 10px;
 border-top-right-radius: 10px;
 padding-right: 12px;
 }
+.lcars-knee-right {
+    border-top-right-radius: 10px;
+    padding-right: 12px;
+}
 
 .lcars .knee-left {
 border-top-left-radius: 10px;
 padding-left: 12px;
 }
+.lcars-knee-left {
+    border-top-left-radius: 10px;
+    padding-left: 12px;
+}
+    
 
 .lcars .elbow-left {
-border-bottom-left-radius: 10px;
-padding-left: 12px;
+    border-bottom-left-radius: 10px;
+    padding-left: 12px;
+}
+.lcars-elbow-left {
+    border-bottom-left-radius: 10px;
+    padding-left: 12px;
 }
 
 .lcars .elbow-right {
-border-bottom-right-radius: 10px;
-padding-right: 12px;
+    border-bottom-right-radius: 10px;
+    padding-right: 12px;
 }
+.lcars-elbow-right {
+    border-bottom-right-radius: 10px;
+    padding-right: 12px;
+}
+
 
 .lcars button {
 font-family: 'Impact';
