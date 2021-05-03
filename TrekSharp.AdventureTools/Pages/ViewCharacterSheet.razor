@@ -8,6 +8,7 @@
     <div class="w3-half w3-left-align">
         &nbsp;
         <button @onclick=AddMilestone>+ Milestone</button>
+        <button @onclick=Promote>+ Promotion</button>
     </div>
     <div class="w3-half w3-right-align">
         <button @onclick="Export">Export Json</button>
@@ -114,6 +115,7 @@
 }
 
 <MilestoneEditor @ref=milestones OnSave=@(() => StateHasChanged())></MilestoneEditor>
+<PromotionEditor @ref=promotions OnSave=@(() => StateHasChanged())></PromotionEditor>
 
 <ConfirmationDialog @ref="confirm">
 </ConfirmationDialog>
@@ -162,6 +164,13 @@
     private void AddMilestone() {
         if (this.HasCharacter)
             milestones.Open(this.Player);
+    }
+
+    private PromotionEditor promotions;
+    private void Promote() {
+        if (HasCharacter) {
+            promotions.Open(this.Player);
+        }
     }
 
 }

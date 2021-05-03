@@ -1,6 +1,7 @@
 @using System.Globalization
 
-@if (RequireDelete && DeletedTalent == null) { 
+<RulebookPicker @ref=Books></RulebookPicker>
+@if (RequireDelete) { 
     <div class="row">
         <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
         <span class="spacer typeface text-secondary w3-large">
@@ -31,13 +32,12 @@
             </div>
         }
     }
-} else {
-<RulebookPicker @ref=Books></RulebookPicker>
-
+}
+@if (!RequireDelete || DeletedTalent != null) {
 <div class="row">
     <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
     <span class="spacer typeface text-secondary w3-large">
-        TALENTS
+        ADD TALENT
     </span>
     <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
 </div>

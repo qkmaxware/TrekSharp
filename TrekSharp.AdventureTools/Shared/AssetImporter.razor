@@ -12,17 +12,17 @@
 
     <LocalFileInput Accept=".json" OnFileLoad=@((txt) => { jsonData =  txt; InvokeAsync(StateHasChanged); })></LocalFileInput>
 
-    <textarea style="width: 100%; height: 480px; max-height: 80%; resize: vertical;" @bind="jsonData"></textarea>
+    <textarea style="width: 100%; height: 480px; max-height: 50vh; resize: vertical;" @bind="jsonData"></textarea>
     @if (loadError != null) {
     <div class="w3-panel w3-red">
         <p>@loadError.Message</p>
     </div> 
     }
     <div class="w3-row">
-        <div class="w3-half">
+        <div class="w3-col s6">
             <button class="w3-button" @onclick="Close"> Cancel</button>
         </div>
-        <div class="w3-half w3-right-align">
+        <div class="w3-col s6 w3-right-align">
             <button class="w3-button" @onclick="Load"> Load</button>
         </div>
     </div>
