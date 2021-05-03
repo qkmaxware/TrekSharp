@@ -1,0 +1,53 @@
+@inherits AppComponentBase
+
+<div>
+    <div class="lcars">
+        <div class="row">
+            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                PERSONAL LOG 
+            </div>
+            <div class="hbar row-fill"></div>
+        </div>
+    </div>
+    <div class="lcars noselect">
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding typeface secondary w3-col" style="width: 120px;">
+                <span>STARDATE</span>
+            </div>
+            <div class="w3-rest" style="padding-left: 10px">
+                <input type="text" class="w3-input" style="font-size: medium;" @bind=stardate placeholder="Stardate"/>
+            </div>
+        </div>
+        <div class="w3-margin-left w3-margin-right">
+            <textarea @bind=logtext class="text-primary typeface lcars-border-primary" style="width: 100%; resize: vertical; background-color: black;"></textarea>
+        </div>
+        <div class="w3-right-align w3-padding">
+            <button style="font-size: medium;" @onclick=save>record</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Action OnLogRecorded {get; set;}
+    private double stardate = 48200.3;
+    private string logtext;
+
+    protected override void OnInitialized() {
+        // Default stardate to the last log entry
+        if (Data.Logs.Count > 0) {
+            stardate = Data.Logs.Latest.Stardate;
+        }
+    }
+
+    private void save() {
+        var entry = new LogEntry {
+            Stardate = stardate,
+            Content = logtext,
+        };
+        Data.Logs.Record(entry);
+        logtext = string.Empty;
+        stardate = Data.Logs.Latest.Stardate;
+        OnLogRecorded?.Invoke(); 
+    }
+}

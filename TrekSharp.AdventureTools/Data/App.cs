@@ -57,6 +57,8 @@ public class AppData {
 
     public UserCustomData Custom {get; set;} = new UserCustomData();
 
+    public Logbook Logs {get; set;} = new Logbook();
+
     public void Overwrite(AppData @new) {
         this.IsGm = @new.IsGm;
         this.Mission = @new.Mission ?? new Mission();
@@ -67,6 +69,10 @@ public class AppData {
         this.Encounters = @new.Encounters ?? new List<Encounter>();
         this.Tasks = @new.Tasks ?? new List<ExtendedTask>();
         this.Custom = @new.Custom ?? new UserCustomData();
+        this.Logs = @new.Logs ?? new Logbook();
+        if (this.Logs.Entries == null) {
+            this.Logs = new Logbook();
+        }
     }
 }
 

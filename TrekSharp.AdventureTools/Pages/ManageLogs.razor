@@ -1,0 +1,101 @@
+@inherits Page
+@page "/manage/logs"
+@using System.Globalization
+
+<LCARS Title="LOG ENTRIES">
+    @if (compose) {
+        <div class="w3-col" style="width: 50px">
+            <button class="w3-button w3-blue w3-margin-right w3-margin-bottom" style="border-radius: 0;" @onclick=@(() => compose = false)>&lt;</button>
+        </div>
+        <Quicklog OnLogRecorded=@(() => { compose = false; StateHasChanged(); })></Quicklog>
+    } else {
+        @if (viewedEntry == null) {
+        <div class="w3-padding">
+            <input type="text" placeholder="search logs" @bind="filter" style="width: 100%;"/>
+            <div class="w3-row">
+                <button class="w3-col s6 w3-button @(!flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => flaggedOnly = false)>All</button>
+                <button class="w3-col s6 w3-button @(flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => flaggedOnly = true)>Flagged</button>
+            </div>
+            <div class="w3-right-align">
+                <button class="w3-margin" @onclick=@(() => compose = true)>Record Log</button>
+            </div>
+        </div>
+        @if (Data.Logs.Count > 0) {
+            <hr>
+        }
+        <ul class="w3-ul w3-hoverable">
+        @foreach (var entry in Data.Logs) {
+            if((!flaggedOnly || entry.Flagged) && (string.IsNullOrEmpty(filter) || CultureInfo.InvariantCulture.CompareInfo.IndexOf(entry.Content, filter, CompareOptions.IgnoreCase) >=0 )) {
+                var capture = entry;
+                <li class="w3-row">
+                    <div class="w3-col" style="width: 72px;">
+                        <button class="w3-black" @onclick=@(() => capture.Flagged = !capture.Flagged)>
+                            @if (capture.Flagged) {
+                                <img src="assets/flag_filled.png" width=24 height=24>
+                            } else {
+                                <img src="assets/flag_empty.png" width=24 height=24>
+                            }
+                        </button>
+                    </div>
+                    <div class="w3-rest" @onclick=@(() => viewedEntry = capture)>
+                        <b>@capture.Stardate</b>
+                        <p>
+                            @capture.ExcerptString()
+                        </p>
+                    </div>
+                </li>
+            }
+        }
+        </ul>
+        } else {
+            <div class="w3-row">
+                <div class="w3-col" style="width: 50px">
+                    <button class="w3-button w3-blue w3-margin-right" style="border-radius: 0;" @onclick=@(() => viewedEntry = null)>&lt;</button>
+                </div>
+                <div class="w3-rest">
+                    <div class="w3-half w3-xlarge">
+                        STARDATE @viewedEntry.Stardate
+                    </div>
+                    <div class="w3-half w3-right-align w3-padding">
+                        <button class="w3-black" @onclick=@(() => viewedEntry.Flagged = !viewedEntry.Flagged)>
+                            @if (viewedEntry.Flagged) {
+                                <img src="assets/flag_filled.png" width=24 height=24>
+                            } else {
+                                <img src="assets/flag_empty.png" width=24 height=24>
+                            }
+                        </button>
+                        <button class="w3-red" @onclick=confirmDeleteCurrent>
+                            &times;
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div style="white-space: pre-wrap;">
+                @viewedEntry.Content
+            </div>
+        }
+    }
+</LCARS>
+
+<ConfirmationDialog @ref="confirm">
+</ConfirmationDialog>
+
+@code {
+    private bool compose = false;
+    private LogEntry viewedEntry = null;
+    private string filter = null;
+    private bool flaggedOnly = false;
+
+    private ConfirmationDialog confirm;
+    private void confirmDeleteCurrent() {
+        confirm.Open($"Are you sure you want to delete this log entry?", () => deleteCurrent());
+    }
+
+    private void deleteCurrent() {
+        if (viewedEntry != null) {
+            Data.Logs.Delete(viewedEntry);
+            viewedEntry = null;
+            StateHasChanged();
+        }
+    }
+}
