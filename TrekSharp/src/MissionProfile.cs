@@ -20,6 +20,8 @@ public class MissionProfile {
         this.MissionProfileTalents = profileTalents;
     }
 
+    public override string ToString() => Name;
+
 }
 
 }

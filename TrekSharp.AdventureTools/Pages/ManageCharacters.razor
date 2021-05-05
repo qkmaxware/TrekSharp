@@ -7,10 +7,6 @@
     <div class="container w3-margin-bottom">
         <LCARS Title="PARTY">
             <div class="w3-padding row-fill">
-                <div class="w3-container w3-right no-print">
-                    <button @onclick="@(() => raw.Open())">+ Sheet</button>
-                    <button @onclick="@(() => importer.Open())">+ Json</button>
-                </div>
                 <Col4Layout Items=Data.Party>
                     <Template>
                         <div class="row" @onclick="@(() => NavigateToPlayerCharacter(context))">
@@ -43,10 +39,6 @@
     <div class="container w3-margin-bottom">
         <LCARS Title="SUPPORT">
             <div class="w3-padding row-fill">
-                <div class="w3-container w3-right no-print">
-                    <button @onclick="@(() => rawSupport.Open())">+ Sheet</button>
-                    <button @onclick="@(() => importerSupport.Open())">+ Json</button>
-                </div>
                 <Col4Layout Items=Data.Supports>
                     <Template>
                         <div class="row" @onclick="@(() => NaviateToSupportCharacter(context))">
@@ -75,38 +67,3 @@
         </LCARS>
     </div>
 </div>
-
-<AssetImporter
-    @ref="importer"
-    TItem="PlayerCharacter"
-    Title="Import Character"
-    OnLoad="onCharacterLoaded"
-/>
-
-<AssetImporter
-    @ref="importerSupport"
-    TItem="SupportCharacter"
-    Title="Import Support Character"
-    OnLoad=onSupportLoaded
-/>
-
-<RawPlayerCharacterCreator @ref=raw OnImport=@(() => StateHasChanged())></RawPlayerCharacterCreator>
-<RawSupportCharacterCreator @ref=rawSupport OnImport=@(() => StateHasChanged())></RawSupportCharacterCreator>
-
-@code {
-
-    private RawPlayerCharacterCreator raw;
-    private AssetImporter<PlayerCharacter> importer;
-    private void onCharacterLoaded(PlayerCharacter character) {
-        this.Data.Party.Add(character);
-        this.StateHasChanged();
-    }
-
-    private RawSupportCharacterCreator rawSupport;
-    private AssetImporter<SupportCharacter> importerSupport;
-    private void onSupportLoaded(SupportCharacter character) {
-        this.Data.Supports.Add(character);
-        this.StateHasChanged();
-    }
-
-}

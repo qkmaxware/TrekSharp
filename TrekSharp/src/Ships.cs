@@ -121,6 +121,8 @@ public class Spaceframe : IResearchableEntity {
     public System.DateTime DesignDate {get; set;}
     public Systems Systems {get; set;}
     public Disciplines Departments {get; set;}
+
+    public override string ToString() => Name;
 }
 
 public class Vessel {

@@ -8,6 +8,12 @@ public static class RandomizerExtentions {
     public static T Random<T>(this List<T> items) {
         return items[random.Next(items.Count)];   
     }
+    public static T RemoveRandom<T>(this List<T> items) {
+        var rng = random.Next(items.Count);
+        var item = items[rng];
+        items.RemoveAt(rng);
+        return item;
+    }
 
     public static int Random(this Range range) {
         return random.Next(range.Start.Value, range.End.Value);

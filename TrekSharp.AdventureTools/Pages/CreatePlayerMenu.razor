@@ -1,0 +1,45 @@
+@page "/new/player"
+@inherits Page
+
+<LCARS Title="PLAYER CHARACTER">
+    <div class="w3-panel typeface w3-center">
+        Various methods for creating player characters.
+    </div>
+    <NavLink class="w3-button w3-block" href="new/player/lifepath" Match="NavLinkMatch.All">
+        Lifepath Creation
+    </NavLink>
+    <NavLink class="w3-button w3-block" href="new/player/random" Match="NavLinkMatch.All">
+        Randomly Generate
+    </NavLink>
+    <a class="w3-button w3-block" @onclick=openImporter>
+        Import From JSON
+    </a>
+    <a class="w3-button w3-block" @onclick=openRawImporter>
+        Import From Character Sheet
+    </a>
+</LCARS>
+
+<AssetImporter
+    @ref="importer"
+    TItem="PlayerCharacter"
+    Title="Import Character"
+    OnLoad="onCharacterLoaded"
+/>
+
+<RawPlayerCharacterCreator @ref=raw OnImport=onRawImport></RawPlayerCharacterCreator>
+
+@code {
+    AssetImporter<PlayerCharacter> importer;
+    private void openImporter() {
+        importer?.Open();
+    }
+    private void onCharacterLoaded(PlayerCharacter character) {
+        this.Data.Party.Add(character);
+    }
+
+    RawPlayerCharacterCreator raw;
+    private void openRawImporter() {
+        raw?.Open();
+    }
+    private void onRawImport() {}
+}

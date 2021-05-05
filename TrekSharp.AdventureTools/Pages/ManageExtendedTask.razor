@@ -1,90 +1,144 @@
 @page "/manage/task/extended"
 @inherits Page
 
-<div class="lcars">
-    <div class="container">
-        <LCARS Title="EXTENDED TASKS">
-            <div class="w3-padding row-fill">
-                @foreach (var task in Data.Tasks) {
-                    <div class="container">
-                        <!-- Title -->
-                        <div class="row">
-                            <span class="hbar elbow-left knee-left w3-padding">EXTENDED TASK</span>
-                            <span class="hbar row-fill" style="margin-left: 10px;">
-                                <input type="text" class="w3-padding" style="width: 100%;" @bind="task.Name"/>
-                            </span>
+<LCARS Title="EXTENDED TASKS">
+    <div class="w3-padding row-fill">
+        @foreach (var task in Data.Tasks) {
+            var capture = task;
+            <div class="container">
+                <!-- Title -->
+                <div class="row">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <span class="spacer typeface text-secondary w3-large">
+                        @capture?.Name?.ToUpper()
+                    </span>
+                    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+                </div>
+                <!-- Progress -->
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding w3-quarter secondary lcars-border-secondary">
+                        <span>Breakthroughs</span>
+                    </div>
+                    <div class="w3-threequarter lcars-border-secondary typeface w3-padding w3-right-align" style="padding-left: 10px">
+                        @capture.Breakthroughs / @capture.Difficulty
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding w3-quarter secondary lcars-border-secondary">
+                        <span>Work Track</span>
+                    </div>
+                    <div class="w3-threequarter lcars-border-secondary typeface w3-padding w3-right-align" style="padding-left: 10px">
+                        @(capture.WorkTrack - capture.TotalWork) / @capture.WorkTrack
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="w3-row w3-col s8">
+                        <div class="w3-col" style="width: 64px;">
+                            <button style="width: 100%; font-size: medium; border-radius: 20px 0 0 20px;" class="lcars-border-secondary" @onclick=@(() => capture.ApplyRollsAgainst())>+ work</button>
                         </div>
-                        <!-- Characteristics -->
-                        <div class="w3-row w3-padding w3-row-padding">
-                            <div class="w3-third row">
-                                <div class="knee-left elbow-left hbar highlight">Difficulty</div>
-                                <div class="row-fill" style="margin-left: 10px;">
-                                    <input type="number" style="width: 100%;" @bind="task.Difficulty"/> 
-                                </div>
-                            </div>
-                            <div class="w3-third row">
-                                <div class="knee-left elbow-left hbar highlight">Magnitude</div>
-                                <div class="row-fill" style="margin-left: 10px;">
-                                    <input type="number" style="width: 100%;" @bind="task.Magnitude"/> 
-                                </div>
-                            </div>
-                            <div class="w3-third row">
-                                <div class="knee-left elbow-left hbar highlight">Resistance</div>
-                                <div class="row-fill" style="margin-left: 10px;">
-                                    <input type="number" style="width: 100%;" @bind="task.Resistance"/> 
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Progress -->
-                        <div class="w3-row w3-padding w3-row-padding">
-                            <div class="w3-threequarter row">
-                                <div class="knee-left elbow-left hbar secondary" style="line-height: 400%;">Work Track</div>
-                                <div class="row-fill w3-black border-primary" style="margin-left: 10px;">
-                                    <input type="number" readonly style="width: 100%;" @bind="task.TotalWork"/> 
-                                    <br>
-                                    <input type="number" style="width: 100%;" @bind="task.WorkTrack"/> 
-                                </div>
-                            </div>
-                            <div class="w3-quarter row">
-                                <div class="knee-left elbow-left hbar secondary" style="line-height: 400%;">Breakthroughs</div>
-                                <div class="row-fill" style="margin-left: 10px;">
-                                    <input type="number" style="width: 100%; height: 100%;" @bind="task.Breakthroughs"/> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w3-row w3-padding w3-row-padding">
-                            <div class="w3-half">
-                                <input type="number" @bind="task.RollsAgainst"/>
-                                <button @onclick="@(() => { task.ApplyRollsAgainst(); StateHasChanged(); })">+ Work</button>
-                            </div>
-                            <div class="w3-half w3-right-align">
-                                <button class="w3-red" @onclick="@(() => { Data.Tasks.Remove(task); })">Delete</button>
-                            </div>
-                        </div>
-                        <!-- Footer -->
-                        <div class="row">
-                            <div class="hbar knee-left elbow-left row-fill knee-right elbow-right w3-right-align">   
-                            </div>
+                        <div class="w3-rest">
+                            <input style="width: 100%;" class="lcars-border-secondary" @bind=task.RollsAgainst></input>
                         </div>
                     </div>
-                }
-                <hr>
-                <div class="w3-right-align">
-                    <button @onclick="NewTask">
-                        New Task +
-                    </button>
+                    <div class="w3-col s4 w3-right-align">
+                        <button class="w3-red" style="font-size: medium;" @onclick=@(() => DeleteTask(capture))>&times;</button>
+                    </div>
                 </div>
             </div>
-        </LCARS>
+        }
+        <div class="w3-right-align">
+            <button @onclick="NewTask">
+                + Task
+            </button>
+        </div>
     </div>
-</div>
+</LCARS>
 
-
+<Popup @ref="creationPopup">
+    @if (customTask != null) {
+    <div>
+        <div class="row">
+            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+            <span class="spacer typeface text-secondary w3-large">
+                EXTENDED TASK
+            </span>
+            <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+        </div>
+        <div>
+            <div class="w3-row w3-padding">
+                <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                    <span>Name</span>
+                </div>
+                <div class="w3-threequarter" style="padding-left: 10px">
+                    <input type="text" class="w3-input" @bind=customTask.Name placeholder="Name"/>
+                </div>
+            </div>
+            <div class="w3-row w3-padding">
+                <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                    <span>Work Track</span>
+                </div>
+                <div class="w3-threequarter" style="padding-left: 10px">
+                    <input type="number" class="w3-input" @bind=customTask.WorkTrack placeholder="Size"/>
+                </div>
+            </div>
+            <div class="w3-row w3-padding">
+                <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                    <span>Difficulty</span>
+                </div>
+                <div class="w3-threequarter" style="padding-left: 10px">
+                    <input type="number" class="w3-input" @bind=customTask.Difficulty placeholder="Difficulty"/>
+                </div>
+            </div>
+            <div class="w3-row w3-padding">
+                <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                    <span>Magnitude</span>
+                </div>
+                <div class="w3-threequarter" style="padding-left: 10px">
+                    <input type="number" class="w3-input" @bind=customTask.Magnitude placeholder="Magnitude"/>
+                </div>
+            </div>
+            <div class="w3-row w3-padding">
+                <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                    <span>Resistance</span>
+                </div>
+                <div class="w3-threequarter" style="padding-left: 10px">
+                    <input type="number" class="w3-input" @bind=customTask.Resistance placeholder="Resistance"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    <div class="w3-row">
+        <div class="w3-col s6">
+            <button class="w3-button w3-red" @onclick="closeCreateExtendedTask">Cancel</button>
+        </div>
+        <div class="w3-col s6 w3-right-align">
+            <button class="w3-button w3-green" @onclick="addCreateExtendedTask">Add</button>
+        </div>
+    </div>
+</Popup>
 
 @code {
 
+    private Popup creationPopup;
+    ExtendedTask customTask = null;
+    private void openCreateExtendedTask() {
+        customTask = new ExtendedTask("New Extended Task", difficulty: 1, workTrackSize: 20, magnitude: 3, resistance: 0);
+        creationPopup.Open();
+    }
+    private void closeCreateExtendedTask() {
+        creationPopup.Close();
+        customTask = null;
+    }
+    private void addCreateExtendedTask() {
+        if (customTask != null) {
+            this.Data.Tasks.Add(customTask);
+        }
+        closeCreateExtendedTask();
+    }
+
     private void NewTask() {
-        Data.Tasks.Add(new ExtendedTask("Extended Task", 1, 20, 3, 0));
+        openCreateExtendedTask();
     }
     private void DeleteTask(ExtendedTask task) {
         Data.Tasks.Remove(task);

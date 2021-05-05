@@ -46,135 +46,141 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            ATTRIBUTES
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-    </div>
-    <div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Control</span>
+    <div class="w3-row">
+        <div class="w3-half">
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <span class="spacer typeface text-secondary w3-large">
+                    ATTRIBUTES
+                </span>
+                <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
             </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Attributes[0] placeholder="Name"/>
+            <div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Control</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Attributes[0] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Fitness</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Attributes[2] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Presence</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Attributes[4] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Daring</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Attributes[1] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Insight</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Attributes[3] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Reason</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Attributes[5] placeholder="Name"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <span class="spacer typeface text-secondary w3-large">
+                    DISCIPLINES
+                </span>
+                <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+            </div>
+            <div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Command</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Disciplines[0] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Security</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Disciplines[1] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Science</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Disciplines[2] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Conn</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Disciplines[3] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Engineering</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Disciplines[4] placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Medicine</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="number" class="w3-input" @bind=character.Disciplines[5] placeholder="Name"/>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Fitness</span>
+        <div class="w3-half">
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <span class="spacer typeface text-secondary w3-large">
+                    FOCUSES
+                </span>
+                <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
             </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Attributes[2] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Presence</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Attributes[4] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Daring</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Attributes[1] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Insight</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Attributes[3] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Reason</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Attributes[5] placeholder="Name"/>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            DISCIPLINES
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-    </div>
-    <div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Command</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Disciplines[0] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Security</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Disciplines[1] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Science</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Disciplines[2] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Conn</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Disciplines[3] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Engineering</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Disciplines[4] placeholder="Name"/>
-            </div>
-        </div>
-        <div class="w3-row w3-padding">
-            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
-                <span>Medicine</span>
-            </div>
-            <div class="w3-threequarter" style="padding-left: 10px">
-                <input type="number" class="w3-input" @bind=character.Disciplines[5] placeholder="Name"/>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-        <span class="spacer typeface text-secondary w3-large">
-            FOCUSES
-        </span>
-        <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
-    </div>
-    <div>
-        <StringEditor Items=character.Focuses></StringEditor>
-        <div class="w3-row w3-padding">
-            <div class="w3-half w3-left-align">
-                <button class="w3-red" @onclick=@(() => { if (character.Focuses.Count > 0) { character.Focuses.RemoveAt(character.Focuses.Count - 1); } })>-</button>
-            </div>
-            <div class="w3-half w3-right-align">
-                <button class="w3-blue" @onclick=@(() => character.Focuses.Add(string.Empty))>+</button>
+            <div>
+                <StringEditor Items=character.Focuses></StringEditor>
+                <div class="w3-row w3-padding">
+                    <div class="w3-half w3-left-align">
+                        <button class="w3-red" @onclick=@(() => { if (character.Focuses.Count > 0) { character.Focuses.RemoveAt(character.Focuses.Count - 1); } })>-</button>
+                    </div>
+                    <div class="w3-half w3-right-align">
+                        <button class="w3-blue" @onclick=@(() => character.Focuses.Add(string.Empty))>+</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -103,8 +103,7 @@
     private void generateAndShow() {
         var character = generate();
         Data.Party.Add(character);
-        var id = Data.Party.Count - 1;
-        NavigationManager.NavigateTo($"manage/characters/player/{id}");
+        this.NavigateToPlayerCharacter(character);
     }
 
     private PlayerCharacter generate() {
@@ -190,7 +189,7 @@
         character.Disciplines.RandomlyIncrement(playerEnvironment.DisciplineSelectionMask);
         
         // Pick first value
-        var firstValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var firstValue = values.GenerateValueForDiscipline(roleWeight);
         character.Values.Add(firstValue);
 
         // Pick upbringing
@@ -201,7 +200,7 @@
         character.Upbringing = playerUpbringing.Name;
 
         // Pick upbringing focus
-        var upbriningFocus = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var upbriningFocus = focuses.GenerateFocusForDiscipline(roleWeight);
         character.Focuses.Add(upbriningFocus);
 
         // Pick upbringing talent
@@ -217,13 +216,13 @@
         character.Disciplines[random.NextExcept(6, majorIndex)] += 1;
 
         // Starfleet academy value
-        var academyValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var academyValue = values.GenerateValueForDiscipline(roleWeight);
         character.Values.Add(academyValue);
 
         // Starfleet academy focuses
-        var academyFocus1 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
-        var academyFocus2 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
-        var academyFocus3 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var academyFocus1 = focuses.GenerateFocusForDiscipline(roleWeight);
+        var academyFocus2 = focuses.GenerateFocusForDiscipline(roleWeight);
+        var academyFocus3 = focuses.GenerateFocusForDiscipline(roleWeight);
         character.Focuses.Add(academyFocus1);
         character.Focuses.Add(academyFocus2);
         character.Focuses.Add(academyFocus3);
@@ -233,7 +232,7 @@
         character.Talents.Add(academyTalent);
 
         // Career value
-        var careerValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var careerValue = values.GenerateValueForDiscipline(roleWeight);
         character.Values.Add(careerValue);
 
         // Career talent
@@ -241,8 +240,8 @@
         character.Talents.Add(careerTalent);
 
         // Career focuses
-        var careerFocus1 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
-        var careerFocus2 = focuses.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var careerFocus1 = focuses.GenerateFocusForDiscipline(roleWeight);
+        var careerFocus2 = focuses.GenerateFocusForDiscipline(roleWeight);
         character.Focuses.Add(careerFocus1);
         character.Focuses.Add(careerFocus2);
 
@@ -254,7 +253,7 @@
         }
 
         // Last value
-        var relationshipValue = this.values.Where(kv => kv.Key.SharesDisciplinesWith(roleWeight)).SelectMany(kv => kv.Value).ToList().Random();
+        var relationshipValue = values.GenerateValueForDiscipline(roleWeight);
         character.Values.Add(relationshipValue);
 
         // Cleanup
@@ -325,231 +324,8 @@
         Rank.Ensign, Rank.LieutenantJuniorGrade, Rank.Lieutenant, Rank.LieutenantCommander, Rank.Commander
     };
 
-    private Dictionary<Disciplines, List<string>> values = new Dictionary<Disciplines, List<string>>{
-        {new Disciplines { Command = 1 }, new List<string>{
-            "Doesn’t Believe in a No-Win Situation",
-            "Risk is Our Business",
-            "Seek Out New Life, and New Civilizations",
-            "Compassion through Understanding",
-            "The Drive for Exploration",
-            "The Needs of the Many Outweigh the Needs of the Few, or the One",
-            "A Starship is a Home, it’s Crew a Family",
-            "Most Comfortable in a Crowd",
-            "Serving Starfleet is a Family Tradition",
-            "Indefatigable Confidence",
-            "Proud and Honest",
-            "A Responsibility to the Truth",
-            "Inexperienced and Idealistic",
-            "Fast Ships and Strange New Worlds",
-            "Exploring to Test New Theories",
-            "Seen Too Much to be Surprised",
-            "Holds Everyone to the Highest Standards",
-            "We Endure Hardship, So That Others Do Not Have To",
-            "A Failure to Act Can Be As Dangerous As Acting Rashly",
-        }},
-        {new Disciplines { Security = 1 }, new List<string>{
-            "Risk is Our Business",
-            "Safety in Numbers",
-            "The Needs of the Many Outweigh the Needs of the Few, or the One",
-            "A Starship is a Home, it’s Crew a Family",
-            "Most Comfortable in a Crowd",
-            "Body and Mind Alike Must Be Healthy",
-            "No Stranger to Violence",
-            "Emotion in a Crisis only Makes Things Worse",
-            "Serving Starfleet is a Family Tradition",
-            "Indefatigable Confidence",
-            "Inexperienced and Idealistic",
-            "Always Prepared, Always Vigilant",
-            "Seen Too Much to be Surprised",
-            "The Price of Peace is Vigilance",
-            "Living with Your Ideals is Harder than Dying for Them",
-            "There Is No Higher Calling Than to Serve",
-            "We Endure Hardship, So That Others Do Not Have To",
-            "A Failure to Act Can Be As Dangerous As Acting Rashly",
-        }},
-        {new Disciplines { Science = 1 }, new List<string>{
-            "There’s No Such Thing as The Unknown — Only the Temporarily Hidden",
-            "Logic is the Beginning, not the end, of Wisdom",
-            "Seek Out New Life, and New Civilizations",
-            "Compassion through Understanding",
-            "The Drive for Exploration",
-            "All Ideas must Withstand Scrutiny",
-            "A Starship is a Home, it’s Crew a Family",
-            "Most Comfortable in a Crowd",
-            "Engineer at Heart",
-            "Serving Starfleet is a Family Tradition",
-            "Indefatigable Confidence",
-            "Proud and Honest",
-            "Insatiable Curiosity",
-            "Understands Technology Better Than People",
-            "A Responsibility to the Truth",
-            "Inexperienced and Idealistic",
-            "Precise to a Fault",
-            "Exploring to Test New Theories",
-            "A Theory For Every Situation",
-            "Seen Too Much to be Surprised",
-            "Nothing Better Than Practical Experience",
-        }},
-        {new Disciplines { Conn = 1 }, new List<string>{
-            "Compassion through Understanding",
-            "A Starship is a Home, it’s Crew a Family",
-            "Most Comfortable in a Crowd",
-            "Serving Starfleet is a Family Tradition",
-            "Indefatigable Confidence",
-            "Proud and Honest",
-            "Inexperienced and Idealistic",
-            "Always Prepared, Always Vigilant",
-            "Fast Ships and Strange New Worlds",
-            "Seen Too Much to be Surprised",
-        }},
-        {new Disciplines { Engineering = 1 }, new List<string>{
-            "Risk is Our Business",
-            "Logic is the Beginning, not the end, of Wisdom",
-            "Compassion through Understanding",
-            "All Ideas must Withstand Scrutiny",
-            "A Starship is a Home, it’s Crew a Family",
-            "Most Comfortable in a Crowd",
-            "Serving Starfleet is a Family Tradition",
-            "Indefatigable Confidence",
-            "Proud and Honest",
-            "Insatiable Curiosity",
-            "Understands Technology Better Than People",
-            "Inexperienced and Idealistic",
-            "Threw Out The Handbook and Wrote My Own",
-            "Precise to a Fault",
-            "A Theory For Every Situation",
-            "Seen Too Much to be Surprised",
-            "Nothing Better Than Practical Experience",
-        }},
-        {new Disciplines { Medicine = 1 }, new List<string>{
-            "Compassion through Understanding",
-            "All Ideas must Withstand Scrutiny",
-            "The Needs of the Many Outweigh the Needs of the Few, or the One",
-            "A Starship is a Home, it’s Crew a Family",
-            "Most Comfortable in a Crowd",
-            "Body and Mind Alike Must Be Healthy",
-            "Serving Starfleet is a Family Tradition",
-            "Indefatigable Confidence",
-            "Proud and Honest",
-            "Insatiable Curiosity",
-            "A Responsibility to the Truth",
-            "Inexperienced and Idealistic",
-            "Threw Out The Handbook and Wrote My Own",
-            "Precise to a Fault",
-            "Seen Too Much to be Surprised",
-            "Driven to Ease Suffering",
-            "Rough and Tumble Doctor",
-        }},
-    };
+    private Generators.ValueGenerator values = new Generators.ValueGenerator();
+    private Generators.FocusGenerator focuses = new Generators.FocusGenerator();
 
-    private Dictionary<Disciplines, List<string>> focuses = new Dictionary<Disciplines, List<string>> {
-        {new Disciplines { Command = 1 }, new List<string>{
-            "Negotiation",
-            "Athletics",
-            "Endurance",
-            "Music",
-            "Observation",
-            "Persuasion",
-            "Composure",
-            "Debate",
-            "Diplomacy",
-            "Starfleet Protocol",
-            "Composure",
-            "Inspiration",
-            "Team Dynamics",
-        }},
-        {new Disciplines { Security = 1 }, new List<string>{
-            "Athletics",
-            "Endurance",
-            "Music",
-            "Observation",
-            "Composure",
-            "Espionage",
-            "Interrogation",
-            "Law",
-            "Starfleet Protocol",
-            "Composure",
-            "Inspiration",
-            "Team Dynamics",
-            "Tactical Systems",
-        }},
-        {new Disciplines { Science = 1 }, new List<string>{
-            "Geology",
-            "Linguistics",
-            "Finances",
-            "Survey",
-            "Athletics",
-            "Endurance",
-            "Astrophysics",
-            "Astronavigation",
-            "Botany",
-            "Cultural Studies",
-            "Music",
-            "Observation",
-            "Psychology",
-            "Philosophy",
-            "Starfleet Protocol",
-            "Composure",
-            "Inspiration",
-            "Team Dynamics",
-            "Warp Dynamics",
-            "Quantum Mechanics",
-        }},
-        {new Disciplines { Conn = 1 }, new List<string>{
-            "Athletics",
-            "Ground Vehicles",
-            "Endurance",
-            "Navigation",
-            "Music",
-            "Observation",
-            "Starfleet Protocol",
-            "Composure",
-            "Extra-Vehicular Activity",
-            "Evasive Action",
-            "Helm Operations",
-            "Small Craft",
-            "Starship Recognition",
-            "Inspiration",
-            "Team Dynamics",
-        }},
-        {new Disciplines { Engineering = 1 }, new List<string>{
-            "Manufacturing",
-            "Metallurgy",
-            "Athletics",
-            "Endurance",
-            "Computers",
-            "Cybernetics",
-            "Holoprogramming",
-            "Music",
-            "Observation",
-            "Starfleet Protocol",
-            "Composure",
-            "Inspiration",
-            "Team Dynamics",
-            "Power Systems",
-            "Transporters",
-            "Replicators",
-        }},
-        {new Disciplines { Medicine = 1 }, new List<string>{
-            "Animal Handing",
-            "Athletics",
-            "Emergency Medicine",
-            "Endurance",
-            "Infectious Diseases",
-            "Toxicology",
-            "Music",
-            "Observation",
-            "Psychology",
-            "Debate",
-            "Starfleet Protocol",
-            "Composure",
-            "Inspiration",
-            "Team Dynamics",
-            "Trauma Surgery",
-            "Virology",
-            "Xenobiology",
-            "Genetics",
-        }}
-    };
 
 }

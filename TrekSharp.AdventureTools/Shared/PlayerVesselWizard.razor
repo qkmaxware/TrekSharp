@@ -1,0 +1,362 @@
+<Wizard OnWizardComplete=done AllowBacktracking=false>
+    <WizardStage>
+        <Content>
+            <p>
+                Select which sources are to be used for your vessel creation. Different sources can have different spaceframe, talents, and mission profiles. Adding more sources creates more options for customization. 
+            </p>
+            <RulebookPicker @ref="books"></RulebookPicker>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasSpaceframe>
+        <Content>
+            <p>
+                Choose a base spaceframe, a spaceframe dictates the state of the vessel as it is constructed from spacedock. These spaceframes determine the vessel's shape, size, and initial weapon compilement.
+            </p>
+            <ListSelect @ref=spaceframeSelect Title="SPACEFRAME" List=spaceframes Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div style="width: 100%; height: 100px; display: table-cell; vertical-align: middle;">
+                            <img src="@context.GetShipImageUrl()" onerror="this.src='assets/artwork/ships/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-width: 640px; height: auto; max-height: 100px;">
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Systems
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container w3-margin-bottom">
+                            @foreach (var reference in context.Systems.Enumerate()) {
+                                <span>@reference.Name @reference.Value</span><br/>
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Departments
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @foreach (var reference in context.Departments.Enumerate()) {
+                                if (reference.Value > 0) {
+                                    <span>@reference.Name +@reference.Value</span><br/>
+                                }
+                            }
+                        </div>
+                        <div class="w3-margin-top w3-center">
+                            For more information see <a href="@(context.GetMemoryAlphaSearchLink())" target="_blank">Memory Alpha</a>.
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasProfile>
+        <Content>
+            <p>
+                Select a mission profile. Mission profiles determine how a vessel is specialized. Different mission profiles dictate different equipment. A vessel specialized for combat will likely have less scientific capacity and vice-versa. 
+            </p>
+            <ListSelect @ref=profileSelect Title="MISSION PROFILE" List=profiles Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container w3-margin-bottom">
+                            @context.Description
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Departments
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @foreach (var reference in context.Departments.Enumerate()) {
+                                if (reference.Value > 0) {
+                                    <span>@reference.Name +@reference.Value</span><br/>
+                                }
+                            }
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <p>
+                Vessel registry information. All Vessels must be registered with an authoratative body and given a unique identification code. 
+            </p>
+            <div class="row w3-margin-bottom">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    SHIP REGISTRY 
+                </div>
+                <div class="hbar row-fill elbow-right knee-right"></div>
+            </div>
+            <div class="w3-padding w3-margin-bottom">
+                <p>
+                    Every Starship needs a name. The Federation has no universal convention for the naming of ships, often naming them after locations, important historical persons (normally only the person’s surname), ancient ships, mythical figures, or even more abstract ideals, virtues, or concepts. In many cases, these vague naming conventions overlap — a ship may be named after an ancient ship that was itself named after a location, for example — but this shouldn’t cause any issues. The name should ideally be a single word or, more rarely, two.
+                </p>
+                <div class="row">
+                    <span class="hbar elbow-left knee-left w3-padding">Name</span>
+                    <span class="hbar row-fill row" style="margin-left: 10px;">
+                        <input type="text" class="w3-padding row-fill"  @bind="Name"/>
+                        <button @onclick="randomName" style="width: 120px">Random</button>
+                    </span>
+                </div>
+                <p>
+                    To go with the name, each Federation starship has a registry number. This is a four- (for games set in the Original Series era), or five-digit number (for games set in the Next Generation era), prefixed by either the letters NCC, or NX. NCC is used for most ships, but NX is reserved for prototype vessels and the first ship of a class , in honor of the first Human starships able to reach warp 5.
+                </p>
+                <div class="row">
+                    <span class="hbar elbow-left knee-left w3-padding">Registry Number</span>
+                    <span class="hbar row-fill row" style="margin-left: 10px;">
+                        <input type="text" class="w3-padding row-fill" @bind="Registry"/>
+                        <button @onclick="randomId" style="width: 120px">Random</button>
+                    </span>
+                </div>
+                <p>
+                    Choose which year you want to play in together with your GM. 
+                </p>
+                <div class="row">
+                    <span class="hbar elbow-left knee-left w3-padding">Service Date</span>
+                    <span class="hbar row-fill row" style="margin-left: 10px;">
+                        <input type="date" class="w3-grey w3-padding row-fill" required @bind="ServiceDate" />
+                    </span>
+                </div>
+                <div class="w3-margin-left w3-margin-right">
+                    <p>
+                        A service date can be picked from the list of important dates in the Franchise' timeline.
+                    </p>
+                    @foreach (var kv in importantTimes) {
+                        <button @onclick="@(() => ServiceDate = kv.Value)"> @kv.Key </button>
+                    }
+                </div>
+            </div>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasProfileTalent>
+        <Content>
+            <p>
+                Select an appropriate talent based on your vessel's mission profile. 
+            </p>
+            <ListSelect @ref=profileTalentSelect Title="MISSION PROFILE TALENT" List=profileTalents Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container w3-margin-bottom">
+                            @context.Description
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <p>
+                Your vessel may be eligible for additional talents. This depends on the number of talents your spaceframe comes with by default.
+            </p>
+            <div class="row w3-margin-bottom">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    ADDITIONAL TALENTS
+                </div>
+                <div class="hbar row-fill elbow-right knee-right"></div>
+            </div>
+            @if (additionalTalentCount > 0) {
+                <p>
+                    You are eligible for @additionalTalentCount talents.
+                </p>
+                <ListSelect @ref=additionalTalentSelect List=additionalTalents() Filterable=true OnSelectionChanged=StateHasChanged MaxSelected=additionalTalentCount>
+                    <Info>
+                        <LCARS>
+                            <div class="row">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @context.Name
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                            </div>
+                            <div class="w3-container w3-margin-bottom">
+                                @context.Description
+                            </div>
+                        </LCARS>
+                    </Info>
+                </ListSelect>
+            } else {
+                <p>
+                    You are not eligible for any additional talents.
+                </p>
+            }
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <p>
+                Based on the age of the spaceframe design and your vessel's service date, your vessel may be eligible for some refits. Refits will improve the base stats of the vessel.
+            </p>
+            <div class="row w3-margin-bottom">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    REFITS
+                </div>
+                <div class="hbar row-fill elbow-right knee-right"></div>
+            </div>
+            @if (refitPoints > 0) {
+                <div>
+                <p>
+                    Given the age of your vessel, you are eligable for @refitPoints refits. Each refit grants a point that can be used to increase a System attribute by one. No System attribute may go above 12.
+                </p>
+                <SystemIncrement
+                    Points="refitPoints"
+                    MaxPointsPerItem="12"
+                    Reference="refitedSystems"
+                />
+                </div>
+            } else {
+                <p>
+                    Your vessel is not eligible for any additional refits.
+                </p>
+            }
+        </Content>
+    </WizardStage>
+</Wizard>
+
+@code {
+    #region Page1
+    private RulebookPicker books;
+    #endregion
+
+    #region Page2
+    private ListSelect<Spaceframe> spaceframeSelect;
+    private Spaceframe spaceframe => spaceframeSelect?.Selected;
+    private IEnumerable<Spaceframe> spaceframes => books.EnabledRulebooks.SelectMany(book => book.Spaceframes).OrderBy(frame => frame.DesignDate);
+    private bool hasSpaceframe() => spaceframe != null;
+    #endregion
+
+    #region Page3
+    private ListSelect<MissionProfile> profileSelect;
+    private MissionProfile missionProfile => profileSelect?.Selected;
+    private IEnumerable<MissionProfile> profiles => books.EnabledRulebooks.SelectMany(book => book.MissionProfiles);
+    private bool hasProfile() => missionProfile != null;
+    #endregion
+
+    #region Page4
+    private string Name = "USS ";
+    private string Registry = "NCC ";
+    private DateTime ServiceDate = new DateTime(2371, 1, 1);
+    private Dictionary<string, DateTime> importantTimes = new Dictionary<string, DateTime>() {
+        {"Enterprise"               , new DateTime(2151, 1, 1)}, 
+        {"Discovery"                , new DateTime(2255, 1, 1)},
+        {"The Original Series"      , new DateTime(2265, 1, 1)},
+        {"Original Series Movies"   , new DateTime(2273, 1, 1)},
+        {"The Next Generation"      , new DateTime(2364, 1, 1)},
+        {"Deep Space 9"             , new DateTime(2369, 1, 1)},
+        {"Voyager"                  , new DateTime(2371, 1, 1)},
+        {"Picard"                   , new DateTime(2399, 1, 1)},
+        {"Lower Decks"              , new DateTime(2380, 1, 1)},
+        {"Discovery S3"             , new DateTime(3101, 1, 1)},
+    };
+
+    private Generators.UfpRegistryGenerator generator = new Generators.UfpRegistryGenerator();
+    private void randomName() {
+        this.Name = generator.RandomName();
+    }
+    private void randomId() {
+        this.Registry = generator.RandomRegistryNumber();
+    }
+    #endregion 
+
+    #region Page5
+    private ListSelect<ShipTalent> profileTalentSelect;
+    private ShipTalent profileTalent => profileTalentSelect?.Selected;
+    private IEnumerable<ShipTalent> talents => books.EnabledRulebooks.SelectMany(book => book.ShipTalents);
+    private IEnumerable<ShipTalent> profileTalents => talents.Where(
+        talent => 
+            missionProfile.MissionProfileTalents.Contains(talent.Name)
+            && !spaceframe.StartingTalents.Contains(talent.Name) // don't show talents I already have
+        );
+    private bool hasProfileTalent() => profileTalent != null;
+    #endregion
+
+    #region Page6
+    private ListSelect<ShipTalent> additionalTalentSelect;
+    private int additionalTalentCount => spaceframe.Scale - spaceframe.StartingTalents.Count - 1;
+    private IEnumerable<ShipTalent> additionalTalents(){
+        var vessel = FinalShip;
+        return talents.Where(talent => talent.CanBeUsedBy(vessel));
+    } 
+    #endregion
+
+    #region Page7
+    private Systems refitedSystems = new Systems();
+    private int refitPoints =>
+        Math.Max(
+            0, 
+            (int)((ServiceDate - spaceframe.DesignDate).TotalDays / 356) / 10
+        );
+    #endregion
+
+    public PlayerVessel FinalShip {
+        get {
+            PlayerVessel vessel = new PlayerVessel();
+            vessel.Name = Name;
+            vessel.Registry = Registry;
+            vessel.Frame = spaceframe;
+            vessel.Systems = new Systems();
+            vessel.Systems.Add(spaceframe.Systems);
+            vessel.Systems.Add(refitedSystems);
+            vessel.MissionProfile = missionProfile;
+            vessel.Departments = new Disciplines();
+            vessel.Departments.Add(spaceframe.Departments);
+            vessel.Departments.Add(missionProfile.Departments);
+            vessel.Talents = new List<ShipTalent>();
+
+            // Add initial talents
+            foreach (var talentName in spaceframe.StartingTalents) {
+                var talent = talents.Where(t => t.Name == talentName).FirstOrDefault();
+                if (talent != null) {
+                    vessel.Talents.Add(talent);
+                }
+            }
+            // Add mission profile talent
+            vessel.Talents.Add(profileTalent);
+
+            // Add remaining Scale - Count (talents + mission profile talent) talents
+            if (additionalTalentSelect != null) {
+                foreach (var talent in additionalTalentSelect.AllSelected) {
+                    vessel.Talents.Add(talent);
+                }
+            }
+
+            return vessel;
+        }
+    }
+
+
+    [Parameter] public Action<PlayerVessel> OnVesselCreated {get; set;}
+    private void done() {
+        OnVesselCreated?.Invoke(FinalShip);
+    }
+}

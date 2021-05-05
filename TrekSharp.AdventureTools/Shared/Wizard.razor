@@ -1,0 +1,97 @@
+@inherits AppComponentBase
+
+<CascadingValue Value=this>
+    @ChildContent
+</CascadingValue>
+
+@if (ActiveStage != null) {
+    if (ActiveStage.IsShowingHelp) {
+        <div class="w3-center">
+            <button @onclick="readHelp">Confirm</button>
+        </div>
+    } else {
+        <div class="w3-row">
+            <div class="w3-col s6">
+                @if(hasPrevious() && (ActiveStage == null || ActiveStage.AllowBacktracking)) {
+                    <button @onclick="previous">Back</button>
+                } else {
+                    <span>&nbsp;</span>
+                }
+            </div>
+            <div class="w3-col s6 w3-right-align">
+                @if(hasNext()) {
+                    if (isValid()) {
+                    <button @onclick="next">Next</button>
+                    }
+                } else {
+                    <button @onclick="confirm">Done</button>
+                }
+            </div>
+        </div>
+    }
+}
+
+@code {
+
+    /*
+    Usage:
+    <Wizard>
+        <WizardStage>
+            <Help>
+                In this next step, press go
+            </Help>
+            <Content>
+                <button>go</button>
+            </Content>
+        </WizardStage>
+    </Wizard>
+    */
+
+    private List<WizardStage> Pages = new List<WizardStage>();
+    public int Count => Pages.Count;
+    private int active = -1;
+    public WizardStage ActiveStage => active >= 0 && active < Pages.Count ? Pages[active] : null;
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public Action OnWizardComplete {get; set;}
+    [Parameter] public bool AllowBacktracking {get; set;} = true;
+
+    public void AddStage(WizardStage stage) {
+        if (stage != null) {
+            Pages.Add(stage);
+            if (Count == 1) {
+                active = 0;
+            }
+        }
+        StateHasChanged();
+    }
+
+    private void readHelp() {
+        if (ActiveStage != null) {
+            ActiveStage.ReadHelp();
+        }
+    }
+
+    private bool hasPrevious() {
+        return AllowBacktracking && active - 1 >= 0;
+    }
+    private void previous() {
+        if (hasPrevious()) {
+            active--;
+        }
+    }
+    private bool hasNext() {
+        return active + 1 < this.Pages.Count;
+    }
+    private bool isValid() {
+        return (ActiveStage == null || ActiveStage.ValidatationFunction == null || ActiveStage.ValidatationFunction());
+    }
+    private void next() {
+        if (hasNext()) {
+            active++;
+            ResetScrollPosition();
+        }
+    }
+    private void confirm() {
+        OnWizardComplete?.Invoke();
+    }
+}

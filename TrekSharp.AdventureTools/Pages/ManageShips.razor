@@ -7,10 +7,6 @@
     <div class="container w3-margin-bottom">
         <LCARS Title="SHIPS">
             <div class="w3-padding row-fill">
-                <div class="w3-container w3-right no-print">
-                    <button @onclick="@(() => raw.Open())">+ Sheet</button>
-                    <button @onclick="@(() => importer.Open())">+ Json</button>
-                </div>
                 <Col4Layout Items=Data.Ships>
                     <Template>
                         <div class="row" @onclick="@(() => NavigateToPlayerVessel(context))">
@@ -43,23 +39,3 @@
         </LCARS>
     </div> 
 </div>
-
-<AssetImporter
-    @ref="importer"
-    TItem="PlayerVessel"
-    Title="Import Vessel"
-    OnLoad="onShipLoaded"
-/>
-
-<RawShipCreator @ref="raw" OnImport=@(() => StateHasChanged())></RawShipCreator>
-
-@code {
-    private RawShipCreator raw;
-    private AssetImporter<PlayerVessel> importer;
-    private void onShipLoaded(PlayerVessel vessel) {
-        this.Data.Ships.Add(vessel);
-        this.StateHasChanged();
-    }
-
-    
-}

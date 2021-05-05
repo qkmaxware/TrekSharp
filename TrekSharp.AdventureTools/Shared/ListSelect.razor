@@ -1,0 +1,75 @@
+@typeparam T
+@using System.Globalization
+
+<div class="w3-margin-bottom">
+    @if (!string.IsNullOrEmpty(Title)) {
+    <div class="row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            @Title 
+        </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    }
+    <div class="w3-row w3-margin-bottom">
+        <div class="w3-half">
+            @if (Filterable) {
+            <div class="w3-right-align">
+                <input placeholder="filter" class="w3-input" @bind=filterString></input>
+            </div>
+            }
+            <ul class="w3-ul w3-hoverable">
+                @if (List != null) {
+                    foreach (var value in List) {
+                        if (matchesFilter(value)) {
+                        var capture = value;
+                        <li @onclick=@(() => select(capture)) class="@((AllSelected.Contains(capture)) ? "w3-blue" : string.Empty)">
+                            @capture?.ToString()
+                        </li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+        <div class="w3-half w3-hide-small">
+            @if (Info != null && Selected != null) {
+                @Info(Selected)
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title {get; set;}
+    [Parameter]
+    public bool Filterable {get; set;} = false;
+    [Parameter]
+    public IEnumerable<T> List {get; set;}
+    [Parameter]
+    public Action OnSelectionChanged {get; set;}
+    [Parameter] 
+    public int MaxSelected {get; set;} = 1;
+    [Parameter]
+    public RenderFragment<T> Info {get; set;}
+
+    public T Selected => AllSelected.Count > 0 ? AllSelected[AllSelected.Count - 1] : default(T);
+    public List<T> AllSelected = new List<T>();
+
+    private string filterString;
+    private bool matchesFilter(T obj) {
+        if (obj == null)
+            return false;
+        if (string.IsNullOrEmpty(filterString))
+            return true;
+        return CultureInfo.InvariantCulture.CompareInfo.IndexOf(obj.ToString(), filterString, CompareOptions.IgnoreCase) >= 0;
+    }
+
+    private void select(T obj) {
+        this.AllSelected.Add(obj);
+        while(this.AllSelected.Count > MaxSelected) {
+            AllSelected.RemoveAt(0);
+        }
+        OnSelectionChanged?.Invoke();
+    }
+}

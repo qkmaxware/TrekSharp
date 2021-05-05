@@ -1,0 +1,13 @@
+@page "/beta/new/ship/custom"
+@inherits Page
+
+<LCARS Title="CUSTOM VESSEL">
+    <PlayerVesselWizard OnVesselCreated=saveVessel></PlayerVesselWizard>
+</LCARS>
+
+@code {
+    private void saveVessel(PlayerVessel vessel) {
+        Data.Ships.Add(vessel);
+        this.NavigateToPlayerVessel(vessel);
+    }
+}

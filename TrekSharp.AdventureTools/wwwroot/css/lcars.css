@@ -79,6 +79,9 @@ body {
     background-color: #CC99CC !important;
     color: black;
 }
+.lcars-border-secondary {
+    border: 1px solid #CC99CC !important;
+}
 
 .lcars .border-secondary {
     border: 1px solid #CC99CC !important;

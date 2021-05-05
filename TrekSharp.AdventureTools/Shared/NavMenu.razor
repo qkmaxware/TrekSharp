@@ -35,32 +35,15 @@
                     Plot
                 </NavLink>
                 }
-                <div class="vertical-space w3-margin-left w3-margin-right">
-                    <div class="row">
-                        <div class="hbar secondary elbow-left knee-left" style="margin-right:10px; width: 10px;"></div>
-                        <div>
-                            Player Character
-                        </div>
-                        <div class="hbar secondary knee-right row-fill" style="margin-left:10px;"></div>
-                    </div>
-                    <div class="rbar" style="border-color: #CC99CC !important;">
-                        <NavLink class="w3-button w3-block" href="new/player/lifepath" Match="NavLinkMatch.All">
-                            Lifepath Creation
-                        </NavLink>
-                        <NavLink class="w3-button w3-block" href="new/player/random" Match="NavLinkMatch.All">
-                            Random 
-                        </NavLink>
-                    </div>
-                    <div class="row">
-                        <div class="hbar secondary elbow-left knee-left elbow-right row-fill"></div>
-                    </div>
-                </div>
+                <NavLink class="w3-button w3-block" href="new/player" Match="NavLinkMatch.All">
+                    Player Character
+                </NavLink>
                 <NavLink class="w3-button w3-block" href="new/support" Match="NavLinkMatch.All">
                     Support Character
                 </NavLink>
                 @if (Data.IsGm) {
                 <NavLink class="w3-button w3-block" href="new/ship" Match="NavLinkMatch.All">
-                    Ship
+                    Vessel
                 </NavLink>
                 <NavLink class="w3-button w3-block" href="new/custom" Match="NavLinkMatch.All">
                     Homebrew Data

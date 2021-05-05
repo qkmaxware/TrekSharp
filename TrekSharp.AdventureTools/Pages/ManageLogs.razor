@@ -13,8 +13,8 @@
         <div class="w3-padding">
             <input type="text" placeholder="search logs" @bind="filter" style="width: 100%;"/>
             <div class="w3-row">
-                <button class="w3-col s6 w3-button @(!flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => flaggedOnly = false)>All</button>
-                <button class="w3-col s6 w3-button @(flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0;" @onclick=@(() => flaggedOnly = true)>Flagged</button>
+                <button class="w3-col s6 w3-button @(!flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0; font-size: medium;" @onclick=@(() => flaggedOnly = false)>All</button>
+                <button class="w3-col s6 w3-button @(flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0; font-size: medium;" @onclick=@(() => flaggedOnly = true)>Flagged</button>
             </div>
             <div class="w3-right-align">
                 <button class="w3-margin" @onclick=@(() => compose = true)>Record Log</button>

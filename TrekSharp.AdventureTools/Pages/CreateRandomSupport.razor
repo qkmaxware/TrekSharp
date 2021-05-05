@@ -1,0 +1,170 @@
+@page "/new/support/random"
+@inherits Page
+
+<LCARS Title="RANDOM SUPPORT">
+    <div class="w3-panel typeface">
+        This tool will randomly generate a supporting character. Simply select your desired options below and press 'Generate New' button to create your character.
+    </div>
+    <RulebookPicker @ref="Rulebooks"/>
+
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            RANDOMIZER SETTINGS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <div class="w3-padding">
+        <p>
+            Every character needs a name.
+        </p>
+        <div class="row w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Name</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <input type="text" class="w3-padding w3-input"  @bind="name"/>
+            </span>
+        </div>
+
+        <p>
+            You can choose what species you want this character to be a member of. This option is desirable if if have a particular species and name in mind.
+        </p>
+        <div class="row  w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Species</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <select class="w3-black w3-input lcars-border-primary" @bind="selectedSpecies">
+                    <option value="">ANY</option>
+                    @if (this.Rulebooks != null) {
+                        foreach (var species in this.Rulebooks.EnabledRulebooks.SelectMany(book => book.Species)) {
+                            <option value="@species.Name">@species.Name</option>
+                        }
+                    }
+                </select>
+            </span>
+        </div>
+
+        <p>
+            What type of role do you want this character to fullfill? Leave as "ANY" for the role to be randomly chosen as well.
+        </p>
+        <div class="row  w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Role</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <select class="w3-black w3-input lcars-border-primary" @bind="selectedRole">
+                    <option value="">ANY</option>
+                    @foreach (var role in this.roles) {
+                        <option value="@role.Key">@role.Key</option>
+                    }
+                </select>
+            </span>
+        </div>
+
+        <div class="w3-right-align w3-padding">
+            <button class="w3-button w3-blue" @onclick="generateAndShow"> Generate New </button>
+        </div>
+    </div>
+</LCARS>
+
+@code {
+
+    RulebookPicker _books;
+    RulebookPicker Rulebooks {
+        get {
+            return _books;
+        }
+        set {
+            _books = value;
+            _books.OnChange = refresh;
+        }
+    }
+
+    private void refresh() {
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender) {
+        if (firstRender) {
+            StateHasChanged();
+        }
+    }
+
+
+    private string name;
+
+    private string selectedRole;
+    private Dictionary<string, Disciplines> roles = new Dictionary<string, Disciplines> {
+        {"Commanding Officer", new Disciplines { Command = 1 }},
+        {"Pilot", new Disciplines { Conn = 1 }},
+        {"Security Officer", new Disciplines { Security = 1 }},
+        {"Science Officer", new Disciplines { Science = 1 }},
+        {"Engineer", new Disciplines { Engineering = 1 }},
+        {"Medical Officer", new Disciplines { Medicine = 1 }},
+    };
+
+    private string selectedSpecies = null;
+
+    private List<Rank> ranks = new List<Rank> {
+        Rank.Ensign, Rank.LieutenantJuniorGrade, Rank.Lieutenant, Rank.LieutenantCommander, Rank.Commander
+    };
+
+    private Generators.ValueGenerator values = new Generators.ValueGenerator();
+    private Generators.FocusGenerator focuses = new Generators.FocusGenerator();
+
+    private void generateAndShow() {
+        var character = generate();
+        Data.Supports.Add(character);
+        this.NaviateToSupportCharacter(character);
+    }
+
+    private SupportCharacter generate() {
+        var species = Rulebooks.EnabledRulebooks.SelectMany(book => book.Species).ToList();
+        var attr_points = new List<int>() { 10, 9, 9, 8, 8, 7 };
+        var disc_points = new List<int>() {  4, 3, 2, 2, 1, 1 };
+
+        Disciplines role = null;
+        string assignment = null;
+        if (!string.IsNullOrEmpty(selectedRole)) {
+            role = roles[selectedRole];
+            assignment = selectedRole;
+        } else {
+            var select = roles.ToList().Random();
+            assignment = select.Key; 
+            role = select.Value;
+        }
+
+        var attr = new Attributes();
+        var attr_list = attr.Enumerate().ToList();
+        while (attr_points.Count > 0) {
+            var points = attr_points.RemoveRandom();
+            attr_list.RemoveRandom().Value = points;
+        }
+        var disc = new Disciplines();
+        var disc_list = disc.Enumerate().ToList();
+        while (disc_points.Count > 0) {
+            var points = disc_points.RemoveRandom();
+            disc_list.RemoveRandom().Value = points;
+        }
+
+        SupportCharacter c = new SupportCharacter {
+            Name = name,
+            Rank = ranks.Random(),
+            Assignment = assignment,
+            Species = species.Random(),
+            Attributes = attr,
+            Disciplines = disc,
+            Equipment = new List<Item>() {
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(1),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(2),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
+                TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
+            },
+            Focuses = new List<string> {
+                focuses.GenerateFocusForDiscipline(role),
+                focuses.GenerateFocusForDiscipline(role),
+                focuses.GenerateFocusForDiscipline(role)
+            }
+        };
+
+        return c;
+    }
+
+}

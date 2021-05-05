@@ -1,0 +1,568 @@
+<Wizard AllowBacktracking=false OnWizardComplete=onWizardDone>
+    <WizardStage>
+        <Content>
+            <p>
+                Select which sources are to be used for character creation. Different sources can have different species, talents, or character backgrounds. Adding more sources creates more options for customization. 
+            </p>
+            <p>
+                Your Game-Master may restict which sources are allowed to be used as some sources may not make sence with the scenario that they are crafting. Always confirm with your GM which sources are allowed.
+            </p>
+            <RulebookPicker @ref="sources"></RulebookPicker>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=requireSpecies>
+        <Content>
+            <p>
+                Select the species which your character is a member of. Different species have different initial attributes and are allowed to access special talents.
+            </p>
+            <ListSelect @ref="speciesSelector" Title="SPECIES" List=species Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div style="width: 100%; height: 125px;">
+                            <img src="@context.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Attributes
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @foreach (var attr in context.AttributeModifiers.Enumerate()) {
+                                <span>@attr.Name +@attr.Value</span>
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Details
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @if (context is CustomSpecies cs) {
+                                <span>
+                                    @cs.Description
+                                </span>
+                            } else {
+                                <div class="w3-center">
+                                    For species information see <a href="@(context.GetMemoryAlphaSearchLink())" target="_blank">Memory Alpha</a>.
+                                </div>
+                            }
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasFirstTalent>
+        <Content>
+            <p>
+                Select your character's first talent. 
+            </p>
+            <ListSelect @ref="speciesTalentSelector" Title="FIRST TALENT" List=validTalents() Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @context.Description
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasEnvironment>
+        <Content>
+            <p>
+                Select an environment for your character to have grown up in. Environments represent where your character was born and how they spent their early years. 
+            </p>
+            <ListSelect @ref=environmentSelect Title="ENVIRONMENT" List=environments Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @context.Description
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Available Attributes
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @foreach (var item in context.AttributeSelectionMask.Enumerate()){
+                                if (item.Value > 0) {
+                                    <span>@item.Name</span>
+                                }
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Available Disciplines
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @foreach (var item in context.DisciplineSelectionMask.Enumerate()){
+                                if (item.Value > 0) {
+                                    <span>@item.Name</span>
+                                }
+                            }
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    @characterEnvironment?.Name
+                </div>
+                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+            </div>
+            <p>
+                @characterEnvironment?.Description
+            </p>
+            <div class="w3-padding">
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        ATTRIBUTES
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <AttributeIncrement 
+                        Points="1" 
+                        Mask="characterEnvironment.AttributeSelectionMask ?? characterSpecies.AttributeModifiers"
+                        Reference="characterEnvironmentAttributes"
+                        />
+                </div>
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        DISCIPLINES
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <DisciplineIncrement 
+                        Points="1" 
+                        Mask="characterEnvironment.DisciplineSelectionMask"
+                        Reference="characterEnvironmentDisciplines"
+                        />
+                </div>
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        VALUE
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    This Value should reflect the environment and culture the character was raised within. This is a good opportunity to consider how the character views their own culture, and how they connect — or possibly, don’t connect — to the philosophies and traditions of their people.
+                    <br>
+                    <input type="text" style="width: 100%" @bind="characterEnvironmentValue"/>
+                </div>
+            </div>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasUpbringing>
+        <Content>
+            <p> 
+                Select an upbrining for your character. Upbrinings represent the potential values and skilles your character would have been experienced to while in their formative years. Your character may choose to embrace this upbrining or reject it.
+            </p>
+            <ListSelect @ref=upbringingSelect Title="UPBRINGING" List=upbringings Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @context.Description
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    @characterUpbringing?.Name
+                </div>
+                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+            </div>
+            <p>
+                @characterUpbringing?.Description
+            </p>
+            <div class="w3-padding">
+                <div class="w3-margin-bottom">
+                    Do you EMBRACE or REBEL against your upbringing?<br>
+                    <label>Embrace</label>
+                    <input type="radio" 
+                        checked="@(characterAcceptsUpbringing == true)" 
+                        @onchange="@(() => characterAcceptsUpbringing = true)" 
+                    />
+                    <br>
+                    <label>Rebel</label>
+                    <input type="radio" 
+                        checked="@(characterAcceptsUpbringing == false)" 
+                        @onchange="@(() => characterAcceptsUpbringing = false)" 
+                    />
+                </div>
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        ATTRIBUTES
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    @foreach (var attr in characterUpbringingAttributes.Enumerate()) {
+                        if (attr.Value > 0) {
+                            <div class="row w3-margin-bottom">
+                                <div class="hbar elbow-left knee-left secondary" style="width: 32px;"></div>
+                                <div class="hbar w3-padding typeface secondary" style="width: 96px;">
+                                    @attr.Name
+                                </div>
+                                <div class="hbar row-fill w3-black" style="margin-left: 10px;">
+                                    +@attr.Value
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        DISCIPLINES
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <DisciplineIncrement 
+                        Points="1" 
+                        Mask="characterUpbringing.DisciplineMask"
+                        Reference="characterUpbringingDisciplines"
+                        />
+                </div>
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        FOCUS
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <p>
+                        The character’s Focus should relate to their connection to their upbringing, covering skills learned during the character’s formative years.
+                    </p>
+                    <input type="text" style="width: 100%" @bind="characterUpbringingFocus"/>
+                </div> 
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        TALENT
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <ListSelect @ref="upbringingTalentSelect" List=validTalents() Filterable=true OnSelectionChanged=StateHasChanged>
+                    <Info>
+                        <LCARS>
+                            <div class="row">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @context.Name
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                            </div>
+                            <div class="w3-container">
+                                @context.Description
+                            </div>
+                        </LCARS>
+                    </Info>
+                </ListSelect>
+            </div>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasCareerTrack>
+        <p>
+            Select a track to attend at Starfleet Academy. While all cadets will come out of the academy with a wide range of skills and knowledge, different tracks will provide your character with slightly different areas of expertiese. 
+        </p>
+        <ListSelect @ref=trackSelect Title="ACADEMY TRACK" List=tracks Filterable=false OnSelectionChanged=StateHasChanged>
+        </ListSelect>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    @characterCareerTrack.Value
+                </div>
+                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+            </div>
+            <p>
+                @if (characterCareerTrack.Value == CareerTrack.Command) {
+                    <span>The Command track is for those cadets who aspire to command their own starship someday. It focuses on leadership and interpersonal skills, diplomacy, decisionmaking in crisis situations, an understanding of protocol and procedure, and starship operations, which includes flight control.</span>
+                } else if (characterCareerTrack.Value == CareerTrack.Operations) {
+                    <span>The Operations track is practical and hands-on, dealing with many of the realities of Starfleet’s mission. Divided broadly into engineering and security divisions, operations track cadets are defined by a sense of pragmatism, whether that applies to the technical or the tactical.</span>
+                } else if (characterCareerTrack.Value == CareerTrack.Sciences) {
+                    <span>Somewhat isolated from the other Tracks, the Sciences track is primarily academic, with Starfleet Academy producing many accomplished scientists. Included within the sciences track, but separated by a distinct curriculum, is Starfleet Medical, training doctors, nurses, and counselors to serve aboard Starfleet vessels and facilities across the Federation.</span>
+                }
+            </p>
+            <div class="w3-padding">
+                <div style="w3-padding">
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            ATTRIBUTES
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        <AttributeIncrement 
+                            Points="3"
+                            MaxPointsPerItem="2" 
+                            Mask="attributeMaskAll"
+                            Reference="characterCareerPathAttributes"
+                            OnChange=@(() => StateHasChanged())
+                            />
+                    </div>
+                </div>
+
+                <div style="w3-padding">
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            MAJOR
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        @if (characterCareerTrack.Value == CareerTrack.Command) {
+                            <DisciplineIncrement 
+                                Points="1"
+                                Increment="2"
+                                Mask="commandMajorsMask"
+                                Reference="characterCareerPathMajorDisciplines"
+                                OnChange="@(() => { minorDisciplineComponent.UpdateMask(createMinorMask()); StateHasChanged(); })"
+                                />
+                        } else if (characterCareerTrack.Value == CareerTrack.Operations) {
+                            <DisciplineIncrement 
+                                Points="1"
+                                Increment="2"
+                                Mask="opsMajorsMask"
+                                Reference="characterCareerPathMajorDisciplines"
+                                OnChange="@(() => { minorDisciplineComponent.UpdateMask(createMinorMask()); StateHasChanged(); })"
+                                />
+                        } else if (characterCareerTrack.Value == CareerTrack.Sciences) {
+                            <DisciplineIncrement 
+                                Points="1"
+                                Increment="2"
+                                Mask="scienceMajorsMask"
+                                Reference="characterCareerPathMajorDisciplines"
+                                OnChange="@(() => { minorDisciplineComponent.UpdateMask(createMinorMask()); StateHasChanged(); })"
+                                />
+                        }
+                    </div>
+                </div>
+            </div>
+        </Content>
+    </WizardStage>
+</Wizard>
+
+@code {
+    #region Events
+    [Parameter] public Action<PlayerCharacter> OnCharacterDone {get; set;}
+    private void onWizardDone() {
+        OnCharacterDone?.Invoke(null);
+    }
+    #endregion
+
+    #region Enums
+    enum CareerTrack {
+        Command, Operations, Sciences
+    }
+    private List<CareerTrack> tracks = new List<CareerTrack> {CareerTrack.Command, CareerTrack.Operations, CareerTrack.Sciences};
+    enum CareerAge {
+        Young, Experienced, Veteran
+    }
+    #endregion
+
+    #region Sources
+    private RulebookPicker sources;
+    private IEnumerable<Species> species => sources.EnabledRulebooks.SelectMany(book => book.Species);
+    private IEnumerable<TrekSharp.Environment> environments => sources.EnabledRulebooks.SelectMany(book => book.Environments);
+    private IEnumerable<Upbringing> upbringings => sources.EnabledRulebooks.SelectMany(book => book.Upbringings);
+    private IEnumerable<CareerEvent> careerEvents => sources.EnabledRulebooks.SelectMany(book => book.CareerEvents);
+    private IEnumerable<CharacterTalent> talents => sources.EnabledRulebooks.SelectMany(book => book.Talents);
+    #endregion
+
+    #region Character
+    private string characterName = null;
+    private Rank characterRank = null;
+    private string characterAssignment = null;
+    private Attributes characterBaseAttributes = new Attributes (7);
+    private Attributes characterCustomSpeciesAttributes = new Attributes(0);
+    private Attributes speciesAttributes => characterSpecies?.AttributeModifiers ?? characterCustomSpeciesAttributes;
+
+    private Attributes characterCareerPathAttributes = new Attributes();
+    private Disciplines characterCareerPathMajorDisciplines = new Disciplines();
+    private Disciplines characterCareerPathMinorDisciplines = new Disciplines();
+    private string characterCareerFocus1 = null;
+    private string characterCareerFocus2 = null;
+    private string characterCareerFocus3 = null;
+    private string characterCareerValue = null;
+    private CharacterTalent characterCareerTalent = null;
+    private string characterCareerExperienceValue = null;
+    private CharacterTalent characterCareerExperienceExperiencedTalent = null;
+    private CharacterTalent caracterCareerAgeTalent => experience switch {
+        CareerAge.Young => TrekSharp.Rulebooks.CoreRulebook.Instance.Talents.Where(talent => talent.Name == "Untapped Potential").First(),
+        CareerAge.Veteran => TrekSharp.Rulebooks.CoreRulebook.Instance.Talents.Where(talent => talent.Name == "Veteran").First(),
+        _ => characterCareerExperienceExperiencedTalent
+    };
+    private List<CharacterTalent> characterTalents => new List<CharacterTalent>(){
+        firstTalent,
+        characterUpbringingTalent,
+        characterCareerTalent,
+        caracterCareerAgeTalent
+    };
+    private List<string> characterValues => new List<string>() {
+        characterEnvironmentValue,
+        characterCareerValue,
+        characterCareerExperienceValue,
+        characterRelationshipValue
+    };
+    private List<string> characterFocuses => new List<string>() {
+        characterUpbringingFocus,
+        characterCareerFocus1,
+        characterCareerFocus2,
+        characterCareerFocus3,
+        characterFirstEventFocus,
+        characterSecondEventFocus,
+    };
+    private List<Item> characterEquipment = new List<Item>() {
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(1),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(2),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
+        TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
+    };
+    public PlayerCharacter FinalCharacter {
+        get {
+            return new PlayerCharacter {
+                Name = characterName,
+                Rank = characterRank,
+                Assignment = characterAssignment,
+                Species = characterSpecies,
+                Attributes = characterAttributesAfterRebalance,
+                Disciplines = characterDisciplinesAfterRebalance,
+                Equipment = characterEquipment,
+                Values = characterValues,
+                Focuses = characterFocuses,
+                Talents = characterTalents,
+
+                Upbringing = characterUpbringing?.Name,
+                Environment = characterEnvironment?.Name,
+            };
+        }
+    }
+    #endregion
+
+    #region Species
+    private ListSelect<Species> speciesSelector;
+    private Species characterSpecies => speciesSelector?.Selected;
+    private bool requireSpecies() => speciesSelector?.Selected != null;
+    #endregion
+
+    #region First Talent
+    private ListSelect<CharacterTalent> speciesTalentSelector;
+    private CharacterTalent firstTalent => speciesTalentSelector?.Selected;
+    private IEnumerable<CharacterTalent> validTalents() {
+        var @char = this.FinalCharacter; // Cached once across entire filter
+        return talents.Where(talent =>
+                talent.CanBeUsedBy(@char)                 // Character can use talent (species or skill rating restrictions)
+                && !characterTalents.Contains(talent)     // Character does not already have this talent
+            ); 
+    }
+    private bool hasFirstTalent() => firstTalent != null;
+    #endregion
+
+    #region Environment
+    private ListSelect<TrekSharp.Environment> environmentSelect;
+    private TrekSharp.Environment characterEnvironment => environmentSelect?.Selected;
+    private string characterEnvironmentValue = null;
+    private Attributes characterEnvironmentAttributes = new Attributes();
+    private Disciplines characterEnvironmentDisciplines = new Disciplines();
+    private bool hasEnvironment() => characterEnvironment != null;
+    #endregion
+
+    #region Upbringing
+    private ListSelect<Upbringing> upbringingSelect;
+    private ListSelect<CharacterTalent> upbringingTalentSelect;
+    private Upbringing characterUpbringing => upbringingSelect?.Selected;
+    private bool hasUpbringing() => characterUpbringing != null;
+    public bool characterAcceptsUpbringing = true;
+    private Attributes characterUpbringingAttributes => 
+        characterUpbringing == null ? null : (
+            characterAcceptsUpbringing ? characterUpbringing.AcceptAttributeModifier : characterUpbringing.RejectAttributeModifier
+        );
+    private Disciplines characterUpbringingDisciplines = new Disciplines();
+    private string characterUpbringingFocus = null;
+    private CharacterTalent characterUpbringingTalent => upbringingTalentSelect?.Selected;
+    #endregion
+
+    #region Career
+    private ListSelect<CareerTrack> trackSelect;
+    private CareerTrack? characterCareerTrack => trackSelect?.Selected;
+    private bool hasCareerTrack() => characterCareerTrack.HasValue;
+    private Attributes attributeMaskAll = new Attributes(1);
+    private Disciplines commandMajorsMask = new Disciplines {
+        Command = 1,
+        Conn = 1,
+    };
+    private Disciplines opsMajorsMask = new Disciplines {
+        Engineering = 1,
+        Security = 1,
+    };
+    private Disciplines scienceMajorsMask = new Disciplines {
+        Medicine = 1,
+        Science = 1,
+    };
+    private Disciplines createMinorMask () {
+        Disciplines mask = new Disciplines(1); // Start with all
+        // Remove selected major
+        for (var i = 0; i < 6; i++) {
+            mask[i] -= this.characterCareerPathMajorDisciplines[i];
+        }
+        return mask;
+    }
+    private DisciplineIncrement minorDisciplineComponent;
+    private CareerAge experience = CareerAge.Experienced;
+    #endregion
+
+}

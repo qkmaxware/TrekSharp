@@ -1,0 +1,45 @@
+@page "/new/support"
+@inherits Page
+
+<LCARS Title="SUPPORT CHARACTER">
+    <div class="w3-panel typeface w3-center">
+        Various methods for creating supporting characters.
+    </div>
+    <NavLink class="w3-button w3-block" href="new/support/custom" Match="NavLinkMatch.All">
+        Custom Support
+    </NavLink>
+    <NavLink class="w3-button w3-block" href="new/support/random" Match="NavLinkMatch.All">
+        Randomly Generate
+    </NavLink>
+    <a class="w3-button w3-block" @onclick=openImporter>
+        Import From JSON
+    </a>
+    <a class="w3-button w3-block" @onclick=openRawImporter>
+        Import From Character Sheet
+    </a>
+</LCARS>
+
+<AssetImporter
+    @ref="importer"
+    TItem="SupportCharacter"
+    Title="Import Character"
+    OnLoad="onCharacterLoaded"
+/>
+
+<RawSupportCharacterCreator @ref=raw OnImport=onRawImport></RawSupportCharacterCreator>
+
+@code {
+    AssetImporter<SupportCharacter> importer;
+    private void openImporter() {
+        importer?.Open();
+    }
+    private void onCharacterLoaded(SupportCharacter character) {
+        this.Data.Supports.Add(character);
+    }
+
+    RawSupportCharacterCreator raw;
+    private void openRawImporter() {
+        raw?.Open();
+    }
+    private void onRawImport() {}
+}

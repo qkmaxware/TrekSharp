@@ -1,0 +1,47 @@
+@page "/new/ship"
+@inherits Page
+
+<LCARS Title="VESSEL">
+    <div class="w3-panel typeface w3-center">
+        Various methods for creating player vessels.
+    </div>
+    <NavLink class="w3-button w3-block" href="new/ship/custom" Match="NavLinkMatch.All">
+        Custom Vessel
+    </NavLink>
+    <a class="w3-button w3-block" @onclick=openImporter>
+        Import From JSON
+    </a>
+    <a class="w3-button w3-block" @onclick=openRawImporter>
+        Import From Vessel Sheet
+    </a>
+</LCARS>
+
+<AssetImporter
+    @ref="importer"
+    TItem="PlayerVessel"
+    Title="Import Vessel"
+    OnLoad="onShipLoaded"
+/>
+
+<RawShipCreator @ref="raw" OnImport=onRawShipLoaded></RawShipCreator>
+
+@code {
+    private AssetImporter<PlayerVessel> importer;
+    private void openImporter() {
+        importer?.Open();
+    }
+    private void onShipLoaded(PlayerVessel vessel) {
+        this.Data.Ships.Add(vessel);
+        this.StateHasChanged();
+    }
+
+    private RawShipCreator raw;
+    private void openRawImporter() {
+        raw?.Open();
+    }
+    private void onRawShipLoaded() {
+        this.StateHasChanged();
+    }
+
+    
+}

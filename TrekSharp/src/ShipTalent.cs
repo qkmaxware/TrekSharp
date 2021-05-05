@@ -19,6 +19,8 @@ public class ShipTalent {
     public virtual bool CanBeUsedBy(PlayerVessel ship) {
         return true;
     }
+
+    public override string ToString() => Name;
 }
 
 public class DateLimitedTalent : ShipTalent {
