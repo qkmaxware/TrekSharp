@@ -37,7 +37,7 @@
                         </div>
                         <div class="w3-container">
                             @foreach (var attr in context.AttributeModifiers.Enumerate()) {
-                                <span>@attr.Name +@attr.Value</span>
+                                <div>@attr.Name +@attr.Value</div>
                             }
                         </div>
                         <div class="row">
@@ -104,6 +104,7 @@
                         <div class="w3-container">
                             @context.Description
                         </div>
+                        @if ((context.AttributeSelectionMask ?? characterSpecies.AttributeModifiers ?? characterCustomSpeciesAttributes) != null) {
                         <div class="row">
                             <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                             <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
@@ -112,12 +113,14 @@
                             <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
                         </div>
                         <div class="w3-container">
-                            @foreach (var item in context.AttributeSelectionMask.Enumerate()){
+                            @foreach (var item in (context.AttributeSelectionMask ?? characterSpecies.AttributeModifiers ?? characterCustomSpeciesAttributes).Enumerate()){
                                 if (item.Value > 0) {
-                                    <span>@item.Name</span>
+                                    <div>@item.Name</div>
                                 }
                             }
                         </div>
+                        }
+                        @if(context.DisciplineSelectionMask != null) {
                         <div class="row">
                             <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                             <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
@@ -128,10 +131,11 @@
                         <div class="w3-container">
                             @foreach (var item in context.DisciplineSelectionMask.Enumerate()){
                                 if (item.Value > 0) {
-                                    <span>@item.Name</span>
+                                    <div>@item.Name</div>
                                 }
                             }
                         </div>
+                        }
                     </LCARS>
                 </Info>
             </ListSelect>
@@ -218,7 +222,7 @@
             <div class="row">
                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                    @characterUpbringing?.Name
+                    @characterUpbringing?.Name?.ToUpper()
                 </div>
                 <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
             </div>
@@ -228,17 +232,17 @@
             <div class="w3-padding">
                 <div class="w3-margin-bottom">
                     Do you EMBRACE or REBEL against your upbringing?<br>
-                    <label>Embrace</label>
-                    <input type="radio" 
+                    <input class="w3-check" type="radio" 
                         checked="@(characterAcceptsUpbringing == true)" 
                         @onchange="@(() => characterAcceptsUpbringing = true)" 
                     />
+                    <label>Embrace</label>
                     <br>
-                    <label>Rebel</label>
-                    <input type="radio" 
+                    <input class="w3-check" type="radio" 
                         checked="@(characterAcceptsUpbringing == false)" 
                         @onchange="@(() => characterAcceptsUpbringing = false)" 
                     />
+                    <label>Rebel</label>
                 </div>
                 <div class="row">
                     <div class="hbar w3-padding typeface">
@@ -292,38 +296,42 @@
                     </div>
                     <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
                 </div>
-                <ListSelect @ref="upbringingTalentSelect" List=validTalents() Filterable=true OnSelectionChanged=StateHasChanged>
-                    <Info>
-                        <LCARS>
-                            <div class="row">
-                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                    @context.Name
+                <div class="w3-container w3-padding">
+                    <ListSelect @ref="upbringingTalentSelect" List=validTalents() Filterable=true OnSelectionChanged=StateHasChanged>
+                        <Info>
+                            <LCARS>
+                                <div class="row">
+                                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                        @context.Name
+                                    </div>
+                                    <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
                                 </div>
-                                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
-                            </div>
-                            <div class="w3-container">
-                                @context.Description
-                            </div>
-                        </LCARS>
-                    </Info>
-                </ListSelect>
+                                <div class="w3-container">
+                                    @context.Description
+                                </div>
+                            </LCARS>
+                        </Info>
+                    </ListSelect>
+                </div>
             </div>
         </Content>
     </WizardStage>
     <WizardStage ValidatationFunction=hasCareerTrack>
-        <p>
-            Select a track to attend at Starfleet Academy. While all cadets will come out of the academy with a wide range of skills and knowledge, different tracks will provide your character with slightly different areas of expertiese. 
-        </p>
-        <ListSelect @ref=trackSelect Title="ACADEMY TRACK" List=tracks Filterable=false OnSelectionChanged=StateHasChanged>
-        </ListSelect>
+        <Content>
+            <p>
+                Select a track to attend at Starfleet Academy. While all cadets will come out of the academy with a wide range of skills and knowledge, different tracks will provide your character with slightly different areas of expertiese. 
+            </p>
+            <ListSelect @ref=trackSelect Title="ACADEMY TRACK" List=tracks Filterable=false OnSelectionChanged=StateHasChanged>
+            </ListSelect>
+        </Content>
     </WizardStage>
-    <WizardStage>
+    <WizardStage ValidatationFunction=hasCareerTalent>
         <Content>
             <div class="row">
                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                    @characterCareerTrack.Value
+                    @characterCareerTrack.Value.ToString().ToUpper()
                 </div>
                 <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
             </div>
@@ -340,7 +348,7 @@
                 <div style="w3-padding">
                     <div class="row">
                         <div class="hbar w3-padding typeface">
-                            ATTRIBUTES
+                            ATTRIBUTES (PICK 3)
                         </div>
                         <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
                     </div>
@@ -358,7 +366,7 @@
                 <div style="w3-padding">
                     <div class="row">
                         <div class="hbar w3-padding typeface">
-                            MAJOR
+                            MAJOR (PICK 1)
                         </div>
                         <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
                     </div>
@@ -390,6 +398,386 @@
                         }
                     </div>
                 </div>
+
+                <div style="w3-padding">
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            MINORS (PICK 2)
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        <DisciplineIncrement 
+                                Points="2"
+                                MaxPointsPerItem="1"
+                                Mask="createMinorMask()"
+                                Reference="characterCareerPathMinorDisciplines"
+                                @ref="minorDisciplineComponent"
+                                OnChange=@(() => StateHasChanged())
+                                />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        FOCUSES
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <p>
+                        Select three focuses for your character, at least one reflecting the time at Starfleet Academy.
+                    </p>
+                    <input type="text" style="width: 100%" @bind="characterCareerFocus1"/>
+                    <input type="text" style="width: 100%" @bind="characterCareerFocus2"/>
+                    <input type="text" style="width: 100%" @bind="characterCareerFocus3"/>
+                </div>
+
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        VALUE
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <p>
+                        The character gains a single Value, which should reflect some aspect of the character’s beliefs that developed during their time at the Academy.
+                    </p>
+                    <input type="text" style="width: 100%" @bind="characterCareerValue"/>
+                </div>
+
+                <div style="w3-padding">
+                    <div class="row">
+                        <div class="hbar w3-padding typeface">
+                            TALENT
+                        </div>
+                        <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                    </div>
+                    <div class="w3-container w3-padding">
+                        <ListSelect @ref="careerTalentSelect" List=validTalents() Filterable=true OnSelectionChanged=StateHasChanged>
+                            <Info>
+                                <LCARS>
+                                    <div class="row">
+                                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                            @context.Name
+                                        </div>
+                                        <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                                    </div>
+                                    <div class="w3-container">
+                                        @context.Description
+                                    </div>
+                                </LCARS>
+                            </Info>
+                        </ListSelect>
+                    </div>
+                </div>
+            </div>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasCareerAge>
+        <Content>
+            <p>
+                How experienced is your character as a Starfleet officer. Are you fresh out of the academy, or an well experienced crew memeber?
+            </p>
+            <ListSelect @ref=experienceSelect Title="CAREER EXPERIENCE" List=experienceAges OnSelectionChanged=StateHasChanged>
+            </ListSelect>
+            <div class="row">
+                <div class="hbar w3-padding typeface">
+                    VALUE
+                </div>
+                <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+            </div>
+            <div class="w3-container w3-padding">
+                The character receives a Value, which must reflect the character’s experience or lack thereof. 
+                <br>
+                <input type="text" style="width: 100%" @bind="characterCareerExperienceValue"/>
+            </div>
+            @if (experience.HasValue && experience.Value == CareerAge.Experienced) {
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        TALENT
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <ListSelect @ref="characterChareerExperienceTalentSelect" List=validTalents() Filterable=true OnSelectionChanged=StateHasChanged>
+                        <Info>
+                            <LCARS>
+                                <div class="row">
+                                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                        @context.Name
+                                    </div>
+                                    <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                                </div>
+                                <div class="w3-container">
+                                    @context.Description
+                                </div>
+                            </LCARS>
+                        </Info>
+                    </ListSelect>
+                </div>
+            }
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <p>
+                Your career is a tapestry of events and experiences, but amongst this, a few will have been pivotal moments in your life. Define which moments of your life are important in retrospect, and what seemed definitive to an ensign in their early 20s may be inconsequential to that same officer decades later.
+            </p>
+            <p>
+                You may choose to select a career event below, or skip it if your character is still too new to have experienced many important events.
+            </p>
+            <ListSelect @ref=careerEvent1Select Title="CAREER EVENT (1/2)" List=careerEvents Filterable=true OnSelectionChanged=StateHasChanged>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            @if (characterCareerEvent1 == null) {
+                <p>
+                    You have chosen to not select a career event, no options are shown, continue to the next step.
+                </p>
+            } else {
+                <div>
+                    <div class="row w3-margin-bottom">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                            @characterCareerEvent1?.Name
+                        </div>
+                        <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                    </div>
+                    <div class="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <AttributeIncrement 
+                                Points="1" 
+                                Mask="characterCareerEvent1.AttributeSelectionMask"
+                                Reference="characterCareerEventAttributes1"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                DISCIPLINES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineIncrement 
+                                Points="1" 
+                                Mask="characterCareerEvent1.DisciplineSelectionMask"
+                                Reference="characterCareerEventDisciplines1"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                FOCUS
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <input type="text" style="width: 100%" @bind="characterCareerEventFocus1"/>
+                        </div>
+                    </div>
+                </div>
+            }
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <p>
+                You may choose to select another career event below, or skip it if your character is still too new to have experienced many important events.
+            </p>
+            <ListSelect @ref=careerEvent2Select Title="CAREER EVENT (2/2)" List=careerEvents Filterable=true OnSelectionChanged=StateHasChanged>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            @if (characterCareerEvent2 == null) {
+                <p>
+                    You have chosen to not select a career event, no options are shown, continue to the next step.
+                </p>
+            } else {
+                <div>
+                    <div class="row w3-margin-bottom">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                            @characterCareerEvent2?.Name
+                        </div>
+                        <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                    </div>
+                    <div class="w3-padding">
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                ATTRIBUTES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <AttributeIncrement 
+                                Points="1" 
+                                Mask="characterCareerEvent2.AttributeSelectionMask"
+                                Reference="characterCareerEventAttributes2"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                DISCIPLINES
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <DisciplineIncrement 
+                                Points="1" 
+                                Mask="characterCareerEvent2.DisciplineSelectionMask"
+                                Reference="characterCareerEventDisciplines2"
+                                />
+                        </div>
+
+                        <div class="row">
+                            <div class="hbar w3-padding typeface">
+                                FOCUS
+                            </div>
+                            <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                        </div>
+                        <div class="w3-container w3-padding">
+                            <input type="text" style="width: 100%" @bind="characterCareerEventFocus2"/>
+                        </div>
+                    </div>
+                </div>
+            }
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    EXCESS EXPERIENCE
+                </div>
+                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+            </div>
+            <div class="w3-padding w3-margin-bottom">
+                Re-allocate your character's excess experience to other fields so that no attribute is above @(MaxAttributes) and no discipline above @(MaxDisciplines). 
+            </div>
+
+            <div style="w3-padding">
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        ATTRIBUTES
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <AttributeBalancer 
+                        MaxValue="MaxAttributes"
+                        ToBalance="characterAttributesBeforeRebalance"
+                        Reference="characterAttributeRebalance"
+                        />
+                </div>
+
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        DISCIPLINES
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <DisciplineBalancer 
+                        MaxValue="MaxDisciplines"
+                        ToBalance="characterDisciplinesBeforeRebalance"
+                        Reference="characterDisciplinesRebalance"
+                        />
+                </div>
+            </div>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <p>
+                Select a final value. This value could be anything. Often this value is used to represent another career event or something that the character believes as a result of their personal relationship with another character or npc. 
+            </p>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    PERSONAL VALUE
+                </div>
+                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+            </div>
+            <div class="w3-container w3-padding">
+                <input type="text" style="width: 100%" @bind="characterRelationshipValue"/>
+            </div>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <p>
+                 Your character is almost finished. Simply fill out some personal details below and when you are ready you can export the character sheet.
+            </p>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    PERSONAL DETAILS
+                </div>
+                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+            </div>
+            <div class="w3-padding">
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        NAME
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <input type="text" style="width: 100%" @bind="characterName"/>
+                </div>
+
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        RANK
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    <ListSelect @ref=rankSelect List=RanksByExperience></ListSelect>
+                </div>
+
+                <div class="row">
+                    <div class="hbar w3-padding typeface">
+                        ASSIGNMENT
+                    </div>
+                    <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
+                </div>
+                <div class="w3-container w3-padding">
+                    Select the role your character has on the starship, starbase, or outpost they service. You should pick a choice that is best suited for your character given your disciplines.
+                    <ListSelect @ref=assignmentSelect List=Assignments Stringify=@((val) => val.Key)>
+                        <Info>
+                            <LCARS>
+                                <div class="row">
+                                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                        @context.Key
+                                    </div>
+                                    <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                                </div>
+                                <div class="w3-container">
+                                    @context.Value
+                                </div>
+                            </LCARS>
+                        </Info>
+                    </ListSelect>
+                </div>
+                
             </div>
         </Content>
     </WizardStage>
@@ -399,7 +787,7 @@
     #region Events
     [Parameter] public Action<PlayerCharacter> OnCharacterDone {get; set;}
     private void onWizardDone() {
-        OnCharacterDone?.Invoke(null);
+        OnCharacterDone?.Invoke(this.FinalCharacter);
     }
     #endregion
 
@@ -416,17 +804,31 @@
     #region Sources
     private RulebookPicker sources;
     private IEnumerable<Species> species => sources.EnabledRulebooks.SelectMany(book => book.Species);
-    private IEnumerable<TrekSharp.Environment> environments => sources.EnabledRulebooks.SelectMany(book => book.Environments);
+    private IEnumerable<TrekSharp.Environment> environments => sources.EnabledRulebooks.SelectMany(book => book.Environments).Concat(
+            species.Select(
+                s => new TrekSharp.Environment(
+                    $"Another Species' Homeworld ({s.Name})", 
+                    "The character grew up amonst another species. They might have lives in a small enclave of their own kind, or they may have been orphaned in some mannor. Whatever the situation, the character has a unique perspective on their own species and on those they were rasied alongside.",
+                    s.AttributeModifiers, 
+                    new Disciplines {
+                        Command     = 1,
+                        Security    = 1,
+                        Science     = 1,
+                        Conn        = 1,
+                        Engineering = 1,
+                        Medicine    = 1,
+                    }
+                ) 
+            )
+        );
     private IEnumerable<Upbringing> upbringings => sources.EnabledRulebooks.SelectMany(book => book.Upbringings);
     private IEnumerable<CareerEvent> careerEvents => sources.EnabledRulebooks.SelectMany(book => book.CareerEvents);
     private IEnumerable<CharacterTalent> talents => sources.EnabledRulebooks.SelectMany(book => book.Talents);
     #endregion
 
     #region Character
-    private string characterName = null;
-    private Rank characterRank = null;
-    private string characterAssignment = null;
     private Attributes characterBaseAttributes = new Attributes (7);
+    private Disciplines characterBaseDisciplines = new Disciplines (1);
     private Attributes characterCustomSpeciesAttributes = new Attributes(0);
     private Attributes speciesAttributes => characterSpecies?.AttributeModifiers ?? characterCustomSpeciesAttributes;
 
@@ -437,9 +839,7 @@
     private string characterCareerFocus2 = null;
     private string characterCareerFocus3 = null;
     private string characterCareerValue = null;
-    private CharacterTalent characterCareerTalent = null;
     private string characterCareerExperienceValue = null;
-    private CharacterTalent characterCareerExperienceExperiencedTalent = null;
     private CharacterTalent caracterCareerAgeTalent => experience switch {
         CareerAge.Young => TrekSharp.Rulebooks.CoreRulebook.Instance.Talents.Where(talent => talent.Name == "Untapped Potential").First(),
         CareerAge.Veteran => TrekSharp.Rulebooks.CoreRulebook.Instance.Talents.Where(talent => talent.Name == "Veteran").First(),
@@ -462,8 +862,8 @@
         characterCareerFocus1,
         characterCareerFocus2,
         characterCareerFocus3,
-        characterFirstEventFocus,
-        characterSecondEventFocus,
+        characterCareerEventFocus1,
+        characterCareerEventFocus2,
     };
     private List<Item> characterEquipment = new List<Item>() {
         TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
@@ -506,7 +906,7 @@
         var @char = this.FinalCharacter; // Cached once across entire filter
         return talents.Where(talent =>
                 talent.CanBeUsedBy(@char)                 // Character can use talent (species or skill rating restrictions)
-                && !characterTalents.Contains(talent)     // Character does not already have this talent
+                //&& !characterTalents.Contains(talent)     // Character does not already have this talent
             ); 
     }
     private bool hasFirstTalent() => firstTalent != null;
@@ -562,7 +962,154 @@
         return mask;
     }
     private DisciplineIncrement minorDisciplineComponent;
-    private CareerAge experience = CareerAge.Experienced;
+    private List<CareerAge> experienceAges = new List<CareerAge> { CareerAge.Young, CareerAge.Experienced, CareerAge.Veteran };
+    private ListSelect<CareerAge> experienceSelect;
+    private CareerAge? experience => experienceSelect?.Selected;
+    private bool hasCareerAge() => experience.HasValue;
+    private ListSelect<CharacterTalent> characterChareerExperienceTalentSelect;
+    private CharacterTalent characterCareerExperienceExperiencedTalent => characterChareerExperienceTalentSelect?.Selected;
+
+    private ListSelect<CharacterTalent> careerTalentSelect;
+    private CharacterTalent characterCareerTalent => careerTalentSelect?.Selected;
+    private bool hasCareerTalent() => characterCareerTalent != null;
+    #endregion
+
+    #region Career Events
+    private ListSelect<CareerEvent> careerEvent1Select;
+    private string characterCareerEventFocus1;
+    private CareerEvent characterCareerEvent1 => careerEvent1Select?.Selected;
+    private Attributes characterCareerEventAttributes1 = new Attributes();
+    private Disciplines characterCareerEventDisciplines1 = new Disciplines();
+
+    private ListSelect<CareerEvent> careerEvent2Select;
+    private string characterCareerEventFocus2;
+    private CareerEvent characterCareerEvent2 => careerEvent2Select?.Selected;
+    private Attributes characterCareerEventAttributes2 = new Attributes();
+    private Disciplines characterCareerEventDisciplines2 = new Disciplines();  
+
+    #endregion
+
+    #region Cleanup
+    private int MaxAttributes => experience == CareerAge.Young ? 11 : 12;
+    private int MaxDisciplines => experience == CareerAge.Young ? 4 : 5;
+    private Attributes characterAttributeRebalance = new Attributes();
+    private Disciplines characterDisciplinesRebalance = new Disciplines();
+    private Attributes characterAttributesBeforeRebalance {
+        get {
+            var attr = new Attributes();
+            attr.Add(characterBaseAttributes);
+            attr.Add(speciesAttributes);
+            attr.Add(characterUpbringingAttributes);
+            attr.Add(characterEnvironmentAttributes);
+            attr.Add(characterCareerPathAttributes);
+            attr.Add(characterCareerEventAttributes1);
+            attr.Add(characterCareerEventAttributes2);
+            return attr;
+        }
+    }
+    private Attributes characterAttributesAfterRebalance {
+        get {
+            var attr = new Attributes();
+            attr.Add(characterAttributesBeforeRebalance);
+            attr.Add(characterAttributeRebalance);
+            return attr;
+        }
+    }
+    private Disciplines characterDisciplinesBeforeRebalance {
+        get {
+            var attr = new Disciplines();
+            attr.Add(this.characterBaseDisciplines);
+            attr.Add(characterEnvironmentDisciplines);
+            attr.Add(characterUpbringingDisciplines);
+            attr.Add(characterCareerEventDisciplines1);
+            attr.Add(characterCareerEventDisciplines2);
+            attr.Add(characterCareerPathMajorDisciplines);
+            attr.Add(characterCareerPathMinorDisciplines);
+            return attr;
+        }
+    }
+    private Disciplines characterDisciplinesAfterRebalance {
+        get {
+            var attr = new Disciplines();
+            attr.Add(characterDisciplinesBeforeRebalance);
+            attr.Add(characterDisciplinesRebalance);
+            return attr;
+        }
+    }
+    #endregion
+
+    #region Personal Value
+    private string characterRelationshipValue;
+    #endregion
+
+    #region Personal Details
+    private string characterName = null;
+    private Rank characterRank => rankSelect?.Selected;
+    private ListSelect<Rank> rankSelect;
+    private ListSelect<KeyValuePair<string,string>> assignmentSelect;
+    private string characterAssignment =>  assignmentSelect != null ? assignmentSelect.Selected.Key : string.Empty;
+    private IEnumerable<Rank> RanksByExperience {
+        get {
+            if (experience == CareerAge.Young) {
+                yield return Rank.Cadet;
+                yield return Rank.Ensign;
+                yield return Rank.LieutenantJuniorGrade;
+            } else if (experience == CareerAge.Veteran) {
+                yield return Rank.LieutenantCommander;
+                yield return Rank.Commander;
+                yield return Rank.Captain;
+                yield return Rank.RearAdmiral;
+                yield return Rank.ViceAdmiral;
+                yield return Rank.Commodore;
+                yield return Rank.FleetAdmiral;
+            } else {
+                yield return Rank.LieutenantJuniorGrade;
+                yield return Rank.Lieutenant;
+                yield return Rank.LieutenantCommander;
+                yield return Rank.Commander;
+                yield return Rank.Captain;
+            }
+        }
+    }
+    private List<KeyValuePair<string,string>> Assignments = new List<KeyValuePair<string,string>> {
+        // Command Positions
+        new KeyValuePair<string, string>("Commanding Officer", "The captain. Even if the commanding officer does not hold the rank of captain, they will be referred to as captain by their subordinates. Every ship must have a commanding officer."),
+        new KeyValuePair<string, string>("Executive Officer", "Second-in-Command. The executive officer is the captain’s chief advisor, and takes command in situations where the captain is unable to. If a ship does not have a dedicated executive officer, an officer in another role should be noted as second-in-command, but they will not gain the benefits of this role."),
+        new KeyValuePair<string, string>("Second Officer", "At times the XO must assume command of a Starship or base, when this happens the XO needs the help of another officer to assume his/her role as XO. The second officer is not a stand alone position, but a role given to the highest ranked and trusted officer aboard. When required the Second Officer will assume the role of XO, or if needed CO, and performs their duties as listed, for as long as required."),
+        new KeyValuePair<string, string>("Intelligence Officer", "On all starships and starbases, a single individual amongst the command staff is designated the Intelligence Officer for that ship/base. Responsible for liaising with Starfleet Intelligence on a daily basis, the Intelligence Officer reads numerous classified reports as forwarded to them by SFI, and makes the decision on which reports are relevant to the crew to designate the command staff as having the need-to-know in order to view them. They are responsible for mission briefings involving information provided by Starfleet Intelligence, and act as a conduit from the command staff to SFI. The role of Intelligence Officer is considered an additional duty, in addition to a standard duty assignment."),
+        new KeyValuePair<string, string>("Diplomatic Officer", "The Diplomatic Officer of each vessel/base must be familiar with a variety of areas: history, religion, politics, economics, and military, and understand how they affect potential threats. A wide range of operations can occur in response to these areas and threats. These operations occur within three general states of being: peacetime competition, conflict and war. This position is held jointly with another aboard the ship, and is considered a secondary duty."),
+        new KeyValuePair<string, string>("Yeoman", "The Captain's Yeoman is for Petty Officers who wish to continue as administrators. It is technically a non-Mate position. Use of this position is completely at the discretion of the Commanding Officer. File work, and sensitive message transport are but two examples of the Yeoman's possible duties. The Yeoman assists the CO in day-to-day duties that the CO would otherwise not have the time to do."),
+
+        // Conn Positions
+        new KeyValuePair<string, string>("Flight Control Officer", "Not a typical senior staff role, some captains, particularly those operating in uncharted space, choose the most senior helmsman or flight control officer to serve as senior staff as well."),
+        new KeyValuePair<string, string>("Shuttlebay Manager", "The Shuttlebay Manager is responsible for pre and post flight checks of all support craft involved in away missions."),
+        new KeyValuePair<string, string>("Support Craft Pilot", "All small spacecrafts aboard a starship, starbase or a facility (Shuttles, Runabouts, Transports, Captain's yacht, Patrol Vessels etc.) but excluding fighters are flown by Support Craft Pilots. This is often the proving ground for pilots until they earn a berth on a starship as a Flight Control Officer."),
+
+        // Security Positions
+        new KeyValuePair<string, string>("Chief of Security", "The chief of security oversees the ship’s security department, and is responsible for ensuring the safety of the ship and crew during missions, for the investigation of disciplinary and criminal matters, and for overseeing the protection of important persons aboard the ship. On many ships, the chief of security operates from the Tactical station on the bridge."),
+        new KeyValuePair<string, string>("Security Officer", "There are several Security Officers aboard each vessel. They are assigned to their duties by the Chief of Security and mostly guard sensitive areas, protect people, patrol, and handle other threats to the Federation."),
+        new KeyValuePair<string, string>("Tactical Officer", "The Tactical Officers are the vessels gunmen. Very often Tactical Officers are also trained in ground combat and small unit tactics."),
+        new KeyValuePair<string, string>("Master-at-Arms", "The Master-at-Arms trains and supervises Security crewmen in departmental operations, repairs, and protocols; maintains duty assignments for all Security personnel; supervises weapons locker access and firearm deployment; and is qualified to temporarily act as Chief of Security if so ordered. The Master-at-Arms reports to the Chief of Security."),
+
+        // Engineering Positions
+        new KeyValuePair<string, string>("Operations Manager", "The operations manager manages and oversees all technical operations aboard or involving the ship, normally from the Operations station on the Bridge, or in conjunction with the chief engineer (on smaller ships, one officer may fill both roles). This often entails taking on the duties of a science officer, if there is no dedicated science officer in the senior staff."),
+        new KeyValuePair<string, string>("Chief Engineer", "The chief engineer is responsible for ensuring that the ship remains operational and functional, and commands the engineering department aboard the ship."),
+        
+        // Science Positions
+        new KeyValuePair<string, string>("Science Officer", "A science officer is responsible for advising the commanding officer of all matters scientific, providing hypotheses in matters concerning the unknown. Not all ships have a dedicated science officer within the senior staff, often having the operations manager take on these duties."),
+        new KeyValuePair<string, string>("Astrometrics Officer", "Specialized Science Officer in charge of the Astrometrics Section. This role entails the maintaining, correction and production of new stellar maps. Has close ties with the the Physicist and Stellar Cartographers."),
+    
+        // Medical Positions
+        new KeyValuePair<string, string>("Ship's Counselor", "On larger ships and starbases, it’s common to have personnel dedicated to the mental soak. Some captains regard them as valuable advisors, as their training covers both culture and psychology, making them exceptionally good at reading the moods and intentions of others."),
+        new KeyValuePair<string, string>("Morale Officer", "Responsible for keeping the morale of the crew high. Delivers regular reports on morale to the Executive Officer. The Morale Officer plans activities that will keep the crew's morale and demeanor up. If any crew member is having problems, the Morale Officer can assist that crew member."),
+        new KeyValuePair<string, string>("Chief Medical Officer", "The chief medical officer, also known as ship’s surgeon, or ship’s doctor, is responsible for the health and wellbeing of the crew and other persons aboard the ship, and leads the ship’s medical department. A chief medical officer can order, and countermand the orders of, senior officers where matters of that officer’s health are concerned."),
+        new KeyValuePair<string, string>("Surgeon", "Doctors of the federation still specialize and mostly, the Chief Medical Officer position is usually held by a general practitioner. While simple surgery is part of their training, some doctors on larger vessels and starbases prefer to have a surgeon on staff."),
+        new KeyValuePair<string, string>("Head Nurse", "The Head Nurse oversees all the Nurses currently aboard, ensuring they are assigned to tasks and working as required in their area. Additionally the Head nurse performs the normal duties of the nurse, assisting the Duty Medical Officer in sickbay."),
+        new KeyValuePair<string, string>("Nurse", "Nurses are trained in basic medical care, and are capable of dealing with less serious medical cases. In more serious matters the nurse assists the medical officer in the examination and administration of medical care, be this injecting required drugs, or simply assuring the injured party that they will be ok."),
+
+        // Communications Positions
+        new KeyValuePair<string, string>("Communications Officer", "More common in the earlier days of Starfleet, dedicated communications officers are typically skilled in linguistics and cryptography, and aided with advanced translation and decryption technologies, and thus valuable during encounters with both new cultures, and with hostile ones."),
+    };
     #endregion
 
 }

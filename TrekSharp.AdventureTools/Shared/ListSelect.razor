@@ -12,7 +12,7 @@
     </div>
     }
     <div class="w3-row w3-margin-bottom">
-        <div class="w3-half">
+        <div class="@(HasInfoWindow ? "w3-half" : string.Empty)">
             @if (Filterable) {
             <div class="w3-right-align">
                 <input placeholder="filter" class="w3-input" @bind=filterString></input>
@@ -24,18 +24,20 @@
                         if (matchesFilter(value)) {
                         var capture = value;
                         <li @onclick=@(() => select(capture)) class="@((AllSelected.Contains(capture)) ? "w3-blue" : string.Empty)">
-                            @capture?.ToString()
+                            @Stringify(capture)
                         </li>
                         }
                     }
                 }
             </ul>
         </div>
+        @if(HasInfoWindow) {
         <div class="w3-half w3-hide-small">
-            @if (Info != null && Selected != null) {
+            @if (Selected != null) {
                 @Info(Selected)
             }
         </div>
+        }
     </div>
 </div>
 
@@ -52,6 +54,14 @@
     public int MaxSelected {get; set;} = 1;
     [Parameter]
     public RenderFragment<T> Info {get; set;}
+    [Parameter]
+    public Func<T, string> Stringify {get; set;} = toString;
+
+    private static string toString(T value) {
+        return value?.ToString() ?? string.Empty;
+    }
+
+    public bool HasInfoWindow => Info != null;
 
     public T Selected => AllSelected.Count > 0 ? AllSelected[AllSelected.Count - 1] : default(T);
     public List<T> AllSelected = new List<T>();
@@ -66,9 +76,13 @@
     }
 
     private void select(T obj) {
-        this.AllSelected.Add(obj);
-        while(this.AllSelected.Count > MaxSelected) {
-            AllSelected.RemoveAt(0);
+        if (this.AllSelected.Contains(obj)) {
+            this.AllSelected.Remove(obj);
+        } else {
+            this.AllSelected.Add(obj);
+            while(this.AllSelected.Count > MaxSelected) {
+                AllSelected.RemoveAt(0);
+            }
         }
         OnSelectionChanged?.Invoke();
     }
