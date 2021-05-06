@@ -24,6 +24,18 @@ public class DisciplineReference {
         this.source = source;
         this.Index = index;
     }
+
+    public override bool Equals(object obj) {
+        if (obj is DisciplineReference disc) {
+            return disc.Index == this.Index && disc.source == this.source;
+        } else {
+            return base.Equals(obj);
+        }
+    }
+    public override int GetHashCode() {
+        return this.Index ^ source.GetHashCode();
+    }
+    
 }
 
 public class DisciplineEnumerator : IEnumerable<DisciplineReference> {

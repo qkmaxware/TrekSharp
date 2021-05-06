@@ -3,11 +3,13 @@
     Item10=Attributes.DaringReference Item11=Attributes.InsightReference Item12=Attributes.ReasonReference
 >
     <Template>
-        <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-            @context?.Name?.ToUpper()
-        </div>
-        <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-            @context?.Value
+        <div @onclick=@(() => select(context))>
+            <div class="w3-col s8 noselect secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                @context?.Name?.ToUpper()
+            </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @context?.Value
+            </div>
         </div>
     </Template>
 </Grid3x2Layout>
@@ -16,4 +18,15 @@
 
     [Parameter]
     public Attributes Attributes {get; set;}
+
+    [Parameter]
+    public bool Selectable {get; set;} = false;
+    [Parameter]
+    public Action<AttributeReference> OnAttributeClick {get; set;}
+    private void select(AttributeReference @ref) {
+        if (Selectable) {
+            OnAttributeClick?.Invoke(@ref);
+        }
+    }
+
 }

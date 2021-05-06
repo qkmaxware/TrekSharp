@@ -18,11 +18,11 @@
                     <span class="w3-button no-print" @onclick=@(() => removeItem(capture))>&times;</span>
                     @capture.Name 
                     @if(capture.Qualities != null && capture.Qualities.Count > 0) {
-                        <small>(@string.Join(',', item.Qualities))</small>
+                        <small>(@string.Join(',', capture.Qualities))</small>
                     }
-                    @if (item.DamageDice.HasValue && item.DamageDice.Value != 0) {
-                        <span class="w3-right">
-                            @(item.DamageDice.Value + Player.BonusDamageDice) 
+                    @if (capture.DamageDice.HasValue && capture.DamageDice.Value != 0) {
+                        <span class="w3-right noselect" @onclick=@(() => clickChallengeDie(capture))>
+                            @(capture.DamageDice.Value + Player.BonusDamageDice) 
                             <img src="assets/challenge-effect.png" width=12 height=12 />
                         </span>
                     }
@@ -58,6 +58,8 @@
     [Parameter] public bool AllowEdit {get; set;} = false;
     [Parameter] public string TitleCss {get; set;} = "";
 
+    [Parameter] public Action<Item> OnChallengeDieClicked {get; set;} = null;
+
     protected override void OnInitialized() {
         RulebookContainer books = new RulebookContainer();
         books.AddRulebook("Homebrew", new UserCreatedSpeciesRulebook(Data));
@@ -71,6 +73,9 @@
     private void onAddItem(Item item) {
         Player.Equipment.Add(item);
         StateHasChanged();
+    }
+    private void clickChallengeDie(Item item) {
+        OnChallengeDieClicked?.Invoke(item);
     }
 
 }

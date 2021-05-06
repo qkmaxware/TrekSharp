@@ -13,27 +13,27 @@
 
     <div class="w3-row w3-padding lcars-primary lcars-elbow-left lcars-elbow-right w3-margin-left w3-margin-right">
         <div class="w3-col s7 w3-text-white">
-            <button class="w3-button w3-display-container" style="padding:4px 4px;" @onclick=AddChallengeDie>
+            <button class="w3-button w3-display-container no-lcars" style="padding:4px 4px;" @onclick=@(() => AddChallengeDie(1))>
                 <img src="assets/d6.png" width=40 height=40 />
                 <img class="w3-display-middle" src="assets/challenge-effect.png" width="40" height="40">
             </button>
-            <button class="w3-button w3-display-container" style="padding:4px 4px;" @onclick=AddD6>
+            <button class="w3-button w3-display-container no-lcars" style="padding:4px 4px;" @onclick=@(() => AddD6(1))>
                 <img src="assets/d6.png" width=40 height=40 />
                 <div class="w3-display-middle">
                     6
                 </div>
             </button>
-            <button class="w3-button w3-display-container" style="padding:4px 4px;" @onclick=AddTaskDie>
+            <button class="w3-button w3-display-container no-lcars" style="padding:4px 4px;" @onclick=@(() => AddTaskDie(1))>
                 <img src="assets/d20.png" width=40 height=40 />
                 <div class="w3-display-middle">
                     20
                 </div>
             </button>
         </div>
-        <div class="w3-col s5 w3-right-align">
-            <button class="w3-button w3-round-xxlarge w3-red" @onclick=rerollAll>
+        <div class="w3-col s5 w3-right-align" style="font-size: medium;">
+            <button class="w3-button w3-round-xxlarge w3-red no-lcars" @onclick=RerollAll>
                 Roll
-                <button class="w3-button w3-circle w3-dark-grey" @onclick=clear>
+                <button class="w3-button w3-circle w3-dark-grey no-lcars" @onclick=clear>
                     &times;
                 </button>
             </button>
@@ -54,10 +54,21 @@
         }
     </div>
 
-    <div class="w3-center lcars w3-margin-left w3-margin-right">
-        <div class="secondary elbow-left elbow-right knee-left knee-right">
-            <b>Total:</b> @Total + @Effects Effect(s)
+    <div class="lcars w3-margin-left w3-margin-right w3-row">
+        <div class="@panelCss w3-padding">
+            <div class="secondary elbow-left elbow-right knee-left knee-right"><b>Total:</b> @Total</div>
         </div>
+        
+        @if (TargetScore.HasValue) {
+        <div class="@panelCss w3-padding">
+            <div class="secondary elbow-left elbow-right knee-left knee-right"><b>Successes:</b> @Successes</div>
+        </div>
+        }
+        @if (hasChallengeDie) {
+        <div class="@panelCss w3-padding">
+            <div class="secondary elbow-left elbow-right knee-left knee-right"><b>Effects:</b> @Effects</div>
+        </div>
+        }
     </div>
 
 </div>
@@ -66,8 +77,30 @@
 
     private List<Dice> dices = new List<Dice>();
 
+    private int panels => 1 + (TargetScore.HasValue ? 1 : 0) + (hasChallengeDie ? 1 : 0);
+    private string panelCss {
+        get {
+            var number = panels;
+            if (number < 2) {
+                return string.Empty;
+            } else if (number == 2) {
+                return "w3-half";
+            } else {
+                return "w3-third";
+            }
+        }
+    }
+
+    [Parameter]
+    public int? TargetScore {get; set;} = null;
+    public void UpdateTargetScore(int? score) {
+        this.TargetScore = score;
+    }
+    private bool hasChallengeDie => dices.OfType<ChallengeDice>().Any(); 
+
     private int Total => dices.Select(dice => dice.NumericValue).Sum();
-    private int Effects =>dices.OfType<ChallengeDice>().Where(dice => dice.ChallengeValue == ChallengeDiceResult.Effect).Count();
+    private int Effects => dices.OfType<ChallengeDice>().Where(dice => dice.ChallengeValue == ChallengeDiceResult.Effect).Count();
+    private int Successes => !TargetScore.HasValue ? 0 : dices.OfType<D20>().Select(dice => dice.NumericValue <= TargetScore.Value ? (dice.NumericValue == 1 ? 2 : 1) : 0).Sum(); 
 
     private string getDiceImage(Dice dice) {
         return dice switch {
@@ -80,7 +113,7 @@
         dices.Clear();
     }
 
-    private void rerollAll() {
+    public void RerollAll() {
         foreach (var dice in dices) {
             dice.Roll();
         }
@@ -92,22 +125,30 @@
         StateHasChanged();
     }
 
-    public void AddChallengeDie() {
-        var die = new ChallengeDice();
-        dices.Add(die);
-        rerollDice(die);
+    public void ClearDicePool() {
+        this.dices.Clear();
+        StateHasChanged();
     }
 
-    public void AddD6() {
-        var die = new D6();
-        dices.Add(die);
-        rerollDice(die);
+    public void AddChallengeDie(int count = 1) {   
+        for (var i = 0; i < count; i++) {
+            var die = new ChallengeDice();
+            dices.Add(die);
+        }
     }
 
-    public void AddTaskDie() {
-        var die = new D20();
-        dices.Add(die);
-        rerollDice(die);
+    public void AddD6(int count = 1) {
+        for (var i = 0; i < count; i++) {
+            var die = new D6();
+            dices.Add(die);
+        }
+    }
+
+    public void AddTaskDie(int count = 1) {
+        for (var i = 0; i < count; i++) {
+            var die = new D20();
+            dices.Add(die);
+        }
     }
 
 }

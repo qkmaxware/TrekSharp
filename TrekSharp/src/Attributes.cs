@@ -24,6 +24,17 @@ public class AttributeReference {
         this.source = source;
         this.Index = index;
     }
+
+    public override bool Equals(object obj) {
+        if (obj is AttributeReference disc) {
+            return disc.Index == this.Index && disc.source == this.source;
+        } else {
+            return base.Equals(obj);
+        }
+    }
+    public override int GetHashCode() {
+        return this.Index ^ source.GetHashCode();
+    }
 }
 
 public class AttributeEnumerator : IEnumerable<AttributeReference> {

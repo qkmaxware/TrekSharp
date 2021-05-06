@@ -23,11 +23,7 @@
 
     public override int NumericCount => dice.NumericValue;
     public override int EffectCount => dice.ChallengeValue == ChallengeDiceResult.Effect ? 1 : 0;
-
-    protected override void OnInitialized() {
-        this.Roll();
-    }
-
+    
     public override void Roll() {
         dice.Roll();
         StateHasChanged();

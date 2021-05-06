@@ -15,10 +15,6 @@
 
     public override int NumericCount => dice.NumericValue;
 
-    protected override void OnInitialized() {
-        this.Roll();
-    }
-
     public override void Roll() {
         dice.Roll();
         StateHasChanged();

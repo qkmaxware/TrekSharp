@@ -8,11 +8,13 @@
 
 @code {
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public Action OnOpen {get; set;}
     private bool isOpen = false;
     private string CssClass => isOpen ? "w3-show" : "w3-hide";
 
     public void Open() {
         isOpen = true;
+        OnOpen?.Invoke();
         StateHasChanged();
     }
 

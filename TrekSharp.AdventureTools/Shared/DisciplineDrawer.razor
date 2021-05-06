@@ -3,11 +3,13 @@
     Item10=Disciplines.ConnReference Item11=Disciplines.EngineeringReference Item12=Disciplines.MedicineReference
 >
     <Template>
-        <div class="w3-col s8 secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
-            @context?.Name?.ToUpper()
-        </div>
-        <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
-            @context?.Value
+        <div @onclick=@(() => select(context))>
+            <div class="w3-col s8 noselect secondary border-secondary elbow-left knee-left typeface print-small" style="padding-left: 6px;">
+                @context?.Name?.ToUpper()
+            </div>
+            <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
+                @context?.Value
+            </div>
         </div>
     </Template>
 </Grid3x2Layout>
@@ -16,7 +18,18 @@
 
     [Parameter]
     public Disciplines Disciplines {get; set;}
-
     [Parameter]
     public string Title {get; set;} = "DISCIPLINES";
+
+    [Parameter]
+    public bool Selectable {get; set;} = false;
+    [Parameter]
+    public Action<DisciplineReference> OnDisciplineClick {get; set;}
+    
+    private void select(DisciplineReference @ref) {
+        if (Selectable) {
+            StateHasChanged();
+            OnDisciplineClick?.Invoke(@ref);
+        }
+    }
 }

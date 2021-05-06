@@ -36,8 +36,8 @@
             <SplitLayout>
                 <Left>
                     <InjuryDrawer Player="Player"/>
-                    <AttributeDrawer Attributes="Player.Attributes"/>
-                    <DisciplineDrawer Disciplines="Player.Disciplines"/>
+                    <AttributeDrawer @ref=attributes Attributes="Player.Attributes" Selectable=true OnAttributeClick=onAttributeClick/>
+                    <DisciplineDrawer @ref=disciplines Disciplines="Player.Disciplines" Selectable=true OnDisciplineClick=onDisciplineClick/>
                     <ListDrawer Title="VALUES" List="Player.Values"/>
                 </Left>
                 <Right>
@@ -55,6 +55,45 @@
 
 <ConfirmationDialog @ref="confirm">
 </ConfirmationDialog>
+
+@if (diceSelectedAttribute != null || diceSelectedDiscipline != null) {
+<div style="position: fixed; bottom: 12px; left: 0; right: 0;" class="noselect w3-center">
+    <div class="w3-red w3-round-xxlarge w3-large w3-center w3-container w3-padding" style="display: inline-block" @onclick=tryRollTaskDice>
+        <button class="w3-button w3-circle w3-dark-grey no-lcars" @onclick=clearDice>
+            &times;
+        </button>
+        Roll
+        @if (diceSelectedAttribute != null) {
+            <span>@diceSelectedAttribute.Name</span>
+        } else {
+            <span>?</span>
+        } 
+        + 
+        @if (diceSelectedDiscipline != null) {
+            <span>@diceSelectedDiscipline.Name</span>
+        } else {
+            <span>?</span>
+        }
+    </div>
+</div>
+}
+@if (challengeDieCount > 0) {
+<div style="position: fixed; bottom: 12px; left: 0; right: 0;" class="noselect w3-center">
+    <div class="w3-red w3-round-xxlarge w3-large w3-center w3-container w3-padding" style="display: inline-block" @onclick=tryRollChallengeDie>
+        <button class="w3-button w3-circle w3-dark-grey no-lcars" @onclick=clearDice>
+            &times;
+        </button>
+        Roll @challengeDieCount <img src="assets/challenge-effect.png" width=22 height=22 />
+    </div>
+</div>   
+}
+<Popup @ref="dicePopup" OnOpen=@(() => diceRoller?.RerollAll())>
+    <DiceRoller @ref="diceRoller"></DiceRoller>
+    <div class="w3-center">
+        <button @onclick=closeDicePopup>close</button>
+    </div>
+</Popup>
+
 
 @code {
 
@@ -125,5 +164,67 @@
             NavigationManager.NavigateTo("manage/encounters");
         }
     }
+
+    #region Quick Dice Roller
+    private Popup dicePopup;
+    private DiceRoller diceRoller;
+    AttributeDrawer attributes;
+    DisciplineDrawer disciplines;
+    private int challengeDieCount;
+    private void clearDice() {
+        challengeDieCount = 0;
+        diceSelectedAttribute = null;
+        diceSelectedDiscipline = null;
+    }
+    private void clickChallengeDie(Item weapon) {
+        diceSelectedAttribute = null;
+        diceSelectedDiscipline = null;
+        challengeDieCount = weapon.DamageDice.Value + this.Player.BonusDamageDice;
+        StateHasChanged();
+    }
+    private void tryRollChallengeDie(){
+        diceRoller.ClearDicePool();
+        diceRoller.UpdateTargetScore(null);
+        diceRoller.AddChallengeDie(challengeDieCount);
+        dicePopup.Open();
+        challengeDieCount = 0;
+    }
+    private AttributeReference diceSelectedAttribute;
+    private void onAttributeClick(AttributeReference attr) {
+        challengeDieCount = 0;
+        if(diceSelectedAttribute != null && diceSelectedAttribute.Index == attr.Index) {
+            diceSelectedAttribute = null;
+        } else {
+            diceSelectedAttribute = attr;
+        }
+        StateHasChanged();
+    }
+    private DisciplineReference diceSelectedDiscipline;
+    private void onDisciplineClick(DisciplineReference disc) {
+        challengeDieCount = 0;
+        if(diceSelectedDiscipline != null && diceSelectedDiscipline.Index == disc.Index) {
+            diceSelectedDiscipline = null;
+        } else {
+            diceSelectedDiscipline = disc;
+        }
+        StateHasChanged();
+    }
+    private void tryRollTaskDice() {
+        if (diceSelectedAttribute != null && diceSelectedDiscipline != null) {
+            var target = diceSelectedAttribute.Value + diceSelectedDiscipline.Value;
+
+            diceSelectedAttribute = null;
+            diceSelectedDiscipline = null;
+
+            diceRoller.UpdateTargetScore(target);
+            diceRoller.ClearDicePool();
+            diceRoller.AddTaskDie(2);
+            dicePopup.Open();
+        }
+    }
+    private void closeDicePopup() {
+        dicePopup.Close();
+    }
+    #endregion
 
 }
