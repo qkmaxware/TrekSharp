@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace TrekSharp.Generators {
@@ -8,6 +9,8 @@ namespace TrekSharp.Generators {
 /// use '@name' or '@name(s)' for repeated insertion and \<\a\> for insertion of 'a' or 'an' depending on the context 
 /// </summary>
 public class StringGenerator {
+
+    public int MaxRecursiveDepth = 1500;
 
     public Dictionary<string, List<string>> Phrases {get; private set;}
 
@@ -43,8 +46,9 @@ public class StringGenerator {
     public string Generate(string template) {
         // Generate
         // 2. While subcomponents exist, substitute
-        
-        while (replacement.IsMatch(template)) {
+        int count = 0;
+        while (replacement.IsMatch(template) && count < MaxRecursiveDepth) {
+            count++;
             template = replacement.Replace(template, (match) => {
                 var property = match.Value.Substring(1); // without the @
                 var plural = false;
@@ -90,6 +94,67 @@ public class StringGenerator {
         template = char.ToUpper(template[0]).ToString() + template.Substring(1);
 
         return template;
+    }
+
+}
+
+/// <summary>
+/// Builder for string generators
+/// </summary>
+public class StringGeneratorBuilder {
+    private Dictionary<string, List<string>> phrases = new Dictionary<string, List<string>>();
+    public IEnumerable<string> Variables => phrases.Keys;
+    public StringGeneratorBuilder AddOption(string variable, string option) {
+        if (this.phrases.ContainsKey(variable)) {
+            this.phrases[variable].Add(option);
+        } else {
+            this.phrases[variable] = new List<string> { option };
+        }
+        return this;
+    }
+    public StringGeneratorBuilder AddOption(string variable, TemplateStringBuilder builder) {
+        return AddOption(variable, (string)builder);
+    }
+    public StringGenerator Build() {
+        return new StringGenerator(new Dictionary<string, List<string>>(phrases));
+    }
+}
+
+/// <summary>
+/// A templated string builder for the string generator
+/// </summary>
+public class TemplateStringBuilder {
+
+    private StringBuilder builder = new StringBuilder();
+    public TemplateStringBuilder AppendChar(char c) {
+        builder.Append(c);
+        return this;
+    }
+    public TemplateStringBuilder AppendText(string text) {
+        builder.Append(text);
+        return this;
+    }
+    public TemplateStringBuilder AppendVariable(string name) {
+        builder.Append('@');
+        builder.Append(name);
+        return this;
+    }
+    public TemplateStringBuilder AppendPluralVariable(string name) {
+        AppendVariable(name);
+        builder.Append("(s)");
+        return this;
+    }
+    public TemplateStringBuilder AppendAorAn() {
+        builder.Append(" <a> ");
+        return this;
+    }
+
+    public override string ToString() {
+        return builder.ToString();
+    }
+
+    public static explicit operator string(TemplateStringBuilder builder) {
+        return builder.ToString();
     }
 
 }

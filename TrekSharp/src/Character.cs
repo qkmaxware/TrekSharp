@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +22,12 @@ public class NpcCharacter : Character {
     public float PlayerDifficulty {
         get {
             var sum = Disciplines.Enumerate().Select(x => x.Value).Sum();
-            if (sum <= 8) {
-                return 0.6f;// Minor NPC (weaker than the player)
-            } else if (sum > 8 && sum < 16) {
-                return 1f;  // Notable NPC (equal to the player)
-            } else {
-                return 2f;  // Major NPC (stronger than the player)
-            }
+            return Math.Max(0, 0.0571f * sum + 0.1429f); // will be 0.6 at 8 disciplines and 1 for 15 disciplines allows scaling for more powerful creatures
         }
     } 
+    public bool IsMinor => Disciplines.Enumerate().Select(x => x.Value).Sum() <= 8;
+    public bool IsNotable => !IsMinor && !IsMajor;
+    public bool IsMajor => Disciplines.Enumerate().Select(x => x.Value).Sum() > 16;
 }
 
 public class Character {
