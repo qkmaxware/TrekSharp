@@ -11,6 +11,14 @@
         byte[] file = System.Text.Encoding.UTF8.GetBytes(json);
         await JSRuntime.InvokeVoidAsync("BlazorDownloadFile", $"{filename}.json", "text/json", file);
     }
+    protected async Task SaveToLocalStorage<T>(string name, T data) {
+        var json = System.Text.Json.JsonSerializer.Serialize(data);
+        await JSRuntime.InvokeVoidAsync("BlazorWriteLocalStorage", name, json);
+    }
+    protected async Task<T> ReadFromLocalStorage<T>(string name) {
+        var json = await JSRuntime.InvokeAsync<string>("BlazorReadLocalStorage", name);
+        return System.Text.Json.JsonSerializer.Deserialize<T>(json);
+    }
 
     protected async Task SetPageTitle(string title) {
         await JSRuntime.InvokeVoidAsync("BlazorSetPageTitle", title);
