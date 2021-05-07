@@ -1,0 +1,266 @@
+<Wizard OnWizardComplete=done AllowBacktracking=false> 
+    <WizardStage>
+        <Content>
+            <p>
+                Select which sources are to be used for your vessel creation. Different sources can have different spaceframe, talents, and mission profiles. Adding more sources creates more options for customization. 
+            </p>
+            <RulebookPicker @ref="books"></RulebookPicker>
+        </Content>
+    </WizardStage>
+    <WizardStage ValidatationFunction=hasSpecies>
+        <Content>
+            <p>
+                Select the species which your character is a member of. Different species have different initial attributes and are allowed to access special talents.
+            </p>
+            <ListSelect @ref="speciesSelect" Title="SPECIES" List=allSpecies Filterable=true OnSelectionChanged=StateHasChanged>
+                <Info>
+                    <LCARS>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                @context.Name
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-margin-bottom w3-margin-top" style="width: 100%; height: 125px;">
+                            <img src="@context.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
+                        </div>
+                        <div class="row">
+                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                Details
+                            </div>
+                            <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+                        </div>
+                        <div class="w3-container">
+                            @if (context is CustomSpecies cs) {
+                                <span>
+                                    @cs.Description
+                                </span>
+                            } else {
+                                <div class="w3-center">
+                                    For species information see <a href="@(context.GetMemoryAlphaSearchLink())" target="_blank">Memory Alpha</a>.
+                                </div>
+                            }
+                        </div>
+                    </LCARS>
+                </Info>
+            </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <div class="row w3-margin-bottom">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    ATTRIBUTES
+                </div>
+                <div class="hbar row-fill elbow-right knee-right"></div>
+            </div>
+            <div class="w3-padding w3-margin-bottom">
+                <p>
+                    Click on any 2 attributes to swap their attribute values
+                </p>
+                @foreach (var a in this.attrs.Enumerate()) {
+                <div class="row w3-padding">
+                    <span class="hbar elbow-left knee-left w3-padding" style="width:256px;">@a.Name</span>
+                    <span class="row-fill" style="margin-left: 10px;">
+                        <button class="w3-button @(firstAttr.HasValue && firstAttr.Value == a.Index ? "secondary" : "w3-black")" style="width: 100%" @onclick="@(() => clickAttr(a.Index))">
+                            @a.Value
+                        </button>
+                    </span>
+                </div>
+                }
+            </div>
+
+            <div class="row w3-margin-bottom">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    DISCIPLINES
+                </div>
+                <div class="hbar row-fill elbow-right knee-right"></div>
+            </div>
+            <div class="w3-padding">
+                <p>
+                    Click on any 2 disciplines to swap their discipline values
+                </p>
+                @foreach (var a in this.disc.Enumerate()) {
+                <div class="row w3-padding">
+                    <span class="hbar elbow-left knee-left w3-padding" style="width:256px;">@a.Name</span>
+                    <span class="row-fill" style="margin-left: 10px;">
+                        <button class="w3-button @(firstDisc.HasValue && firstDisc.Value == a.Index ? "secondary" : "w3-black")" style="width: 100%" @onclick="@(() => clickDisc(a.Index))">
+                            @a.Value
+                        </button>
+                    </span>
+                </div>
+                }
+            </div>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <div class="row w3-margin-bottom">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    PERSONNEL PROFILE
+                </div>
+                <div class="hbar row-fill elbow-right knee-right"></div>
+            </div>
+            <div class="w3-padding w3-margin-bottom">
+                <p>
+                    Give the character an appropriate name and rank. Supporting Characters should never have a rank above Lieutenant and may often be enlisted personnel rather than officers.
+                </p>
+                <div class="row w3-margin-bottom">
+                    <span class="hbar elbow-left knee-left w3-padding">Name</span>
+                    <span class="hbar row-fill" style="margin-left: 10px;">
+                        <input type="text" class="w3-padding" style="width: 100%;" @bind="name"/>
+                    </span>
+                </div
+                <ListSelect @ref=rankSelect List=ranks></ListSelect>
+            </div>
+
+            <div class="row w3-margin-bottom">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    FOCUSES
+                </div>
+                <div class="hbar row-fill elbow-right knee-right"></div>
+            </div>
+            <div class="w3-padding">
+                <p>
+                    Choose three Focuses for the character. At least one should reflect the department/purpose of the character.
+                </p>
+                <div class="row w3-padding">
+                    <span class="hbar elbow-left knee-left w3-padding">Focus 1</span>
+                    <span class="hbar row-fill" style="margin-left: 10px;">
+                        <input type="text" class="w3-padding" style="width: 100%;" @bind="focus1"/>
+                    </span>
+                </div>
+                <div class="row w3-padding">
+                    <span class="hbar elbow-left knee-left w3-padding">Focus 2</span>
+                    <span class="hbar row-fill" style="margin-left: 10px;">
+                        <input type="text" class="w3-padding" style="width: 100%;" @bind="focus2"/>
+                    </span>
+                </div>
+                <div class="row w3-padding">
+                    <span class="hbar elbow-left knee-left w3-padding">Focus 3</span>
+                    <span class="hbar row-fill" style="margin-left: 10px;">
+                        <input type="text" class="w3-padding" style="width: 100%;" @bind="focus3"/>
+                    </span>
+                </div>
+            </div>
+        </Content>
+    </WizardStage>
+</Wizard>
+
+@code {
+    [Parameter] public Action<SupportCharacter> OnSupportCreated {get; set;}
+    private void done() {
+        OnSupportCreated?.Invoke(this.FinalCharacter);
+    }
+
+    #region Stage1
+    private RulebookPicker books;
+    #endregion
+
+    #region Stage2
+    private IEnumerable<Species> allSpecies => books.EnabledRulebooks.SelectMany(book => book.Species);
+    private ListSelect<Species> speciesSelect;
+    private Species species => speciesSelect?.Selected;
+    private bool hasSpecies() => species != null;
+    #endregion
+
+    #region Stage3
+    private int? firstAttr = null;
+    private void clickAttr(int index) {
+        if (!firstAttr.HasValue) {
+            firstAttr = index;
+        } else {
+            var temp = attrs[firstAttr.Value];
+            attrs[firstAttr.Value] = attrs[index];
+            attrs[index] = temp;
+            firstAttr = null;
+        }
+    }
+    private int? firstDisc = null;
+    private void clickDisc(int index) {
+        if (!firstDisc.HasValue) {
+            firstDisc = index;
+        } else {
+            var temp = disc[firstDisc.Value];
+            disc[firstDisc.Value] = disc[index];
+            disc[index] = temp;
+            firstDisc = null;
+        }
+    }
+
+    private Attributes attrs = new Attributes {
+        Control  = 10,
+        Fitness  = 9,
+        Presence = 9,
+        Daring   = 8,
+        Insight  = 8,
+        Reason   = 7,
+    };
+    private Disciplines disc = new Disciplines {
+        Command     = 4,
+        Security    = 3,
+        Science     = 2,
+        Conn        = 2,
+        Engineering = 1,
+        Medicine    = 1,
+    };
+    #endregion
+
+    #region Stage4
+    private string name;
+    private Rank rank => rankSelect?.Selected;
+    private string focus1;
+    private string focus2;
+    private string focus3;
+
+    private ListSelect<Rank> rankSelect;
+    private IEnumerable<Rank> ranks {
+        get {
+            yield return Rank.Cadet;
+            yield return Rank.Ensign;
+            yield return Rank.LieutenantJuniorGrade;
+            yield return Rank.Lieutenant;
+            yield return Rank.Commander;
+            yield return Rank.Captain;
+            yield return Rank.Admiral;
+        }
+    }
+    #endregion
+
+    public SupportCharacter FinalCharacter {
+        get {
+            var a = new Attributes();
+            a.Add(species.AttributeModifiers);
+            a.Add(attrs);
+
+            var d = new Disciplines();
+            d.Add(disc);
+
+            return new SupportCharacter {
+                Name = name,
+                Rank = rank,
+                Species = species,
+                Focuses = new List<string>{
+                    focus1,
+                    focus2,
+                    focus3
+                },
+                Attributes = a,
+                Disciplines = d,
+                Equipment = new List<Item> {
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(0),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(1),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(2),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(3),
+                    TrekSharp.Rulebooks.CoreRulebook.Instance.Items.ElementAt(4)
+                }
+            };
+        }
+    }
+}

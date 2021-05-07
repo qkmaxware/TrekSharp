@@ -1,13 +1,13 @@
 @page "/new/support/custom"
 @inherits Page
 
-<LCARS Title="NEW SUPPORT CHARACTER">
-    <div class="w3-panel typeface">
-        This tool will guide you through the process of creating a supporting character. Like with the player lifepath creator, please fill out all fields from top to bottom and advance to the next page of the process by using the 'Next' button.
-    </div>
-    <SupportMaker/>
+<LCARS Title="CUSTOM  SUPPORT CHARACTER">
+    <SupportWizard OnSupportCreated=save></SupportWizard>
 </LCARS>
 
 @code {
-    
+    private void save(SupportCharacter c) {
+        Data.Supports.Add(c);
+        this.NaviateToSupportCharacter(c);
+    }
 }
