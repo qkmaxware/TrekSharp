@@ -1,0 +1,168 @@
+@page "/calculate/technobabble"
+@inherits Page
+
+<LCARS Title="TECHNOBABBLE">
+    <p>
+        Use this utility to randomly generate technobabble for your sessions. Select the type of technobabble to generate from the list of types and watch the results.
+    </p>
+    <div class="row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            TYPE
+        </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <div class="w3-container w3-margin-bottom">
+        <button @onclick=generateEquipmentBabbble>Equipment</button>
+        <button @onclick=generateAnomalyBabble>Anomaly</button>
+        <button @onclick=generateActionBabble>Action</button>
+    </div>
+
+    <div class="row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            BABBLE
+        </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <p class="w3-container w3-center w3-large">
+        @babble
+    </p>
+</LCARS>
+
+@code {
+
+    private string _old;
+    private string _babble;
+
+    private string babble {
+        get => _babble;
+        set {
+            _old = _babble;
+            _babble = value;
+        }
+    }
+
+    private void generateEquipmentBabbble() {
+        babble = generator.Generate(new List<string> { 
+            "@source @device", 
+            "@source @effect @device" 
+        });
+    }
+    private void generateAnomalyBabble() {
+        babble = generator.Generate(new List<string>{ 
+            "@description @source @effect", 
+            "@size @description @source @effect" 
+        });
+    }
+
+    private void generateActionBabble() {
+        babble = generator.Generate(new List<string>{ 
+            "@action the @description @source @effect @device"
+        }); 
+    }
+
+    private static Generators.StringGenerator generator = new Generators.StringGenerator(new Dictionary<string, List<string>> {
+        {"action", new List<string>{
+            "refocus",
+            "amplify",
+            "synchronize",
+            "redirect",
+            "recalibrate",
+            "modulate",
+            "remodulate",
+            "oscillate",
+            "intensify",
+            "dampen",
+            "nullify",
+            "boost",
+            "reverse",
+            "reconfigure",
+            "actuate",
+            "focus",
+            "refocus",
+            "invert",
+            "reroute",
+            "modify",
+            "restrict",
+            "reset",
+            "extend",    
+        }},
+        {"effect", new List<string>{
+            "flux",
+            "reaction",
+            "field",
+            "particle",
+            "gradient",
+            "induction @device",
+            "conversion",
+            "polarizing",
+            "displacement",
+            "reciprocating @effect",
+            "frequency",
+            "pulse",
+        }},
+        {"size", new List<string>{
+            "microscopic",
+            "macroscopic",    
+            "nano",
+        }},
+        {"description", new List<string>{
+            "phased",
+            "harmonic",
+            "invarient",
+            "dampening",
+            "multivariant",
+            "polynodal",
+            "multiphasic",
+            "oscillating",
+            "tri-fold",
+        }},
+        {"source", new List<string>{
+            "quantum",
+            "positronic",
+            "thermionic",
+            "osmotic",
+            "neutrino",
+            "spatial",
+            "resonating",
+            "thermal",
+            "photon",
+            "ionic",
+            "plasma",
+            "nucleonic",
+            "verteron",
+            "gravimetric",
+            "nadion",
+            "subspace",
+            "baryon",
+            "tetryon",
+            "polaron",
+            "tachyon"
+        }},
+        {"device", new List<string>{
+            "inhibitor",
+            "equalizer",
+            "damper",
+            "chamber",
+            "catalyst",
+            "coil",
+            "unit",
+            "grid",
+            "regulator",
+            "sustainer",
+            "relay",
+            "discriminator",
+            "array",
+            "coupler",
+            "controller",
+            "actuator",
+            "harmonic resonator",
+            "generator",
+            "manifold",
+            "stabilizer",
+            "imager",
+        }}
+    }); 
+
+}
