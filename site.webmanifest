@@ -1,6 +1,8 @@
 {
     "name": "TrekSharp",
     "short_name": "TrekSharp",
+    "start_url": "./index.html",
+    "orientation": "portrait",
     "icons": [
         {
             "src": "android-chrome-96x96.png",
