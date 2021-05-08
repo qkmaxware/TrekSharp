@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="120" height="120" src="TrekSharp.AdventureTools/wwwroot/logo.svg">
+</p>
+
 # TrekSharp
 TrekSharp is a Blazor WebAssembly project designed to create tools for assisting players of Modiphius's <a href="https://www.modiphius.net/collections/star-trek-adventures" target="_blank"> Star Trek Adventures </a> Tabletop RPG. This repository is grouped into three directories, `TrekSharp` contains the core classes and data-structures, `TrekSharp.AdventureTools` contains the actual Blazor application and `TrekSharp.Godot` contains Godot game engine apps which are integrated into the Blazor application for some of the more "interactive" components. 
 
