@@ -65,7 +65,7 @@ jobs:
             fi
           done
 
-        echo -n "$jsFile" > service-worker-assets.js
+          echo -n "$jsFile" > service-worker-assets.js
 
       - name: Commit to Github Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
