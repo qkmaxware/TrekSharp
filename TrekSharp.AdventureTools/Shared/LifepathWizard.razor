@@ -25,9 +25,10 @@
                             </div>
                             <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
                         </div>
-                        <div style="width: 100%; height: 125px;">
+                        <div class="w3-margin-bottom w3-margin-top" style="width: 100%; height: 125px;">
                             <img src="@context.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
                         </div>
+                        
                         <div class="row">
                             <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                             <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
@@ -35,9 +36,15 @@
                             </div>
                             <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
                         </div>
-                        <div class="w3-container">
-                            @foreach (var attr in context.AttributeModifiers.Enumerate()) {
-                                <div>@attr.Name +@attr.Value</div>
+                        <div class="w3-container w3-margin-bottom">
+                            @if (context.AttributeModifiers != null) {
+                                foreach (var attr in context.AttributeModifiers.Enumerate()) {
+                                    <div>@attr.Name +@attr.Value</div>
+                                }
+                            } else {
+                                <p>
+                                    This species has no default attributes.
+                                </p>
                             }
                         </div>
                         <div class="row">
@@ -61,6 +68,43 @@
                     </LCARS>
                 </Info>
             </ListSelect>
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
+            <div class="row">
+                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                    SPECIES ATTRIBUTES
+                </div>
+                <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
+            </div>
+            @if (characterSpecies.AttributeModifiers == null) {
+            <p>
+                This species has no default attributes, choose 3 attributes to increase.
+            </p>
+            <AttributeIncrement 
+                Points="3" 
+                MaxPointsPerItem="1"
+                Mask="attributeMaskAll"
+                Reference="characterCustomSpeciesAttributes"
+            ></AttributeIncrement>
+            } else {
+                <p>
+                    This species has the following default attributes
+                </p>
+                foreach (var attr in characterSpecies.AttributeModifiers.Enumerate()) {
+                    <div class="row w3-margin-bottom">
+                        <div class="hbar elbow-left knee-left secondary" style="width: 16px;"></div>
+                        <div class="hbar w3-padding typeface secondary" style="width: 112px;">
+                            @attr.Name
+                        </div>
+                        <div class="hbar row-fill w3-black" style="margin-left: 10px; padding-right: 25px;">
+                            + @attr.Value
+                        </div>
+                    </div>
+                }
+            }
         </Content>
     </WizardStage>
     <WizardStage ValidatationFunction=hasFirstTalent>
@@ -163,7 +207,7 @@
                 <div class="w3-container w3-padding">
                     <AttributeIncrement 
                         Points="1" 
-                        Mask="characterEnvironment.AttributeSelectionMask ?? characterSpecies.AttributeModifiers"
+                        Mask="characterEnvironment.AttributeSelectionMask ?? characterSpecies.AttributeModifiers ?? characterCustomSpeciesAttributes"
                         Reference="characterEnvironmentAttributes"
                         />
                 </div>
