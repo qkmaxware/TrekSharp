@@ -1,7 +1,7 @@
 {
     "name": "TrekSharp",
     "short_name": "TrekSharp",
-    "start_url": "./index.html",
+    "start_url": "./",
     "orientation": "portrait",
     "icons": [
         {

@@ -8,7 +8,7 @@ self.addEventListener('fetch', event => event.respondWith(onFetch(event)));
 
 const cacheNamePrefix = 'offline-cache-';
 const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
-const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
+const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/ ];
 const offlineAssetsExclude = [ /^service-worker\.js$/ ];
 
 async function onInstall(event) {
@@ -18,13 +18,7 @@ async function onInstall(event) {
     const assetsRequests = self.assetsManifest.assets
         .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
         .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
-        .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }));
-//#if(IndividualLocalAuth && Hosted)
-
-    // Also cache authentication configuration
-    assetsRequests.push(new Request('_configuration/ComponentsWebAssembly-CSharp.Client'));
-
-//#endif
+        .map(asset => new Request(asset.url, { integrity: asset.hash }));
     await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
 }
 
@@ -43,13 +37,7 @@ async function onFetch(event) {
     if (event.request.method === 'GET') {
         // For all navigation requests, try to serve index.html from cache
         // If you need some URLs to be server-rendered, edit the following check to exclude those URLs
-//#if(IndividualLocalAuth && Hosted)
-        const shouldServeIndexHtml = event.request.mode === 'navigate'
-            && !event.request.url.includes('/connect/')
-            && !event.request.url.includes('/Identity/');
-//#else
         const shouldServeIndexHtml = event.request.mode === 'navigate';
-//#endif
 
         const request = shouldServeIndexHtml ? 'index.html' : event.request;
         const cache = await caches.open(cacheName);
@@ -57,4 +45,5 @@ async function onFetch(event) {
     }
 
     return cachedResponse || fetch(event.request);
-}/* Manifest version: 47DEQpj8 */
+}
+/* Manifest version: 47DEQpj8 */
