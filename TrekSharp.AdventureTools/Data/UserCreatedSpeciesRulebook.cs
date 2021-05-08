@@ -19,7 +19,7 @@ public class UserCreatedSpeciesRulebook : IRulebook {
 
     public IEnumerable<CareerEvent> CareerEvents => Enumerable.Empty<CareerEvent>();
 
-    public IEnumerable<Spaceframe> Spaceframes => Enumerable.Empty<Spaceframe>();
+    public IEnumerable<Spaceframe> Spaceframes => data?.Custom?.Spaceframes ?? Enumerable.Empty<Spaceframe>();
 
     public IEnumerable<Spaceframe> NpcSpaceframes => Enumerable.Empty<Spaceframe>();
     

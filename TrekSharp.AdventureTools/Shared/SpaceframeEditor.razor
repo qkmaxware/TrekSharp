@@ -1,0 +1,168 @@
+<div class="w3-panel">
+    This tool will allow you to create custom spaceframes which can be used for NPC or player vessels. 
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        DETAILS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div class="w3-padding">
+    <p>
+        The name of the new vessel class
+    </p>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Name</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="text" class="w3-padding row-fill" @bind="Frame.Name"/>
+            <button @onclick="randomClassName" style="width: 120px">Random</button>
+        </span>
+    </div>
+    <p>
+        The relative size of the vessel class. 
+    </p>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Scale</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <select class="lcars-border-primary typeface" style="width: 100%; background-color: black">
+                <option value=1>Small Craft <small>(shuttle, fighter)</small></option>
+                <option value=2>Large Shuttle <small>(runabout)</small></option>
+                <option value=3>Small <small>(defiant, maquis raider)</small></option>
+                <option value=4>Medium <small>(intrepid, galor)</small></option>
+                <option value=5>Large <small>(excelsior, akira)</small></option>
+                <option value=6>Very Large <small>(galaxy, sovereign)</small></option>
+                <option value=7>Extremely Large <small>(borg sphere)</small></option>
+            </select>
+        </span>
+    </div>
+    <p>
+        The date in which this class was designed.
+    </p>
+    <div class="row w3-padding">
+        <span class="hbar elbow-left knee-left w3-padding">Design Date</span>
+        <span class="hbar row-fill row" style="margin-left: 10px;">
+            <input type="date" class="w3-padding w3-input w3-grey"  @bind="Frame.DesignDate"/>
+        </span>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        SYSTEMS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div class="w3-padding">
+    <p>
+        The base systems for the class.
+    </p>
+    @foreach (var system in Frame.Systems.Enumerate()) {
+        var capture = system;
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>@capture.Name</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=capture.Value placeholder="Name"/>
+            </div>
+        </div>
+    }
+    <div class="w3-center">
+        <button @onclick=randomSystems>Randomize</button>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        DEPARTMENTS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div class="w3-padding">
+    <p>
+        The base departments for the class.
+    </p>
+    @foreach (var dept in Frame.Departments.Enumerate()) {
+        var capture = dept;
+        <div class="w3-row w3-padding">
+            <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                <span>@capture.Name</span>
+            </div>
+            <div class="w3-threequarter" style="padding-left: 10px">
+                <input type="number" class="w3-input" @bind=capture.Value placeholder="Name"/>
+            </div>
+        </div>
+    }
+    <div class="w3-center">
+        <button @onclick=randomDepartments>Randomize</button>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        WEAPONS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div class="w3-padding">
+    <StringEditor Items=Frame.Weapons></StringEditor>
+    <div class="w3-row w3-padding">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => { if (Frame.Weapons.Count > 0) { Frame.Weapons.RemoveAt(Frame.Weapons.Count - 1); } })>-</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button class="w3-blue" @onclick=@(() => Frame.Weapons.Add(string.Empty))>+</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        TALENTS
+    </span>
+    <div class="hbar row-fill elbow-right knee-right"></div>
+</div>
+<div class="w3-padding">
+    <StringListOptionEditor Items=Frame.StartingTalents Options=talents></StringListOptionEditor>
+    <div class="w3-row w3-padding">
+        <div class="w3-half w3-left-align">
+            <button class="w3-red" @onclick=@(() => { if (Frame.StartingTalents.Count > 0) { Frame.StartingTalents.RemoveAt(Frame.StartingTalents.Count - 1); } })>-</button>
+        </div>
+        <div class="w3-half w3-right-align">
+            <button class="w3-blue" @onclick=@(() => Frame.StartingTalents.Add(string.Empty))>+</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Spaceframe Frame {get; set;}
+
+    private List<string> talents;
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        Data.RulebookContainer books = new Data.RulebookContainer();
+        talents = books.AllRulebooks.SelectMany(book => book.Value.ShipTalents).Select(talent => talent.Name).ToList();
+    }
+
+    private void randomSystems() {
+        foreach (var dept in Frame.Systems.Enumerate()) {
+            dept.Value = (5..12).Random();
+        }
+    }
+
+    private void randomDepartments() {
+        var departments = Frame.Departments.Enumerate().ToList();
+        departments.RemoveRandom().Value = 1;
+        departments.RemoveRandom().Value = 1;
+        departments.RemoveRandom().Value = 1;
+        foreach (var dept in departments) {
+            dept.Value = 0;
+        }
+    }
+
+    private void randomClassName() {
+        Frame.Name = new Generators.UfpRegistryGenerator().RandomName().Substring(4) + " Class";
+    }
+}

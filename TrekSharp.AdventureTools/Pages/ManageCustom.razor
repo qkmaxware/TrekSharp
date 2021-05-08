@@ -62,6 +62,32 @@
     }
 </LCARS>
 
+<LCARS Title="CUSTOM VESSEL CLASSES">
+    @if (Data.Custom != null && Data.Custom.Spaceframes != null) {
+        <Col3Layout Items="Data.Custom.Spaceframes">
+            <Template>
+                <div>
+                    <div class="row">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                            @context.Name 
+                        </div>
+                        <div class="hbar row-fill elbow-right knee-right"></div>
+                    </div>
+                    <div class="w3-row w3-margin-top w3-margin-bottom">
+                        <div class="w3-half w3-left-align">
+                            <button class="w3-small" @onclick=@(() => editSpaceframe(context))>edit</button>
+                        </div>
+                        <div class="w3-half w3-right-align">
+                            <button class="w3-small w3-red" @onclick=@(() => confirmDeleteSpaceframe(context))>delete</button>
+                        </div>
+                    </div>
+                </div>
+            </Template>
+        </Col3Layout>
+    }
+</LCARS>
+
 <LCARS Title="CUSTOM ITEMS">
     @if (Data.Custom != null && Data.Custom.Items != null) {
         <Col3Layout Items="Data.Custom.Items">
@@ -87,6 +113,7 @@
         </Col3Layout>
     }
 </LCARS>
+
 
 <ConfirmationDialog @ref="confirm">
 </ConfirmationDialog>
@@ -130,6 +157,24 @@
     private void deleteNpcType(NpcCharacter character) {
         if (Data.Custom != null && Data.Custom.NpcCharacterTypes != null) {
             Data.Custom.NpcCharacterTypes.Remove(character);
+        }
+        StateHasChanged();
+    }
+
+    private void confirmDeleteSpaceframe(Spaceframe character) {
+        confirm.Open($"Are you sure you want to delete the spaceframe '{character.Name}'?", () => deleteSpaceframe(character));
+    }
+
+    private void editSpaceframe(Spaceframe species) {
+        var Id = Data.Custom.Spaceframes?.IndexOf(species) ?? -1;
+        if (Id >= 0) {
+            NavigationManager.NavigateTo($"manage/custom/vessel/{Id}");
+        }
+    }
+
+    private void deleteSpaceframe(Spaceframe character) {
+        if (Data.Custom != null && Data.Custom.Spaceframes != null) {
+            Data.Custom.Spaceframes.Remove(character);
         }
         StateHasChanged();
     }

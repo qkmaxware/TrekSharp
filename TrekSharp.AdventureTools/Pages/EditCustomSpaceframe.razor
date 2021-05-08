@@ -1,0 +1,25 @@
+@page "/manage/custom/vessel/{Id}"
+@using Data
+@inherits Page
+
+<LCARS Title="EDIT VESSEL CLASS">
+    @if (HasContent) {
+    <SpaceframeEditor Frame=Content></SpaceframeEditor>
+    }
+</LCARS>
+
+@code {
+    [Parameter] public string Id { get; set; }
+    public int HomebrewIndex {
+        get {
+            int index;
+            if (int.TryParse(Id, out index)) {
+                return index;
+            } else {
+                return -1;
+            }
+        }
+    }
+    public bool HasContent => Content != null;
+    public Spaceframe Content => HomebrewIndex >= 0 && HomebrewIndex < (Data.Custom.Spaceframes?.Count ?? 0) ? Data.Custom.Spaceframes[HomebrewIndex] : null;
+}

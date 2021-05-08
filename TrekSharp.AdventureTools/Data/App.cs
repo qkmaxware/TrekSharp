@@ -21,11 +21,13 @@ public class UserCustomData {
     public UserCustomSpecies Species {get; set;}
     public List<NpcCharacter> NpcCharacterTypes {get; set;}
     public List<Item> Items {get; set;}
+    public List<Spaceframe> Spaceframes {get; set;}
 
     public UserCustomData() {
         Species = new UserCustomSpecies();
         NpcCharacterTypes = new List<NpcCharacter>();
         Items = new List<Item>();
+        Spaceframes = new List<Spaceframe>();
     }
 }
 
@@ -44,8 +46,13 @@ public class Act {
     public List<string> LinkedEncounters {get; set;} = new List<string>();
 }
 
+public static class View {
+    public static readonly bool GM = true;
+    public static readonly bool Player = false;
+}
+
 public class AppData {
-    public bool IsGm = true;
+    public bool IsGm = View.Player;
 
     public Mission Mission {get; set;} = new Mission();
     public TokenCollection Tokens {get; set;} = new TokenCollection();

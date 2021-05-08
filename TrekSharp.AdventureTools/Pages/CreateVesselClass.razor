@@ -1,0 +1,38 @@
+@page "/new/custom/vessel"
+@inherits Page
+
+<LCARS Title="NEW ITEM">
+    <SpaceframeEditor Frame=frame></SpaceframeEditor>
+    <div class="w3-padding w3-right-align">
+        <button class="w3-blue" @onclick=save>Save</button>
+    </div>
+</LCARS>
+
+@code {
+    private Spaceframe frame = new Spaceframe {
+        Scale = 4,
+        DesignDate = new DateTime(2371, 1, 1),
+        Weapons = new List<string>(),
+        StartingTalents = new List<string>(),
+        Systems = new Systems(0),
+        Departments = new Disciplines(0),
+    }; 
+
+    private void save() {
+        if (Data.Custom == null)
+            Data.Custom = new UserCustomData();
+        if (Data.Custom.Spaceframes == null)
+            Data.Custom.Spaceframes = new List<Spaceframe>();
+        
+        Data.Custom.Spaceframes.Add(frame);
+        frame = new Spaceframe {
+            Scale = 4,
+            DesignDate = new DateTime(2371, 1, 1),
+            Weapons = new List<string>(),
+            StartingTalents = new List<string>(),
+            Systems = new Systems(0),
+            Departments = new Disciplines(0),
+        };
+        this.NavigationManager.NavigateTo("manage/custom");
+    }
+}
