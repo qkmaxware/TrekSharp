@@ -1,5 +1,15 @@
+:root {
+    --lcars-background-main-colour: rgb(4, 19, 34);
+    --lcars-background-accent-colour: rgb(0, 0, 0);
+
+    --lcars-foreground-primary-colour: #FF9104;
+    --lcars-foreground-secondary-colour: #CC99CC;
+    --lcars-foreground-highlight-colour: #4455BB;
+}
+
+
 body {
-    background-color: rgb(4, 19, 34);
+    background-color: var(--lcars-background-main-colour);
     color: white;
 }
 
@@ -31,7 +41,7 @@ body {
 
 .lcars .typeface {
     font-family: 'Impact';
-    color: #FF9104;
+    color: var(--lcars-foreground-primary-colour);
     letter-spacing: 1px;
 }
 
@@ -49,63 +59,70 @@ body {
 }
 
 .lcars .primary {
-    background-color: #FF9104 !important;
+    background-color: var(--lcars-foreground-primary-colour) !important;
     color: black;
 }
 
 .lcars-primary {
-    background-color: #FF9104 !important;
+    background-color: var(--lcars-foreground-primary-colour) !important;
     color: black;
 }
     
 .lcars .border-primary {
-    border-color: #FF9104 !important;
+    border-color: var(--lcars-foreground-primary-colour) !important;
 }
 .lcars-border-primary {
-    border: 1px solid #FF9104 !important;
+    border: 1px solid var(--lcars-foreground-primary-colour) !important;
 }
 
 
 .lcars .text-primary {
-    color: #FF9104 !important;
+    color: var(--lcars-foreground-primary-colour) !important;
 }
 
 .lcars .secondary {
-    background-color: #CC99CC !important;
+    background-color: var(--lcars-foreground-secondary-colour) !important;
     color: black;
 }
 
 .lcars-secondary {
-    background-color: #CC99CC !important;
+    background-color: var(--lcars-foreground-secondary-colour) !important;
     color: black;
+}
+.lcars-border-secondary {
+    border: 1px solid var(--lcars-foreground-secondary-colour) !important;
 }
 
 .lcars .border-secondary {
-    border: 1px solid #CC99CC !important;
+    border: 1px solid var(--lcars-foreground-secondary-colour) !important;
 }
 
 .lcars .border-secondary-left {
     border-style: solid;
-    border-color: #CC99CC !important;
+    border-color: var(--lcars-foreground-secondary-colour) !important;
     border-width: 0px 0px 0px 10px;
 }
 
 .lcars .text-secondary {
-    color: #CC99CC !important;
+    color: var(--lcars-foreground-secondary-colour) !important;
 }
     
 
 .lcars .highlight {
-background-color: #4455BB !important;
-color: black;
+background-color: var(--lcars-foreground-highlight-colour) !important;
+color: white;
 }
 
 .lcars .border-highlight {
-border-color: #4455BB !important;
+border-color: var(--lcars-foreground-highlight-colour) !important;
 }
+.lcars-border-highlight {
+    border-color: var(--lcars-foreground-highlight-colour) !important;
+}
+    
 
 .lcars .text-highlight {
-color: #4455BB !important;
+color: var(--lcars-foreground-highlight-colour) !important;
 }
 
 .lcars .row {
@@ -154,15 +171,15 @@ padding: 5px 5px;
 }
 
 .lcars .rbar {
-border-right: 10px solid #FF9104;
+border-right: 10px solid var(--lcars-foreground-primary-colour);
 }
 
 .lcars .lbar {
-border-left: 10px solid #FF9104;
+border-left: 10px solid var(--lcars-foreground-primary-colour);
 }
 
 .lcars .hbar {
-background-color: #FF9104;
+background-color: var(--lcars-foreground-primary-colour);
 color: black;
 text-align: right;
 min-height: 10px;
@@ -206,9 +223,9 @@ padding-left: 12px;
 }
 
 
-.lcars button {
+.lcars button:not(.no-lcars) {
 font-family: 'Impact';
-background-color: #CB99CC;
+background-color: var(--lcars-foreground-secondary-colour);
 color: black;
 border-radius: 20px;
 font-size: 21px;
@@ -220,12 +237,12 @@ user-select: none;
 }
 
 .lcars button:hover {
-background-color: #FF9104;
+background-color: var(--lcars-foreground-primary-colour);
 }
 
-.lcars select {
+.lcars select:not(.no-lcars) {
     border: none;
-    color: #FF9104;
+    color: var(--lcars-foreground-primary-colour);
     padding-left: 5px;
     padding-right: 5px;
     font-family: 'Impact';
@@ -236,9 +253,9 @@ background-color: #FF9104;
     outline: none !important;
 }
 
-.lcars input {
-    border: 1px solid #FF9104;
-    color: #FF9104;
+.lcars input:not(.no-lcars) {
+    border: 1px solid var(--lcars-foreground-primary-colour);
+    color: var(--lcars-foreground-primary-colour);
     background-color: black;
     padding-left: 5px;
     padding-right: 5px;
