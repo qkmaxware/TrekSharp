@@ -7,4 +7,4 @@ This fan site is intended for personal and non-profit use only and is not sponso
 The code in this project is licensed under the following [LICENSE](LICENSE).
 
 ## Usage
-For usage information check out the [wiki](https://github.com/qkmaxware/TrekSharp/wiki);
+For usage information check out the [wiki](https://github.com/qkmaxware/TrekSharp/wiki).
