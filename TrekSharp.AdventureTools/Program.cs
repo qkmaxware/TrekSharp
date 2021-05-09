@@ -29,6 +29,8 @@ namespace TrekSharp.AdventureTools
             data = provider.GetService<AppData>();
             runtime = provider.GetService<IJSRuntime>();
 
+            await ReloadPersistedSession();
+
             await host.RunAsync();
         }
 
@@ -42,6 +44,31 @@ namespace TrekSharp.AdventureTools
             var json = System.Text.Json.JsonSerializer.Serialize(data);
             byte[] file = System.Text.Encoding.UTF8.GetBytes(json);
             await runtime.InvokeVoidAsync("BlazorDownloadFile", $"{filename}.json", "text/json", file);
+        }
+        [JSInvokable]
+        public static async Task PersistSession() {
+            if (data == null || runtime == null)
+                return;
+            try {
+                var json = System.Text.Json.JsonSerializer.Serialize(data);
+                await runtime.InvokeVoidAsync("BlazorWriteLocalStorage", "treksharp.session", json);
+            } catch (Exception e) {
+                Console.WriteLine(e);
+            }
+        }
+        public static async Task ReloadPersistedSession() {
+            if (data == null || runtime == null)
+                return;
+
+            try {
+                var json = await runtime.InvokeAsync<string>("BlazorReadLocalStorage", "treksharp.session");
+                if (string.IsNullOrEmpty(json))
+                    return;
+                var app_data = System.Text.Json.JsonSerializer.Deserialize<AppData>(json);
+                data.Overwrite(app_data);
+            } catch (Exception e) {
+                Console.WriteLine(e);
+            }
         }
     }
 }

@@ -122,6 +122,13 @@
     <div class="w3-padding w3-center" style="width: 100%; overflow: hidden;">
         <button 
             style="border: 0; padding: 0; background-color: inherit;"
+            title="New"
+            @onclick="newData"
+        >
+            <img src="assets/new.png" width="32" height="32">
+        </button>
+        <button 
+            style="border: 0; padding: 0; background-color: inherit;"
             title="Save"
             @onclick="downloadDataJson"
         >
@@ -197,6 +204,11 @@
     }
 
     private AssetImporter<AppData> importer;
+
+    private void newData() {
+        this.Data.Overwrite(new AppData());
+        this.NavigateHome();
+    }
 
     private void loadAppData(AppData newData) {
         this.Data.Overwrite(newData);

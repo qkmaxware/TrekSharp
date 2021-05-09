@@ -5,49 +5,50 @@ using System.Linq;
 
 namespace TrekSharp.AdventureTools {
 
-public class Logbook : IEnumerable<LogEntry> {
-    public SortedList<double, List<LogEntry>> Entries {get; set;}
-    public LogEntry Earliest => Entries?.Min().Value.FirstOrDefault();
-    public LogEntry Latest {
-        get {
-            var last_set = Entries?.Max().Value;
-            if (last_set.Count < 1)
-                return null;
-            var last_value = last_set[last_set.Count - 1];
-            return last_value;
-        }
-    }
-    public int Count => Entries?.Count ?? 0;
-    public Logbook() {
-        this.Entries = new SortedList<double, List<LogEntry>>();
-    }
-    public void Record(LogEntry entry) {
-        if (Entries.ContainsKey(entry.Stardate)) {
-            this.Entries[entry.Stardate].Add(entry);
-        } else {
-            this.Entries.Add(entry.Stardate, new List<LogEntry> { entry });
-        }
-    }
-    public void Delete(LogEntry entry) {
-        if (this.Entries.ContainsKey(entry.Stardate)) {
-            var list = this.Entries[entry.Stardate];
-            list.Remove(entry);
-            if (list.Count < 1) {
-                this.Entries.Remove(entry.Stardate);
-            }
-        }
+public class LogbookEnumerator : IEnumerable<LogEntry> {
+    private Logbook logs;
+    public LogbookEnumerator(Logbook logs) {
+        this.logs = logs;
     }
 
     public IEnumerator<LogEntry> GetEnumerator() {
-        foreach (var log_set in this.Entries) {
-            foreach (var entry in log_set.Value) {
-                yield return entry;
-            }
+        if (this.logs == null || this.logs.Entries == null)
+            yield break;
+
+        foreach (var entry in this.logs.Entries) {
+            yield return entry;
         }
     }
 
     IEnumerator IEnumerable.GetEnumerator() {
         return GetEnumerator();
+    }
+}
+
+public class Logbook {
+    public List<LogEntry> Entries {get; set;}
+    public LogEntry Earliest => Entries.FirstOrDefault();
+    public LogEntry Latest {
+        get {
+            if (Entries.Count < 1)
+                return null;
+            else    
+                return Entries[Entries.Count - 1];
+        }
+    }
+    public int Count => Entries?.Count ?? 0;
+    public Logbook() {
+        this.Entries = new List<LogEntry>();
+    }
+    public void Record(LogEntry entry) {
+        this.Entries.Add(entry);
+        this.Entries = this.Entries.OrderBy(e => e.Stardate).ToList();
+    }
+    public void Delete(LogEntry entry) {
+        this.Entries.Remove(entry);
+    }
+    public LogbookEnumerator Enumerate() {
+        return new LogbookEnumerator(this);
     }
 }
 

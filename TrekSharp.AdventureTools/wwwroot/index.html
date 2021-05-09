@@ -41,10 +41,20 @@
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         }
-        // Prevent accidental leaving
-        window.onbeforeunload = function() {
-            return "Unsaved app data will be lost if you leave the page, are you sure?";
-        };
+        // Persist data when leaving the app
+        document.addEventListener('visibilitychange', function(e) {
+            if (document.hidden) {
+                // Save data if exists
+                saveAppData();
+            }
+        });
+        function saveAppData() {
+            DotNet.invokeMethodAsync (
+                "TrekSharp.AdventureTools",
+                "PersistSession",
+                null
+            );
+        }
         // Overload the save function
         document.addEventListener("keydown", function(e) {
             if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) {

@@ -24,7 +24,7 @@
             <hr>
         }
         <ul class="w3-ul w3-hoverable">
-        @foreach (var entry in Data.Logs) {
+        @foreach (var entry in Data.Logs.Enumerate()) {
             if((!flaggedOnly || entry.Flagged) && (string.IsNullOrEmpty(filter) || CultureInfo.InvariantCulture.CompareInfo.IndexOf(entry.Content, filter, CompareOptions.IgnoreCase) >=0 )) {
                 var capture = entry;
                 <li class="w3-row">
