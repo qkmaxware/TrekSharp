@@ -89,6 +89,246 @@
       "url": "assets\/artwork\/grids\/space\/Tic Tac Toe.svg"
     },
     {
+      "hash": "sha256-c6ry+XjpILhdidRLqzUSDe22FEHjvyEI+uSX7eKBZs0=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Antenae.png"
+    },
+    {
+      "hash": "sha256-rIbcF15ZPQhtaoBEh2TzpPWJmNX291DdGxEvpeRsBhQ=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Elvish.png"
+    },
+    {
+      "hash": "sha256-NnkhorK4dknjtiqQdOpqM90ZbjpQW0XGsLHj0gj8WDY=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Generic.png"
+    },
+    {
+      "hash": "sha256-a\/h54z9joiGAWNP5k2xzN9yROLjXkTaJtPvLiABx6ds=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Horned.png"
+    },
+    {
+      "hash": "sha256-i5DY9xLpbWXj3oW+ZeFbYJxQHsISw2Nhu6tCJtFuHUQ=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Large Ears.png"
+    },
+    {
+      "hash": "sha256-2phl8S6x7J3jX0zZraa6t1u318plVZG\/cht5mGXpBe4=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Ridged.png"
+    },
+    {
+      "hash": "sha256-l5VuYgKKi4IOZvR1Ew5KUBOl07mNb2l58EUEVQpHtms=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Split.png"
+    },
+    {
+      "hash": "sha256-R4\/3i7Yb\/zNnjYUatyHv7SzxEkfpm77C2DLbc\/u7mk8=",
+      "url": "assets\/artwork\/minis\/base\/Humanoid Spotted.png"
+    },
+    {
+      "hash": "sha256-QoU2Ok97W5zEqNs04yfV26FmF7BrKfZoRK7m2bBCn+o=",
+      "url": "assets\/artwork\/minis\/beards\/Clean Shaven.png"
+    },
+    {
+      "hash": "sha256-LtBvy1GWbpf2zAn3SMHz7PoasZLjeMFldA4QPn1WAec=",
+      "url": "assets\/artwork\/minis\/beards\/White Friendly Mutton Chops.png"
+    },
+    {
+      "hash": "sha256-MroHHmlmrTfL7yM\/to2bEUDEwYwrkK+pPux5l1H0LXg=",
+      "url": "assets\/artwork\/minis\/beards\/White Full Beard.png"
+    },
+    {
+      "hash": "sha256-uFdjHqVjuMV57sdh90oiFO5pE3NBpbduCrdYDuouung=",
+      "url": "assets\/artwork\/minis\/beards\/White Goatee.png"
+    },
+    {
+      "hash": "sha256-tlqwqVnUBNHn\/S2BqOcXOwcKWJS9FkuUPSmYXnly86g=",
+      "url": "assets\/artwork\/minis\/beards\/White Mustache.png"
+    },
+    {
+      "hash": "sha256-AlEjT\/3nbKQjZO5R9HqKoJbkvNeU75DKo\/AeEqYGFkk=",
+      "url": "assets\/artwork\/minis\/beards\/White Mutton Chops.png"
+    },
+    {
+      "hash": "sha256-vnBp9o+3Vxk9TTPDQ5sMNSH\/J8OK0Qn\/k32yrrf9gzE=",
+      "url": "assets\/artwork\/minis\/beards\/White Van Dyke.png"
+    },
+    {
+      "hash": "sha256-7W1jNGwlG6uE3dgWhbiLD1g01J7efg9iUF07hK68uPY=",
+      "url": "assets\/artwork\/minis\/eyes\/Long.png"
+    },
+    {
+      "hash": "sha256-ZhA2fmoEfsMEXc\/Q2x5LuRlrilsbc8diQWGeNlN+y6Y=",
+      "url": "assets\/artwork\/minis\/eyes\/Many.png"
+    },
+    {
+      "hash": "sha256-0vfoT7ztuiILkyt0RjIlUX473BzqGFjbshyuUhZ161k=",
+      "url": "assets\/artwork\/minis\/eyes\/Tall.png"
+    },
+    {
+      "hash": "sha256-+8VZ8QWl3vhTw7Hyi6CtJdcqomh9kmjPlZMHl2y+Y6M=",
+      "url": "assets\/artwork\/minis\/eyes\/Very Tall.png"
+    },
+    {
+      "hash": "sha256-UZJ9O1+K5n5Ay6\/8QI5yqOvdUZBZxEc9hNPOoEvSo1A=",
+      "url": "assets\/artwork\/minis\/hair\/Afro.png"
+    },
+    {
+      "hash": "sha256-hdD9djqXMchno3gLnMikKK8waMSLKORFs2vZ141NpX8=",
+      "url": "assets\/artwork\/minis\/hair\/Bald Top.png"
+    },
+    {
+      "hash": "sha256-f\/JvZ8Vc81XdSVq\/XG8TLXFpTnlCJ9ev87nzW74YtjM=",
+      "url": "assets\/artwork\/minis\/hair\/Bald.png"
+    },
+    {
+      "hash": "sha256-5pVlVtYvsx1xmm4vhHKXZb0ycEUJxfdgxYHYm9PJqi8=",
+      "url": "assets\/artwork\/minis\/hair\/Bun.png"
+    },
+    {
+      "hash": "sha256-k9n5Yh\/4zIuRWE0kVVP5dch4kUu5sVQonf9TMP3bJR4=",
+      "url": "assets\/artwork\/minis\/hair\/Center.png"
+    },
+    {
+      "hash": "sha256-2cs6\/MRf\/6ZWsVzUFrep5JvliB3Lb\/0Vl4TyemKcNaE=",
+      "url": "assets\/artwork\/minis\/hair\/Combover.png"
+    },
+    {
+      "hash": "sha256-t5vaADK+VrJiuTEPmzwIGMumLO+yj\/mIf1h\/druQcUo=",
+      "url": "assets\/artwork\/minis\/hair\/Flat Top.png"
+    },
+    {
+      "hash": "sha256-YBAoENZ5U\/vpF1VKxBgq2r4awM0bPLNTM4N8ZN95J14=",
+      "url": "assets\/artwork\/minis\/hair\/Long Framed.png"
+    },
+    {
+      "hash": "sha256-CKTeGelCSpCupHyt7vjC1dBFw0u5mlaJQsQV0G28hEQ=",
+      "url": "assets\/artwork\/minis\/hair\/Long.png"
+    },
+    {
+      "hash": "sha256-UhZpe5sDIeAXC8uT1jottAnenpBOPleu6tmBJuu\/g9k=",
+      "url": "assets\/artwork\/minis\/hair\/Man Bun.png"
+    },
+    {
+      "hash": "sha256-RY2kPXYUMqRTsVYrAKMzCw1gl\/y6tz7WMc347JT8ZPg=",
+      "url": "assets\/artwork\/minis\/hair\/Short.png"
+    },
+    {
+      "hash": "sha256-0garej7r+EyLY9nnmhz\/OpuX7yMpRDTCnReRy5IQ5dQ=",
+      "url": "assets\/artwork\/minis\/hair\/Shoulder Length.png"
+    },
+    {
+      "hash": "sha256-3N+ThIxKiWMtTdfp5ULPlYynY3zVBo8fPrL0j6aL+rY=",
+      "url": "assets\/artwork\/minis\/hair\/Side Pony.png"
+    },
+    {
+      "hash": "sha256-lqbd7c+SR4ql4Idbycjk8dES0Z\/5O39kENNJbLBOq2w=",
+      "url": "assets\/artwork\/minis\/hair\/Spike.png"
+    },
+    {
+      "hash": "sha256-u9Aub6rECltbNBIgk7u3CZCakBELGxyVrGRb9bOIxak=",
+      "url": "assets\/artwork\/minis\/hair\/Sporatic.png"
+    },
+    {
+      "hash": "sha256-rWtSYImA9W8q\/cmGBpJN2DVTBPm0cYoqRnFN62v8XaY=",
+      "url": "assets\/artwork\/minis\/hair\/Very Long.png"
+    },
+    {
+      "hash": "sha256-zUPvHr8KqPBj83PPo0eldn\/FqY54EvqiDVXLIlxEaig=",
+      "url": "assets\/artwork\/minis\/uniform\/DISCO Command.png"
+    },
+    {
+      "hash": "sha256-3YbXPOQb+q6qmdgaY2r1g1HBSXJ\/FjOOS6mgkFpswxQ=",
+      "url": "assets\/artwork\/minis\/uniform\/DISCO Operations.png"
+    },
+    {
+      "hash": "sha256-Lx3z89C2B2c15GA4Ei3vuYxApOseZCv22yma5I2Zl5o=",
+      "url": "assets\/artwork\/minis\/uniform\/DISCO Science.png"
+    },
+    {
+      "hash": "sha256-sA9mhnKwLdjd3BFNK\/wdDAgAK\/DSWSYdL09++4unr8E=",
+      "url": "assets\/artwork\/minis\/uniform\/DS9 Command.png"
+    },
+    {
+      "hash": "sha256-6xHT4D3ESn\/pa1wE\/nEopa8EXJd599+ooMh0HHZG9Cg=",
+      "url": "assets\/artwork\/minis\/uniform\/DS9 Operations.png"
+    },
+    {
+      "hash": "sha256-axe3M0mLuO33vXwesEzgMaz7SLbhe5FDJbVQ9yVUt0A=",
+      "url": "assets\/artwork\/minis\/uniform\/DS9 Science.png"
+    },
+    {
+      "hash": "sha256-eIBHoEyXjCLV4ZcaLb2eIYe1v1wbfe7vbyE7BSs17dY=",
+      "url": "assets\/artwork\/minis\/uniform\/ENT Command.png"
+    },
+    {
+      "hash": "sha256-l85qX5FfZS+2vxYYA\/Cxnbw5sLODwtUp9s5cu7ejJJU=",
+      "url": "assets\/artwork\/minis\/uniform\/ENT Operations.png"
+    },
+    {
+      "hash": "sha256-kOHpWaiDOvqjyO\/BGw4ihK2MR2GgGWkUtJ1nLILOQyQ=",
+      "url": "assets\/artwork\/minis\/uniform\/ENT Science.png"
+    },
+    {
+      "hash": "sha256-ByUFeZUBciUzlpse6ovs6CsaBDVpqvt4Gv9cwnSEFcY=",
+      "url": "assets\/artwork\/minis\/uniform\/LD Command.png"
+    },
+    {
+      "hash": "sha256-Rmyhsyfl4mo99cz+oXOx3TCe2GAPEe\/iUftaJ9ZTBSI=",
+      "url": "assets\/artwork\/minis\/uniform\/LD Operations.png"
+    },
+    {
+      "hash": "sha256-YMhoxz8hulX4I+7+JKp3I7QcU9o2\/C+njlnEAcfrNTA=",
+      "url": "assets\/artwork\/minis\/uniform\/LD Science Lab Coat.png"
+    },
+    {
+      "hash": "sha256-z3RLCUTYMhTOtNb6IIldhRiJwYhirSElbIKYdh0+xk8=",
+      "url": "assets\/artwork\/minis\/uniform\/LD Science.png"
+    },
+    {
+      "hash": "sha256-fmBbt+krCIx+p88EkBtWSGE0DXEuq\/riSJ19gHVxgfU=",
+      "url": "assets\/artwork\/minis\/uniform\/TNG Command.png"
+    },
+    {
+      "hash": "sha256-9eKBd2whi+aJFtVmlTosFs9AcXVhUAQGJJ6NwXiFyOI=",
+      "url": "assets\/artwork\/minis\/uniform\/TNG Operations.png"
+    },
+    {
+      "hash": "sha256-8sI12j7ZTyHhG26eUX67hs8VTU\/jrBw0rwYuurt4P2g=",
+      "url": "assets\/artwork\/minis\/uniform\/TNG Science.png"
+    },
+    {
+      "hash": "sha256-azi6ZMfLYG8KIatbL0sKngukWrRzKbBWDcfS4MKd2XE=",
+      "url": "assets\/artwork\/minis\/uniform\/TOS Command Skirt.png"
+    },
+    {
+      "hash": "sha256-aGXKBlSlV9DtvwujkSZopdrt0siE4Z256LelE3Wu7tw=",
+      "url": "assets\/artwork\/minis\/uniform\/TOS Command.png"
+    },
+    {
+      "hash": "sha256-XCUNm7iltkoYgJghUh1ahiia4+5SU2b+z3pOy9E8G\/I=",
+      "url": "assets\/artwork\/minis\/uniform\/TOS Operations Skirt.png"
+    },
+    {
+      "hash": "sha256-waju\/WhOFVf+kKsrqj3vIc2u4U+nHAhPnW9\/91VLrPg=",
+      "url": "assets\/artwork\/minis\/uniform\/TOS Operations.png"
+    },
+    {
+      "hash": "sha256-ZPIz0ufNVUx9px0arBmKjmTgvAVVA5jxFZ49mLb\/g8k=",
+      "url": "assets\/artwork\/minis\/uniform\/TOS Science Skirt.png"
+    },
+    {
+      "hash": "sha256-xbeSb+G0cSMKPtplU\/+MqWYJI+5GMyHyeUR6Ao7SN+Q=",
+      "url": "assets\/artwork\/minis\/uniform\/TOS Science.png"
+    },
+    {
+      "hash": "sha256-3c0U4LD9UQ42qJtb\/b4Si6KrphRzYK8Q5DTVAcPcvzM=",
+      "url": "assets\/artwork\/minis\/uniform\/VOY Command.png"
+    },
+    {
+      "hash": "sha256-gck0dHURynbOiWbn\/Rf2Tukxbv\/hCrizHWpTgRg1\/Hs=",
+      "url": "assets\/artwork\/minis\/uniform\/VOY Operations.png"
+    },
+    {
+      "hash": "sha256-QZYNk0i3cjMCm6vivxeqM2qnH0bhIzhwLS8tTEApP64=",
+      "url": "assets\/artwork\/minis\/uniform\/VOY Science.png"
+    },
+    {
       "hash": "sha256-FfFAexhSjptHePcU2aU+rIKdo\/w7LSG0C1dcPMD0JUk=",
       "url": "assets\/artwork\/ships\/AkiraClass.png"
     },
@@ -497,6 +737,10 @@
       "url": "css\/lcars.css"
     },
     {
+      "hash": "sha256-ZlC5\/yRQitqdnnnFAw\/8ouSj3J1cq64bFqqK3uP1ez8=",
+      "url": "css\/minis.css"
+    },
+    {
       "hash": "sha256-csE7qwgjJMqsZpI7KkHrvnJMpKBC\/8UqM89or0uJohg=",
       "url": "css\/pdf.css"
     },
@@ -517,7 +761,7 @@
       "url": "favicon.ico"
     },
     {
-      "hash": "sha256-3crbxs7HbHRwzxumDvg3dp1bl3KvpkdUYWs\/64xv4QA=",
+      "hash": "sha256-jNEeAQ6OQOEcAWP7YqgvaQpn\/Mf18AEg4IM3ImhYxww=",
       "url": "index.html"
     },
     {
@@ -561,15 +805,15 @@
       "url": "_framework\/_bin\/Astro.dll"
     },
     {
-      "hash": "sha256-+QvNJLPzdmoYSv7yH3pNOc1y2693lxp6BGr+FgIRQMI=",
+      "hash": "sha256-qDMDFybDf1FoPBVzchZvcMAtGPRuX\/G4Y2cDSSXEIsM=",
       "url": "_framework\/_bin\/Microsoft.AspNetCore.Components.dll"
     },
     {
-      "hash": "sha256-y0gdqm7PguboWzj7XdLOBTmjSkQx7zT3yu7MMoHzSbY=",
+      "hash": "sha256-UeakRRFJV0EOwkGpCudLfRYfKwqjfSyAnvlN7iDCeHs=",
       "url": "_framework\/_bin\/Microsoft.AspNetCore.Components.Web.dll"
     },
     {
-      "hash": "sha256-tElEG7zhnx3DnGeUw7si3aYR6tqDe4jH3PFcJfh37Ik=",
+      "hash": "sha256-uizY4Vl2uYM5rTPQXMNmMSp0BHJddWo60zZJWXcjE9I=",
       "url": "_framework\/_bin\/Microsoft.AspNetCore.Components.WebAssembly.dll"
     },
     {
@@ -577,39 +821,39 @@
       "url": "_framework\/_bin\/Microsoft.Bcl.AsyncInterfaces.dll"
     },
     {
-      "hash": "sha256-7VFMnaUYXF2Et6cMIVH7aSlgGFuBgq3j4JB4Mk+6RaY=",
+      "hash": "sha256-yKBZqWQK1vQACvwP+8H+KFTIBER+bxEHyDERCB1d6Cg=",
       "url": "_framework\/_bin\/Microsoft.Extensions.Configuration.Abstractions.dll"
     },
     {
-      "hash": "sha256-pkOVVBDab++iERRmYQ6aJAPBOcxMqvTHvaob3u6Hmek=",
+      "hash": "sha256-AClGkuHI5OptPgD4tpNk7gvfOF4aG0MDz0zGNd5E0X0=",
       "url": "_framework\/_bin\/Microsoft.Extensions.Configuration.dll"
     },
     {
-      "hash": "sha256-4vAboT5fhRVIFJMQFzrv7B50sda77+hwAJKmhdmneQ4=",
+      "hash": "sha256-tAJuAKCaZrhL5lDRLY2qBUemrbnhCCFX7RO6wSbS\/Bg=",
       "url": "_framework\/_bin\/Microsoft.Extensions.Configuration.Json.dll"
     },
     {
-      "hash": "sha256-j1EGUQXmMHgdYVfrOuoKBsdfVyn43Q5ddCgasKuG2YE=",
+      "hash": "sha256-5huUiVBX6fH3d7N8N68b6DhaGmMj5EnIEZJRtzPjiAw=",
       "url": "_framework\/_bin\/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
     },
     {
-      "hash": "sha256-d3SsPbiE+6NjU5XkBOYng7RCAakgISFtPfM0b\/OgGyU=",
+      "hash": "sha256-TvhZ0uYaIoVB0nWUWT+bdk+9LV6JPHQqeumdC4SUuAw=",
       "url": "_framework\/_bin\/Microsoft.Extensions.DependencyInjection.dll"
     },
     {
-      "hash": "sha256-NvWP4rCjjBsNYBsJ3evW07la7TwVbe3YIvvysajMutU=",
+      "hash": "sha256-f+swyTzTpLbchj3vM93v8PEcE0GPdhOVaggH2w1fADY=",
       "url": "_framework\/_bin\/Microsoft.Extensions.Logging.Abstractions.dll"
     },
     {
-      "hash": "sha256-GxXtd5hnQgcTFgV5f7vOlaJFJg9i8N9XpsEVKCU6Rsc=",
+      "hash": "sha256-y9nKTNxuxP+YRRlpKDWUaNZZIfs0Hn2dDLck5D0pHJ0=",
       "url": "_framework\/_bin\/Microsoft.Extensions.Logging.dll"
     },
     {
-      "hash": "sha256-m13ZSyaJERSU6RmwiwoQdV5TFUvEldij8US7jTTzH3g=",
+      "hash": "sha256-cVj+4wLSFsDpLunq+GsEZNMXZG6lAKmy\/mimrugtmTw=",
       "url": "_framework\/_bin\/Microsoft.Extensions.Options.dll"
     },
     {
-      "hash": "sha256-hUY3xEQSpJquUy4YNLMl+4sQfwT6IHkK7VH3ItxPGn8=",
+      "hash": "sha256-od5VSBAPSzuEmwDqaNTVMqxSJ2ryMThhdHztFFT+KHQ=",
       "url": "_framework\/_bin\/Microsoft.Extensions.Primitives.dll"
     },
     {
@@ -621,59 +865,63 @@
       "url": "_framework\/_bin\/Microsoft.JSInterop.WebAssembly.dll"
     },
     {
-      "hash": "sha256-paQKbAfqmpnST6DIH8uX81Y\/vlV+TiMg8v+5Np20yEg=",
+      "hash": "sha256-66FA2ISrgbtO\/8WHsyZ7afIeeZ2sEgQpqd+opDcE+sM=",
       "url": "_framework\/_bin\/Mono.Security.dll"
     },
     {
-      "hash": "sha256-Kjp9\/WvRzX35edBnC7Uu8auT6v7awGIcUw26o4wMH30=",
+      "hash": "sha256-OrC6CASD+SPJsgj0y9CXoPCsgFV3SXx\/M1ftoRIYFXc=",
       "url": "_framework\/_bin\/mscorlib.dll"
     },
     {
-      "hash": "sha256-\/wgScCkqT4oHaE1v0TO55kT477yCOkCftw7RBx0KAYI=",
+      "hash": "sha256-PEBv6BSNI7CaWy9CkLSr8Y8+cpmgzfkgXh09fVIi5Zg=",
       "url": "_framework\/_bin\/netstandard.dll"
     },
     {
-      "hash": "sha256-2RbsNG6Zu\/Vx64jNv3l3vh6FvxAlkbY3lfYuhHcVLjs=",
+      "hash": "sha256-W3AgD30w1Gj\/TyL3wBpZWM1mgPBpPB4M\/ToU6iWc2P8=",
       "url": "_framework\/_bin\/System.Core.dll"
     },
     {
-      "hash": "sha256-NIQacLLGO3dawNoLhaJasp5d1oZMwaVZKbUJHDRSoWY=",
+      "hash": "sha256-VKWRPXty0Nykz\/Krhee4ugsTTyn547sr4vruceq3Ugw=",
       "url": "_framework\/_bin\/System.dll"
     },
     {
-      "hash": "sha256-kzJPDhk7V+gYJNra9hflV8Y6TmZpkSGXZSC8IxQDwBY=",
+      "hash": "sha256-\/oicD3K6R\/nTp3qgX4PIWzdJB4eoUjR6JUWWzoBmxT4=",
+      "url": "_framework\/_bin\/System.Drawing.Common.dll"
+    },
+    {
+      "hash": "sha256-LhqjxJ+X5gk8fAeNLBJE8lNG6QLl1nJzMZorM\/E6Dyk=",
       "url": "_framework\/_bin\/System.Net.Http.dll"
     },
     {
-      "hash": "sha256-QYoTdPha2pjBW\/dj1H3CfstBkBVquwahOUE9v556tyQ=",
+      "hash": "sha256-k1Hl1AUVY1Bx9otIB7byL3jqq\/on6hKw0YU8WrnYhFU=",
       "url": "_framework\/_bin\/System.Net.Http.WebAssemblyHttpHandler.dll"
     },
     {
-      "hash": "sha256-leu\/OCX30KjY8QKcimlpPh8xYiYeMYPD5N1PTiQOjcA=",
+      "hash": "sha256-y61RjXYOQZv9AJdZ+EK7f7UxX+z+g9Ew11j1WIA\/DZ4=",
       "url": "_framework\/_bin\/System.Runtime.CompilerServices.Unsafe.dll"
     },
     {
-      "hash": "sha256-qwuVPP2oKggw4PKbBGoZfIKhHjgIGy5l6gaFI0ap1xg=",
+      "hash": "sha256-Mz8nXFKRE96GhSAKJDUe18LlxX96QwFkzXzjA1486r4=",
       "url": "_framework\/_bin\/System.Text.Encodings.Web.dll"
     },
     {
-      "hash": "sha256-0g+RwWrlx+Qwxj2rI3Ah+gWVcX5P0TURYtac\/nQlxZA=",
+      "hash": "sha256-H6MPo4pgmHPTC3cNWBYKz\/AU9eIeHFgpxSj+vBsuXZM=",
       "url": "_framework\/_bin\/System.Text.Json.dll"
     },
     {
-      "hash": "sha256-NBQ+LdNjX8sYTcnR4Hl1Z9+hEQXkafcFYBk0Ila2t5Q=",
+      "hash": "sha256-FP+PwA2lb3KrgfYUojYLnKIfsvX3FuHKX4W+rmWR+VE=",
       "url": "_framework\/_bin\/System.Xml.dll"
     },
     {
-      "hash": "sha256-jrAnEYJWCDFGmvdE664MWj5wgBYcKRpmAOG8\/0GFM90=",
+      "hash": "sha256-GKKf2gVSGOlfnoNY43iNqbZK5V7fihe6zJJJrK0OS4c=",
       "url": "_framework\/_bin\/TrekSharp.AdventureTools.dll"
     },
     {
-      "hash": "sha256-D1z9bfWNbbPbgUx8X36pnrJPxI7w7+bGriFal1XNWCQ=",
+      "hash": "sha256-zb3Tm9Lw+akpzje1NSvpZYoFHMzu+XCXUzDM7vGANBQ=",
       "url": "_framework\/_bin\/TrekSharp.dll"
     },
     {
-      "hash": "sha256-j9xXRv5XwoP9Ae9WF\/SJ+EaDOuH3IagwCWONnh1VJhk=",
+      "hash": "sha256-iaNsRIpMAn7Eohe7lmSO1Hev8LMGBNv8CSttK8qRhnE=",
       "url": "_framework\/_bin\/WebAssembly.Bindings.dll"
     },
     {
@@ -693,7 +941,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-bOJSQ3uJzjFCtBis0uDyx91eZwUHm\/DI\/NIEDss5Mq0=",
+      "hash": "sha256-HN9g7GKNhhNpndKLz6TUyFuairRl01Cv54RTrVxnEEk=",
       "url": "_framework\/blazor.boot.json"
     }
   ],
