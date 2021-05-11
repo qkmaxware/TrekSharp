@@ -1,0 +1,36 @@
+@using System.Drawing
+
+<svg style="position: absolute; width: 0; height: 0; overflow: none; left: -100%;">
+  <filter id="@filterId" color-interpolation-filters="sRGB"
+          x="0" y="0" height="100%" width="100%">
+    <feColorMatrix type="matrix"
+      values="@r 0 0 0  0 
+              0 @g 0 0  0  
+              0 0 @b 0  0 
+              0  0 0 1  0" />
+  </filter>
+</svg>
+<img src="@Src" class="@Class" style="-moz-filter: url(#@(filterId)); -webkit-filter: url(#@(filterId)); -ms-filter: url(#@(filterId)); filter: url(#@(filterId)); @Style">
+
+@code {
+    [Parameter] public string Src {get; set;} = string.Empty;
+    [Parameter] public string Class {get; set;} = string.Empty;
+    [Parameter] public Color Tint {get; set;} = Color.White;
+    [Parameter] public string Style {get; set;} = string.Empty;
+
+    private string filterString {
+      get {
+        return $"<svg><filter id=\"tint-filter\" color-interpolation-filters=\"sRGB\" x=\"0\" y=\"0\" height=\"100%\" width=\"100%\"><feColorMatrix type=\"matrix\" values=\"{r} 0 0 0 0 0 {g} 0 0 0 0 0 {b} 0 0 0 0 0 1 0\"/></filter></svg>";
+      }
+    }
+    private string filterId => $"{nameof(TintedImage)}-tint-filter-{Tint.ToHex()}";
+
+    public void SetTint(Color tint) {
+        this.Tint = tint;
+        StateHasChanged();
+    }
+
+    private float r => Tint.R / 255f;
+    private float g => Tint.G / 255f;
+    private float b => Tint.B / 255f;
+}

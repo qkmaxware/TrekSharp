@@ -1,3 +1,4 @@
+@using Pages
 @inject IJSRuntime JSRuntime;
 @inject AppData AppDataService;
 @inject NavigationManager AppNavigationManager;
@@ -26,6 +27,14 @@
     
     protected void NavigateHome() {
         NavigationManager.NavigateTo(string.Empty);
+    }
+
+    protected void NavigateToMini() {
+        NavigationManager.NavigateTo("/new/mini");
+    }
+    protected void NavigateToMini(Character character) {
+        CreateMini.EditCharacterAvatar(character);
+        NavigationManager.NavigateTo("/new/mini/character");
     }
 
     protected void NavigateToPlayerVessel(PlayerVessel vessel) {

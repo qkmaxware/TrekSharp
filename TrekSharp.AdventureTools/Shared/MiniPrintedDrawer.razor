@@ -1,0 +1,38 @@
+<div class="mini">
+    <div class="foot back">
+
+    </div>
+    <div class="art back">
+        @if (string.IsNullOrEmpty (Avatar.CustomNetworkImage)) {
+            <TintedImage Class="pixelart" Src="@Avatar.Body" Tint=@Avatar.SkinColour></TintedImage>
+            <TintedImage Class="pixelart" Src="@Avatar.Eyes" Tint=@Avatar.SkinColour></TintedImage>
+            <img class="pixelart" src="@Avatar.Uniform">
+            <TintedImage Class="pixelart" Src="@Avatar.Beard" Tint=@Avatar.BeardColour></TintedImage>
+            <TintedImage Class="pixelart" Src="@Avatar.Hair" Tint=@Avatar.HairColour></TintedImage>
+        } else {
+            <img class="pixelart" src="@Avatar.CustomNetworkImage"> 
+        }
+    </div>
+    <div class="art front">
+        @if (string.IsNullOrEmpty (Avatar.CustomNetworkImage)) {
+            <TintedImage Class="pixelart" Src="@Avatar.Body" Tint=@Avatar.SkinColour></TintedImage>
+            <TintedImage Class="pixelart" Src="@Avatar.Eyes" Tint=@Avatar.SkinColour></TintedImage>
+            <img class="pixelart" src="@Avatar.Uniform">
+            <TintedImage Class="pixelart" Src="@Avatar.Beard" Tint=@Avatar.BeardColour></TintedImage>
+            <TintedImage Class="pixelart" Src="@Avatar.Hair" Tint=@Avatar.HairColour></TintedImage>
+        } else {
+            <img class="pixelart" src="@Avatar.CustomNetworkImage"> 
+        }
+    </div>
+    <div class="foot front">
+
+    </div>
+    <div class="base">
+        <span>@Name</span>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Name {get; set;}
+    [Parameter] public Avatar Avatar {get; set;}
+}

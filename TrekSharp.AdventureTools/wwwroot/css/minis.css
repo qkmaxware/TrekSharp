@@ -1,0 +1,67 @@
+.mini {
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+    page-break-inside: avoid;
+}
+.mini .base {
+    height: 1in;
+    width: 1in;
+    overflow:hidden;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-top: 1px dotted grey;
+}
+.mini .base span {
+    line-height: 1in;
+    vertical-align: middle;
+}
+.mini .art {
+    height: 1.18in;
+    width: 1in;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px dotted grey;
+    border-bottom: 1px dotted grey;
+    position: relative;
+    overflow: hidden;
+}
+.pixelart {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-pixelated;
+    image-rendering: pixelated;
+}
+.mini .art img {
+    position: absolute;
+    bottom: 0;
+    left: 0;    
+}
+.mini .art.front img {
+    object-position: left bottom;
+}
+.mini .art.back img {
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+    object-position: left bottom;
+}
+.mini .foot {
+    width: 1in;
+    height: 0.5in;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+.mini .foot.front {
+    border-top: 1px dotted grey;
+    border-bottom: 1px dotted grey;
+}
+.mini .foot.back {
+    border-top: 1px solid black;
+    border-bottom: 1px dotted grey;
+}

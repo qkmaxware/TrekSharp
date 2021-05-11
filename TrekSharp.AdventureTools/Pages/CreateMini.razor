@@ -1,0 +1,271 @@
+@page "/new/mini"
+@page "/new/mini/character"
+@using System.Drawing
+@inherits Page
+
+<PrintNotification >
+    To print <b>all</b> your custom minis at once click <a href="print/mini">here</a>.
+</PrintNotification>
+
+<div class="no-print">
+    <LCARS Title="MINI">
+    <div class="w3-row">
+        <div class="w3-half">
+            <div class="w3-bar-block">
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("head")" @onclick=@(() => selectTab("head"))>Body</button>
+                <div class="@subpanelCss("head") lcars-border-primary w3-padding">
+                    <div class="w3-right-align">
+                        <ColourPicker Colour=avatar.SkinColour Pallet=ColourExtentions.SkinColours OnChange=@((colour) => { avatar.SkinColour=colour; StateHasChanged(); })></ColourPicker>
+                    </div>
+                    <div class="w3-row">
+                        @foreach (var body in bodies) {
+                            var capture = body;
+                            <button class="w3-col s3 w3-button no-lcars" @onclick=@(() => avatar.Body=capture)>
+                                <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                            </button>
+                        }
+                    </div>
+                </div>
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("eyes")" @onclick=@(() => selectTab("eyes"))>Eyes</button>
+                <div class="@subpanelCss("eyes") lcars-border-primary w3-padding">
+                    <div class="w3-row">
+                        <div class="w3-right-align">
+                            <ColourPicker Colour=avatar.EyeColour Pallet=ColourExtentions.EyeColours OnChange=@((colour) => { avatar.EyeColour=colour; StateHasChanged(); })></ColourPicker>
+                        </div>
+                        @foreach (var eye in eyes) {
+                            var capture = eye;
+                            <button class="w3-col s3 w3-button no-lcars" @onclick=@(() => avatar.Eyes=capture)>
+                                <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                            </button>
+                        }
+                    </div>
+                </div>
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("hair")" @onclick=@(() => selectTab("hair"))>Hair</button>
+                <div class="@subpanelCss("hair") lcars-border-primary w3-padding">
+                    <div class="w3-right-align">
+                        <ColourPicker Colour=avatar.HairColour Pallet=ColourExtentions.HairColours OnChange=@((colour) => { avatar.HairColour=colour; StateHasChanged(); })></ColourPicker>
+                    </div>
+                    <div class="w3-row">
+                    @foreach (var hair in hairs) {
+                        var capture = hair;
+                        <button class="w3-col s3 w3-button no-lcars" @onclick=@(() => avatar.Hair=capture)>
+                            <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                        </button>
+                    }
+                    </div>
+                </div>
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("beard")" @onclick=@(() => selectTab("beard"))>Facial Hair</button>
+                <div class="@subpanelCss("beard") lcars-border-primary w3-padding">
+                    <div class="w3-row">
+                        <div class="w3-right-align">
+                            <ColourPicker Colour=avatar.BeardColour Pallet=ColourExtentions.HairColours OnChange=@((colour) => { avatar.BeardColour=colour; StateHasChanged(); })></ColourPicker>
+                        </div>
+                        @foreach (var beard in beards) {
+                            var capture = beard;
+                            <button class="w3-col s3 w3-button no-lcars" @onclick=@(() => avatar.Beard=capture)>
+                                <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                            </button>
+                        }
+                    </div>
+                </div>
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("uniform")" @onclick=@(() => selectTab("uniform"))>Uniform</button>
+                <div class="@subpanelCss("uniform") lcars-border-primary w3-padding">
+                    @foreach (var timeperiod in uniforms) {
+                        <div class="typeface text-secondary w3-border-bottom">
+                            <b>@timeperiod.Key</b>
+                        </div>
+                        <div class="w3-row">
+                            @foreach (var uniform in timeperiod.Value) {
+                                var capture = uniform;
+                                <button class="w3-col s4 w3-button no-lcars" @onclick=@(() => avatar.Uniform=capture)>
+                                    <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                                </button>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="w3-half ">
+            <MiniDrawer Avatar=@avatar></MiniDrawer>
+        </div>
+    </div>
+    </LCARS>
+</div>
+<div class="print">
+    <h1>@name</h1>
+    <MiniPrintedDrawer Avatar=@avatar Name=@name></MiniPrintedDrawer>
+    <p>
+        <h2>
+            Instructions
+        </h2>
+        <ol>
+            <li>Print out</li>
+            <li>Cut along the solid lines</li>
+            <li>Fold along the dotted lines</li>
+            <li>Glue the backside of the mini name to the bottom of the feet</li>
+        </ol>
+    </p>
+</div>
+
+@code {
+
+    #region Tabs
+    private string selectedTab = "head";
+    private string selectedCss(string tab) => selectedTab == tab ? "primary" : "secondary";
+    private string subpanelCss(string tab) => selectedTab == tab ? "w3-show" : "w3-hide";
+    private void selectTab(string tab) {
+        this.selectedTab = tab;
+    }
+    #endregion
+
+    #region Avatar
+    private Avatar _internalAvatar = randomAvatar();
+    private static Avatar randomAvatar() {
+        var hair = ColourExtentions.HairColours.Random();
+        return new Avatar {
+            SkinColour = ColourExtentions.SkinColours.Random(),
+            Body= bodies.Random(),
+            EyeColour = ColourExtentions.EyeColours.Random(),
+            Eyes= eyes[0],
+            HairColour = hair,
+            Hair= hairs.Random(),
+            BeardColour = hair,
+            Beard= beards.Random(),
+            Uniform= uniforms.Random().Random(),
+        };
+    }
+    private static Character _character;
+    private Avatar _characterAvatar => _character?.Avatar;
+    private bool useCharacter => NavigationManager.Uri.EndsWith("character") && _character != null;
+    public static void EditCharacterAvatar(Character character) {
+        _character = character;
+    }
+    private Avatar avatar => useCharacter ? (_characterAvatar ?? _internalAvatar) : _internalAvatar;
+    private string name => useCharacter ? _character.Name : "Custom Mini";
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        if (useCharacter) {
+            if (_characterAvatar == null) {
+                // Assume species is unknown. Pick random body
+                _character.Avatar = randomAvatar();
+                // For well known species, choose an appropriate body
+                if (_character.Species.Name == "Andorian") {
+                    _character.Avatar.Body = bodies[3];
+                    _character.Avatar.SkinColour = ColourExtentions.BlueSkinColours.Random();
+                } else if (_character.Species.Name == "Vulkan" || _character.Species.Name == "Romulan") {
+                    _character.Avatar.Body = bodies[1];
+                } else if (_character.Species.Name == "Human" || _character.Species.Name == "Betazoid" || _character.Species.Name == "Bajoran") {
+                    _character.Avatar.Body = bodies[0];
+                } else if (_character.Species.Name == "Trill") {
+                    _character.Avatar.Body = bodies[5];
+                } else if (_character.Species.Name == "Orion") {
+                    _character.Avatar.Body = bodies[0];
+                    _character.Avatar.SkinColour = ColourExtentions.GreenSkinColours.Random();
+                } else if (_character.Species.Name == "Bolian") {
+                    _character.Avatar.Body = bodies[4];
+                    _character.Avatar.SkinColour = ColourExtentions.BlueSkinColours.Random();
+                } else if (_character.Species.Name == "Klingon") {
+                    _character.Avatar.Body = bodies[2];
+                } else if (_character.Species.Name == "Ferengi") {
+                    _character.Avatar.Body = bodies[7];
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region Creator
+    
+    #endregion
+
+    #region Creator
+    private static List<string> bodies = new List<string>{
+        "assets/artwork/minis/base/Humanoid Generic.png",
+        "assets/artwork/minis/base/Humanoid Elvish.png",
+        "assets/artwork/minis/base/Humanoid Ridged.png",
+        "assets/artwork/minis/base/Humanoid Antenae.png",
+        "assets/artwork/minis/base/Humanoid Split.png",
+        "assets/artwork/minis/base/Humanoid Spotted.png",
+        "assets/artwork/minis/base/Humanoid Horned.png",
+        "assets/artwork/minis/base/Humanoid Large Ears.png",
+    };
+    private static List<string> eyes = new List<string> {
+        "assets/artwork/minis/eyes/Tall.png",
+        "assets/artwork/minis/eyes/Very Tall.png",
+        "assets/artwork/minis/eyes/Long.png",
+        "assets/artwork/minis/eyes/Many.png",
+    };
+    private static List<string> hairs = new List<string>{
+        "assets/artwork/minis/hair/Bald.png",
+        "assets/artwork/minis/hair/Bald Top.png",
+        "assets/artwork/minis/hair/Sporatic.png",
+        "assets/artwork/minis/hair/Short.png",
+        "assets/artwork/minis/hair/Combover.png",
+        "assets/artwork/minis/hair/Afro.png",
+        "assets/artwork/minis/hair/Long.png",
+        "assets/artwork/minis/hair/Long Framed.png",
+        "assets/artwork/minis/hair/Side Pony.png",
+        "assets/artwork/minis/hair/Spike.png",
+        "assets/artwork/minis/hair/Bun.png",
+        "assets/artwork/minis/hair/Man Bun.png",
+        "assets/artwork/minis/hair/Very Long.png",
+        "assets/artwork/minis/hair/Flat Top.png",
+        "assets/artwork/minis/hair/Center.png",
+        "assets/artwork/minis/hair/Shoulder Length.png",
+    };
+    
+    private static List<string> beards = new List<string>{
+        "assets/artwork/minis/beards/Clean Shaven.png",
+        "assets/artwork/minis/beards/White Mustache.png",
+        "assets/artwork/minis/beards/White Van Dyke.png",
+        "assets/artwork/minis/beards/White Goatee.png",
+        "assets/artwork/minis/beards/White Mutton Chops.png",
+        "assets/artwork/minis/beards/White Friendly Mutton Chops.png",
+        "assets/artwork/minis/beards/White Full Beard.png",
+    };
+
+    private static Dictionary<string, List<string>> uniforms = new Dictionary<string, List<string>> {
+        { "ENT", new List<string>{
+            "assets/artwork/minis/uniform/ENT Command.png",
+            "assets/artwork/minis/uniform/ENT Operations.png",
+            "assets/artwork/minis/uniform/ENT Science.png",
+        }},
+        { "DISCO", new List<string>{
+            "assets/artwork/minis/uniform/DISCO Command.png",
+            "assets/artwork/minis/uniform/DISCO Operations.png",
+            "assets/artwork/minis/uniform/DISCO Science.png",
+        }},
+        { "TOS", new List<string>{
+            "assets/artwork/minis/uniform/TOS Command.png",
+            "assets/artwork/minis/uniform/TOS Operations.png",
+            "assets/artwork/minis/uniform/TOS Science.png",
+            "assets/artwork/minis/uniform/TOS Command Skirt.png",
+            "assets/artwork/minis/uniform/TOS Operations Skirt.png",
+            "assets/artwork/minis/uniform/TOS Science Skirt.png",
+        }},
+        { "TNG", new List<string> {
+            "assets/artwork/minis/uniform/TNG Command.png",
+            "assets/artwork/minis/uniform/TNG Operations.png",
+            "assets/artwork/minis/uniform/TNG Science.png",
+        }},
+        { "VOY", new List<string> {
+            "assets/artwork/minis/uniform/VOY Command.png",
+            "assets/artwork/minis/uniform/VOY Operations.png",
+            "assets/artwork/minis/uniform/VOY Science.png",
+        }},
+        { "DS9", new List<string> {
+            "assets/artwork/minis/uniform/DS9 Command.png",
+            "assets/artwork/minis/uniform/DS9 Operations.png",
+            "assets/artwork/minis/uniform/DS9 Science.png",
+        }},
+        { "LD", new List<string> {
+            "assets/artwork/minis/uniform/LD Command.png",
+            "assets/artwork/minis/uniform/LD Operations.png",
+            "assets/artwork/minis/uniform/LD Science.png",
+            "assets/artwork/minis/uniform/LD Science Lab Coat.png",
+        }},
+    };
+    #endregion
+
+}

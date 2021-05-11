@@ -1,0 +1,45 @@
+@page "/print/mini"
+@inherits Page
+
+<PrintNotification></PrintNotification>
+
+<div class="print">
+    <h1>Custom Minis</h1>
+</div>
+
+<div class="w3-row">
+@foreach (var character in Data.Party) {
+    if (character.Avatar != null) {
+        <div class="no-print w3-quarter">
+            <MiniDrawer Avatar=@character.Avatar></MiniDrawer>
+        </div>
+        <div class="print"> 
+            <MiniPrintedDrawer Avatar=@character.Avatar Name=@character.Name></MiniPrintedDrawer>
+        </div>
+    }
+}
+@foreach (var character in Data.Supports) {
+    if (character.Avatar != null) {
+        <div class="no-print w3-quarter">
+            <MiniDrawer Avatar=@character.Avatar></MiniDrawer>
+        </div>
+        <div class="print"> 
+            <MiniPrintedDrawer Avatar=@character.Avatar Name=@character.Name></MiniPrintedDrawer>
+        </div>
+    }
+}
+</div>
+
+<div class="print">
+    <p>
+        <h2>
+            Instructions
+        </h2>
+        <ol>
+            <li>Print out</li>
+            <li>Cut along the solid lines</li>
+            <li>Fold along the dotted lines</li>
+            <li>Glue the backside of the mini name to the bottom of the feet</li>
+        </ol>
+    </p>
+</div>

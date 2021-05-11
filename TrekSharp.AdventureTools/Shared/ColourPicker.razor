@@ -1,0 +1,32 @@
+@using System.Drawing
+@using System.Globalization
+
+@if(Pallet != null) {
+    foreach (var colour in Pallet) {
+        <span style="width: 24px; height: 24px; background-color: #@(colour.ToHex()); border-radius: 50%; display: inline-block" @onclick=@(() => setColour(colour))></span>
+    }
+}
+<input type="color" style="height: 32px;" @bind=hex> 
+
+@code {
+    [Parameter] public Color Colour {get; set;}
+    [Parameter] public Action<Color> OnChange {get; set;}
+    [Parameter] public IEnumerable<Color> Pallet {get; set;}
+
+    public string hex {
+        get {
+            return "#" + Colour.ToHex();
+        }
+        set {
+            Console.WriteLine(value);
+            string colorcode = value.PadLeft(8, '0');
+            int argb = Int32.Parse(colorcode.Replace("#", ""), NumberStyles.HexNumber);
+            setColour(Color.FromArgb(argb));
+        }
+    }
+
+    private void setColour(Color c) {
+        this.Colour = c;
+        OnChange?.Invoke(Colour);
+    }
+}

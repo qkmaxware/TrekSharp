@@ -143,11 +143,21 @@
             disc_list.RemoveRandom().Value = points;
         }
 
+        Species s;
+        if (string.IsNullOrEmpty(selectedSpecies)) {
+            s = species.Random();
+        } else {
+            s = species.Where(species => species.Name == selectedSpecies).FirstOrDefault();
+            if (s == null) {
+                s = species.Random();
+            }
+        }
+
         SupportCharacter c = new SupportCharacter {
             Name = name,
             Rank = ranks.Random(),
             Assignment = assignment,
-            Species = species.Random(),
+            Species = s,
             Attributes = attr,
             Disciplines = disc,
             Equipment = new List<Item>() {

@@ -1,4 +1,9 @@
 <div id="print-notification" class="w3-padding no-print" style="text-align: center;">
-    For a printable PDF , press CTRL + P and use your browser's <b>Print to PDF</b> functionality. Make sure to select <b>Background graphics</b> if you desire artwork.
+    For a printable PDF , press CTRL + P and use your browser's <b>Print to PDF</b> functionality. Make sure to select <b>Background graphics</b> if you desire artwork. 
+    @ChildContent
     <hr/>
 </div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent {get; set;}
+}

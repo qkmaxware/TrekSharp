@@ -40,6 +40,8 @@ public class Character {
     public Attributes Attributes {get; set;}
     public Disciplines Disciplines {get; set;}
 
+    public Avatar Avatar {get; set;} = null;
+
     public virtual int TotalStress => Attributes.Fitness + Disciplines.Security + BonusStress;
     public virtual int BonusStress {get;} = 0;
     public int UsedStress {get; set;}
