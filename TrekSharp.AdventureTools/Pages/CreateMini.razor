@@ -26,20 +26,7 @@
                         }
                     </div>
                 </div>
-                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("eyes")" @onclick=@(() => selectTab("eyes"))>Eyes</button>
-                <div class="@subpanelCss("eyes") lcars-border-primary w3-padding">
-                    <div class="w3-row">
-                        <div class="w3-right-align">
-                            <ColourPicker Colour=avatar.EyeColour Pallet=ColourExtentions.EyeColours OnChange=@((colour) => { avatar.EyeColour=colour; StateHasChanged(); })></ColourPicker>
-                        </div>
-                        @foreach (var eye in eyes) {
-                            var capture = eye;
-                            <button class="w3-col s3 w3-button no-lcars" @onclick=@(() => avatar.Eyes=capture)>
-                                <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
-                            </button>
-                        }
-                    </div>
-                </div>
+                
                 <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("hair")" @onclick=@(() => selectTab("hair"))>Hair</button>
                 <div class="@subpanelCss("hair") lcars-border-primary w3-padding">
                     <div class="w3-right-align">
@@ -54,6 +41,22 @@
                     }
                     </div>
                 </div>
+                
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("eyes")" @onclick=@(() => selectTab("eyes"))>Eyes</button>
+                <div class="@subpanelCss("eyes") lcars-border-primary w3-padding">
+                    <div class="w3-row">
+                        <div class="w3-right-align">
+                            <ColourPicker Colour=avatar.EyeColour Pallet=ColourExtentions.EyeColours OnChange=@((colour) => { avatar.EyeColour=colour; StateHasChanged(); })></ColourPicker>
+                        </div>
+                        @foreach (var eye in eyes) {
+                            var capture = eye;
+                            <button class="w3-col s3 w3-button no-lcars" @onclick=@(() => avatar.Eyes=capture)>
+                                <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                            </button>
+                        }
+                    </div>
+                </div>
+                
                 <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("beard")" @onclick=@(() => selectTab("beard"))>Facial Hair</button>
                 <div class="@subpanelCss("beard") lcars-border-primary w3-padding">
                     <div class="w3-row">
@@ -68,6 +71,19 @@
                         }
                     </div>
                 </div>
+
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("hat")" @onclick=@(() => selectTab("hat"))>Headgear</button>
+                <div class="@subpanelCss("hat") lcars-border-primary w3-padding">
+                    <div class="w3-row">
+                    @foreach (var hat in hats) {
+                        var capture = hat;
+                        <button class="w3-col s4 w3-button no-lcars" @onclick=@(() => avatar.Hat=capture)>
+                            <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                        </button>
+                    }
+                    </div>
+                </div>
+
                 <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("uniform")" @onclick=@(() => selectTab("uniform"))>Uniform</button>
                 <div class="@subpanelCss("uniform") lcars-border-primary w3-padding">
                     @foreach (var timeperiod in uniforms) {
@@ -83,6 +99,18 @@
                             }
                         </div>
                     }
+                </div>
+                
+                <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("accessory")" @onclick=@(() => selectTab("accessory"))>Accessory</button>
+                <div class="@subpanelCss("accessory") lcars-border-primary w3-padding">
+                    <div class="w3-row">
+                    @foreach (var acc in accessories) {
+                        var capture = acc;
+                        <button class="w3-col s4 w3-button no-lcars" @onclick=@(() => avatar.Accessory=capture)>
+                            <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                        </button>
+                    }
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,6 +160,8 @@
             Hair= hairs.Random(),
             BeardColour = hair,
             Beard= beards.Random(),
+            Hat= hats[0],
+            Accessory= accessories[0],
             Uniform= uniforms.Random().Random(),
         };
     }
@@ -169,6 +199,9 @@
                     _character.Avatar.Body = bodies[2];
                 } else if (_character.Species.Name == "Ferengi") {
                     _character.Avatar.Body = bodies[7];
+                } else if (_character.Species.Name == "Caitian") {
+                    _character.Avatar.Body = bodies[0];
+                    _character.Avatar.Hat = hats[4];
                 }
             }
         }
@@ -265,6 +298,21 @@
             "assets/artwork/minis/uniform/LD Science.png",
             "assets/artwork/minis/uniform/LD Science Lab Coat.png",
         }},
+    };
+    private static List<string> hats = new List<string> {
+        "assets/artwork/minis/beards/Clean Shaven.png",
+        "assets/artwork/minis/hats/Glasses.png",
+        "assets/artwork/minis/hats/Ball Cap.png",
+        "assets/artwork/minis/hats/Bow.png",
+        "assets/artwork/minis/hats/Cat Ears.png",
+        "assets/artwork/minis/hats/Cortical Node.png",
+        "assets/artwork/minis/hats/Borg Eyeplate.png",
+    };
+    private static List<string> accessories = new List<string> {
+        "assets/artwork/minis/beards/Clean Shaven.png",
+        "assets/artwork/minis/accessories/Batleth.png",
+        "assets/artwork/minis/accessories/PADD.png",
+        "assets/artwork/minis/accessories/Borg Multitool.png",
     };
     #endregion
 

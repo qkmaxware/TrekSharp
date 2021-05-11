@@ -8,4 +8,13 @@
         width: 100%; 
         max-width: 100%; 
     }
+    .mobile-small {
+        font-size: small !important;
+    }
+    .mobile-medium {
+        font-size: medium !important;
+    }
+    .mobile-full {
+        width: 100%;
+    }
 }

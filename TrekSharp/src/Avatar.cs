@@ -31,6 +31,9 @@ public class Avatar {
     public Colour BeardColour {get; set;}
     public string Beard {get; set;}
     public string Uniform {get; set;}
+
+    public string Hat {get; set;}
+    public string Accessory {get; set;}
 }
 
 }

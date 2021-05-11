@@ -41,6 +41,12 @@ public class Rank {
     public static readonly Rank Admiral = new Rank(Faction.Starfleet, 9, "Admiral");
     public static readonly Rank FleetAdmiral = new Rank(Faction.Starfleet, 10, "Fleet Admiral");
 
+    public static readonly Rank Gil = new Rank(Faction.CardassianOrder, 0, "Gil");
+    public static readonly Rank Glinn = new Rank(Faction.CardassianOrder, 2, "Glinn");
+    public static readonly Rank Dalin = new Rank(Faction.CardassianOrder, 3, "Dalin");
+    public static readonly Rank Dal = new Rank(Faction.CardassianOrder, 4, "Dal");
+    public static readonly Rank Gul = new Rank(Faction.CardassianOrder, 5, "Gul");
+    public static readonly Rank Legate = new Rank(Faction.CardassianOrder, 9, "Legate");
 }
 
 }

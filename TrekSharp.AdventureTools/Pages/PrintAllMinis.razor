@@ -28,6 +28,18 @@
         </div>
     }
 }
+@foreach (var encounter in Data.Encounters) {
+    foreach (var character in encounter.AllCharacters) {
+        if (character.Avatar != null) {
+            <div class="no-print w3-quarter">
+                <MiniDrawer Avatar=@character.Avatar></MiniDrawer>
+            </div>
+            <div class="print"> 
+                <MiniPrintedDrawer Avatar=@character.Avatar Name=@character.Name></MiniPrintedDrawer>
+            </div>
+        }
+    }
+}
 </div>
 
 <div class="print">

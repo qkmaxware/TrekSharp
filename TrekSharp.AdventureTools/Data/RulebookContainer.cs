@@ -10,6 +10,10 @@ public class RulebookContainer {
         {"Command Division", Rulebooks.CommandDivision.Instance }, 
         {"Operations Division", Rulebooks.OperationsDivision.Instance },   
         {"Science Division", Rulebooks.ScienceDivision.Instance },   
+        {"Alpha Quadrant", Rulebooks.QuadrantSupplementAlpha.Instance },
+        {"Beta Quadrant", Rulebooks.QuadrantSupplementBeta.Instance }, 
+        {"Delta Quadrant", Rulebooks.QuadrantSupplementDelta.Instance }, 
+        {"Gamma Quadrant", Rulebooks.QuadrantSupplementGamma.Instance },    
         {"α Cannon Races", Rulebooks.MoreAlphaCannonRaces.Instance }   ,
         {"α Cannon Ships", Rulebooks.MoreAlphaCannonShips.Instance }   ,
     };

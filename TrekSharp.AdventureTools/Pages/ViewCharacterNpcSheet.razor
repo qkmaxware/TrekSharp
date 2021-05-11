@@ -18,8 +18,20 @@
             <div class="w3-padding row-fill">
                 <h2 class="w3-right-align text-primary typeface">PERSONNEL RECORD</h2>
                 <div class="w3-row">
-                    <div class="w3-quarter text-secondary typeface">NAME:</div> 
-                    <div class="w3-threequarter w3-border-bottom">@Player.Rank @Player.Name</div>
+                    <div class="w3-col w3-right w3-center" style="width: 100px;">
+                        @if (Player.Avatar != null) {
+                            <MiniDrawer Avatar=Player.Avatar></MiniDrawer>
+                            <button class="no-print" style="font-size:medium;" @onclick=createOrEditAvatar>Edit</button>
+                        } else {
+                            <button class="no-print" style="font-size:medium;" @onclick=createOrEditAvatar>+ Avatar</button>
+                        }
+                    </div>
+                    <div class="w3-rest">
+                        <div class="w3-row">
+                            <div class="w3-quarter text-secondary typeface">NAME:</div> 
+                            <div class="w3-threequarter w3-border-bottom">@Player.Rank @Player.Name</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,6 +163,10 @@
 
     private void confirmDelete() {
         confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
+    }
+
+    private void createOrEditAvatar() {
+        NavigateToMini(this.Player);
     }
 
     public void Delete() {

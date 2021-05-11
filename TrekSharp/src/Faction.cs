@@ -9,6 +9,8 @@ public class Faction : IResearchableEntity {
     }
 
     public static readonly Faction Starfleet = new Faction("Starfleet");
+    public static readonly Faction CardassianOrder = new Faction("Cardassian Order");
+    public static readonly Faction RomulanEmpire = new Faction("Romulan Empire");
 }
 
 }

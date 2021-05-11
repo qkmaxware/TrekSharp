@@ -16,20 +16,20 @@
     <div>
         <b>Official</b>
     </div>
-    <div class="w3-padding">
+    <div class="w3-margin-left w3-margin-top w3-margin-bottom">
     @foreach (var kv in Rulebooks.AllRulebooks) {
         if (!(kv.Value is UnofficialRulebook) && kv.Value is BaseRulebook) {
-            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
+            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary") mobile-medium mobile-full" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
         }
     }
     </div>
     <div>
         <b>Unofficial</b>
     </div>
-    <div class="w3-padding">
+    <div class="w3-margin-left w3-margin-top w3-margin-bottom">
     @foreach (var kv in Rulebooks.AllRulebooks) {
         if (kv.Value is UnofficialRulebook || !(kv.Value is BaseRulebook)) {
-            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary")" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
+            <button class="button @(Rulebooks.IsRulebookEnabled(kv.Key) ? "primary" : "secondary") mobile-medium mobile-full" @onclick="@(() => Toggle(kv.Key))">@kv.Key</button>
         }
     }
     </div>
