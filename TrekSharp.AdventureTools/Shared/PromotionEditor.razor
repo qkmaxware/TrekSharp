@@ -28,7 +28,7 @@
 
 @code {
     Popup popup;
-    private PlayerCharacter Character {get; set;}
+    private Character Character {get; set;}
     [Parameter] public Action OnSave {get; set;}
 
     private IEnumerable<Rank> ranks {
@@ -49,7 +49,7 @@
     }
     private Rank nextRank = null;
 
-    public void Open(PlayerCharacter character) {
+    public void Open(Character character) {
         this.Character = character;
         popup.Open();
         StateHasChanged();

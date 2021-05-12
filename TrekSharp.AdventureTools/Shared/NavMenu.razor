@@ -162,8 +162,8 @@
 
 <div class="lcars no-print" style="position: absolute;">
 <div 
-    class="w3-button lcars-primary w3-large w3-hide-large w3-padding elbow-right knee-right" 
-    style="position:absolute; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed; z-index: 1; border: 1px solid black;" 
+    class="w3-button lcars-primary w3-large w3-hide-large elbow-right knee-right fixed-tab-padding" 
+    style="position:fixed; left:-1px; top:12px; writing-mode: vertical-rl; text-orientation: mixed; z-index: 1; border: 1px solid black;" 
     @onclick="OpenNavMenu"
 > Menu
 </div>
@@ -212,6 +212,7 @@
 
     private void loadAppData(AppData newData) {
         this.Data.Overwrite(newData);
+        this.StateHasChanged();
         this.NavigateHome();
     }
 

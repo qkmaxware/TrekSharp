@@ -13,8 +13,6 @@ public enum HealthState {
 }
 
 public class NpcCharacter : Character {
-    public List<string> Focuses {get; set;} 
-    public List<string> Values {get; set;} 
     public List<string> SpecialRules {get; set;} 
     public int BaseStress {get; set;}
     public override int TotalStress => this.BaseStress + this.BonusStress;
@@ -39,6 +37,8 @@ public class Character {
 
     public Attributes Attributes {get; set;}
     public Disciplines Disciplines {get; set;}
+    public List<string> Focuses {get; set;}
+    public List<string> Values {get; set;} 
 
     public Avatar Avatar {get; set;} = null;
 
@@ -62,16 +62,15 @@ public class Character {
     }
 }
 
-public class SupportCharacter : Character {
-    public List<string> Focuses {get; set;} 
+public class PlayableCharacter : Character {
+    public List<CharacterTalent> Talents {get; set;}
 }
 
-public class PlayerCharacter : Character {
+public class SupportCharacter : PlayableCharacter { 
+    public bool HasBeenIntroduced => Talents != null && Values != null;
+}
 
-    public List<string> Values {get; set;}
-    public List<string> Focuses {get; set;}
-    public List<CharacterTalent> Talents {get; set;}
-
+public class PlayerCharacter : PlayableCharacter {
     public string Environment {get; set;}
     public string Upbringing {get; set;}
 

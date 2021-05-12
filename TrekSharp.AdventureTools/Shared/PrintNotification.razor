@@ -1,9 +1,17 @@
+@inject IJSRuntime runtime; 
+
 <div id="print-notification" class="w3-padding no-print" style="text-align: center;">
-    For a printable PDF , press CTRL + P and use your browser's <b>Print to PDF</b> functionality. Make sure to select <b>Background graphics</b> if you desire artwork. 
+    For a printable PDF, press CTRL + P and use your browser's <a href="" @onclick:preventDefault @onclick=triggerPrint><b>Print to PDF</b></a> functionality. Make sure to select <b>Background graphics</b> if you desire artwork. 
     @ChildContent
     <hr/>
 </div>
 
 @code {
     [Parameter] public RenderFragment ChildContent {get; set;}
+
+    private async Task triggerPrint() {
+        try {
+            await runtime.InvokeVoidAsync("window.print");
+        } catch { /* Suppress Errors */ }
+    }
 }

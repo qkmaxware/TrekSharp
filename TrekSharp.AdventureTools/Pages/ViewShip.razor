@@ -2,12 +2,8 @@
 @inherits Page
 
 @if (HasShip) {
+<VesselEditorPopupTab Ship=@Ship OnDelete=onConfirmDelete></VesselEditorPopupTab>
 <PrintNotification/>
-
-<div class="w3-container no-print lcars" style="text-align: right;">
-    <button @onclick="Export">Export Json</button>
-    <button @onclick="confirmDelete" class="w3-red">Delete</button>
-</div>
 
 <div id="character-sheet" class="lcars">
     <!-- Header -->
@@ -112,11 +108,7 @@
     <span>No ship "@(ShipId)"</span>
 }
 
-<ConfirmationDialog @ref="confirm">
-</ConfirmationDialog>
-
 @code {
-    private ConfirmationDialog confirm;
 
     [Parameter]
     public string ShipId { get; set; }
@@ -135,21 +127,10 @@
     
     public override string PageTitle => Ship?.Name;
 
-    private void confirmDelete() {
-        confirm.Open($"Are you sure you want to delete the ship '{this.Ship.Name}'?", () => Delete());
-    }
-
-    public void Delete() {
-        if (HasShip) {
-            Data.Ships.Remove(this.Ship);
+    private void onConfirmDelete(Vessel vessel) {
+        if (vessel != null && vessel is PlayerVessel pv) {
+            Data.Ships.Remove(pv);
             NavigationManager.NavigateTo("manage/ships");
-        }
-    }
-
-    public async Task Export() {
-        if (HasShip) {
-            var ship = this.Ship;
-            await this.DownloadJson($"{ship.Name}.{ship.Registry}.vessel", ship);
         }
     }
 }

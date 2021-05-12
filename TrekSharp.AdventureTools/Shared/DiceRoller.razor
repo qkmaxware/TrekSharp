@@ -61,7 +61,7 @@
         
         @if (TargetScore.HasValue) {
         <div class="@panelCss w3-padding">
-            <div class="secondary elbow-left elbow-right knee-left knee-right"><b>Successes:</b> @Successes</div>
+            <div class="secondary elbow-left elbow-right knee-left knee-right"><b>Successes:</b> @SuccessesWithoutFocus <small>(+@(SuccessesWithFocus - SuccessesWithoutFocus) with focus)</small></div>
         </div>
         }
         @if (hasChallengeDie) {
@@ -92,15 +92,20 @@
     }
 
     [Parameter]
-    public int? TargetScore {get; set;} = null;
-    public void UpdateTargetScore(int? score) {
-        this.TargetScore = score;
+    public int? AttributeScore {get; set;} = null;
+    [Parameter]
+    public int? DisciplineScore {get; set;} = null;
+    public int? TargetScore => AttributeScore.HasValue && DisciplineScore.HasValue ? (int?)(AttributeScore.Value + DisciplineScore.Value) : null;
+    public void UpdateTargetScore(int? attr, int? discipline) {
+        this.AttributeScore = attr;
+        this.DisciplineScore = discipline;
     }
     private bool hasChallengeDie => dices.OfType<ChallengeDice>().Any(); 
 
     private int Total => dices.Select(dice => dice.NumericValue).Sum();
     private int Effects => dices.OfType<ChallengeDice>().Where(dice => dice.ChallengeValue == ChallengeDiceResult.Effect).Count();
-    private int Successes => !TargetScore.HasValue ? 0 : dices.OfType<D20>().Select(dice => dice.NumericValue <= TargetScore.Value ? (dice.NumericValue == 1 ? 2 : 1) : 0).Sum(); 
+    private int SuccessesWithoutFocus => !TargetScore.HasValue ? 0 : dices.OfType<D20>().Select(dice => dice.NumericValue <= TargetScore.Value ? (dice.NumericValue == 1 ? 2 : 1) : 0).Sum(); 
+    private int SuccessesWithFocus => !TargetScore.HasValue ? 0 : dices.OfType<D20>().Select(dice => dice.NumericValue <= TargetScore.Value ? (dice.NumericValue <= DisciplineScore.Value ? 2 : 1) : 0).Sum(); 
 
     private string getDiceImage(Dice dice) {
         return dice switch {

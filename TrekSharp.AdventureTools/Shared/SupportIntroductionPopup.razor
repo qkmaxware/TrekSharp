@@ -1,0 +1,159 @@
+<Popup @ref=popup>
+    <TabLayout>
+        @if (HasCharacter) {
+        <TabPage Title="Add Value(s)">
+            <input class="w3-input w3-margin-bottom" placeholder="New Value"             @bind=arcNewValue0 />
+            <input class="w3-input w3-margin-bottom" placeholder="New Value (optional)"  @bind=arcNewValue1 />
+            <input class="w3-input w3-margin-bottom" placeholder="New Value (optional)"  @bind=arcNewValue2 />
+            <input class="w3-input w3-margin-bottom" placeholder="New Value (optional)"  @bind=arcNewValue3 />
+        </TabPage>
+        <TabPage Title="Increment Attribute">
+            <AttributeIncrement
+                Points=1
+                MaxPointsPerItem=12
+                Mask=allAttributeMask
+                Reference=deltaAttributes
+            />
+        </TabPage>
+        <TabPage Title="Increment Discipline">
+            <DisciplineIncrement
+                Points=1
+                MaxPointsPerItem=5
+                Mask=allDisciplineMask
+                Reference=deltaDisciplines
+            />
+        </TabPage>
+        <TabPage Title="Add Focus(es)">
+            <input class="w3-input w3-margin-bottom" placeholder="New Focus"             @bind=arcNewFocus0 />
+            <input class="w3-input w3-margin-bottom" placeholder="New Focus (optional)"  @bind=arcNewFocus1 />
+            <input class="w3-input w3-margin-bottom" placeholder="New Focus (optional)"  @bind=arcNewFocus2 />
+        </TabPage>
+        <TabPage Title="Add Talent(s)">
+            <input class="w3-input w3-margin-bottom" list="support_talent_list" placeholder="New Talent"             @bind=arcNewTalents[0] />
+            <input class="w3-input w3-margin-bottom" list="support_talent_list" placeholder="New Talent (optional)"  @bind=arcNewTalents[1] />
+            <input class="w3-input w3-margin-bottom" list="support_talent_list" placeholder="New Talent (optional)"  @bind=arcNewTalents[2] />
+            <input class="w3-input w3-margin-bottom" list="support_talent_list" placeholder="New Talent (optional)"  @bind=arcNewTalents[3] />
+            <datalist id="support_talent_list">
+                @foreach (var talent in talents) {
+                    <option value="@talent.Name"/>
+                }
+            </datalist>
+        </TabPage>
+        }
+    </TabLayout>
+    <div class="w3-row">
+        <div class="w3-col s6 w3-left-align">
+            <button class="w3-red" @onclick=@(() => Close())>
+                Cancel
+            </button>
+        </div>
+        <div class="w3-col s6 w3-right-align">
+            <button class="w3-green" @onclick=@(() => Save())>
+                Confirm
+            </button>
+        </div>
+    </div>
+</Popup>
+
+@code {
+    private Popup popup;
+    private SupportCharacter Character;
+    public bool HasCharacter => Character != null;
+    [Parameter] public Action OnSave {get; set;}
+
+    public void Open(SupportCharacter support) {
+        this.Character = support;
+
+        arcNewValue0 = null;
+        arcNewValue1 = null;
+        arcNewValue2 = null;
+        arcNewValue3 = null;  
+        deltaAttributes = new Attributes(0);
+        deltaDisciplines = new Disciplines(0);
+        arcNewFocus0 = null;
+        arcNewFocus1 = null;
+        arcNewFocus2 = null;  
+        arcNewTalents = new List<string>(4) {null, null, null, null};
+
+        popup.Open();
+        StateHasChanged();
+    }
+
+    public void Close() {
+        popup.Close();
+        StateHasChanged();
+    }
+
+    private string arcNewValue0;
+    private string arcNewValue1;
+    private string arcNewValue2;
+    private string arcNewValue3;
+
+    private static Attributes allAttributeMask = new Attributes(1);
+    private Attributes deltaAttributes = new Attributes(0);
+
+    private static Disciplines allDisciplineMask = new Disciplines(1);
+    private Disciplines deltaDisciplines = new Disciplines(0);
+
+    private string arcNewFocus0;
+    private string arcNewFocus1;
+    private string arcNewFocus2;
+
+    private List<string> arcNewTalents;
+
+    private List<CharacterTalent> talents = new Data.RulebookContainer().AllRulebooks.SelectMany(book => book.Value.Talents).ToList();
+
+    public void Save() {
+        Close();
+
+        // Ensure lists exist
+        Character.Focuses = Character.Focuses ?? new List<string>();
+        Character.Values = Character.Values ?? new List<string>();
+        Character.Talents = Character.Talents ?? new List<CharacterTalent>();
+            
+        // Apply disciplines and attributes
+        Character.Disciplines.Add(deltaDisciplines);
+        Character.Attributes.Add(deltaAttributes);
+        
+        // Apply values
+        if (!string.IsNullOrEmpty(arcNewValue0)) {
+            Character.Values.Add(arcNewValue0);
+        }
+        if (!string.IsNullOrEmpty(arcNewValue1)) {
+            Character.Values.Add(arcNewValue1);
+        }
+        if (!string.IsNullOrEmpty(arcNewValue2)) {
+            Character.Values.Add(arcNewValue2);
+        }
+        if (!string.IsNullOrEmpty(arcNewValue3)) {
+            Character.Values.Add(arcNewValue3);
+        }
+
+        // Apply Focuses
+        if (!string.IsNullOrEmpty(arcNewFocus0)) {
+            Character.Values.Add(arcNewFocus0);
+        }
+        if (!string.IsNullOrEmpty(arcNewFocus1)) {
+            Character.Values.Add(arcNewFocus1);
+        }
+        if (!string.IsNullOrEmpty(arcNewFocus2)) {
+            Character.Values.Add(arcNewFocus2);
+        }
+
+        // Apply Talents
+        if (arcNewTalents != null) {
+            foreach (var talent in arcNewTalents) {
+                if (!string.IsNullOrEmpty(talent)) {
+                    var selected = talents.Where(item => string.Equals(item.Name, talent, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                    if (selected != null) {
+                        Character.Talents.Add(selected);
+                    }
+                }
+            }
+        }
+
+        // Call save
+        OnSave?.Invoke();
+    }
+
+}

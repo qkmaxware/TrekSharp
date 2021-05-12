@@ -200,7 +200,7 @@
     }
     private void tryRollChallengeDie(){
         diceRoller.ClearDicePool();
-        diceRoller.UpdateTargetScore(null);
+        diceRoller.UpdateTargetScore(null, null);
         diceRoller.AddChallengeDie(challengeDieCount);
         dicePopup.Open();
         challengeDieCount = 0;
@@ -227,12 +227,11 @@
     }
     private void tryRollTaskDice() {
         if (diceSelectedAttribute != null && diceSelectedDiscipline != null) {
-            var target = diceSelectedAttribute.Value + diceSelectedDiscipline.Value;
+            diceRoller.UpdateTargetScore(diceSelectedAttribute.Value, diceSelectedDiscipline.Value);
 
             diceSelectedAttribute = null;
             diceSelectedDiscipline = null;
 
-            diceRoller.UpdateTargetScore(target);
             diceRoller.ClearDicePool();
             diceRoller.AddTaskDie(2);
             dicePopup.Open();

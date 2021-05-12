@@ -1,0 +1,90 @@
+@inherits AppComponentBase
+
+<PopoutTab Name="Modify" TabPosition=80>
+    <div class="lcars">
+        <div class="typeface text-secondary w3-border-bottom w3-large">
+            <b>Experience</b>
+        </div>
+        <div class="w3-bar-block w3-padding">
+            <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=AddMilestone>+ Milestone</button>
+            <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=Promote>+ Promotion</button>
+        </div>
+        @if (Character is SupportCharacter sc) {
+        if (!sc.HasBeenIntroduced) {
+        <div class="typeface text-secondary w3-border-bottom w3-large">
+            <b>Player Options</b>
+        </div>
+        <div class="w3-bar-block w3-padding">
+            <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=assumingDirectControl>Assume Player Control</button>
+        </div>
+        }
+        }
+        <div class="typeface text-secondary w3-border-bottom w3-large">
+            <b>Other</b>
+        </div>
+        <div class="w3-bar-block w3-padding">
+            <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick="Export">Export Json</button>
+            <button class="w3-bar-item w3-margin-bottom w3-red" style="font-size: medium;" @onclick="confirmDelete">Delete</button>
+        </div>
+    </div>
+</PopoutTab>
+
+<MilestoneEditor @ref=milestones OnSave=changesMade></MilestoneEditor>
+<PromotionEditor @ref=promotions OnSave=changesMade></PromotionEditor>
+<SupportIntroductionPopup @ref=introduce OnSave=changesMade></SupportIntroductionPopup>
+
+<ConfirmationDialog @ref="confirm">
+</ConfirmationDialog>
+
+@code {
+    [Parameter] public Character Character {get; set;}
+    [Parameter] public Action OnChange {get; set;}
+    [Parameter] public Action<Character> OnDelete {get; set;}
+    public bool HasCharacter => Character != null;
+    public bool IsPlayerCharacter => Character is PlayerCharacter;
+
+    private void changesMade() {
+        StateHasChanged();
+        OnChange?.Invoke();
+    }
+
+    public async Task Export() {
+        if (HasCharacter) {
+            var character = this.Character;
+            await this.DownloadJson($"{character.Name}.character", character);
+        }
+    }
+
+    private MilestoneEditor milestones;
+
+    private void AddMilestone() {
+        if (this.HasCharacter)
+            milestones.Open(this.Character);
+    }
+
+    private PromotionEditor promotions;
+    private void Promote() {
+        if (HasCharacter) {
+            promotions.Open(this.Character);
+        }
+    }
+
+    private SupportIntroductionPopup introduce;
+    private void assumingDirectControl() {
+        if (HasCharacter && Character is SupportCharacter sc) {
+            introduce.Open(sc);
+        }
+    }
+
+    private ConfirmationDialog confirm;
+    private void confirmDelete() {
+        confirm.Open($"Are you sure you want to delete the character '{this.Character.Name}'?", () => Delete());
+    }
+
+    public void Delete() {
+        if (HasCharacter) {
+            OnDelete?.Invoke(Character);
+        }
+    }
+
+}

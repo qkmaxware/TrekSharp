@@ -72,7 +72,7 @@
 
     [Parameter] public bool RequireDelete {get; set;} = false;
     public CharacterTalent DeletedTalent;
-    [Parameter] public Func<PlayerCharacter> GetPlayer {get; set;}
+    [Parameter] public Func<PlayableCharacter> GetPlayer {get; set;}
     private RulebookPicker Books;
     private string talentFilter = null;
     public CharacterTalent SelectedTalent;

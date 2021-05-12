@@ -2,11 +2,8 @@
 @inherits Page
 
 @if (HasShip) {
+<VesselEditorPopupTab Ship=@Ship OnDelete=onConfirmDelete></VesselEditorPopupTab>
 <PrintNotification/>
-
-<div class="w3-container no-print lcars" style="text-align: right;">
-    <button @onclick="confirmDelete" class="w3-red">Delete</button>
-</div>
 
 <div id="character-sheet" class="lcars">
     <!-- Header -->
@@ -107,12 +104,8 @@
     <span>No ship "@(ShipId)"</span>
 }
 
-<ConfirmationDialog @ref="confirm">
-</ConfirmationDialog>
 
 @code {
-    private ConfirmationDialog confirm;
-    
     [Parameter] public string ShipId { get; set; }
     [Parameter] public string EncounterId {get; set;}
     [Parameter] public string ListId {get; set;}
@@ -163,17 +156,13 @@
 
     public override string PageTitle => Ship?.Name;
 
-    private void confirmDelete() {
-        confirm.Open($"Are you sure you want to delete the ship '{this.Ship.Name}'?", () => Delete());
-    }
-
-    public void Delete() {
-        if (HasShip) {
+    public void onConfirmDelete(Vessel vessel) {
+        if (vessel != null) {
            if (ListId == "ally") {
-                Encounter?.AlliedShips.Remove(this.Ship);
+                Encounter?.AlliedShips.Remove(vessel);
             }
             else if (ListId == "enemy") {
-                Encounter?.EnemyShips.Remove(this.Ship);
+                Encounter?.EnemyShips.Remove(vessel);
             }
             NavigationManager.NavigateTo("manage/encounters");
         }

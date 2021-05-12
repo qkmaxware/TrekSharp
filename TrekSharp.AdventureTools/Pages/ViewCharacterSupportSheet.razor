@@ -2,13 +2,8 @@
 @inherits Page
 
 @if (HasCharacter) {
+<CharacterEditorPopoutTab Character=Player OnDelete=onConfirmDelete OnChange=StateHasChanged></CharacterEditorPopoutTab>
 <PrintNotification/>
-
-<div class="w3-container no-print lcars" style="text-align: right;">
-    <button @onclick="Export">Export Json</button>
-    <button @onclick="confirmDelete" class="w3-red">Delete</button>
-</div>
-
 
 <div id="character-sheet" class="lcars">
     <!-- Header -->
@@ -57,6 +52,7 @@
                     <InjuryDrawer Player="Player"/>
                     <AttributeDrawer @ref=attributes Attributes="Player.Attributes" Selectable=true OnAttributeClick=onAttributeClick/>
                     <DisciplineDrawer @ref=disciplines Disciplines="Player.Disciplines" Selectable=true OnDisciplineClick=onDisciplineClick/>
+                    <ValueDrawer Values="Player.Values"/>
                 </Left>
                 <Right>
                     <FocusDrawer Focuses="Player.Focuses"/>
@@ -65,13 +61,38 @@
             </SplitLayout>
         </div>
     </LCARS>
+
+    @if (Player.Talents != null && Player.Talents.Count > 0) {
+    <div class="pagebreak"></div>
+    <LCARS PrintBorders=true>
+        <!-- Content -->
+        <div class="row-fill">
+            <div class="w3-row w3-padding">
+                <div class="row w3-margin-bottom row-fill">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                        TALENTS 
+                    </div>
+                    <div class="hbar row-fill elbow-right knee-right"></div>
+                </div>
+                <div class="row-fill">
+                    <Col3Layout Items=Player.Talents>
+                        <Template>
+                            <div class="w3-border-bottom">
+                                <b>@context.Name</b>
+                                <p class="w3-small">@context.Description</p>
+                            </div>
+                        </Template>
+                    </Col3Layout>
+                </div>
+            </div>
+        </div>
+    </LCARS>
+    }
 </div>
 } else {
     <span>No support player "@(PlayerId)"</span>
 }
-
-<ConfirmationDialog @ref="confirm">
-</ConfirmationDialog>
 
 @if (diceSelectedAttribute != null || diceSelectedDiscipline != null) {
 <div style="position: fixed; bottom: 12px; left: 0; right: 0;" class="noselect w3-center">
@@ -114,8 +135,6 @@
 
 @code {
 
-    private ConfirmationDialog confirm;
-
     [Parameter]
     public string PlayerId { get; set; }
     public int PlayerIndex {
@@ -133,24 +152,13 @@
 
     public override string PageTitle => Player?.Name;
 
-    private void confirmDelete() {
-        confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
-    }
-
     private void createOrEditAvatar() {
         NavigateToMini(this.Player);
     }
 
-    public async Task Export() {
-        if (HasCharacter) {
-            var character = this.Player;
-            await this.DownloadJson($"{character.Name}.character", character);
-        }
-    }
-
-    public void Delete() {
-        if (HasCharacter) {
-            Data.Supports.Remove(this.Player);
+    public void onConfirmDelete(Character character) {
+        if (character != null && character is SupportCharacter sc) {
+            Data.Supports.Remove(sc);
             NavigationManager.NavigateTo("manage/characters");
         }
     }
@@ -174,7 +182,7 @@
     }
     private void tryRollChallengeDie(){
         diceRoller.ClearDicePool();
-        diceRoller.UpdateTargetScore(null);
+        diceRoller.UpdateTargetScore(null, null);
         diceRoller.AddChallengeDie(challengeDieCount);
         dicePopup.Open();
         challengeDieCount = 0;
@@ -201,12 +209,11 @@
     }
     private void tryRollTaskDice() {
         if (diceSelectedAttribute != null && diceSelectedDiscipline != null) {
-            var target = diceSelectedAttribute.Value + diceSelectedDiscipline.Value;
+            diceRoller.UpdateTargetScore(diceSelectedAttribute.Value, diceSelectedDiscipline.Value);
 
             diceSelectedAttribute = null;
             diceSelectedDiscipline = null;
 
-            diceRoller.UpdateTargetScore(target);
             diceRoller.ClearDicePool();
             diceRoller.AddTaskDie(2);
             dicePopup.Open();

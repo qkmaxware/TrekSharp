@@ -3,6 +3,10 @@
     max-width: 100%; 
 }
 
+.fixed-tab-padding {
+    padding: 8px 4px !important;
+}
+
 @media (max-width:601px){
     .navbar {
         width: 100%; 

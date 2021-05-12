@@ -2,19 +2,8 @@
 @inherits Page
 
 @if (HasCharacter) {
+<CharacterEditorPopoutTab Character=Player OnDelete=onConfirmDelete OnChange=StateHasChanged></CharacterEditorPopoutTab>
 <PrintNotification/>
-
-<div class="w3-container no-print lcars w3-row" style="text-align: right;">
-    <div class="w3-half w3-left-align">
-        &nbsp;
-        <button @onclick=AddMilestone>+ Milestone</button>
-        <button @onclick=Promote>+ Promotion</button>
-    </div>
-    <div class="w3-half w3-right-align">
-        <button @onclick="Export">Export Json</button>
-        <button @onclick="confirmDelete" class="w3-red">Delete</button>
-    </div>
-</div>
 
 <div id="character-sheet" class="lcars">
     <div id="player-info" class="container">
@@ -90,6 +79,7 @@
         </div>
     </LCARS>
     
+    @if (Player.Talents != null && Player.Talents.Count > 0) {
     <div class="pagebreak"></div>
     <LCARS PrintBorders=true>
         <!-- Content -->
@@ -115,6 +105,7 @@
             </div>
         </div>
     </LCARS>
+    }
 </div>
 
 
@@ -123,12 +114,6 @@
     <h2>No player "@(PlayerId)"</h2>
 </div>
 }
-
-<MilestoneEditor @ref=milestones OnSave=@(() => StateHasChanged())></MilestoneEditor>
-<PromotionEditor @ref=promotions OnSave=@(() => StateHasChanged())></PromotionEditor>
-
-<ConfirmationDialog @ref="confirm">
-</ConfirmationDialog>
 
 @if (diceSelectedAttribute != null || diceSelectedDiscipline != null) {
 <div style="position: fixed; bottom: 12px; left: 0; right: 0;" class="noselect w3-center">
@@ -170,8 +155,6 @@
 
 @code {
 
-    private ConfirmationDialog confirm;
-
     [Parameter]
     public string PlayerId { get; set; }
     public int PlayerIndex {
@@ -189,39 +172,14 @@
 
     public override string PageTitle => Player?.Name;
 
-    private void confirmDelete() {
-        confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
-    }
-
     private void createOrEditAvatar() {
         NavigateToMini(this.Player);
     }
 
-    public void Delete() {
-        if (HasCharacter) {
-            Data.Party.Remove(this.Player);
+    private void onConfirmDelete(Character character) {
+        if (character != null && character is PlayerCharacter pc) {
+            Data.Party.Remove(pc);
             NavigationManager.NavigateTo("manage/characters");
-        }
-    }
-
-    public async Task Export() {
-        if (HasCharacter) {
-            var character = this.Player;
-            await this.DownloadJson($"{character.Name}.character", character);
-        }
-    }
-
-    private MilestoneEditor milestones;
-
-    private void AddMilestone() {
-        if (this.HasCharacter)
-            milestones.Open(this.Player);
-    }
-
-    private PromotionEditor promotions;
-    private void Promote() {
-        if (HasCharacter) {
-            promotions.Open(this.Player);
         }
     }
 
@@ -244,7 +202,7 @@
     }
     private void tryRollChallengeDie(){
         diceRoller.ClearDicePool();
-        diceRoller.UpdateTargetScore(null);
+        diceRoller.UpdateTargetScore(null, null);
         diceRoller.AddChallengeDie(challengeDieCount);
         dicePopup.Open();
         challengeDieCount = 0;
@@ -271,12 +229,11 @@
     }
     private void tryRollTaskDice() {
         if (diceSelectedAttribute != null && diceSelectedDiscipline != null) {
-            var target = diceSelectedAttribute.Value + diceSelectedDiscipline.Value;
+            diceRoller.UpdateTargetScore(diceSelectedAttribute.Value, diceSelectedDiscipline.Value);
 
             diceSelectedAttribute = null;
             diceSelectedDiscipline = null;
 
-            diceRoller.UpdateTargetScore(target);
             diceRoller.ClearDicePool();
             diceRoller.AddTaskDie(2);
             dicePopup.Open();
