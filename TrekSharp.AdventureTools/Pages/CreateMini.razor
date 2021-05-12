@@ -86,18 +86,27 @@
 
                 <button class="w3-button w3-border-bottom w3-bar no-lcars @selectedCss("uniform")" @onclick=@(() => selectTab("uniform"))>Uniform</button>
                 <div class="@subpanelCss("uniform") lcars-border-primary w3-padding">
-                    @foreach (var timeperiod in uniforms) {
-                        <div class="typeface text-secondary w3-border-bottom">
-                            <b>@timeperiod.Key</b>
-                        </div>
-                        <div class="w3-row">
-                            @foreach (var uniform in timeperiod.Value) {
-                                var capture = uniform;
-                                <button class="w3-col s4 w3-button no-lcars" @onclick=@(() => avatar.Uniform=capture)>
-                                    <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
-                                </button>
+                    <div class="w3-margin-bottom" style="padding-left: max(50%, 32px);">
+                        <select @bind=uniformEra class="w3-input w3-border-bottom border-primary" style="background-color: inherit; text-align-last: right;">
+                            @foreach (var era in uniformsByEraAndFaction.Keys) {
+                                <option value="@era" style="background-color: black;">@era</option>
                             }
-                        </div>
+                        </select>
+                    </div>
+                    @if (!string.IsNullOrEmpty(uniformEra) && uniformsByEraAndFaction.ContainsKey(uniformEra)) {
+                        foreach (var faction in uniformsByEraAndFaction[uniformEra]) {
+                            <div class="typeface text-secondary w3-border-bottom">
+                                <b>@faction.Key</b>
+                            </div>
+                            <div class="w3-row">
+                                @foreach (var uniform in faction.Value) {
+                                    var capture = uniform;
+                                    <button class="w3-col s4 w3-button no-lcars" @onclick=@(() => avatar.Uniform=capture)>
+                                        <img class="pixelart" src="@capture" style="width: 100%; height: 100%; object-fit: contain;">
+                                    </button>
+                                }
+                            </div>
+                        }
                     }
                 </div>
                 
@@ -162,7 +171,7 @@
             Beard= beards.Random(),
             Hat= hats[0],
             Accessory= accessories[0],
-            Uniform= uniforms.Random().Random(),
+            Uniform= uniformsByEraAndFaction.Random()["STARFLEET"].Random(),
         };
     }
     private static Character _character;
@@ -258,47 +267,86 @@
         "assets/artwork/minis/beards/White Full Beard.png",
     };
 
-    private static Dictionary<string, List<string>> uniforms = new Dictionary<string, List<string>> {
-        { "ENT", new List<string>{
-            "assets/artwork/minis/uniform/ENT Command.png",
-            "assets/artwork/minis/uniform/ENT Operations.png",
-            "assets/artwork/minis/uniform/ENT Science.png",
+    private string uniformEra = "TNG";
+    private static Dictionary<string, Dictionary<string, List<string>>> uniformsByEraAndFaction = new Dictionary<string, Dictionary<string, List<string>>>() {
+        { "ENT", new Dictionary<string, List<string>>{
+            {"STARFLEET", new List<string> {
+                "assets/artwork/minis/uniform/ENT Command.png",
+                "assets/artwork/minis/uniform/ENT Operations.png",
+                "assets/artwork/minis/uniform/ENT Science.png",
+            }}
         }},
-        { "DISCO", new List<string>{
-            "assets/artwork/minis/uniform/DISCO Command.png",
-            "assets/artwork/minis/uniform/DISCO Operations.png",
-            "assets/artwork/minis/uniform/DISCO Science.png",
+        { "DISCO", new Dictionary<string, List<string>>{
+            {"STARFLEET", new List<string> {
+                "assets/artwork/minis/uniform/DISCO Command.png",
+                "assets/artwork/minis/uniform/DISCO Operations.png",
+                "assets/artwork/minis/uniform/DISCO Science.png",
+                "assets/artwork/minis/uniform/DISCO Medical.png",
+            }}
         }},
-        { "TOS", new List<string>{
-            "assets/artwork/minis/uniform/TOS Command.png",
-            "assets/artwork/minis/uniform/TOS Operations.png",
-            "assets/artwork/minis/uniform/TOS Science.png",
-            "assets/artwork/minis/uniform/TOS Command Skirt.png",
-            "assets/artwork/minis/uniform/TOS Operations Skirt.png",
-            "assets/artwork/minis/uniform/TOS Science Skirt.png",
+        { "TOS", new Dictionary<string, List<string>>{
+            {"STARFLEET", new List<string> {
+                "assets/artwork/minis/uniform/TOS Command.png",
+                "assets/artwork/minis/uniform/TOS Operations.png",
+                "assets/artwork/minis/uniform/TOS Science.png",
+                "assets/artwork/minis/uniform/TOS Command Skirt.png",
+                "assets/artwork/minis/uniform/TOS Operations Skirt.png",
+                "assets/artwork/minis/uniform/TOS Science Skirt.png",
+            }},
+            {"KLINGON EMPIRE", new List<string> {
+                "assets/artwork/minis/uniform/TOS Klingon Officer.png",   
+            }},
+            {"ROMULAN EMPIRE", new List<string>{
+                "assets/artwork/minis/uniform/TOS Romulan Officer Blue.png",
+                "assets/artwork/minis/uniform/TOS Romulan Officer Female.png",
+                "assets/artwork/minis/uniform/TOS Romulan Officer Red.png",
+            }},
         }},
-        { "TNG", new List<string> {
-            "assets/artwork/minis/uniform/TNG Command.png",
-            "assets/artwork/minis/uniform/TNG Operations.png",
-            "assets/artwork/minis/uniform/TNG Science.png",
+        { "TNG", new Dictionary<string, List<string>>{
+            {"STARFLEET", new List<string> {
+                "assets/artwork/minis/uniform/TNG Command.png",
+                "assets/artwork/minis/uniform/TNG Operations.png",
+                "assets/artwork/minis/uniform/TNG Science.png",
+                "assets/artwork/minis/uniform/TNG Medical.png",
+            }},
+            {"KLINGON EMPIRE", new List<string> {
+                "assets/artwork/minis/uniform/TNG Klingon Officer.png",
+                "assets/artwork/minis/uniform/TNG Klingon Officer Cloak.png",
+            }},
+            {"ROMULAN EMPIRE", new List<string>{
+                "assets/artwork/minis/uniform/TNG Romulan Officer.png"
+            }},
+            {"BORG COLLECTIVE", new List<string>{
+                "assets/artwork/minis/uniform/TNG Borg.png"
+            }},
         }},
-        { "VOY", new List<string> {
-            "assets/artwork/minis/uniform/VOY Command.png",
-            "assets/artwork/minis/uniform/VOY Operations.png",
-            "assets/artwork/minis/uniform/VOY Science.png",
+        { "VOY", new Dictionary<string, List<string>>{
+            {"STARFLEET", new List<string> {
+                "assets/artwork/minis/uniform/VOY Command.png",
+                "assets/artwork/minis/uniform/VOY Operations.png",
+                "assets/artwork/minis/uniform/VOY Science.png",
+            }}
         }},
-        { "DS9", new List<string> {
-            "assets/artwork/minis/uniform/DS9 Command.png",
-            "assets/artwork/minis/uniform/DS9 Operations.png",
-            "assets/artwork/minis/uniform/DS9 Science.png",
+        { "DS9", new Dictionary<string, List<string>>{
+            {"STARFLEET", new List<string> {
+                "assets/artwork/minis/uniform/DS9 Command.png",
+                "assets/artwork/minis/uniform/DS9 Operations.png",
+                "assets/artwork/minis/uniform/DS9 Science.png",
+            }},
+            {"THE DOMINION", new List<string> {
+                "assets/artwork/minis/uniform/DS9 Dominion.png",
+            }}
         }},
-        { "LD", new List<string> {
-            "assets/artwork/minis/uniform/LD Command.png",
-            "assets/artwork/minis/uniform/LD Operations.png",
-            "assets/artwork/minis/uniform/LD Science.png",
-            "assets/artwork/minis/uniform/LD Science Lab Coat.png",
+        { "LD", new Dictionary<string, List<string>>{
+            {"STARFLEET", new List<string> {
+                "assets/artwork/minis/uniform/LD Command.png",
+                "assets/artwork/minis/uniform/LD Operations.png",
+                "assets/artwork/minis/uniform/LD Science.png",
+                "assets/artwork/minis/uniform/LD Science Lab Coat.png",
+            }}
         }},
     };
+
     private static List<string> hats = new List<string> {
         "assets/artwork/minis/beards/Clean Shaven.png",
         "assets/artwork/minis/hats/Glasses.png",
