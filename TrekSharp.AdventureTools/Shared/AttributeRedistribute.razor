@@ -1,10 +1,10 @@
 @foreach (var attr in ToBalance.Enumerate()) {
-    <div class="row w3-margin-bottom">
-        <div class="hbar elbow-left knee-left secondary" style="width: 32px;"></div>
-        <div class="hbar w3-padding typeface secondary" style="width: 125px;">
+    <div class="row w3-row w3-margin-bottom">
+        <div class="hbar elbow-left knee-left secondary w3-col" style="width: 32px;"></div>
+        <div class="hbar w3-padding typeface secondary w3-col" style="width: 125px;">
             @attr.Name
         </div>
-        <div class="hbar w3-black" style="margin-left: 10px; width: 256px;">
+        <div class="hbar w3-black w3-rest" style="margin-left: 10px;">
             @(Count(attr)) / @(MaxValue)
             @if(Count(attr) > MinValue && Points < MaxChanges) {
                 <button @onclick="@(() => RemovePoint(attr))">-</button>

@@ -2,9 +2,9 @@
 @inherits Page
 
 <LCARS Title="RANDOM SUPPORT">
-    <div class="w3-panel typeface">
+    <p>
         This tool will randomly generate a supporting character. Simply select your desired options below and press 'Generate New' button to create your character.
-    </div>
+    </p>
     <RulebookPicker @ref="Rulebooks"/>
 
     <div class="row">
@@ -173,6 +173,8 @@
                 focuses.GenerateFocusForDiscipline(role)
             }
         };
+
+        c.UsedStress = c.TotalStress;
 
         return c;
     }

@@ -1,6 +1,6 @@
 <div class="w3-modal no-print @(CssClass)">
     <div class="w3-modal-content">
-        <div class="w3-container lcars w3-padding elbow-left elbow-right knee-left knee-right w3-black lcars-border-primary">
+        <div class="w3-container lcars w3-padding w3-black lcars-border-primary">
             @ChildContent
         </div>
     </div>
@@ -11,6 +11,8 @@
     [Parameter] public Action OnOpen {get; set;}
     private bool isOpen = false;
     private string CssClass => isOpen ? "w3-show" : "w3-hide";
+
+    public bool IsVisible => isOpen;
 
     public void Open() {
         isOpen = true;

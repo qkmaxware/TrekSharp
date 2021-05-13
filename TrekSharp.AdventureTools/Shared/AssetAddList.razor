@@ -14,8 +14,8 @@
         <div class="w3-padding">
             <input type="text" placeholder="filter" @bind="filter" style="width: 100%;"/>
         </div>
-        <div>
-        @if (Store != null) {
+        <div style="max-height: 50vh; overflow: auto;">
+        @if (Store != null && popup.IsVisible) {
             for (var i = 0; i < Store.Count; i++) {
                 var capture = i;
                 if (matchesFilter(Store[i])) {

@@ -193,11 +193,17 @@
                             var capture = player;
                             <div class="w3-row">
                                 <div class="w3-third w3-padding">
+                                    @if(player.Avatar != null) {
+                                        <div style="margin-left: auto; margin-right: auto; width: 100%;">
+                                            <MiniDrawer Avatar=player.Avatar></MiniDrawer>
+                                        </div>
+                                    } else {
                                     <img 
                                         src="@capture.Species.GetSpeciesImageUrl()" 
                                         onerror="this.src='assets/artwork/species/Unknown.png'" 
                                         style="display: block; margin-left: auto; margin-right: auto; width: 100%; height: auto;"
                                     />
+                                    }
                                 </div>
                                 <div class="w3-twothird">
                                     <div class="row">
@@ -208,7 +214,7 @@
                                         <div class="hbar row-fill elbow-right knee-right"></div>
                                     </div>
                                     <div class="w3-padding">
-                                        Stress <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
+                                        <img src="assets/heart.svg" width=24 height=24> <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
                                     </div>
                                     <div class="w3-right-align w3-padding">
                                         <button class="w3-small" @onclick=@(() => NavigateToPlayerCharacter(capture))>view</button>
@@ -220,11 +226,17 @@
                             var capture = npc;
                             <div class="w3-row">
                                 <div class="w3-third w3-padding">
+                                    @if(npc.Avatar != null) {
+                                        <div style="margin-left: auto; margin-right: auto; width: 100%;">
+                                            <MiniDrawer Avatar=npc.Avatar></MiniDrawer>
+                                        </div>
+                                    } else {
                                     <img 
                                         src="@npc.Species.GetSpeciesImageUrl()" 
                                         onerror="this.src='assets/artwork/species/Unknown.png'" 
                                         style="display: block; margin-left: auto; margin-right: auto; width: 100%; height: auto;"
                                     />
+                                    }
                                 </div>
                                 <div class="w3-twothird">
                                     <div class="row">
@@ -235,7 +247,7 @@
                                         <div class="hbar row-fill elbow-right knee-right"></div>
                                     </div>
                                     <div class="w3-padding">
-                                        Stress <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
+                                        <img src="assets/heart.svg" width=24 height=24> <input type="number" style="width: 32%;" @bind=capture.UsedStress/> / @capture.TotalStress
                                     </div>
                                     <div class="w3-right-align w3-padding">
                                         <button class="w3-small" @onclick=@(() => NavigateToAlliedNpc(encounter, capture))>view</button>
@@ -250,11 +262,17 @@
                             var capture = npc;
                             <div class="w3-row">
                                 <div class="w3-third w3-padding">
+                                    @if(npc.Avatar != null) {
+                                        <div style="margin-left: auto; margin-right: auto; width: 100%;">
+                                            <MiniDrawer Avatar=npc.Avatar></MiniDrawer>
+                                        </div>
+                                    } else {
                                     <img 
                                         src="@npc.Species.GetSpeciesImageUrl()" 
                                         onerror="this.src='assets/artwork/species/Unknown.png'" 
                                         style="display: block; margin-left: auto; margin-right: auto;width: 100%; height: auto;"
                                     />
+                                    }
                                 </div>
                                 <div class="w3-twothird">
                                     <div class="row">
@@ -392,6 +410,8 @@
             unique_name = base_name + " (" + (id++) + ")";
         }
         d.Name = unique_name;
+
+        d.UsedStress = d.TotalStress;
 
         return d;
     }

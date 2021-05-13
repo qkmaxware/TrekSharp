@@ -1,0 +1,120 @@
+@page "/new/ship/random"
+@inherits Page
+
+<LCARS Title="RANDOM VESSEL">
+    <p>
+        This tool will randomly generate a player vessel using the desired constraints.
+    </p>
+    <RulebookPicker @ref="Rulebooks"/>
+
+    <div class="row">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <span class="spacer typeface text-secondary w3-large">
+            RANDOMIZER SETTINGS
+        </span>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+    <div class="w3-padding">
+        <p>
+            Every vessel needs a name. Leave this blank for a randomly assigned name.
+        </p>
+        <div class="row w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Name</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <input type="text" class="w3-padding w3-input"  @bind="name"/>
+            </span>
+        </div>
+
+        <p>
+            Every vessel needs a registry number. Leave this blank for a randomly assigned one.
+        </p>
+        <div class="row w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Registry Number</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <input type="text" class="w3-padding w3-input"  @bind="registry"/>
+            </span>
+        </div>
+
+        <p>
+            What year will this vessel be operating in. 
+        </p>
+        <div class="row w3-padding">
+            <span class="hbar elbow-left knee-left w3-padding">Service Date</span>
+            <span class="hbar row-fill row" style="margin-left: 10px;">
+                <input type="date" class="w3-grey w3-padding w3-input" required @bind="date" />
+            </span>
+        </div>
+
+        <div class="w3-right-align w3-padding">
+            <button class="w3-button w3-blue" @onclick="generateAndShow"> Generate New </button>
+        </div>
+    </div>
+</LCARS>
+
+@code {
+    RulebookPicker Rulebooks;
+
+    private string name;
+    private string registry;
+    private DateTime date = new DateTime(2371, 1, 1);
+
+    private Generators.UfpRegistryGenerator names = new Generators.UfpRegistryGenerator();
+
+    private void generateAndShow() {
+        var spaceframes = Rulebooks.EnabledRulebooks.SelectMany(book => book.Spaceframes).ToList();
+        var profiles = Rulebooks.EnabledRulebooks.SelectMany(book => book.MissionProfiles).ToList();
+        var talents = Rulebooks.EnabledRulebooks.SelectMany(book => book.ShipTalents).ToList();
+
+        PlayerVessel vessel = new PlayerVessel();
+        vessel.Name = name;
+        if (string.IsNullOrEmpty(vessel.Name)) {
+            vessel.Name = names.RandomName();
+        }
+        vessel.Registry = registry;
+        if (string.IsNullOrEmpty(vessel.Registry)) {
+            vessel.Registry = names.RandomRegistryNumber();
+        }
+        vessel.Frame = spaceframes.Random();
+        vessel.Systems = new Systems();
+        vessel.Systems.Add(vessel.Frame.Systems);
+        var refitPoints = Math.Max(0, (int)((date - vessel.Frame.DesignDate).TotalDays / 356) / 10 );
+        var systems = vessel.Systems.Enumerate().ToList();
+        for (var i = 0; i < refitPoints; i++) {
+            var picked = systems.Random();
+            if (picked.Value < 12) {
+                picked.Value++;
+            }
+        }
+        vessel.MissionProfile = profiles.Random();
+        vessel.Departments = new Disciplines();
+        vessel.Departments.Add(vessel.Frame .Departments);
+        vessel.Departments.Add(vessel.MissionProfile.Departments);
+        vessel.Talents = new List<ShipTalent>();
+
+        // Add initial talents
+        foreach (var talentName in vessel.Frame.StartingTalents) {
+            var talent = talents.Where(t => t.Name == talentName).FirstOrDefault();
+            if (talent != null) {
+                vessel.Talents.Add(talent);
+            }
+        }
+        // Add mission profile talent
+        List<ShipTalent> profileTalents = talents.Where(
+            talent => 
+                vessel.MissionProfile.MissionProfileTalents.Contains(talent.Name)
+                && !vessel.Frame.StartingTalents.Contains(talent.Name) // don't show talents I already have
+        ).ToList();
+        vessel.Talents.Add(profileTalents.Random());
+
+        // Add remaining Scale - Count (talents + mission profile talent) talents
+        var additionalTalentCount = vessel.Frame.Scale - vessel.Frame.StartingTalents.Count - 1;
+        for (var i = 0; i < additionalTalentCount; i++) {
+            vessel.Talents.Add(talents.Random());
+        }
+
+        // Save and navigate
+        Data.Ships.Add(vessel);
+        this.NavigateToPlayerVessel(vessel);
+    }
+
+}

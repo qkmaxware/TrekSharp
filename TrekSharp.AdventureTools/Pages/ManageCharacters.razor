@@ -4,29 +4,37 @@
 
 <div class="lcars">
     <!-- Player Characters -->
-    <div class="container w3-margin-bottom">
+    <div class="w3-margin-bottom">
         <LCARS Title="PARTY">
-            <div class="w3-padding row-fill">
+            <div class="row-fill">
                 <Col4Layout Items=Data.Party>
                     <Template>
-                        <div class="row" @onclick="@(() => NavigateToPlayerCharacter(context))">
-                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                @context.Rank @context.Name 
+                        <div class="w3-margin-bottom">
+                            <div class="row" @onclick="@(() => NavigateToPlayerCharacter(context))">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @context.Rank @context.Name 
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right"></div>
                             </div>
-                            <div class="hbar row-fill elbow-right knee-right"></div>
-                        </div>
-                        <div style="width: 100%; height: 125px;" @onclick="@(() => NavigateToPlayerCharacter(context))">
-                            <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
-                        </div>
-                        <div class="w3-padding row">
-                            <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                <b>Stress</b> <input type="number" class="w3-small" style="width: 64px;" @bind="context.UsedStress"/> / @context.TotalStress
+                            <div class="w3-row w3-padding">
+                                <div class="w3-col s6" style="overflow: hidden;">
+                                    <img src="assets/heart.svg" width=24 height=24> <small>@(context.UsedStress)/@(context.TotalStress)</small>
+                                </div>
+                                <div class="w3-col s6" style="overflow: hidden;">
+                                    <img src="assets/resistance.svg" width=24 height=24> <small>@(context.Resistance)</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="w3-padding row">
-                            <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                <b>Resistance</b> <input type="number" class="w3-small" style="width: 64px;" @bind="context.Resistance"/>
+                            <div @onclick="@(() => NavigateToPlayerCharacter(context))">
+                                @if(context.Avatar != null) {
+                                    <div style="margin-left: auto; margin-right: auto; width: 100%; max-width: 100px;">
+                                        <MiniDrawer Avatar=@context.Avatar></MiniDrawer>
+                                    </div>
+                                } else {
+                                    <div style="width: 100%; height: 125px;">
+                                        <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; height:auto; max-width:125px;">
+                                    </div>
+                                }
                             </div>
                         </div>
                     </Template>
@@ -36,29 +44,37 @@
     </div>
 
     <!-- Support Characters -->
-    <div class="container w3-margin-bottom">
+    <div class="w3-margin-bottom">
         <LCARS Title="SUPPORT">
-            <div class="w3-padding row-fill">
+            <div class="row-fill">
                 <Col4Layout Items=Data.Supports>
                     <Template>
-                        <div class="row" @onclick="@(() => NaviateToSupportCharacter(context))">
-                            <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
-                            <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
-                                @context.Rank @context.Name 
+                        <div class="w3-margin-bottom">
+                            <div class="row" @onclick="@(() => NaviateToSupportCharacter(context))">
+                                <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                                <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                                    @context.Rank @context.Name 
+                                </div>
+                                <div class="hbar row-fill elbow-right knee-right"></div>
                             </div>
-                            <div class="hbar row-fill elbow-right knee-right"></div>
-                        </div>
-                        <div style="width: 100%; height: 125px;" @onclick="@(() => NaviateToSupportCharacter(context))">
-                            <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; max-height:125px; width: auto;">
-                        </div>
-                        <div class="w3-padding row">
-                            <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                <b>Stress</b> <input type="number" class="w3-small" style="width: 64px;" @bind="context.UsedStress"/> / @context.TotalStress
+                            <div class="w3-row w3-padding">
+                                <div class="w3-col s6" style="overflow: hidden;">
+                                    <img src="assets/heart.svg" width=24 height=24> <small>@(context.UsedStress)/@(context.TotalStress)</small>
+                                </div>
+                                <div class="w3-col s6" style="overflow: hidden;">
+                                    <img src="assets/resistance.svg" width=24 height=24> <small>@(context.Resistance)</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="w3-padding row">
-                            <div class="hbar highlight row-fill elbow-left knee-left elbow-right knee-right">
-                                <b>Resistance</b> <input type="number" class="w3-small" style="width: 64px;" @bind="context.Resistance"/>
+                            <div @onclick="@(() => NaviateToSupportCharacter(context))">
+                            @if(context.Avatar != null) {
+                                <div style="margin-left: auto; margin-right: auto; width: 100%; max-width: 100px;">
+                                    <MiniDrawer Avatar=@context.Avatar></MiniDrawer>
+                                </div>
+                            } else {
+                                <div style="width: 100%; height: 125px;">
+                                    <img src="@context.Species.GetSpeciesImageUrl()" onerror="this.src='assets/artwork/species/Unknown.png'" style="display: block; margin-left: auto; margin-right: auto;width: 100%; height:auto; max-width:125px;">
+                                </div>
+                            }
                             </div>
                         </div>
                     </Template>

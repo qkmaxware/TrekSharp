@@ -1,12 +1,14 @@
 <div class="w3-container lcars">
     <div class="row">
         <div class="hbar knee-left elbow-left primary" style="width: 56px; margin-right: 10px;"></div>
-        @for (var i = 0; i < Pages.Count; i++) {
-        var this_page = i;
-        <div class="typeface w3-center w3-padding w3-margin-left @(i == activePage ? "highlight" : "secondary")" @onclick=@(() => activePage = this_page)>
-            <span>@Pages[i]?.Title</span>
+        <div class="row" style="flex-wrap: wrap;">
+            @for (var i = 0; i < Pages.Count; i++) {
+            var this_page = i;
+            <div class="mobile-full typeface w3-border-bottom w3-center w3-padding w3-margin-left @(i == activePage ? "highlight" : "secondary")" @onclick=@(() => activePage = this_page)>
+                <span>@Pages[i]?.Title</span>
+            </div>
+            }
         </div>
-        }
         <div class="w3-margin-left hbar row-fill primary"></div>
         <div class="hbar primary knee-right elbow-right" style="width: 240px; max-width: 100%;"></div>
     </div>

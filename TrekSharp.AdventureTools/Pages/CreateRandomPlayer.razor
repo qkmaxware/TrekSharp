@@ -2,9 +2,9 @@
 @inherits Page
 
 <LCARS Title="RANDOM PLAYER">
-    <div class="w3-panel typeface">
+    <p>
         This tool will randomly generate the Lifepath of a player character. Simply select your desired options below and press 'Generate New' button to create your character.
-    </div>
+    </p>
     <RulebookPicker @ref="Rulebooks"/>
 
     <div class="row">
@@ -283,6 +283,8 @@
                 }
             }
         }
+
+        character.UsedStress = character.TotalStress;
 
         // Done
         return character;

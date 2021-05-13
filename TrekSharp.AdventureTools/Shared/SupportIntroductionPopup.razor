@@ -74,6 +74,8 @@
         arcNewFocus1 = null;
         arcNewFocus2 = null;  
         arcNewTalents = new List<string>(4) {null, null, null, null};
+        
+        talents = new Data.RulebookContainer().AllRulebooks.SelectMany(book => book.Value.Talents).ToList();
 
         popup.Open();
         StateHasChanged();
@@ -101,7 +103,7 @@
 
     private List<string> arcNewTalents;
 
-    private List<CharacterTalent> talents = new Data.RulebookContainer().AllRulebooks.SelectMany(book => book.Value.Talents).ToList();
+    private List<CharacterTalent> talents;
 
     public void Save() {
         Close();
