@@ -1,0 +1,185 @@
+<Popup @ref=popup>
+    @if (mode == ModeState.None) {
+        <div class="w3-center typeface">
+            <p class="w3-large">
+                Milestones describe events in which a character has grown. Instead of upgrading a particular character, you can choose to perform an upgrade on your vessel. This wizard allows you to make those upgrades. Select your milestone type below. 
+            </p>
+            <hr>
+            <div class="w3-padding">
+                <p>
+                    Awarded to a character that has significant impact to a mission or has reached a key level of character development.
+                </p>
+                <button @onclick=@(() => mode = ModeState.Spotlight)>
+                    Spotlight Milestone
+                </button>
+            </div>
+            <div class="w3-padding">
+                <p>
+                    Awarded to a character when they reach a significant point in a story arc.
+                </p>
+                <button @onclick=@(() => mode = ModeState.Arc)>
+                    Arc Milestone
+                </button>
+            </div>
+        </div>
+        <button class="w3-red" @onclick=@(() => Close())>
+            Cancel
+        </button>
+    } else {
+        if (mode == ModeState.Spotlight) {
+            <TabLayout>
+                <TabPage Title="Redistribute Systems">
+                    <SystemsRedistribute 
+                        MaxChanges=1
+                        MaxValue=12
+                        MinValue=6
+                        ToBalance="Vessel.Systems"
+                        Reference="rebalancedSystemsDelta"
+                    />
+                </TabPage>
+                <TabPage Title="Redistribute Departments">
+                    <DisciplineRedistribute 
+                        MaxChanges=1
+                        MaxValue=4
+                        MinValue=1
+                        ToBalance="Vessel.Departments"
+                        Reference="rebalancedDisciplinesDelta"
+                    />
+                </TabPage>
+                <TabPage Title="Replace Talent">
+                    <div class="row w3-margin-bottom">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                            DELETE TALENT 
+                        </div>
+                        <div class="hbar row-fill elbow-right knee-right"></div>
+                    </div>
+                    <div>
+                        <ListSelect @ref="toDelete" List=@Vessel.Talents>
+
+                        </ListSelect>
+                    </div>
+
+                    <div class="row w3-margin-bottom">
+                        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                            ADD TALENT
+                        </div>
+                        <div class="hbar row-fill elbow-right knee-right"></div>
+                    </div>
+                    <div>
+                        <input type="text" class="w3-input" placeholder="Add Talent" list="ship_talent_list" @bind=toReplace>
+                    </div>
+                </TabPage>
+            </TabLayout>
+        } else if (mode == ModeState.Arc) {
+            <TabLayout>
+                <TabPage Title="Increase System">
+                    <SystemsIncrement
+                        Points=1
+                        MaxPointsPerItem=12
+                        Mask=allSystemsMask
+                        Reference=addedSystems
+                    />
+                </TabPage>
+                <TabPage Title="Increase Departments">
+                    <DisciplineIncrement
+                        Points=1
+                        MaxPointsPerItem=4
+                        Mask=allDisciplinesMask
+                        Reference=addedDisciplines
+                    />
+                </TabPage>
+                <TabPage Title="Add Talent">
+                    <input type="text" class="w3-input" placeholder="Add Talent" list="ship_talent_list" @bind=toAdd>
+                </TabPage>
+            </TabLayout>
+        }
+        <datalist id="ship_talent_list">
+            @foreach (var talent in talents) {
+                <option value="@talent.Name"/>
+            }       
+        </datalist>
+        <div class="w3-row">
+            <div class="w3-col s6 w3-left-align">
+                <button class="w3-red" @onclick=@(() => Close())>
+                    Cancel
+                </button>
+            </div>
+            <div class="w3-col s6 w3-right-align">
+                <button class="w3-green" @onclick=@(() => Save())>
+                    Confirm
+                </button>
+            </div>
+        </div>
+    }
+</Popup>
+
+@code {
+    private Systems allSystemsMask = new Systems(1);
+    private Disciplines allDisciplinesMask = new Disciplines(1);
+
+    private Systems rebalancedSystemsDelta;
+    private Disciplines rebalancedDisciplinesDelta;
+
+    private Systems addedSystems;
+    private Disciplines addedDisciplines;   
+
+    private Vessel Vessel {get; set;}
+    [Parameter] public Action OnSave {get; set;}
+    private enum ModeState {
+        None, Spotlight, Arc
+    }
+    private ModeState mode = ModeState.None;
+
+    private Popup popup;
+
+    private ListSelect<ShipTalent> toDelete;
+    private string toReplace;
+    private string toAdd;
+    private List<ShipTalent> talents;
+
+    public void Open(Vessel vessel) {
+        this.Vessel = vessel;
+
+        rebalancedSystemsDelta = new Systems(0);
+        rebalancedDisciplinesDelta = new Disciplines(0);
+
+        addedSystems = new Systems(0);
+        addedDisciplines = new Disciplines(0);
+
+        toReplace = null;
+        toAdd = null;
+        talents = new Data.RulebookContainer().AllRulebooks.SelectMany(book => book.Value.ShipTalents).ToList();
+
+        popup.Open();
+    }
+    public void Close() {
+        popup.Close();
+        mode = ModeState.None;
+    }
+    public void Save() {
+        Close();
+
+        Vessel.Systems.Add(rebalancedSystemsDelta);
+        Vessel.Systems.Add(addedSystems);
+
+        Vessel.Departments.Add(rebalancedDisciplinesDelta);
+        Vessel.Departments.Add(addedDisciplines);
+
+        if (!string.IsNullOrEmpty(toReplace) && toDelete.Selected != null && Vessel.Talents.Contains(toDelete.Selected)) {
+            var talent = talents.Where(t => t.Name == toReplace).FirstOrDefault();
+            if (talent != null) { 
+                Vessel.Talents.Remove(toDelete.Selected);
+                Vessel.Talents.Add(talent);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(toAdd)) {
+            var talent = talents.Where(t => t.Name == toAdd).FirstOrDefault();
+            if (talent != null) { 
+                Vessel.Talents.Add(talent);
+            }
+        }
+    }
+}
