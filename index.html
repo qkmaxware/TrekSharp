@@ -25,7 +25,7 @@
 
 <body>
     <div id="pwa-update-notification" class="notification w3-hide">
-        A new version is available <a id="pwa-update-refresh" href="" onclick="window.location.reload();" class="w3-text-blue">REFRESH</a> <a style="text-decoration: none;" href="" onclick="hidePwaUpdate(); return false;">&times;</a>
+        A new version is available <a id="pwa-update-refresh" href="" onclick="reloadPwa();" class="w3-text-blue">REFRESH</a> <a style="text-decoration: none;" href="" onclick="hidePwaUpdate(); return false;">&times;</a>
     </div>
     <app>
         <div class="w3-center w3-padding w3-margin-top">
@@ -48,9 +48,15 @@
             note.classList.add("w3-hide");
             note.classList.remove("w3-show");
         }
+        let newWorker;
+        function reloadPwa() {
+            if (newWorker) {
+                newWorker.postMessage({ action: 'skipWaiting' });
+            }
+        }
         navigator.serviceWorker.register('service-worker.js').then(reg => {
             reg.addEventListener('updatefound', () => {
-                let newWorker = reg.installing;
+                newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
                     switch (newWorker.state) {
                         case "installed":
@@ -62,6 +68,13 @@
                     }
                 });
             });
+        });
+        let pwaRefreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+            if (pwaRefreshing) 
+                return;
+            window.location.reload();
+            pwaRefreshing = true;
         });
     </script>
     <script src="js/helpers.js"></script>
