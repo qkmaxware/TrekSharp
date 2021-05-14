@@ -793,6 +793,9 @@
                     <div class="hbar elbow-right knee-right" style="width: 32px; margin-right: 10px;"></div>
                 </div>
                 <div class="w3-container w3-padding">
+                    <div class="w3-padding">
+                        <input class="w3-check" type="checkbox" @bind="IsEnlisted"><label>Non-Commissioned Officer</label>
+                    </div>
                     <ListSelect @ref=rankSelect List=RanksByExperience></ListSelect>
                 </div>
 
@@ -1092,26 +1095,51 @@
     private ListSelect<Rank> rankSelect;
     private ListSelect<KeyValuePair<string,string>> assignmentSelect;
     private string characterAssignment =>  assignmentSelect != null ? assignmentSelect.Selected.Key : string.Empty;
+    public bool IsEnlisted = false;
     private IEnumerable<Rank> RanksByExperience {
         get {
-            if (experience == CareerAge.Young) {
-                yield return Rank.Cadet;
-                yield return Rank.Ensign;
-                yield return Rank.LieutenantJuniorGrade;
-            } else if (experience == CareerAge.Veteran) {
-                yield return Rank.LieutenantCommander;
-                yield return Rank.Commander;
-                yield return Rank.Captain;
-                yield return Rank.RearAdmiral;
-                yield return Rank.ViceAdmiral;
-                yield return Rank.Commodore;
-                yield return Rank.FleetAdmiral;
+            if (IsEnlisted) {
+                if (experience == CareerAge.Young) {
+                    yield return Rank.Crewman;
+                    yield return Rank.Yeoman;
+                    yield return Rank.Specialist3rdClass;
+                    yield return Rank.Specialist2ndClass;
+                    yield return Rank.Specialist1stClass;
+                } else if (experience == CareerAge.Veteran) {
+                    yield return Rank.Specialist3rdClass;
+                    yield return Rank.Specialist2ndClass;
+                    yield return Rank.Specialist1stClass;
+                    yield return Rank.PettyOfficer3rd;
+                    yield return Rank.PettyOfficer2nd;
+                    yield return Rank.PettyOfficer1st;
+                } else {
+                    yield return Rank.PettyOfficer3rd;
+                    yield return Rank.PettyOfficer2nd;
+                    yield return Rank.PettyOfficer1st;
+                    yield return Rank.ChiefPettyOfficer;
+                    yield return Rank.SeniorChiefPettyOfficer;
+                    yield return Rank.MasterChief;
+                }
             } else {
-                yield return Rank.LieutenantJuniorGrade;
-                yield return Rank.Lieutenant;
-                yield return Rank.LieutenantCommander;
-                yield return Rank.Commander;
-                yield return Rank.Captain;
+                if (experience == CareerAge.Young) {
+                    yield return Rank.Cadet;
+                    yield return Rank.Ensign;
+                    yield return Rank.LieutenantJuniorGrade;
+                } else if (experience == CareerAge.Veteran) {
+                    yield return Rank.LieutenantCommander;
+                    yield return Rank.Commander;
+                    yield return Rank.Captain;
+                    yield return Rank.RearAdmiral;
+                    yield return Rank.ViceAdmiral;
+                    yield return Rank.Commodore;
+                    yield return Rank.FleetAdmiral;
+                } else {
+                    yield return Rank.LieutenantJuniorGrade;
+                    yield return Rank.Lieutenant;
+                    yield return Rank.LieutenantCommander;
+                    yield return Rank.Commander;
+                    yield return Rank.Captain;
+                }
             }
         }
     }

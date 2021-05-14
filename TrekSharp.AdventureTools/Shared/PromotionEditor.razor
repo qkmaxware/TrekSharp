@@ -2,7 +2,7 @@
     <div class="w3-panel typeface">
         Characters who have done excellent work are subject to promotions in order to move up the ranks in the hierarchy. Select from the list below one of the ranks ahead of the character's current rank. 
     </div>
-    <div class="w3-padding">
+    <div class="w3-padding" style="max-height: 50vh; overflow: auto;">
         @foreach (var rank in ranks) {
             if (Character?.Rank == null || rank.Order > Character.Rank.Order) {
             var capture = rank;
@@ -31,22 +31,7 @@
     private Character Character {get; set;}
     [Parameter] public Action OnSave {get; set;}
 
-    private IEnumerable<Rank> ranks {
-        get {
-            yield return Rank.Cadet;
-            yield return Rank.Ensign;
-            yield return Rank.LieutenantJuniorGrade;
-            yield return Rank.Lieutenant;
-            yield return Rank.LieutenantCommander;
-            yield return Rank.Commander;
-            yield return Rank.Captain;
-            yield return Rank.Commodore;
-            yield return Rank.RearAdmiral; 
-            yield return Rank.ViceAdmiral;
-            yield return Rank.Admiral;
-            yield return Rank.FleetAdmiral;
-        }
-    }
+    private IEnumerable<Rank> ranks => Rank.AllStarfleetRanks;
     private Rank nextRank = null;
 
     public void Open(Character character) {
