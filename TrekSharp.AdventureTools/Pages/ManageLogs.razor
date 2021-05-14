@@ -2,6 +2,9 @@
 @page "/manage/logs"
 @using System.Globalization
 
+<PrintNotification></PrintNotification>
+
+<div class="no-print">
 <LCARS Title="LOG ENTRIES">
     @if (compose) {
         <div class="w3-col" style="width: 50px">
@@ -9,73 +12,87 @@
         </div>
         <Quicklog OnLogRecorded=@(() => { compose = false; StateHasChanged(); })></Quicklog>
     } else {
-        @if (viewedEntry == null) {
-        <div class="w3-padding">
+    <div class="w3-row">
+        <div class="w3-half w3-border-right" style="max-height: 50vh; overflow: auto;">
             <input type="text" placeholder="search logs" @bind="filter" style="width: 100%;"/>
             <div class="w3-row">
-                <button class="w3-col s6 w3-button @(!flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0; font-size: medium;" @onclick=@(() => flaggedOnly = false)>All</button>
-                <button class="w3-col s6 w3-button @(flaggedOnly ? "w3-blue" : "w3-black")" style="border-radius: 0; font-size: medium;" @onclick=@(() => flaggedOnly = true)>Flagged</button>
+                <button class="w3-col s6 w3-button @(!flaggedOnly ? "w3-text-blue" : "w3-text-white")" style="background-color: inherit; border-radius: 0; font-size: medium;" @onclick=@(() => flaggedOnly = false)>All</button>
+                <button class="w3-col s6 w3-button @(flaggedOnly ? "w3-text-blue" : "w3-text-white")" style="background-color: inherit; border-radius: 0; font-size: medium;" @onclick=@(() => flaggedOnly = true)>Flagged</button>
             </div>
-            <div class="w3-right-align">
-                <button class="w3-margin" @onclick=@(() => compose = true)>Record Log</button>
-            </div>
-        </div>
-        @if (Data.Logs.Count > 0) {
-            <hr>
-        }
-        <ul class="w3-ul w3-hoverable">
-        @foreach (var entry in Data.Logs.Enumerate()) {
-            if((!flaggedOnly || entry.Flagged) && (string.IsNullOrEmpty(filter) || CultureInfo.InvariantCulture.CompareInfo.IndexOf(entry.Content, filter, CompareOptions.IgnoreCase) >=0 )) {
-                var capture = entry;
-                <li class="w3-row">
-                    <div class="w3-col" style="width: 72px;">
-                        <button class="w3-black" @onclick=@(() => capture.Flagged = !capture.Flagged)>
-                            @if (capture.Flagged) {
-                                <img src="assets/flag_filled.png" width=24 height=24>
-                            } else {
-                                <img src="assets/flag_empty.png" width=24 height=24>
-                            }
-                        </button>
-                    </div>
-                    <div class="w3-rest" @onclick=@(() => viewedEntry = capture)>
-                        <b>@capture.Stardate</b>
-                        <p>
-                            @capture.ExcerptString()
-                        </p>
-                    </div>
-                </li>
+            @{
+                string stardate = null;
+                foreach (var entry in Data.Logs.Enumerate()) {
+                    var capture = entry;
+                    if((!flaggedOnly || capture.Flagged) && (string.IsNullOrEmpty(filter) || CultureInfo.InvariantCulture.CompareInfo.IndexOf(capture.Content, filter, CompareOptions.IgnoreCase) >=0 )) {
+                        var printed_stardate = capture.Stardate.ToString("0.0#");
+                        if (printed_stardate != stardate) {
+                            stardate = printed_stardate;
+                            <div class="w3-grey w3-padding">
+                                <b>@stardate</b>
+                            </div>
+                        }
+                        <div class="w3-margin-left w3-padding w3-display-container">
+                            <button class="no-lcars w3-button w3-block w3-left-align" style="background-color:inherit;" @onclick=@(() => viewedEntry = capture)>
+                                @capture.ExcerptString()
+                            </button>
+                            <div class="w3-display-topright">
+                                <button class="w3-button no-lcars" style="background-color:transparent;" @onclick=@(() => capture.Flagged = !capture.Flagged)>
+                                    @if (capture.Flagged) {
+                                        <img src="assets/flag_filled.png" width=12 height=12>
+                                    } else {
+                                        <img src="assets/flag_empty.png" width=12 height=12>
+                                    }
+                                </button>
+                                <button class="w3-button no-lcars w3-text-red" style="background-color:transparent;" @onclick=confirmDeleteCurrent>
+                                    &times;
+                                </button>
+                            </div>
+                        </div>
+                    }
+                }
             }
-        }
-        </ul>
-        } else {
-            <div class="w3-row">
-                <div class="w3-col" style="width: 50px">
-                    <button class="w3-button w3-blue w3-margin-right" style="border-radius: 0;" @onclick=@(() => viewedEntry = null)>&lt;</button>
-                </div>
-                <div class="w3-rest">
-                    <div class="w3-half w3-xlarge">
-                        STARDATE @viewedEntry.Stardate
-                    </div>
-                    <div class="w3-half w3-right-align w3-padding">
-                        <button class="w3-black" @onclick=@(() => viewedEntry.Flagged = !viewedEntry.Flagged)>
-                            @if (viewedEntry.Flagged) {
-                                <img src="assets/flag_filled.png" width=24 height=24>
-                            } else {
-                                <img src="assets/flag_empty.png" width=24 height=24>
-                            }
-                        </button>
-                        <button class="w3-red" @onclick=confirmDeleteCurrent>
-                            &times;
-                        </button>
+        </div>
+        <div class="w3-half">
+            <div class="w3-right-align primary">
+                <button class="no-lcars w3-button" @onclick=@(() => compose = true)>Compose Entry</button>
+            </div>
+            @if (viewedEntry != null) {
+                <div class="w3-padding">
+                    <h4 class="w3-right-align">Stardate @viewedEntry.Stardate.ToString("0.0#")</h4>
+                    <div style="white-space: pre-line;">
+                        @viewedEntry.Content
                     </div>
                 </div>
-            </div>
-            <div style="white-space: pre-wrap;">
-                @viewedEntry.Content
-            </div>
-        }
+            }
+        </div>
+    </div>
     }
 </LCARS>
+</div>
+<div class="print">
+   @{
+    string stardate = null;
+    int count = 0;
+    foreach (var entry in Data.Logs.Enumerate()) {
+        var capture = entry;var printed_stardate = capture.Stardate.ToString("0.0#");
+        if (printed_stardate != stardate) {
+            count = 1;
+            stardate = printed_stardate;
+            <h3>Personal Log Stardate @stardate</h3>
+        } else {
+            count++;
+        }
+        <div class="w3-margin-left w3-display-container">
+            @if (count > 1) {
+                <h4>supplemental</h4>
+            }
+            <div class="w3-padding">
+                @capture.Content
+            </div>
+        </div>
+    }
+} 
+</div>
 
 <ConfirmationDialog @ref="confirm">
 </ConfirmationDialog>

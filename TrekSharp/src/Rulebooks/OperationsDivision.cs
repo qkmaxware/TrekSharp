@@ -186,13 +186,11 @@ public class OperationsDivision : BaseRulebook {
             new Item { Name = "Engineering Tricorder", Size = ItemSize.OneHanded },
             new Item { Name = "Micro-Optic Drill", Size = ItemSize.OneHanded  },
             new Item { Name = "Phaser Drill", Size = ItemSize.TwoHanded  },
-            new Item { Name = "Engineering Tricorder", Size = ItemSize.OneHanded  },
             new Item { Name = "Field Destabilizer", Size = ItemSize.OneHanded  },
             new Item { Name = "Hyperspanner", Size = ItemSize.OneHanded  },
             new Item { Name = "Magnetic Probe", Size = ItemSize.OneHanded  },
             new Item { Name = "Sonic Driver", Size = ItemSize.OneHanded  },
             new Item { Name = "Transport Inhibitor", Size = ItemSize.OneHanded  },
-            new Item { Name = "Chronometer", Size = ItemSize.OneHanded  },
         }
     };
 
