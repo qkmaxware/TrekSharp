@@ -2,7 +2,7 @@
 @inherits Page
 
 @if (HasShip) {
-<VesselEditorPopupTab Ship=@Ship OnDelete=onConfirmDelete></VesselEditorPopupTab>
+<VesselEditorPopupTab Ship=@Ship OnDelete=onConfirmDelete OnChange=StateHasChanged></VesselEditorPopupTab>
 <PrintNotification/>
 
 <div id="character-sheet" class="lcars">
