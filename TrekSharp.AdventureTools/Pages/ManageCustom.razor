@@ -25,6 +25,7 @@
                 <div class="w3-row w3-margin-top w3-margin-bottom">
                     <div class="w3-half w3-left-align">
                         <button class="w3-small" @onclick=@(() => editSpecies(context))>edit</button>
+                        <button class="w3-small" @onclick=@(() => exportSpecies(context))>export</button>
                     </div>
                     <div class="w3-half w3-right-align">
                         <button class="w3-small w3-red" @onclick=@(() => confirmDeleteSpecies(context))>delete</button>
@@ -51,6 +52,7 @@
                     <div class="w3-row w3-margin-top w3-margin-bottom">
                         <div class="w3-half w3-left-align">
                             <button class="w3-small" @onclick=@(() => editNpcType(context))>edit</button>
+                            <button class="w3-small" @onclick=@(() => exportNpcType(context))>export</button>
                         </div>
                         <div class="w3-half w3-right-align">
                             <button class="w3-small w3-red" @onclick=@(() => confirmDeleteNpcType(context))>delete</button>
@@ -77,6 +79,7 @@
                     <div class="w3-row w3-margin-top w3-margin-bottom">
                         <div class="w3-half w3-left-align">
                             <button class="w3-small" @onclick=@(() => editSpaceframe(context))>edit</button>
+                            <button class="w3-small" @onclick=@(() => exportSpaceframe(context))>export</button>
                         </div>
                         <div class="w3-half w3-right-align">
                             <button class="w3-small w3-red" @onclick=@(() => confirmDeleteSpaceframe(context))>delete</button>
@@ -103,6 +106,7 @@
                     <div class="w3-row w3-margin-top w3-margin-bottom">
                         <div class="w3-half w3-left-align">
                             <button class="w3-small" @onclick=@(() => editItem(context))>edit</button>
+                            <button class="w3-small" @onclick=@(() => exportItem(context))>export</button>
                         </div>
                         <div class="w3-half w3-right-align">
                             <button class="w3-small w3-red" @onclick=@(() => confirmDeleteItem(context))>delete</button>
@@ -133,6 +137,10 @@
         }
     }
 
+    private async Task exportSpecies(CustomSpecies species) {
+        await this.DownloadJson($"{species.Name}.species", species);
+    }
+
     private void deleteSpecies(CustomSpecies species) {
         if (Data.Custom != null && Data.Custom.Species != null && Data.Custom.Species.Definitions != null) {
             Data.Custom.Species.Definitions.Remove(species);
@@ -154,6 +162,10 @@
         }
     }
 
+    private async Task exportNpcType(NpcCharacter cha) {
+        await this.DownloadJson($"{cha.Name}.npc", cha);
+    }
+
     private void deleteNpcType(NpcCharacter character) {
         if (Data.Custom != null && Data.Custom.NpcCharacterTypes != null) {
             Data.Custom.NpcCharacterTypes.Remove(character);
@@ -172,6 +184,10 @@
         }
     }
 
+    private async Task exportSpaceframe(Spaceframe s) {
+        await this.DownloadJson($"{s.Name}.spaceframe", s);
+    }
+
     private void deleteSpaceframe(Spaceframe character) {
         if (Data.Custom != null && Data.Custom.Spaceframes != null) {
             Data.Custom.Spaceframes.Remove(character);
@@ -188,6 +204,10 @@
         if (Id >= 0) {
             NavigationManager.NavigateTo($"manage/custom/item/{Id}");
         }
+    }
+
+    private async Task exportItem(Item i) {
+        await this.DownloadJson($"{i.Name}.item", i);
     }
 
     private void deleteItem(Item character) {

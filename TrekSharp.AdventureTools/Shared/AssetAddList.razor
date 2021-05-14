@@ -1,5 +1,5 @@
 @using System.Globalization
-@typeparam TItem
+@typeparam TItem 
 
 <Popup @ref=popup>
     <div class="lcars">
@@ -19,7 +19,7 @@
             for (var i = 0; i < Store.Count; i++) {
                 var capture = i;
                 if (matchesFilter(Store[i])) {
-                <button style="width: 100%" class="@(capture == index ? "secondary" : "primary")" @onclick="@(() => index = capture)">
+                <button style="width: 100%" class="@(capture == index ? "secondary" : "primary")" @onclick="@(() => selectItem (capture))">
                     @ListingFunction(Store[i])            
                 </button>
                 }
@@ -27,6 +27,14 @@
         }
         </div>
     </div>
+    @if (AllowJsonImport) {
+        <p class="w3-center">
+            OR
+        </p>
+        <div class="w3-padding">
+            <LocalFileInput Accept=".json" OnFileLoad=onFileLoaded></LocalFileInput>
+        </div>
+    }
     
     <div class="w3-row">
         <div class="w3-col s6">
@@ -49,6 +57,8 @@
     public Action<TItem> OnAdd {get; set;}
     [Parameter]
     public Func<TItem, string> ListingFunction {get; set;} = stringListing;
+    [Parameter]
+    public bool AllowJsonImport {get; set;} = false;
 
     // Default listing function
     private static string stringListing (TItem item) {
@@ -68,11 +78,30 @@
     }
 
     private int index = -1;
-    private bool hasItem => Store != null && index >= 0 && index < Store.Count;
-    private TItem item => hasItem ? Store[index] : default(TItem);
+    private bool hasItem => use_loaded_item ? (loaded_item != null && !loaded_item.Equals(default(TItem))) : (Store != null && index >= 0 && index < Store.Count);
+    private TItem item => use_loaded_item ? loaded_item : (hasItem ? Store[index] : default(TItem));
 
     private string filter;
 
+    private TItem loaded_item = default(TItem);
+    private bool use_loaded_item;
+    private void onFileLoaded(string contents) {
+        try {
+            loaded_item = System.Text.Json.JsonSerializer.Deserialize<TItem>(contents);
+            use_loaded_item = true;
+            index = -1;
+        } catch (Exception e) {
+            Console.WriteLine(e.Message);
+            loaded_item = default(TItem);
+            use_loaded_item = false;
+        }
+    }
+
+    private void selectItem(int i) {
+        use_loaded_item = false;
+        index = i;
+    }
+ 
     public void ChangeAddListener(Action<TItem> action) {
         this.OnAdd = action;
     }
