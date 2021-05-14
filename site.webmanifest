@@ -3,7 +3,6 @@
     "short_name": "TrekSharp",
     "description": "Fan-made tools for GMs and Players of Modiphius's Star Trek Adventures",
     "start_url": "./",
-    "orientation": "portrait",
     "icons": [
         {
             "src": "android-chrome-96x96.png",

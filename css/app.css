@@ -7,6 +7,16 @@
     padding: 8px 4px !important;
 }
 
+.notification {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    background-color: #404040;
+    border-radius: 6px;
+    padding: 24px;
+    z-index: 10;
+}
+
 @media (max-width:601px){
     .navbar {
         width: 100%; 

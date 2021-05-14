@@ -24,17 +24,46 @@
 </head>
 
 <body>
+    <div id="pwa-update-notification" class="notification w3-hide">
+        A new version is available <a id="pwa-update-refresh" href="" onclick="window.location.reload();" class="w3-text-blue">REFRESH</a> <a style="text-decoration: none;" href="" onclick="hidePwaUpdate(); return false;">&times;</a>
+    </div>
     <app>
         <div class="w3-center w3-padding w3-margin-top">
             <div class="w3-large">Loading... Please Wait</div>
             If this takes longer than a few seconds than an error might have occurred
         </div>
         <div id="blazor-error-ui" class="w3-center">
-            <a href="" class="reload">Reload</a>
+            <a href="" class="reload" onclick="window.location.reload();">Reload</a>
         </div>
     </app>
     <script src="_framework/blazor.webassembly.js"></script>
-    <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script>
+        function showPwaUpdate() {
+            let note = document.getElementById("pwa-update-notification");
+            note.classList.remove("w3-hide");
+            note.classList.add("w3-show");
+        }
+        function hidePwaUpdate() {
+            let note = document.getElementById("pwa-update-notification");
+            note.classList.add("w3-hide");
+            note.classList.remove("w3-show");
+        }
+        navigator.serviceWorker.register('service-worker.js').then(reg => {
+            reg.addEventListener('updatefound', () => {
+                let newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                    switch (newWorker.state) {
+                        case "installed":
+                            // If there is a new service worker
+                            if (navigator.serviceWorker.controller) {
+                                showPwaUpdate();
+                            }
+                            break;
+                    }
+                });
+            });
+        });
+    </script>
     <script src="js/helpers.js"></script>
     <script>
         // Allow components to scroll to top
