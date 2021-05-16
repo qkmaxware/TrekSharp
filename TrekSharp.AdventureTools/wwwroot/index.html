@@ -25,7 +25,7 @@
 
 <body>
     <div id="pwa-update-notification" class="notification w3-hide">
-        A new version is available <a href="" onclick="reloadPwa();" class="w3-text-blue" style="text-decoration: none;"><b>REFRESH</b></a> <a style="text-decoration: none;" href="" onclick="hidePwaUpdate(); return false;">&times;</a>
+        A new version is available <a href="" onclick="return reloadPwa();" class="w3-text-blue" style="text-decoration: none;"><b>REFRESH</b></a> <a style="text-decoration: none;" href="" onclick="hidePwaUpdate(); return false;">&times;</a>
     </div>
     <app>
         <div class="w3-center w3-padding w3-margin-top">
@@ -53,6 +53,7 @@
             if (newWorker) {
                 newWorker.postMessage({ action: 'skipWaiting' });
             }
+            return false;
         }
         navigator.serviceWorker.register('service-worker.js').then(reg => {
             reg.addEventListener('updatefound', () => {
