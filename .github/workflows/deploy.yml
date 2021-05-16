@@ -39,6 +39,6 @@ jobs:
       - name: Commit to Github Pages
         uses: JamesIves/github-pages-deploy-action@4.1.3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: .release/wwwroot
