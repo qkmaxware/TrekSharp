@@ -1,0 +1,43 @@
+<div class="w3-bar-item w3-border-bottom">
+    <input class="w3-check" type="checkbox" @bind=value> <img src="@IconUrl" width=32 height=32 style="object-fit: cover;"> <span>@Name</span> 
+    @if (hasDescription) {
+    <button class="w3-button w3-right noselect w3-large" style="transform: rotate(@(rotation)deg);" @onclick=toggleExpand>&#8250;</button>
+    }
+    @if (isExpanded && hasDescription) {
+    <div class="w3-margin-left w3-padding">
+        @ChildContent
+    </div>
+    }
+</div>
+
+@code {
+    private bool isExpanded = false;
+    private int rotation => isExpanded ? -90 : 90;
+    private void toggleExpand() {
+        isExpanded = !isExpanded;
+    }
+
+    [Parameter] public string Name {get; set;}
+    [Parameter] public string IconUrl {get; set;}
+    [Parameter] public RenderFragment ChildContent {get; set;}
+    
+    public bool hasDescription => ChildContent != null;
+
+    [Parameter] public Func<bool> Getter {get; set;}
+    [Parameter] public Action<bool> Setter {get; set;}
+
+    private bool value {
+        get {
+            if (Getter != null) {
+                return Getter();
+            } else {
+                return false;
+            }
+        }
+        set {
+            if (Setter != null) {
+                Setter(value);
+            }
+        }
+    }
+}

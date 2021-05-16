@@ -50,7 +50,7 @@ public class Character {
     public int BonusDamageDice => Disciplines.Security;
 
     public List<Item> Equipment {get; set;}
-
+    public StatusFlags Condition {get; set;} = new StatusFlags();
     public void ApplyDamage(int damage) {
         damage -= Resistance;
         if (damage > 0) {

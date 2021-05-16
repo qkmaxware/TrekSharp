@@ -1,0 +1,157 @@
+<PopoutTab Name="Condition" TabPosition=168>
+    @if (HasCharacter) {
+    <div class="w3-bar-block w3-padding">
+        <ConditionDrawer 
+            Name="Dying" IconUrl="assets/artwork/status effects/dying.svg" 
+            Getter=@(() => Character.Condition.Dying) Setter=@((v) => Character.Condition.Dying = v)>
+            The character has suffered a lethal injury, if the character is not stablized with a <b>Difficulty 1, Daring + Medicine</b> first aid task, then they will die at the end of the scene.
+        </ConditionDrawer>
+        <ConditionDrawer 
+            Name="Incapacitated" IconUrl="assets/artwork/status effects/unconcious.svg" 
+            Getter=@(() => Character.Condition.Incapacitated) Setter=@((v) => Character.Condition.Incapacitated = v)>
+            An incapacitated character is unable to perform any minor actions or tasks until the end of the scene. A character that has taken any injury in combat is automatically incapacitated.
+        </ConditionDrawer>
+
+        <ConditionDrawer 
+            Name="Grappled" IconUrl="assets/artwork/status effects/grappled.svg" 
+            Getter=@(() => Character.Condition.Grappled) Setter=@((v) => Character.Condition.Grappled = v)>
+            A grappled character is incapable of taking any action other than to attack the grappling character with increased difficulty or to try and break free which is a <b>Difficulty 2, Fitness + Security,</b> task.
+        </ConditionDrawer>
+        <ConditionDrawer 
+            Name="Prone" IconUrl="assets/artwork/status effects/fall.svg" 
+            Getter=@(() => Character.Condition.Prone) Setter=@((v) => Character.Condition.Prone = v)>
+            A character that has been knocked prone must use a minor action to stand up.
+        </ConditionDrawer>
+        <ConditionDrawer 
+            Name="Exhausted" IconUrl="assets/artwork/status effects/tired.svg" 
+            Getter=@(() => Character.Condition.Exhausted) Setter=@((v) => Character.Condition.Exhausted = v)>
+            A character suffering from exhaustion has impaired mobility, increasing the difficulty of <b>Fitness</b> tasks by 1.
+        </ConditionDrawer>
+
+        <ConditionDrawer 
+            Name="Dazed" IconUrl="assets/artwork/status effects/stunned.svg" 
+            Getter=@(() => Character.Condition.Dazed) Setter=@((v) => Character.Condition.Dazed = v)>
+            A character that has been dazed has impaired concentration, increasing the difficulty of <b>Reason</b> tasks by 1.
+        </ConditionDrawer>
+        <ConditionDrawer 
+            Name="Confused" IconUrl="assets/artwork/status effects/confused.svg" 
+            Getter=@(() => Character.Condition.Confused) Setter=@((v) => Character.Condition.Confused = v)>
+            A character suffering from temporary or permanent blindness has impaired concentration, increasing the difficulty of <b>Reason</b> tasks by 1.
+        </ConditionDrawer>
+
+        <ConditionDrawer 
+            Name="Shaky" IconUrl="assets/artwork/status effects/shaky.svg" 
+            Getter=@(() => Character.Condition.Shaky) Setter=@((v) => Character.Condition.Shaky = v)>
+            A character who is shaky has impaired motor control, increasing the difficulty of <b>Control</b> tasks by 1.
+        </ConditionDrawer>
+
+        <ConditionDrawer 
+            Name="Frightened" IconUrl="assets/artwork/status effects/scared.svg" 
+            Getter=@(() => Character.Condition.Frightened) Setter=@((v) => Character.Condition.Frightened = v)>
+            A frightened character has impaired decision making, increasing the difficulty of <b>Daring</b> tasks by 1.
+        </ConditionDrawer>
+
+        <ConditionDrawer 
+            Name="Blinded" IconUrl="assets/artwork/status effects/blind.svg" 
+            Getter=@(() => Character.Condition.Blinded) Setter=@((v) => Character.Condition.Blinded = v)>
+            A character suffering from temporary or permanent blindness has impaired perception, increasing the difficulty of <b>Insight</b> tasks by 1.
+        </ConditionDrawer>
+        <ConditionDrawer 
+            Name="Deafened" IconUrl="assets/artwork/status effects/deaf.svg" 
+            Getter=@(() => Character.Condition.Deafened) Setter=@((v) => Character.Condition.Deafened = v)>
+            A character suffering from temporary or permanent deafness has impaired perception, increasing the difficulty of <b>Insight</b> tasks by 1.
+        </ConditionDrawer>
+
+        <ConditionDrawer 
+            Name="Invisible" IconUrl="assets/artwork/status effects/invisible.svg" 
+            Getter=@(() => Character.Condition.Invisible) Setter=@((v) => Character.Condition.Invisible = v)>
+            A character that is invisible will cause all tasks to observe, locate, or target the character to increase in difficulty.
+        </ConditionDrawer>
+
+        @if (Character.Condition.CustomFlags != null) {
+            foreach (var flag in Character.Condition.CustomFlags) {
+                var capture = flag;
+                <ConditionDrawer 
+                    Name=@capture.Name IconUrl="assets/artwork/species/Unknown.png" 
+                    Getter=@(() => capture.Toggled) Setter=@((v) => capture.Toggled = v)>
+                    @capture.Description
+                    <div class="w3-right-align">
+                        <button class="w3-button noselect w3-large" @onclick=@(() => deleteCustom(capture))>&times;</button>
+                    </div>
+                </ConditionDrawer>
+            }
+        }
+        <div class="w3-margin-top w3-margin-bottom w3-padding">
+            &nbsp;
+        </div>
+        <div class="w3-bar-item w3-row">
+            <div class="w3-col w3-right" style="width: 45px;">
+                <button class="w3-button noselect w3-large" style="transform: rotate(@(rotation)deg);" @onclick=toggleExpand>&#8250;</button>
+            </div>
+            <div class="w3-rest">
+                <span class="lcars">
+                    <b class="text-secondary">
+                        + Custom Condition
+                    </b>
+                </span>
+            </div>
+        </div>
+        <div>
+            @if (showCustomEffectDialog) {
+            <div class="lcars w3-border-left w3-border-right w3-border-bottom">
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding typeface secondary w3-col" style="width: 120px;">
+                        <span>Name</span>
+                    </div>
+                    <div class="w3-rest" style="padding-left: 10px">
+                        <input type="text" class="w3-input" style="font-size: medium;" @bind=customName placeholder="Condition Name"/>
+                    </div>
+                </div>
+                <div class="w3-margin-left w3-margin-right">
+                    <textarea @bind=customDescription class="text-primary typeface lcars-border-primary" style="width: 100%; resize: vertical; background-color: black;"></textarea>
+                </div>
+                <div class="w3-right-align">
+                    <button @onclick=addCustom style="font-size: medium;">+ Condition</button>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+</PopoutTab>
+
+@code {
+    [Parameter] public Character Character {get; set;}
+    public bool HasCharacter => Character != null;
+
+    protected override void OnInitialized() {
+        if (HasCharacter && Character.Condition == null) {
+            Character.Condition = new StatusFlags();
+        }
+    }
+
+    private bool showCustomEffectDialog = false;
+    private int rotation => showCustomEffectDialog ? -90 : 90;
+    private void toggleExpand() {
+        showCustomEffectDialog = !showCustomEffectDialog;
+    }
+
+    private string customName;
+    private string customDescription;
+    private void addCustom() {
+        CustomFlag flag = new CustomFlag {
+            Name = customName,
+            Description = customDescription,
+        };
+        if (Character.Condition.CustomFlags == null) {
+            Character.Condition.CustomFlags = new List<CustomFlag>();
+        }
+        Character.Condition.CustomFlags.Add(flag);
+
+        customName = string.Empty;
+        customDescription = string.Empty;
+    }
+    private void deleteCustom(CustomFlag flag) {
+        Character.Condition.CustomFlags.Remove(flag);
+    }
+}

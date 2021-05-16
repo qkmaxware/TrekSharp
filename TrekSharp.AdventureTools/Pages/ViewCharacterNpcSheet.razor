@@ -2,11 +2,9 @@
 @inherits Page
 
 @if (HasCharacter) {
+<CharacterEditorPopoutTab Character=Player OnDelete=onConfirmDelete OnChange=StateHasChanged></CharacterEditorPopoutTab>
+<CharacterConditionPopoutTab Character=Player></CharacterConditionPopoutTab>
 <PrintNotification/>
-
-<div class="w3-container no-print lcars" style="text-align: right;">
-    <button @onclick="confirmDelete" class="w3-red">Delete</button>
-</div>
 
 <div id="character-sheet" class="lcars">
     <!-- Header -->
@@ -161,21 +159,17 @@
 
     public override string PageTitle => Player?.Name;
 
-    private void confirmDelete() {
-        confirm.Open($"Are you sure you want to delete the character '{this.Player.Name}'?", () => Delete());
-    }
-
     private void createOrEditAvatar() {
         NavigateToMini(this.Player);
     }
 
-    public void Delete() {
-        if (HasCharacter) {
+    public void onConfirmDelete(Character character) {
+        if (character != null && character is NpcCharacter npc) {
             if (ListId == "ally") {
-                Encounter?.AlliedInfrantry.Remove(this.Player);
+                Encounter?.AlliedInfrantry.Remove(npc);
             }
             else if (ListId == "enemy") {
-                Encounter?.EnemyInfantry.Remove(this.Player);
+                Encounter?.EnemyInfantry.Remove(npc);
             }
             NavigationManager.NavigateTo("manage/encounters");
         }
