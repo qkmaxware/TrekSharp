@@ -657,6 +657,246 @@ public class CommandDivision : BaseRulebook {
                 "Independent Phaser Supply",
                 "Common prior to the 2270s, the ship’s phasers use an independent power supply, rather than drawing directly from the ship’s other power sources. Attacking with the ship’s phasers no longer has a Power Requirement. However, the ship may not spend additional Power to boost the effectiveness of an attack with the phasers."
             )
+        },
+        NpcCharacters = new List<NpcCharacter> {
+            new NpcCharacter {
+                Name = "Human Diplomat",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "Peace can be attained through effort and compromise"
+                },
+                Focuses = new List<string> {
+                    "Diplomacy",
+                    "Politics",
+                    "Research"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 11,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Defuse the Tension (Talent)"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Attache",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 08,
+                    Daring = 07,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 00, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Specialist Subject: An Attache may be given a specialty granting them a single focus."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Negotiator",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 07,
+                    Presence = 10,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 00, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Focused Training: Negotiators have a single focus even though they are minor NPCs."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Pathfinder Specialist",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "The First to See Those Stars Up Close"
+                },
+                Focuses = new List<string> {
+                    "Astronavigation",
+                    "Helm Operations"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 08,
+                    Presence = 07,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 03, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Find the Path: If the specialist buys additional d20 for Tasks to navigate or chart a dangerous region, they may re-roll a single d20. When performing an Extended Task the character gains scrutinize 2 when rolling Challenge Dice."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Academy Instructor",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "There's Nothing as Important as Shaping the Next Generation"
+                },
+                Focuses = new List<string> {
+                    "Teaching",
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 10,
+                    Daring = 07,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Collaboration (Talent)",
+                    "Teacher: Choose a Discipline other than Command and increase it by 1. Then select a single Focus to represent the subject taught at the Academy."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Academy Cadet",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Untapped Potential (Talent)"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human JAG Officer",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "Law is the Foundation Upon Which an Orderly Society is Built"
+                },
+                Focuses = new List<string> {
+                    "Law",
+                    "History",
+                    "Rhetoric"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 10,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 11
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Jurisprudence: The JAC Officer is extremely well-versed in the theory and philosophy of law, and may re-roll one d20 on a Task that uses the character's Reason and their Law Focus.",
+                    "Advisor (Talent)",
+                    "Threatening 3"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
         }
     };
 }

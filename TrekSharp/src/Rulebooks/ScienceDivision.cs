@@ -277,6 +277,9 @@ public class ScienceDivision : BaseRulebook {
             new Item { Name = "Hydronalin Vial", Size = ItemSize.OneHanded  },
             new Item { Name = "Lectrazine Vial", Size = ItemSize.OneHanded  },
             new Item { Name = "Tri-ox Compound Vial", Size = ItemSize.OneHanded  },
+        },
+        NpcCharacters = new List<NpcCharacter> {
+            
         }
     };
 }

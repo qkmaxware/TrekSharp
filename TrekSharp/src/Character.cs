@@ -26,6 +26,7 @@ public class NpcCharacter : Character {
     public bool IsMinor => Disciplines.Enumerate().Select(x => x.Value).Sum() <= 8;
     public bool IsNotable => !IsMinor && !IsMajor;
     public bool IsMajor => Disciplines.Enumerate().Select(x => x.Value).Sum() > 16;
+    
 }
 
 public class Character {
@@ -59,6 +60,10 @@ public class Character {
                 // Reduce health state
             }
         }
+    }
+
+    public override string ToString() {
+        return this.Name;
     }
 }
 

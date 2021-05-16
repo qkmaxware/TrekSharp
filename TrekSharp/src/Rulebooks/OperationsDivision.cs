@@ -191,6 +191,292 @@ public class OperationsDivision : BaseRulebook {
             new Item { Name = "Magnetic Probe", Size = ItemSize.OneHanded  },
             new Item { Name = "Sonic Driver", Size = ItemSize.OneHanded  },
             new Item { Name = "Transport Inhibitor", Size = ItemSize.OneHanded  },
+        },
+        NpcCharacters = new List<NpcCharacter> {
+            new NpcCharacter {
+                Name = "Human Intelligence Agent",
+                BaseStress = 13,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "I Am the Unseen Hand of Starfleet"
+                },
+                Focuses = new List<string> {
+                    "Undercover Operations",
+                    "Espionage",
+                    "Intelligence Analysis"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 04,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Constantly Watching: When the agent attempts a Task to detect danger or hidden enemies, reduce the difficulty by 1.",
+                    "Trained to Withstand Interrogation: Whenever the agent attempts a Task to resist being intimidated or threatened, they add one d20 to their dice pool.",
+                    "Menacing"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Informant",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Special Focus: The informant gains one Focus, equal to their species, as chosen by the Game-Master. This Focus applies when they are trying to get information about someone of their own species."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Quartermaster",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "Fail to Prepare and You Prepare to Fail"
+                },
+                Focuses = new List<string> {
+                    "Resource Management",
+                    "Repair Procedures"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 10,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 03,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Requisitions: Whenever the quartermaster asssits Main Characters in creating an Advantage by supplying equipment they may re-roll their d20.",
+                    "Contacts in Fleet Ops: Whenever the quartermaster is attempting a Persuasion Task to request additional resources from Starfleet COmmand, they may add 1d20 to their dice pool."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Transporter Chief",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "Are You Sure These Are the Right Coordinates"
+                },
+                Focuses = new List<string> {
+                    "Transporters",
+                    "Containment Procedures"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 08,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 03,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Technical Expertise: Whenever this character is assisted by the ship's Computers or Sensors, they may re-roll one d20.",
+                    "Emergency Transport: Whenever the character attempts a transport using Daring instead of Control they may reduce the difficulty by 1, to a minimum of 1."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Engineering Specialist",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 08,
+                    Presence = 07,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Field of Expertise: The specialist gains on Focus in the engineering field of their expertise and while attempting a Task in which it applies adds 1 d20 to the dice pool."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Communications Officer",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "Language is the Key to Exploring New Civilizations"
+                },
+                Focuses = new List<string> {
+                    "Alien Languages",
+                    "Translation"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 11,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 03,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Cautious (Engineering): Whenever the character attempts a Task with Engineering, and buys dice with Momentum, they may re-roll one d20.",
+                    "Interpretive Translation: The character may choose to Succeed at Cost when attempting to translate a language with which they are unfamiliar. The Complication limits the understanding to the most basic version of the message."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Operations Officer",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "From This Chair I Am in Control"
+                },
+                Focuses = new List<string> {
+                    "Sensor Operations",
+                    "Starfleet Reporting Procedures"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 08,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 03, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Operations Oversight: Whenever this character attempts a Task of another Station or Department, they ignore increases in difficulty.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Repair Team Leader",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {
+                    "We'll Get it Done..."
+                },
+                Focuses = new List<string> {
+                    "Damage Control Procedures",
+                    "Damage Reporting",
+                    "Hazard Containment",
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 10,
+                    Presence = 07,
+                    Daring = 10,
+                    Insight = 19,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 02, 
+                    Engineering = 03,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Pushing the Deadline: Whenever this character succeeds in an Engineering or Science Task as a part of a Timed Challenge or Extended Task, they may halve the number of time intervals taken by spending 1 Momentum."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
         }
     };
 

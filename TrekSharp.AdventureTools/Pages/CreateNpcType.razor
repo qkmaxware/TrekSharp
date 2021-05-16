@@ -3,18 +3,68 @@
 @inherits Page
 
 <LCARS Title="NEW NPC TYPE">
+    <div class="w3-padding">
+        <button @onclick=copy>Copy From Existing</button>
+    </div>
     <NpcTypeEditor Character=character AllSpeciesOptions=AllSpeciesOptions></NpcTypeEditor>
     <div class="w3-padding w3-right-align">
         <button class="w3-blue" @onclick=save>Save</button>
     </div>
 </LCARS>
 
+<AssetAddList
+    @ref=CopyDialog
+    Title="Copy NPC"
+    Store=ExistingCharacters
+    OnAdd=onCopyNpc
+>
+</AssetAddList>
+
 @code {
     private RulebookContainer books = new RulebookContainer();
     private IEnumerable<Species> AllSpeciesOptions => books.AllRulebooks.SelectMany(book => book.Value.Species);
+    
+    private AssetAddList<NpcCharacter> CopyDialog;
+    private List<NpcCharacter> ExistingCharacters;
 
     protected override void OnInitialized() {
         books.AddRulebook("Homebrew", new UserCreatedSpeciesRulebook(Data));
+        ExistingCharacters = books.AllRulebooks.SelectMany(book => book.Value.NpcCharacters).ToList();
+    }
+
+
+    private void copy() {
+        CopyDialog?.Open();
+    }
+    private void onCopyNpc(NpcCharacter toCopy) {
+        character.Name = toCopy.Name;
+        character.BaseStress = toCopy.BaseStress;
+        character.Resistance = toCopy.Resistance;
+        character.Species = new Species {
+            Name = toCopy.Species.Name,
+        };
+        character.Values = new List<string>(toCopy.Values);
+        character.Focuses = new List<string>(toCopy.Focuses);
+        character.Attributes = new Attributes {
+            Control = toCopy.Attributes.Control,
+            Fitness = toCopy.Attributes.Fitness,
+            Presence = toCopy.Attributes.Presence,
+            Daring = toCopy.Attributes.Daring,
+            Insight = toCopy.Attributes.Insight,
+            Reason = toCopy.Attributes.Reason,
+        };
+        character.Disciplines = new Disciplines {
+            Command     = toCopy.Disciplines.Command,    
+            Security    = toCopy.Disciplines.Security,   
+            Science     = toCopy.Disciplines.Science,    
+            Conn        = toCopy.Disciplines.Conn,       
+            Engineering = toCopy.Disciplines.Engineering,
+            Medicine    = toCopy.Disciplines.Medicine,   
+        };
+        character.SpecialRules = new List<string>(toCopy.SpecialRules);
+        character.Equipment = new List<Item>(toCopy.Equipment);
+
+        StateHasChanged();
     }
 
     private NpcCharacter character = new NpcCharacter() {
