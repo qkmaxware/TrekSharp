@@ -43,8 +43,16 @@
         character.Species = new Species {
             Name = toCopy.Species.Name,
         };
-        character.Values = new List<string>(toCopy.Values);
-        character.Focuses = new List<string>(toCopy.Focuses);
+        if (toCopy.Values != null) {
+            character.Values = new List<string>(toCopy.Values);
+        } else {
+            character.Values = new List<string>();
+        }
+        if (toCopy.Focuses != null) {
+            character.Focuses = new List<string>(toCopy.Focuses);
+        } else {
+            character.Focuses = new List<string>();
+        }
         character.Attributes = new Attributes {
             Control = toCopy.Attributes.Control,
             Fitness = toCopy.Attributes.Fitness,
@@ -61,8 +69,16 @@
             Engineering = toCopy.Disciplines.Engineering,
             Medicine    = toCopy.Disciplines.Medicine,   
         };
-        character.SpecialRules = new List<string>(toCopy.SpecialRules);
-        character.Equipment = new List<Item>(toCopy.Equipment);
+        if (toCopy.SpecialRules != null) {
+            character.SpecialRules = new List<string>(toCopy.SpecialRules);
+        } else {
+            character.SpecialRules = new List<string>();
+        }
+        if (toCopy.Equipment != null) {
+            character.Equipment = new List<Item>(toCopy.Equipment);
+        } else {
+            character.Equipment = new List<Item>();
+        }
 
         StateHasChanged();
     }
