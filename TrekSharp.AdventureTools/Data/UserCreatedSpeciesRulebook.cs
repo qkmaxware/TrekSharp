@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace TrekSharp.AdventureTools {
 
-public class UserCreatedSpeciesRulebook : IRulebook {
+public class HomebrewRulebook : IRulebook {
     private AppData data;
-    public UserCreatedSpeciesRulebook(AppData data) {
+    public HomebrewRulebook(AppData data) {
         this.data = data;
     }
     public IEnumerable<CharacterTalent> Talents => data?.Custom?.Species?.Talents?.Cast<CharacterTalent>() ?? Enumerable.Empty<CharacterTalent>();

@@ -615,6 +615,642 @@ public class QuadrantSupplementBeta : BaseRulebook {
             new ShipTalent("Hidden Emplacements", "Hull plating disguises the weapons aboard this ship. These weapons are not immediately detectable, and when hidden require an Insight + Security Task assisted by a ship’s Sensors + Security with a Difficulty of 3, to detect. Before attacking, the crew must spend a Minor Action to ready the emplacements. To hide them also requires a Minor Action."),
             new ShipTalent("Duranium Armor Plating", "The ship’s Resistance is increased by 2."),
             new ShipTalent("No Shuttlebay", "The starship cannot support any small craft."),
+        },
+        NpcCharacters = new List<NpcCharacter> {
+            new NpcCharacter {
+                Name = "Romulan Scoutship Pilot",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 10,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "One With the Ship: Whenever the Scoutship Pilot attempts a Task to pilot their ship, they may reduce the Difficulty by one, to a minimum of zero.",
+                    "Wary: Whenever the Scoutship Pilot attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Romulan Uhlan Technician",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Technical Acumen: Whenever an Uhlan Technician attempts a Task to notice or repair a problem with a shipboard system, they may re-roll one d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Romulan Tal Shiar Saboteur",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 09,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Guile and Cunning: When attempting to remain hidden or unnoticed, the Saboteur may spend one Threat to increase the Difficulty of enemy Tasks to detect them by one.",
+                    "Hidden Weakness: When sabotaging the systems of an enemy, the Tal Shiar Saboteur may spend 2 Threat to re-roll any number of d20s on their Security rolls."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Romulan Medical Sub-Centurion",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 07,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 00, 
+                    Engineering = 00,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Quick and Dirty: Medical Sub-Centurions are accustomed to working in sub-standard conditions. When attempting a Medicine Task, they ignore any increase in Difficulty for working without the proper tools or equipment.",      
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Romulan Tal Shiar Interrogator",
+                BaseStress = 12,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 10,
+                    Presence = 08,
+                    Daring = 09,
+                    Insight = 07,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Sense Vulnerability: Whenever a Tal Shiar Interrogator attempts a Task to coerce information from an enemy, they may re-roll one d20.",      
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Romulan Lead Scientist",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 10,
+                    Presence = 07,
+                    Daring = 07,
+                    Insight = 08,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Learning Through Adversity: The Lead Scientist is skilled at extracting success from failure. They may roll an additional d20 on a Science Task, as long as they failed at a Science task in the same scientific field earlier in the current mission.",      
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Reman Bodyguard",
+                BaseStress = 13,
+                Resistance = 0,
+                Species = new Species{ Name="Reman" },
+                Values = new List<string> {
+                    "My Life for my Charge"
+                },
+                Focuses = new List<string> {
+                    "Hand-to-Hand Combat", "Threat Assessment"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 10,
+                    Presence = 07,
+                    Daring = 10,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Bodyguard: When taking action to protect the person they are guarding, and buying additional d20s with Threat, a Reman Bodyguard may re-roll a single d20.",
+                    "Wary: Whenever a Reman Bodyguard attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."      
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Romulan Warbird Commander",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Romulan" },
+                Values = new List<string> {
+                    "My Portion is Obedience"
+                },
+                Focuses = new List<string> {
+                    "Starship Tactics", "Leadership"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 09,
+                    Presence = 07,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Ambush: When attacking an opponent who is unaware, the Warbird Commander may spend two Threat. This allows the Warbird Commander and any Romulans under their command to re-roll any number of d20s on their attack rolls for one round.",
+                    "Use My Experience: Once per scene, when the Warbird Commander succeeds at a Task during combat or another perilous situation, they may spend two Threat to give a subordinate assistance on their next Task attempt, using the Warbird Commander’s Presence + Command.",
+                    "Wary: Whenever a Warbird Commander attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Slaver Overseer",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 07,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Vicious: The Overseer knows how to use cruelty to motivate others. When enforcing discipline using threats or violence and buying additional d20s with Threat, the Overseer may re-roll a single d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Slaver Medic",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 09,
+                    Daring = 07,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 00,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Hands-on Training: The Orion Medic has had experience treating a wide variety of ailments on a wide variety of species. When attempting a Task to tend wounds or illness using Reason + Medicine, the Medic reduces the Difficulty by 1 (to a minimum of zero).",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Buccaneer",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 09,
+                    Insight = 07,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 00,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Bold: The Buccaneer is nothing if not daring. When performing a Task using the Daring Attribute and buying additional d20s with Threat, they may re-roll a single d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Breacher",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 07,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "No Quarter: When commanding a boarding action and assisting the soldiers under his command by giving them orders, the Breacher may re-roll a single d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Executive Officer",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 08,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Advisor: The Executive Officer knows the way the world works. When assisting another character using the Command Discipline, the character being assisted may re-roll a single d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Science Officer",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 08,
+                    Daring = 07,
+                    Insight = 07,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 00, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "A Little Bit Extra: An Orion Science Officer is always on the lookout for something interesting, profitable, or valuable. Whenever performing a Task with Science, the Orion Science Officer gains 1 bonus Momentum, that they can only spend on Obtain Information.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Engineer",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 07,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Percussive Maintenance: An Orion Engineer keeps the ship running, no matter what it takes. When making repairs to a ship system and buying additional d20s with Threat, the Overseer may re-roll a single d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Orion Pirate Crewmate",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Orion" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 07,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Cutthroat Crew: Whenever the Orion Pirates attempt a Task related to boarding a captured vessel, and they buy additional d20s with Threat, they may re-roll a single d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Klingon Scientist",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Klingon" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Brak’lul: A Klingon’s Resistance is increased by +2 against Non-lethal attacks.",
+                    "Brilliant Theoretician: When the Klingon Scientist completes a successful Task using his Science Discipline, he may spend 3 Momentum or Threat to assist another scientist’s next scientific Task with his Insight + Command."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "D'k tahg Dagger", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Bat'leth", Size = ItemSize.TwoHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Klingon Diplomat",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Klingon" },
+                Values = new List<string> {
+                    "For the Good of the Empire"
+                },
+                Focuses = new List<string> {
+                    "Negotiation", "Hand-to-Hand Combat"
+                },
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 07,
+                    Presence = 11,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 03,
+                    Science = 02,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Brak’lul: A Klingon’s Resistance is increased by +2 against Non-lethal attacks.",
+                    "Cunning Negotiator: Whenever a Klingon Diplomat attempts a Presence Task to influence an opponent during a negotiation, the Diplomat may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "D'k tahg Dagger", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Smuggler",
+                BaseStress = 13,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 10,
+                    Presence = 10,
+                    Daring = 07,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 03, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Slippery: The Human Smuggler is used to playing upon his essentially harmless nature to wriggle out of trouble. The Smuggler reduces all Difficulties when trying to convince authorities to let them go using Presence by 1 (to a minimum of 0).",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
         }
     };
 

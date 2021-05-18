@@ -422,6 +422,588 @@ public class QuadrantSupplementAlpha : BaseRulebook {
         ShipTalents = new List<ShipTalent> {
             new ShipTalent("Web Spinner", "As long as two ships that have the Web Spinner Talent are active and at Close range, they can use this special ability. While this Talent is being used, the Tholian vessels are unable to make normal weapons attacks. An Engines + Conn Task with a Difficulty of 1 is attempted (based on the lowest stats of the ships involved); for every success the ship that is being ensnared in the web loses 1 Power. All weapons fire at targets outside of the web (including the ships making it) have their Difficulty increased by 1. No weapons fire from inside the web is possible if a ship is brought to 1 Power or less."),
             new ShipTalent("Standing Graviton Field", "This ship can produce as many Tractor Beams as it wishes, but they are each Strength 1.")
+        },
+        NpcCharacters = new List<NpcCharacter> {
+            new NpcCharacter {
+                Name = "Cardassian Colonist",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Cardassian" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 07,
+                    Daring = 07,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {},
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Bludgeon", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Knockdown" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Human Federation Colonist",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Human" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {},
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Bludgeon", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Knockdown" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Vulcan Starfleet Border Agent",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Vulcan" },
+                Values = new List<string> {
+                    "Silent Vigilance",
+                },
+                Focuses = new List<string> {
+                    "Infiltration",
+                    "Persuasion",
+                    "Observation"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 08,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Effective Concealment: When attempting to remain hidden or unnoticed, the border agent may spend one Threat to increase the Difficulty of enemy Tasks to detect them by one.",
+                    "Wary: Whenever a border agent attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Stiletto", Size = ItemSize.OneHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Pulse Grenade", Size = ItemSize.OneHanded, DamageDice = 4, Qualities = new List<string>{ "Area", "Charge", "Grenade" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Betazoid Maquis Smuggler",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Betazoid" },
+                Values = new List<string> {
+                    "It’s Not Illegal if You Don’t get Caught",
+                },
+                Focuses = new List<string> {
+                    "Black Market Dealings",
+                    "Negotiation",
+                    "Small Craft Operations"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 03, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "One With the Ship: Whenever the character attempts a Task to pilot their ship, they may reduce the Difficulty by one, to a minimum of zero.",
+                    "Wary: Whenever a border agent attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Bolian Maquis Sympathizer",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Bolian" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 09,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {},
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Bludgeon", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Knockdown" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Caitian Maquis Guerilla",
+                BaseStress = 13,
+                Resistance = 0,
+                Species = new Species{ Name="Caitian" },
+                Values = new List<string> {
+                    "Safety of the Family First"
+                },
+                Focuses = new List<string> {
+                    "Guerilla Tactics",
+                    "Improvised Explosives",
+                    "Interrogation"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 10,
+                    Presence = 07,
+                    Daring = 11,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Ambush: When attacking an opponent who is unaware, the Maquis guerilla may spend 2 Threat to allow the guerilla and all Maquis under their command to re-roll any number of d20s on their attack rolls.",
+                    "Wary: Whenever a border agent attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Grazerite Maquis Pilot",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Grazerite" },
+                Values = new List<string> {
+                    "I Feel the Need for Speed"
+                },
+                Focuses = new List<string> {
+                    "Combat Maneuvers",
+                    "Small Craft",
+                    "Starship Systems"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 10,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 03, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "One With the Ship: Whenever the character attempts a Task to pilot their ship, they may reduce the Difficulty by one, to a minimum of zero.",
+                    "Wary: Whenever a border agent attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Efrosian Maquis Saboteur",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Efrosian" },
+                Values = new List<string> {
+                    "Deny by Demolition"
+                },
+                Focuses = new List<string> {
+                    "Explosives",
+                    "Infiltration",
+                    "Security Systems"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 08,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Hidden Weakness: When sabotaging the systems of an enemy, the Maquis saboteur may spend 2 Threat to re- roll any number of d20s on their Security roll.",
+                    "Wary: Whenever a border agent attempts a Task to notice or detect an enemy or hazard, they may re-roll one d20."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Pulse Grenade", Size = ItemSize.OneHanded, DamageDice = 4, Qualities = new List<string>{ "Area", "Charge", "Grenade" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Breen Privateer",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Breen" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 09,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Mean Right Hook: The Breen privateer’s Unarmed Strike attack has the Vicious 1 Damage Effect.",
+                    "Threatening 1"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Particle Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Breen Slaver",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Breen" },
+                Values = new List<string> {
+                    "All Others are Meant to Serve Us"
+                },
+                Focuses = new List<string> {
+                    "Intimidation",
+                    "Security Systems",
+                    "Willpower"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Ruthless and Determined: A Breen slaver may spend 2 Threat to gain the effects of a point of Determination, rather than the normal 3.",
+                    "Threatening 2"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Particle Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Ferengi Pirate",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Ferengi" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 07,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Guile and Cunning: When attempting to remain hidden or unnoticed, a Ferengi pirate may spend one Threat to increase the Difficulty of enemy Tasks to detect them by one.",
+                    "Pack Tactics: Whenever a Ferengi pirate assists another character during combat, the character the Ferengi pirate assisted gains one bonus Momentum if they succeed."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Ferengi Debt Collector",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Ferengi" },
+                Values = new List<string> {
+                    "Profit Above All Else"
+                },
+                Focuses = new List<string> {
+                    "Finances", "Persuasion", "Politics"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 07,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 10,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Defuse the Tension: Whenever a Ferengi debt collector attempts a Task to persuade someone not to resort to violence, they may add a bonus d20 to their dice pool.",
+                    "Interrogation: Whenever a Ferengi debt collector succeeds at a Task to coerce someone to reveal information in a Social Conflict, they gain one bonus Momentum, which may only be spent on the Obtain Information Momentum Spend"
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Gorn Mercenary",
+                BaseStress = 11,
+                Resistance = 1,
+                Species = new Species{ Name="Gorn" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 09,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 07,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Claws: Unarmed Strikes gain the Vicious 1 Damage Effect.",
+                    "Reptilian Skin: Gorn gain 1 Resistance against attacks from Unarmed Strikes and Blades (but not Heavy Blades)."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Gorn Raider",
+                BaseStress = 14,
+                Resistance = 1,
+                Species = new Species{ Name="Gorn" },
+                Values = new List<string> {
+                    "Hungry for Dangerous Situations"
+                },
+                Focuses = new List<string> {
+                    "Intimidation", "Martial Arts", "Ranged Weapons"
+                },
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 11,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Claws: Unarmed Strikes gain the Vicious 1 Damage Effect.",
+                    "Reptilian Skin: Gorn gain 1 Resistance against attacks from Unarmed Strikes and Blades (but not Heavy Blades)."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Nausicaan Brute",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Nausicaan" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 09,
+                    Insight = 07,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Brute Force: Nausicaans add the Vicious 1 Effect to their Unarmed Strike, and remove the Non-lethal Quality.",
+                    "Pack Tactics: Whenever a Nausicaan brute assists another character during combat, the character the Nausicaan brute assisted gains one bonus Momentum if they succeed."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Bludgeon", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Knockdown" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Nausicaan Marauder",
+                BaseStress = 13,
+                Resistance = 0,
+                Species = new Species{ Name="Nausicaan" },
+                Values = new List<string> {
+                    "All Others Are Weak"
+                },
+                Focuses = new List<string> {
+                    "Gambling", "Ranged Weapons", "Unarmed Combat"
+                },
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 10,
+                    Presence = 10,
+                    Daring = 11,
+                    Insight = 08,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Brute Force: Nausicaans add the Vicious 1 Effect to their Unarmed Strike, and remove the Non-lethal Quality.",
+                    "Pack Tactics: Whenever a Nausicaan brute assists another character during combat, the character the Nausicaan brute assisted gains one bonus Momentum if they succeed."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Bludgeon", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Knockdown" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Disruptor Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate" } },
+                }
+            },
         }
     };
 }

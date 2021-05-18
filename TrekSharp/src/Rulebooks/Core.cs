@@ -1333,7 +1333,7 @@ public class CoreRulebook : BaseRulebook {
         },
         new List<NpcCharacter>() {
             new NpcCharacter {
-                Name = "Minor Starfleet Conn Officer",
+                Name = "Human Starfleet Conn Officer",
                 BaseStress = 9,
                 Species = new Species{ Name="Human" },
                 Attributes = new Attributes {
@@ -1358,7 +1358,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Starfleet Security Officer",
+                Name = "Human Starfleet Security Officer",
                 BaseStress = 11,
                 Species = new Species{ Name="Human" },
                 Attributes = new Attributes {
@@ -1383,7 +1383,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Starfleet Engineer",
+                Name = "Human Starfleet Engineer",
                 BaseStress = 10,
                 Species = new Species{ Name="Human" },
                 Attributes = new Attributes {
@@ -1408,7 +1408,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Starfleet Science Officer",
+                Name = "Human Starfleet Science Officer",
                 BaseStress = 9,
                 Species = new Species{ Name="Human" },
                 Attributes = new Attributes {
@@ -1433,7 +1433,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Notable Section 31 Operative",
+                Name = "Human Section 31 Operative",
                 BaseStress = 11,
                 Species = new Species{ Name="Human" },
                 Values = new List<string> {
@@ -1469,7 +1469,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Klingon Warrior",
+                Name = "Klingon Warrior",
                 BaseStress = 13,
                 Resistance = 1,
                 Species = new Species{ Name="Klingon" },
@@ -1500,7 +1500,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Notable Klingon Warrior",
+                Name = "Veteran Klingon Warrior",
                 BaseStress = 14,
                 Resistance = 1,
                 Values = new List<string> {
@@ -1539,7 +1539,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Romulan Uhlan",
+                Name = "Romulan Uhlan",
                 BaseStress = 11,
                 Resistance = 0,
                 Species = new Species{ Name="Romulan" },
@@ -1570,7 +1570,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Notable Romulan Centurion",
+                Name = "Romulan Centurion",
                 BaseStress = 11,
                 Resistance = 0,
                 Species = new Species{ Name="Romulan" },
@@ -1609,7 +1609,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Ferengi Menial",
+                Name = "Ferengi Menial",
                 BaseStress = 9,
                 Resistance = 0,
                 Species = new Species{ Name="Ferengi" },
@@ -1644,7 +1644,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Ferengi Salesman",
+                Name = "Ferengi Salesman",
                 BaseStress = 9,
                 Resistance = 0,
                 Species = new Species{ Name="Ferengi" },
@@ -1680,7 +1680,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Cardassian Soldier",
+                Name = "Cardassian Soldier",
                 BaseStress = 11,
                 Resistance = 1,
                 Species = new Species{ Name="Cardassian" },
@@ -1716,7 +1716,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Notable Cardassian Glinn",
+                Name = "Cardassian Glinn",
                 BaseStress = 12,
                 Resistance = 1,
                 Species = new Species{ Name="Cardassian" },
@@ -1864,7 +1864,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Minor Jem'Hadar Warrior",
+                Name = "Jem'Hadar Warrior",
                 BaseStress = 14,
                 Resistance = 2,
                 Species = new Species{ Name="Jem'Hadar" },
@@ -1899,7 +1899,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Notable Jem'Hadar First",
+                Name = "Jem'Hadar First",
                 BaseStress = 14,
                 Resistance = 2,
                 Species = new Species{ Name="Jem'Hadar" },
@@ -1940,7 +1940,7 @@ public class CoreRulebook : BaseRulebook {
                 }
             },
             new NpcCharacter {
-                Name = "Notable Vorta Overseer",
+                Name = "Vorta Overseer",
                 BaseStress = 14,
                 Resistance = 2,
                 Species = new Species{ Name="Vorta" },
@@ -2559,6 +2559,7 @@ public class CoreRulebook : BaseRulebook {
             new Item { Name = "Tricorder", Size = ItemSize.OneHanded },
             new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
             new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+            new Item { Name = "Bludgeon", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Knockdown" } },
             new Item { Name = "Knife", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
             new Item { Name = "Dagger", Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Vicious 1", "Deadly", "Hidden 1" } },
             new Item { Name = "D'k tahg Dagger", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },

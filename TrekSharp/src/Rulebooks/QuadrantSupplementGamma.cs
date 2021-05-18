@@ -321,6 +321,9 @@ public class QuadrantSupplementGamma : BaseRulebook {
         },
         ShipTalents = new List<ShipTalent> {
             
+        },
+        NpcCharacters = new List<NpcCharacter> {
+            
         }
     };
 

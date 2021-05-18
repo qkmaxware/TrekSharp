@@ -1,6 +1,17 @@
 @page "/manage/custom"
 @inherits Page
 
+<PopoutTab Name="Actions" TabPosition=80>
+    <div class="lcars">
+        <div class="typeface text-secondary w3-border-bottom w3-large">
+            <b>Other</b>
+        </div>
+        <div class="w3-bar-block w3-padding">
+            <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=exportAll>Export Sourcebook</button>
+        </div>
+    </div>
+</PopoutTab>
+
 <LCARS Title="CUSTOM SPECIES">
     @if (Data.Custom != null && Data.Custom.Species != null && Data.Custom.Species.Definitions != null) {
     <Col3Layout Items="Data.Custom.Species.Definitions">
@@ -123,6 +134,11 @@
 </ConfirmationDialog>
 
 @code {
+
+    private async Task exportAll() {
+        var source = this.Data.Custom;
+        await this.DownloadJson("homebrew.sourcebook", source);
+    }
 
     ConfirmationDialog confirm;
 

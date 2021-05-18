@@ -17,4 +17,34 @@
     <NavLink class="w3-button w3-block" href="new/custom/item" Match="NavLinkMatch.All">
         Create Custom Item
     </NavLink>
+    <a class="w3-button w3-block" @onclick=openRawImporter>
+        Import Homebrew Sourcebook
+    </a>
 </LCARS>
+
+<AssetImporter
+    @ref="importer"
+    TItem="UserCustomData"
+    Title="Import Sourcebook"
+    OnLoad="onSourceLoaded"
+/>
+
+@code {
+
+    private AssetImporter<UserCustomData> importer;
+
+    private void openRawImporter() {
+        importer.Open();
+    }
+
+    private void onSourceLoaded(UserCustomData source) {
+        if (this.Data.Custom == null) {
+            this.Data.Custom = source;
+            return;
+        } else {
+            this.Data.Custom.Concat(source);
+        }
+        this.NavigationManager.NavigateTo("manage/custom");
+    }
+
+}

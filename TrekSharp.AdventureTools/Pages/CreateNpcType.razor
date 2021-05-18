@@ -28,7 +28,7 @@
     private List<NpcCharacter> ExistingCharacters;
 
     protected override void OnInitialized() {
-        books.AddRulebook("Homebrew", new UserCreatedSpeciesRulebook(Data));
+        books.AddRulebook("Homebrew", new HomebrewRulebook(Data));
         ExistingCharacters = books.AllRulebooks.SelectMany(book => book.Value.NpcCharacters).ToList();
     }
 

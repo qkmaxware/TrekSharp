@@ -705,6 +705,830 @@ public class QuadrantSupplementDelta : BaseRulebook {
             new ShipTalent("Independent Phaser Supply", "Some ships’ phasers, especially Alpha and Beta Quadrant ships prior to 2270s and some vessels found within the Delta Quadrant, use an independent power supply rather than drawing directly from the ship’s other power sources. Attacking with the ship’s phasers no longer has a Power Requirement. However, the ship may not spend additional Power to boost the effectiveness of an attack with the phasers."),
             new ShipTalent("Voth Cloaking Device", "The Voth Cloaking Device operates in the same manner as presented on p.259 in the core rulebook. In addition, the Voth Cloak can also phase solid matter out of spacetime in the same way as seen in the Voyager episode “Distant Origin” and The Next Generation episode “The Pegasus.” In order to use this phased cloak, the operator must succeed at the standard cloaking Task, followed by a second Control + Engineering Task with a Difficulty of 3, assisted by the ship’s Engines + Security. This allows the vessel to be rendered immune to any damage from most sources even if they are detected. At the Gamemaster’s discretion, this immunity may not extend to very high energy events such as a passing through a black hole or neutron star, or being at the core of a star experiencing a supernova. While active, the Voth vessel may also not interact with objects in regular spacetime, but they may observe them with a successful Reason + Science Task with a Difficulty of 3."),
 
+        },
+        NpcCharacters = new List<NpcCharacter> {
+            new NpcCharacter {
+                Name = "Devore Officer",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Devore" },
+                Values = new List<string> {
+                    "Uphold the Devore Way of Life"
+                },
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 09,
+                    Presence = 07,
+                    Daring = 09,
+                    Insight = 07,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 00,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Constantly Watching: Whenever a Devore officer attempts a Task to detect danger or hidden enemies, the Difficulty is reduced by 1.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Blade", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Particle Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Devore Mindhunter",
+                BaseStress = 12,
+                Resistance = 0,
+                Species = new Species{ Name="Devore" },
+                Values = new List<string> {
+                    "Only with Our Enemies Distant and Our Thoughts Secure Are We Free"
+                },
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 09,
+                    Presence = 07,
+                    Daring = 10,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 00,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Psi-Hunter: If the Devore Mindhunter buys one or more additional d20s when attempting a Task to track or to reveal a hidden psychic, they may reroll a single d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Blade", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Particle Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Haakonian Scientist",
+                BaseStress = 7,
+                Resistance = 0,
+                Species = new Species{ Name="Haakonian" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 07,
+                    Presence = 07,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Testing a Theory (Talent): When a Haakonian scientist attempts a Task using Engineering or Science, they may roll an additional d20, so long as they succeeded at a previous Task covering the same scientific or technological field earlier in the same adventure.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Hirogen Technician",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Hirogen" },
+                Values = new List<string> {
+                    "A Good Hunt Depends on Me Doing My Job"
+                },
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 07,
+                    Presence = 07,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Engineering Guidance: Whenever a Hirogen technician uses the Engineering skill to assist another character, the technician can re-roll the d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Hirogen Kukri", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Hirogen Hunter",
+                BaseStress = 13,
+                Resistance = 0,
+                Species = new Species{ Name="Hirogen" },
+                Values = new List<string> {
+                    "A Good Death, a Good Hunt. This is Life."
+                },
+                Focuses = new List<string> {
+                    "Marksmanship", "Tracking", "Xenobiology"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 10,
+                    Presence = 08,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Engineering Guidance: Whenever a Hirogen technician uses the Engineering skill to assist another character, the technician can re-roll the d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Hirogen Kukri", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Tetryon Rifle", Size = ItemSize.OneHanded, DamageDice = 5, Qualities = new List<string>{ "Deadly", "Intense" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Hirogen Alpha",
+                BaseStress = 15,
+                Resistance = 0,
+                Species = new Species{ Name="Hirogen" },
+                Values = new List<string> {
+                    "Hunt All Threats Against the Hirogen",
+                    "Patience is the Knife that Cuts Deepest"
+                },
+                Focuses = new List<string> {
+                    "Hand-to-Hand Combat", "Marksmanship",
+                    "Starship Tactics", "Survival", "Tracking", "Xenobiology"
+                },
+                Attributes = new Attributes {
+                    Control = 11,
+                    Fitness = 11,
+                    Presence = 10,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 05,
+                    Security = 04,
+                    Science = 01,
+                    Conn = 03, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Bold (Command) (Talent): Whenever the Hirogen Alpha attempts a Command task, he may add +1 Threat to purchase an additional d20.",
+                    "Tough (Talent): Whenever the Hirogen alpha Avoids an Injury, the cost is reduced by 1 (minimum 1).",
+                    "Quick to Action (Talent): During the first round of combat, the Hirogen Alpha and his pack ignore the cost to Keep the Initiative."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Hirogen Kukri", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Tetryon Rifle", Size = ItemSize.OneHanded, DamageDice = 5, Qualities = new List<string>{ "Deadly", "Intense" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Kazon Warrior",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Kazon" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Tough (Talent): Whenever a Kazon warrior spends Threat to avoid an injury, the cost is reduced by 1, to a minimum of 1.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 3", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate", "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Kazon Maje",
+                BaseStress = 12,
+                Resistance = 0,
+                Species = new Species{ Name="Kazon" },
+                Values = new List<string> {
+                    "They Will Learn Respect, or They Will Know Pain"
+                },
+                Focuses = new List<string> {
+                    "Hand-to-Hand Combat", "Intimidation"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 10,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 08,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Tough (Talent): Whenever a Kazon warrior spends Threat to avoid an injury, the cost is reduced by 1, to a minimum of 1.",
+                    "Dauntless (Talent): Whenever a Kazon maje attempts a Task to resist being intimidated or threatened, they may add a bonus d20 to the dice pool."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                    new Item { Name = "Phaser Type 3", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate", "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Malon Transporter",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Malon" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 07,
+                    Presence = 08,
+                    Daring = 09,
+                    Insight = 07,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {},
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Ocampa Explorer",
+                BaseStress = 7,
+                Resistance = 0,
+                Species = new Species{ Name="Ocampa" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 07,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {},
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Ocampa Elder",
+                BaseStress = 7,
+                Resistance = 0,
+                Species = new Species{ Name="Ocampa" },
+                Values = new List<string> {
+                    "Please the Caretaker"
+                },
+                Focuses = new List<string> {
+                    "Ocampan History", "Underground Gardening"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 10,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 00,
+                    Science = 01,
+                    Conn = 02, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Eidetic Memory: When an Ocampan elder attempts to recall information they may have encountered previously, add one bonus d20 to the roll.",
+                    "In Service of the Caretaker: When Ocampa elders attempts a Task they believe pleases the Caretaker that ordinarily would use the Daring Attribute, they can use their Presence Attribute instead."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Ocampa Disciple",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Ocampa" },
+                Values = new List<string> {
+                    "To Dwell in Exosia is to Dwell with the Divine",
+                    "Suspiria Chose Us to Lead the Way – Never Let the Less Beloved Forget That"
+                },
+                Focuses = new List<string> {
+                    "Computers", "Diplomacy", "Persuasion", "Philosophy", "Psychic Phenomena"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 10,
+                    Presence = 10,
+                    Daring = 09,
+                    Insight = 11,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 01,
+                    Science = 04,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 04
+                },
+                SpecialRules = new List<string> {
+                    "Intense Scrutiny (Talent): When the Ocampa Disciple succeeds at a Reason or Control Task as part of an Extended Task, they ignore up to two Resistance for every Effect they roll.",
+                    "Psychic Mastery: Ocampa followers of Suspiria have trained their psychic abilities to an extreme degree. Whenever an Ocampa attempts a task using a psychic ability they have a Focus in, they may spend 1 threat to reroll their dice pool. They may also spend 1 Threat to give their Telekinetic Strike the Area Quality for one attack.",
+                    "Threatening 4: Ocampa disciples begin each scene with 4 Threat that may only be used for their benefit and which are not drawn from the general Threat pool."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Telekinetic Strike", Size = ItemSize.OneHanded, DamageDice = 7, Qualities = new List<string>{ "Intense", "Hidden 1", "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Overlooker Spy",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Overlooker" },
+                Values = new List<string> {
+                    "Clear All Decisions with the Hierarchy",
+                },
+                Focuses = new List<string> {
+                    "Intelligence Analysis", "Reconnaissance"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 08,
+                    Presence = 08,
+                    Daring = 09,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 03, 
+                    Engineering = 01,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Cautious (Security) (Talent): Overlookers will not engage in combat unless they’re certain they’ve done everything to put themselves in an advantageous situation. Any time an Overlooker spy spends Threat to attempt a Task using the Security Discipline, the spy can re-roll a single d20.",
+                    "Surveillance Proficiency: When an Overlooker spy attempts a Task associated with gathering intelligence on a target using the Control Attribute, add one bonus d20 to the roll.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Pendari Champion",
+                BaseStress = 17,
+                Resistance = 0,
+                Species = new Species{ Name="Pendari" },
+                Values = new List<string> {
+                    "Freedom!",
+                    "Longing for Home",
+                    "Punish My Oppressors",
+                    "Respect for My Fellow Fighters"
+                },
+                Focuses = new List<string> {
+                    "Hand-to-Hand Combat", "Intimidation", "Wilderness Survival"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 12,
+                    Presence = 10,
+                    Daring = 11,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 05,
+                    Security = 05,
+                    Science = 01,
+                    Conn = 03, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Strive for Freedom: Whenever a Pendari champion attempts a Task using the Daring Attribute in a situation that could allow them to regain their freedom, the champion can spend 1 Threat to re-roll their dice pool.",
+                    "Follow My Lead (Talent): Once per scene, when a Pendari champion succeeds at a Task during combat or another perilous situation, he can spend 3 Threat. He then chooses a single ally. The next Task that ally attempts counts as having assistance from the Pendari champion, using the champion’s Presence + Command.",
+                    "Robust Physiology: The Pendari champion gains +2 Resistance against non-lethal attacks.",
+                    "Mean Right Hook (Talent): The Pendari champion’s Unarmed Strike Attack has the Vicious 1 Damage Effect.",
+                    "Tough (Talent): Whenever a Pendari champion Avoids an Injury, the cost is reduced by 1, to a minimum of 1."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Sikarian Explorer",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Sikarian" },
+                Values = new List<string> {
+                    "The Story of the Universe is the Ultimate Truth, and We All Carry a Piece",
+                },
+                Focuses = new List<string> {
+                    "Astronavigation", "Linguistics", "Persuasion"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 10,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 03, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Observant and Insightful: A Sikarian Explorer who spends one or more Threat to buy additional dice on any Task which uses Insight may re-roll one d20.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Plasma Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1", "Debilitating" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Species 8472",
+                BaseStress = 16,
+                Resistance = 0,
+                Species = new Species{ Name="Species 8472" },
+                Values = new List<string> {},
+                Focuses = new List<string> {
+                    "Genetics", "Hand-to-Hand Combat", "Infiltration", "Xenobiology"
+                },
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 12,
+                    Presence = 10,
+                    Daring = 10,
+                    Insight = 11,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 04,
+                    Science = 03,
+                    Conn = 02, 
+                    Engineering = 03,
+                    Medicine = 03
+                },
+                SpecialRules = new List<string> {
+                    "Immune to Pain",
+                    "Immune to Poison",
+                    "Immune to Disease",
+                    "Immune to Cold",
+                    "Immune to Vacuum",
+                    "Fast Recovery 2: At the start of each of its turns, a member of Species 8472 regains 2 Stress, up to its normal maximum. If injured at their start of its turn, the creature may spend 2 Threat to recover from that Injury immediately.",
+                    "Menacing: When a member of Species 8472 enters a scene, immediately add a point to the Threat pool.",
+                    "Massive Strength: A member of Species 8472 adds 1 automatic success on all Fitness-based Tasks, and all Tasks to make or defend against a melee attack. In addition, their unarmed attacks lose the Non-Lethal quality and gain Intense and Vicious 1.",
+                    "Destructive Biology: Any creature injured by a melee attack from a member of Species 8472, or any creature who comes into contact with blood or other bodily fluids from a member of Species 8472, immediately gains the complication “Deadly Infection”. They will gain an additional instance of this complication at the end of each scene if the infection is not cured. When a character has gained a number of copies of that complication equal to their Fitness, they die.",
+                    "Telepathy: Species 8472 communicates amongst themselves telepathically, and their telepathic communication may be heard by other empathic and telepathic creatures. Any empathic or telepathic character, such as Vulcans, Betazoids, or Ocampa, suffers 3 A Stress when they attempt to communicate with Species 8472, as such communication is painful and exhausting.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Srivani Field Researcher",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Srivani" },
+                Values = new List<string> {
+                    "Just a Little Sting for the Betterment of All"
+                },
+                Focuses = new List<string> {
+                    "Emergency Medicine", "Genetics", "Quantum Mechanics", "Xenobiology"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 11
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 03
+                },
+                SpecialRules = new List<string> {
+                    "Triage (Talent): When a Srivani field researcher attempts a Task to identify specific injuries or illnesses, or to determine the severity of a patient’s condition, the researcher may spend one Threat (Repeatable) to diagnose one additional patient for each point of Threat spent.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Talaxian Soldier",
+                BaseStress = 10,
+                Resistance = 0,
+                Species = new Species{ Name="Talaxian" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 00,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {},
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Talaxian Trader",
+                BaseStress = 8,
+                Resistance = 0,
+                Species = new Species{ Name="Talaxian" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 07,
+                    Presence = 09,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 01,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 00
+                },
+                SpecialRules = new List<string> {
+                    "Studious (Talent): When a Talaxian trader spends Threat to Obtain Information, they may ask one additional question."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Phaser Type 1", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Talaxian Smuggler",
+                BaseStress = 11,
+                Resistance = 0,
+                Species = new Species{ Name="Talaxian" },
+                Values = new List<string> {
+                    "Honor Among Thieves"
+                },
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 10,
+                    Insight = 10,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 02, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Criminal Network: When Talaxian smugglers attempt a Task associated with making contact with other members of a criminal network – such as assassins, thieves or fences – the Difficulty of the Task is reduced by 1, to a minimum of zero.",
+                    "Fast Talker: When a Talaxian smuggler attempts a persuasion Task using the Presence Attribute to get out of legal trouble, the difficulty for the Task is reduced by 1, to a minimum of zero."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Disruptor Pistol", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Vidiian Phage Carrier",
+                BaseStress = 7,
+                Resistance = 0,
+                Species = new Species{ Name="Vidiian" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 07,
+                    Daring = 08,
+                    Insight = 08,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Field Medicine (Talent): When attempting a Medicine Task, the Vidiian ignores any increase in Difficulty for working without the appropriate tools and equipment."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Vidiian Multitool", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Vidiian Harvester",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Vidiian" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 07,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 07,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 03
+                },
+                SpecialRules = new List<string> {
+                    "Field Medicine (Talent): When attempting a Medicine Task, the Vidiian ignores any increase in Difficulty for working without the appropriate tools and equipment."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Vidiian Multitool", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Charge", "Hidden 1" } },
+                    new Item { Name = "Particle Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Accurate" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Voth Scientist",
+                BaseStress = 7,
+                Resistance = 0,
+                Species = new Species{ Name="Voth" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 08,
+                    Fitness = 07,
+                    Presence = 07,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 00,
+                    Security = 00,
+                    Science = 02,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Field Medicine (Talent): When attempting a Medicine Task, the Vidiian ignores any increase in Difficulty for working without the appropriate tools and equipment."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Voth Arm Spines", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious", "Deadly", "Hidden 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Voth Matriarch",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Voth" },
+                Values = new List<string> {
+                    "Let Them Say as They Will; I will Discover Their True Scales"
+                },
+                Focuses = new List<string> {
+                    "Composure", "Diplomacy", "Persuasion"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 07,
+                    Presence = 10,
+                    Daring = 09,
+                    Insight = 10,
+                    Reason = 08
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 01,
+                    Conn = 00, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Follow My Lead (Talent): Once per scene, a Voth Matriarch that succeeds at a Task during combat or another perilous situation can spend three Threat and choose an ally. The next Task that ally attempts counts as having assistance from the Voth Matriarch, using her Presence + Command."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Intense", "Vicious 1" } },
+                    new Item { Name = "Voth Arm Spines", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious", "Deadly", "Hidden 1" } },
+                    new Item { Name = "Phaser Type 2", Size = ItemSize.OneHanded, DamageDice = 3, Qualities = new List<string>{ "Charge" } },
+                }
+            },
         }
     };
 

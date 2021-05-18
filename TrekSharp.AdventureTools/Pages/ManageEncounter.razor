@@ -302,7 +302,7 @@
 
 @code {
     protected override void OnInitialized() {
-        books.AddRulebook("Homebrew", new UserCreatedSpeciesRulebook(Data));
+        books.AddRulebook("Homebrew", new HomebrewRulebook(Data));
         // Load last loaded guid automatically
         if (!string.IsNullOrEmpty(lastGuid)) {
             var guid_encounter = Data.Encounters.Where(enc => enc.GUID == lastGuid).FirstOrDefault();

@@ -29,6 +29,27 @@ public class UserCustomData {
         Items = new List<Item>();
         Spaceframes = new List<Spaceframe>();
     }
+
+    public void Concat(UserCustomData data) {
+        if (data == null)
+            return;
+
+        this.Species = this.Species ?? new UserCustomSpecies();
+        this.NpcCharacterTypes = this.NpcCharacterTypes ?? new List<NpcCharacter>();
+        this.Items = this.Items ?? new List<Item>();
+        this.Spaceframes = this.Spaceframes ?? new List<Spaceframe>();        
+
+        if (data.Species != null && data.Species.Definitions != null)
+            this.Species.Definitions.AddRange(data.Species.Definitions);
+        if (data.Species != null && data.Species.Talents != null)
+            this.Species.Talents.AddRange(data.Species.Talents);
+        if (data.NpcCharacterTypes != null)
+            this.NpcCharacterTypes.AddRange(data.NpcCharacterTypes);
+        if (data.Items != null)
+            this.Items.AddRange(data.Items);
+        if (data.Spaceframes != null)
+            this.Spaceframes.AddRange(data.Spaceframes);
+    }
 }
 
 public class Mission {
