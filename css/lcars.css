@@ -40,7 +40,7 @@ body {
 }
 
 .lcars .typeface {
-    font-family: 'Impact';
+    font-family: 'Impact', Tahoma, sans-serif;
     color: var(--lcars-foreground-primary-colour);
     letter-spacing: 1px;
 }
