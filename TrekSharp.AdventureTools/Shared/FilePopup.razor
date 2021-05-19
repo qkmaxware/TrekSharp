@@ -1,0 +1,68 @@
+@inherits AppComponentBase
+
+<Popup @ref=popup>
+    <div class="row w3-margin-bottom w3-margin-top">
+        <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+        <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+            <img src="assets/file.png" width="28" height="28"> FILES 
+        </div>
+        <div class="hbar row-fill elbow-right knee-right"></div>
+    </div>
+
+    <div class="w3-bar-block w3-padding w3-margin-bottom">
+        <div class="w3-button w3-bar-item" @onclick=createNewFile>
+            <img src="assets/new.png" width="32" height="32"> New Project
+        </div>
+        <div class="w3-button w3-bar-item" @onclick=loadExistingFile>
+            <img src="assets/load.png" width="32" height="32"> Open Project
+        </div>
+        <div class="w3-button w3-bar-item" @onclick=saveFile>
+            <img src="assets/save.png" width="32" height="32"> Save Project
+        </div>
+    </div>
+
+    <div class="w3-row w3-center w3-padding">
+        <button class="w3-button w3-red" @onclick="Close">Cancel</button>
+    </div>
+</Popup>
+
+<AssetImporter
+    @ref="importer"
+    TItem = "AppData"
+    Title ="Load"
+    OnLoad = "onAppDataLoaded"
+/>
+
+@code {
+    private Popup popup;
+    private AssetImporter<AppData> importer;
+
+    public void Open() {
+        popup.Open();
+    }
+
+    public void Close() {
+        popup.Close();
+    }
+
+    private void createNewFile() {
+        this.Data.Overwrite(new AppData());
+        this.NavigateHome();
+        Close();
+    }
+
+    private void loadExistingFile() {
+        importer?.Open();
+        Close();
+    }
+    private void onAppDataLoaded(AppData data) {
+        this.Data.Overwrite(data);
+        this.StateHasChanged();
+        this.NavigateHome();
+    }
+
+    private async Task saveFile() {
+        await Program.DownloadAppData(this.Data);
+        Close();
+    }
+}

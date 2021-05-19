@@ -323,7 +323,222 @@ public class QuadrantSupplementGamma : BaseRulebook {
             
         },
         NpcCharacters = new List<NpcCharacter> {
-            
+            new NpcCharacter {
+                Name = "Jem'Hadar Fourth Ecleck'tikan",
+                BaseStress = 11,
+                Resistance = 2,
+                Species = new Species{ Name="Jem'Hadar" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 09,
+                    Presence = 08,
+                    Daring = 08,
+                    Insight = 07,
+                    Reason = 07
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 02,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 00,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Immune to Fear",
+                    "Immune to Pain",
+                    "Immune to Fear",
+                    "Brute Force: Jem’hadar add the Vicious 1 effect to their Unarmed Strike, and remove the Non-lethal Quality.",
+                    "The Shroud: A Jem’hadar may spend 2 threat as a Minor Action to become virtually invisible, increasing the Difficulty of all Tasks to observe, locate, or target the Jem’hadar by three. This effect ends when the Jem’hadar make an attack, or takes a Minor Action to end the effect. The Jem’Hadar loses this ability when deprived of ketracel-white.",
+                    "Victory is Life: Whenever a Jem’Hadar First or one of its subordinates inflicts an Injury or achieves an objective, add 1 to Threat."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Jem'Hadar Plasma Rifle", Size = ItemSize.TwoHanded, DamageDice = 4, Qualities = new List<string>{ "Vicious 1", "Accurate", "Debilitating" } },
+                    new Item { Name = "Blade", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Vorta Scientist",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Vorta" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 07,
+                    Insight = 10,
+                    Reason = 11
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 01,
+                    Science = 03,
+                    Conn = 00, 
+                    Engineering = 01,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "In the Name of the Founders: When using the Direct or Assist Task to command other servants of the Dominion, a Vorta may roll 2d20 instead of 1d20.",
+                    "Knowledge of a Thousand Species: The Vorta Scientist may reroll one d20 when attempting an Engineering or Science action.",
+                    "Termination Implant: If a Vorta is captured, they may commit suicide by triggering a termination implant. This requires a Minor Action, and kills the Vorta immediately."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Vorta Diplomat",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Vorta" },
+                Values = new List<string> {
+                    "I Live To Serve The Founders",
+                    "The Dominion Philosophy Is Superior"
+                },
+                Focuses = new List<string> {
+                    "Diplomacy", "Intimidation", "Negotiation"
+                },
+                Attributes = new Attributes {
+                    Control = 10,
+                    Fitness = 07,
+                    Presence = 10,
+                    Daring = 08,
+                    Insight = 09,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 03,
+                    Security = 02,
+                    Science = 02,
+                    Conn = 00, 
+                    Engineering = 01,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "In the Name of the Founders: When using the Direct or Assist Task to command other servants of the Dominion, a Vorta may roll 2d20 instead of 1d20.",
+                    "Voice of the Founders: The Vorta Diplomat may reroll one d20 when attempting an Command or Conn action.",
+                    "Termination Implant: If a Vorta is captured, they may commit suicide by triggering a termination implant. This requires a Minor Action, and kills the Vorta immediately."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Vorta Strategist",
+                BaseStress = 14,
+                Resistance = 0,
+                Species = new Species{ Name="Vorta" },
+                Values = new List<string> {
+                    "Learn All We Can Until The Fighting Begins",
+                    "Fear Is As Effective As A Warship"
+                },
+                Focuses = new List<string> {
+                    "Diplomacy", "Infiltration", "Intimidation", "Negotiation", "Politics", "Propaganda"
+                },
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 11,
+                    Presence = 11,
+                    Daring = 08,
+                    Insight = 10,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 04,
+                    Security = 03,
+                    Science = 03,
+                    Conn = 02, 
+                    Engineering = 03,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "In the Name of the Founders: When using the Direct or Assist Task to command other servants of the Dominion, a Vorta may roll 2d20 instead of 1d20.",
+                    "Telekinetic Mastery: The Vorta Strategist may reroll one d20 when attempting to manipulate an object or person with telekinesis.",
+                    "Fear Through Facts and Falsehoods: The Vorta Strategist gains an additional d20 when attempting to use Presence.",
+                    "Termination Implant: If a Vorta is captured, they may commit suicide by triggering a termination implant. This requires a Minor Action, and kills the Vorta immediately."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Telekinetic Push",Size = ItemSize.Worn, DamageDice = 2, Qualities = new List<string>{ "Knockdown", "lethal" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Drai Clonemaster",
+                BaseStress = 9,
+                Resistance = 0,
+                Species = new Species{ Name="Drai" },
+                Values = new List<string> {},
+                Focuses = new List<string> {},
+                Attributes = new Attributes {
+                    Control = 09,
+                    Fitness = 08,
+                    Presence = 09,
+                    Daring = 09,
+                    Insight = 09,
+                    Reason = 10
+                },
+                Disciplines = new Disciplines {
+                    Command = 01,
+                    Security = 01,
+                    Science = 03,
+                    Conn = 00, 
+                    Engineering = 02,
+                    Medicine = 02
+                },
+                SpecialRules = new List<string> {
+                    "Superior Transporters: A Clonemaster may spend 2 points of Threat to break through any effect that blocks Transporters.",
+                    "Biological Duplication: A Clonemaster may reroll all dice in their pool when using Science or Medicine.",
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Blade", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                }
+            },
+            new NpcCharacter {
+                Name = "Drai Hunter Leader",
+                BaseStress = 14,
+                Resistance = 2,
+                Species = new Species{ Name="Drai" },
+                Values = new List<string> {
+                    "The Hunt Is Everything",
+                    "We Shall Succeed At All Costs"
+                },
+                Focuses = new List<string> {
+                    "Energy Weapons", "Melee Combat", "Tracking"
+                },
+                Attributes = new Attributes {
+                    Control = 07,
+                    Fitness = 11,
+                    Presence = 10,
+                    Daring = 09,
+                    Insight = 08,
+                    Reason = 09
+                },
+                Disciplines = new Disciplines {
+                    Command = 02,
+                    Security = 03,
+                    Science = 00,
+                    Conn = 01, 
+                    Engineering = 02,
+                    Medicine = 01
+                },
+                SpecialRules = new List<string> {
+                    "Sophisticated Scanners: A Hunter may spend 1 point of Threat to see through any effect that camouflages or shields an object or individual from being detected visually as long as they are within eyesight.",
+                    "Superior Transporters: A Hunter may spend 2 points of Threat to break through any effect that blocks Transporters.",
+                    "A Hunter’s Senses: A Hunter may reroll all dice in their pool relating to tracking an opponent."
+                },
+                Equipment = new List<Item> {
+                    new Item { Name = "Unarmed Strike",Size = ItemSize.OneHanded, DamageDice = 1, Qualities = new List<string>{ "Knockdown", "Non-lethal" } },
+                    new Item { Name = "Blade", Size = ItemSize.OneHanded, DamageDice = 2, Qualities = new List<string>{ "Vicious 1" } },
+                    new Item { Name = "Hunting Rifle", Size = ItemSize.TwoHanded, DamageDice = 3, Qualities = new List<string>{ "Vicious 1", "Accurate", "Debilitating" } },
+                }
+            },
         }
     };
 

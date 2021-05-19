@@ -6,18 +6,28 @@
     style="z-index: 2;" 
     id="mySidebar" 
 >
-    <div style="min-height: calc(100vh - 48px);">
-        <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
-        <div class="w3-row">
-            <div class="w3-col" style="width: 48px;">
-                <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
-                    <img src="assets/home.png" width=16 height=16>
-                </NavLink>
+    <div>
+        <div class="lcars-dark-blue">
+            <button class="w3-bar-item w3-button w3-large w3-hide-large" @onclick="CloseNavMenu">Close &times;</button>
+            <div class="w3-row">
+                <div class="w3-col" style="width: 48px;">
+                    <NavLink class="w3-button w3-block" href="" Match="NavLinkMatch.All">
+                        <img src="assets/home.png" width=16 height=16>
+                    </NavLink>
+                </div>
+                <div class="w3-rest w3-right-align w3-row">
+                    <button class="w3-col s6 w3-button @(Data.IsGm ? "w3-blue" : string.Empty)" @onclick=@(() => Data.IsGm = true)>GM</button>
+                    <button class="w3-col s6 w3-button @(!Data.IsGm ? "w3-blue" : string.Empty)" @onclick=@(() => Data.IsGm = false)>Player</button>
+                </div>
             </div>
-            <div class="w3-rest w3-right-align w3-row">
-                <button class="w3-col s6 w3-button @(Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = true)>GM</button>
-                <button class="w3-col s6 w3-button @(!Data.IsGm ? "w3-blue" : "w3-black")" @onclick=@(() => Data.IsGm = false)>Player</button>
-            </div>
+        </div>
+        <div class="w3-bar lcars-disabled w3-margin-bottom">
+            <button class="w3-button w3-left-align" @onclick=@(() => files?.Open())>
+                File
+            </button>
+            <button class="w3-button w3-left-align" @onclick=@(() => help?.Open())>
+                Help
+            </button>
         </div>
         <button class="w3-button w3-block w3-left-align lcars" @onclick="@(() => collapseCreateMenu = !collapseCreateMenu)"  style="padding-bottom: 0px;">
             <div class="row">
@@ -119,45 +129,6 @@
             </div>
         </div>
     </div>
-    <div class="w3-padding w3-center" style="width: 100%; overflow: hidden;">
-        <button 
-            style="border: 0; padding: 0; background-color: inherit;"
-            title="New"
-            @onclick="newData"
-        >
-            <img src="assets/new.png" width="32" height="32">
-        </button>
-        <button 
-            style="border: 0; padding: 0; background-color: inherit;"
-            title="Save"
-            @onclick="downloadDataJson"
-        >
-            <img src="assets/save.png" width="32" height="32">
-        </button>
-        <button 
-            style="border: 0; padding: 0; background-color: inherit;"
-            title="Load"
-            @onclick="@(() => importer?.Open())"
-        >
-            <img src="assets/load.png" width="32" height="32">
-        </button>
-        <a 
-            href="https://github.com/qkmaxware/TrekSharp/wiki"
-            target="_blank"
-            style="border: 0; padding: 0; background-color: inherit; text-decoration: none; margin-left: 12px;"
-            title="Get Help"
-        >
-            <img src="assets/help.png" width="32" height="32">
-        </a>
-        <a 
-            href="https://github.com/qkmaxware/TrekSharp"
-            target="_blank"
-            style="border: 0; padding: 0; background-color: inherit; text-decoration: none;"
-            title="Contribute"
-        >
-            <img src="assets/github.png" width="32" height="32">
-        </a>
-    </div>
 </div>
 
 <div class="lcars no-print" style="position: absolute;">
@@ -169,14 +140,13 @@
 </div>
 </div>
 
-<AssetImporter
-    @ref="importer"
-    TItem = "AppData"
-    Title ="Load"
-    OnLoad = "loadAppData"
-/>
+<FilePopup @ref=files></FilePopup>
+<HelpPopup @ref=help></HelpPopup>
 
 @code {
+
+    private FilePopup files;
+    private HelpPopup help;
 
     private bool collapseNavMenu = true;
     private string NavMenuCssClass => collapseNavMenu ? "w3-hide" : "w3-show";
@@ -201,25 +171,6 @@
     }
     public void OpenNavMenu() {
         collapseNavMenu = false;
-    }
-
-    private AssetImporter<AppData> importer;
-
-    private void newData() {
-        this.Data.Overwrite(new AppData());
-        this.NavigateHome();
-    }
-
-    private void loadAppData(AppData newData) {
-        this.Data.Overwrite(newData);
-        this.StateHasChanged();
-        this.NavigateHome();
-    }
-
-    private async Task downloadDataJson() {
-        await Program.DownloadAppData(this.Data);
-        // Generate a text file
-        //await this.DownloadJson("adventure", Data);
     }
 
     protected override void OnInitialized() {

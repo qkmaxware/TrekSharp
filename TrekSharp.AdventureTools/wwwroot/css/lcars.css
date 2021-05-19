@@ -7,6 +7,12 @@
     --lcars-foreground-highlight-colour: #4455BB;
 }
 
+.lcars-dark-blue {
+    background-color: rgb(19, 61, 135);
+}
+.lcars-disabled {
+    background-color: rgb(11, 36, 80);
+}
 
 body {
     background-color: var(--lcars-background-main-colour);

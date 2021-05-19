@@ -51,6 +51,7 @@
         let newWorker;
         function reloadPwa() {
             if (newWorker) {
+                hidePwaUpdate();
                 newWorker.postMessage({ action: 'skipWaiting' });
             }
             return false;
