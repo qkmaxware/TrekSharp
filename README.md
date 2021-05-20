@@ -12,3 +12,4 @@ The code in this project is licensed under the following [LICENSE](LICENSE).
 
 ## Usage
 For usage information check out the [wiki](https://github.com/qkmaxware/TrekSharp/wiki).
+For browser compatibility check out the [compatibility matrix](https://github.com/qkmaxware/TrekSharp/wiki/Compatibility).

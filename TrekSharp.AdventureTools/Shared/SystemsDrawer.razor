@@ -9,6 +9,45 @@
         <div class="w3-col s4 w3-white border-secondary w3-right-align elbow-right knee-right print-small">
             @context?.Value
         </div>
+        <div class="w3-small print-small">
+            <div class="no-print" style="display: inline-block">
+                <span class="typeface text-secondary">Breaches:</span>
+                <button class="no-lcars w3-button" style="padding: 4px;" @onclick=@(() => decrementBreaches(context))>-</button>
+                <button class="no-lcars w3-button" style="padding: 4px;" @onclick=@(() => incrementBreaches(context))>+</button>
+            </div>
+            <div style="display: inline-block">
+                @if(context.Breaches > 0) {
+                    <span>&#9635;</span>
+                } else {
+                    <span>&#9634;</span>
+                }
+                @if(context.Breaches > 1) {
+                    <span>&#9635;</span>
+                } else {
+                    <span>&#9634;</span>
+                }
+                @if(context.Breaches > 2) {
+                    <span>&#9635;</span>
+                } else {
+                    <span>&#9634;</span>
+                }
+                @if(context.Breaches > 3) {
+                    <span>&#9635;</span>
+                } else {
+                    <span>&#9634;</span>
+                }
+                @if(context.Breaches > 4) {
+                    <span>&#9635;</span>
+                } else {
+                    <span>&#9634;</span>
+                }
+                @if(context.Breaches > 5) {
+                    <span>&#9635;</span>
+                } else {
+                    <span>&#9634;</span>
+                }
+            </div>
+        </div>
     </Template>
 </Grid3x2Layout>
 
@@ -16,4 +55,13 @@
 
     [Parameter]
     public Systems Systems {get; set;}
+
+    private void decrementBreaches(SystemReference r) {
+        if (r.Breaches > 0) {
+            r.Breaches --;
+        }
+    }
+    private void incrementBreaches(SystemReference r) {
+        r.Breaches++;
+    }
 }

@@ -15,6 +15,29 @@ public class SystemReference {
         5 => "Weapons",
         _ => null
     };
+    public int Breaches {
+        get {
+            return Index switch {
+                0 => source.CommsBreaches,
+                1 => source.EnginesBreaches,
+                2 => source.StructureBreaches,
+                3 => source.ComputersBreaches,
+                4 => source.SensorsBreaches,
+                5 => source.WeaponsBreaches,
+                _ => 0
+            };
+        } 
+        set {
+            switch (Index) {
+                case 0: source.CommsBreaches = value; break;
+                case 1: source.EnginesBreaches = value; break;
+                case 2: source.StructureBreaches = value; break;
+                case 3: source.ComputersBreaches = value; break;
+                case 4: source.SensorsBreaches = value; break;
+                case 5: source.WeaponsBreaches = value; break;
+            }
+        }
+    }
     public int Index {get; private set;}
     public int Value {
         get => source[Index];
@@ -49,16 +72,22 @@ public class SystemsEnumerator : IEnumerable<SystemReference> {
 
 public class Systems {
     public int Comms {get; set;}
+    public int CommsBreaches {get; set;}
     public SystemReference CommsReference => new SystemReference(this, 0);
     public int Engines {get; set;}
+    public int EnginesBreaches {get; set;}
     public SystemReference EnginesReference => new SystemReference(this, 1);
     public int Structure {get; set;}
+    public int StructureBreaches {get; set;}
     public SystemReference StructureReference => new SystemReference(this, 2);
     public int Computers {get; set;}
+    public int ComputersBreaches {get; set;}
     public SystemReference ComputersReference => new SystemReference(this, 3);
     public int Sensors {get; set;}
+    public int SensorsBreaches {get; set;}
     public SystemReference SensorsReference => new SystemReference(this, 4);
     public int Weapons {get; set;}
+    public int WeaponsBreaches {get; set;}
     public SystemReference WeaponsReference => new SystemReference(this, 5);
 
     public int this[int index] {
