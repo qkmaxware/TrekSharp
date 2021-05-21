@@ -12,21 +12,28 @@
     <p>
         Every species needs a name.
     </p>
-    <div class="row w3-padding">
-        <span class="hbar elbow-left knee-left w3-padding">Name</span>
-        <span class="hbar row-fill row" style="margin-left: 10px;">
-            <input type="text" class="w3-padding w3-input"  @bind="Species.Name"/>
-        </span>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Name</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="text" class="w3-input" @bind=Species.Name />
+        </div>
     </div>
+
     <p>
         What is the name of the planet that this species comes from.
     </p>
-    <div class="row w3-padding">
-        <span class="hbar elbow-left knee-left w3-padding">Homeworld</span>
-        <span class="hbar row-fill row" style="margin-left: 10px;">
-            <input type="text" class="w3-padding row-fill"  @bind="Species.Homeworld"/>
-            <button @onclick="randomHomeworld" style="width: 120px">Random</button>
-        </span>
+    <div class="w3-row w3-padding">
+        <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+            <span>Homeworld</span>
+        </div>
+        <div class="w3-threequarter" style="padding-left: 10px">
+            <input type="text" class="w3-input" @bind=Species.Homeworld />
+        </div>
+    </div>
+    <div class="w3-center">
+        <button @onclick="randomHomeworld" style="width: 120px">Randomize</button>
     </div>
     <p>
         Provide a brief description of this species including their general appearance and demeanor. 

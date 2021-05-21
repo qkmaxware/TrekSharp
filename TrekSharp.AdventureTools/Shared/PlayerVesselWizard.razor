@@ -112,38 +112,50 @@
                 <p>
                     Every Starship needs a name. The Federation has no universal convention for the naming of ships, often naming them after locations, important historical persons (normally only the person’s surname), ancient ships, mythical figures, or even more abstract ideals, virtues, or concepts. In many cases, these vague naming conventions overlap — a ship may be named after an ancient ship that was itself named after a location, for example — but this shouldn’t cause any issues. The name should ideally be a single word or, more rarely, two.
                 </p>
-                <div class="row">
-                    <span class="hbar elbow-left knee-left w3-padding">Name</span>
-                    <span class="hbar row-fill row" style="margin-left: 10px;">
-                        <input type="text" class="w3-padding row-fill"  @bind="Name"/>
-                        <button @onclick="randomName" style="width: 120px">Random</button>
-                    </span>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Name</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="text" class="w3-input" @bind=Name placeholder="Name"/>
+                    </div>
                 </div>
+                <div class="w3-center">
+                    <button @onclick="randomName" style="width: 120px">Randomize</button>
+                </div>
+
                 <p>
                     To go with the name, each Federation starship has a registry number. This is a four- (for games set in the Original Series era), or five-digit number (for games set in the Next Generation era), prefixed by either the letters NCC, or NX. NCC is used for most ships, but NX is reserved for prototype vessels and the first ship of a class , in honor of the first Human starships able to reach warp 5.
                 </p>
-                <div class="row">
-                    <span class="hbar elbow-left knee-left w3-padding">Registry Number</span>
-                    <span class="hbar row-fill row" style="margin-left: 10px;">
-                        <input type="text" class="w3-padding row-fill" @bind="Registry"/>
-                        <button @onclick="randomId" style="width: 120px">Random</button>
-                    </span>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Registry</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="text" class="w3-input" @bind=Registry placeholder="Registry Number"/>
+                    </div>
                 </div>
+                <div class="w3-center">
+                    <button @onclick="randomId" style="width: 120px">Randomize</button>
+                </div>
+
                 <p>
                     Choose which year you want to play in together with your GM. 
                 </p>
-                <div class="row">
-                    <span class="hbar elbow-left knee-left w3-padding">Service Date</span>
-                    <span class="hbar row-fill row" style="margin-left: 10px;">
-                        <input type="date" class="w3-grey w3-padding row-fill" required @bind="ServiceDate" />
-                    </span>
+                <div class="w3-row w3-padding">
+                    <div class="hbar elbow-left knee-left w3-padding-large w3-quarter">
+                        <span>Service Date</span>
+                    </div>
+                    <div class="w3-threequarter" style="padding-left: 10px">
+                        <input type="date" class="w3-input w3-grey w3-padding row-fill" @bind=ServiceDate />
+                    </div>
                 </div>
                 <div class="w3-margin-left w3-margin-right">
                     <p>
                         A service date can be picked from the list of important dates in the Franchise' timeline.
                     </p>
                     @foreach (var kv in importantTimes) {
-                        <button @onclick="@(() => ServiceDate = kv.Value)"> @kv.Key </button>
+                        <button class="mobile-full" @onclick="@(() => ServiceDate = kv.Value)"> @kv.Key </button>
                     }
                 </div>
             </div>
