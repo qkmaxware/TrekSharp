@@ -57,6 +57,11 @@
             return false;
         }
         navigator.serviceWorker.register('service-worker.js').then(reg => {
+            if (reg.waiting) {
+                newWorker = reg.waiting;
+                showPwaUpdate();
+            }
+
             reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
