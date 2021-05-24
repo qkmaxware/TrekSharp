@@ -85,7 +85,7 @@ public class PlayerCharacter : PlayableCharacter {
         set => _det = (value < 0 ? 0 : value);
     }
 
-    public override int BonusStress => Talents.Select(talent => talent.StressModifier).Sum();
+    public override int BonusStress => Talents.Select(talent => talent?.StressModifier ?? 0).Sum();
 
 }
 
