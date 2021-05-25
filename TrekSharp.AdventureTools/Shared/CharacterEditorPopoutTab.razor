@@ -50,15 +50,7 @@
 
     public async Task Export() {
         if (HasCharacter) {
-            if (this.Character is PlayerCharacter pc) {
-                await this.DownloadJson<PlayerCharacter>($"{pc.Name}.character", pc);
-            } else if (this.Character is SupportCharacter sc) {
-                await this.DownloadJson<SupportCharacter>($"{sc.Name}.character", sc);
-            } else if (this.Character is NpcCharacter npc) {
-                await this.DownloadJson<NpcCharacter>($"{npc.Name}.character", npc);
-            } else {
-                await this.DownloadJson<Character>($"{Character.Name}.character", Character);
-            }
+            await this.DownloadJson($"{this.Character.Name}.character", this.Character, this.Character.GetType());
         }
     }
 

@@ -8,7 +8,10 @@
     protected AppData Data => AppDataService;
     protected NavigationManager NavigationManager => AppNavigationManager;
     public async Task DownloadJson<T>(string filename, T data) {
-        var json = System.Text.Json.JsonSerializer.Serialize(data);
+        await DownloadJson(filename, data, typeof(T));
+    }
+    public async Task DownloadJson(string filename, object data, Type t) {
+        var json = System.Text.Json.JsonSerializer.Serialize(data, t);
         byte[] file = System.Text.Encoding.UTF8.GetBytes(json);
         await JSRuntime.InvokeVoidAsync("BlazorDownloadFile", $"{filename}.json", "text/json", file);
     }

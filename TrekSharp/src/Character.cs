@@ -42,6 +42,7 @@ public class Character {
     public List<string> Values {get; set;} 
 
     public Avatar Avatar {get; set;} = null;
+    public string Bio {get; set;} = null;
 
     public virtual int TotalStress => Attributes.Fitness + Disciplines.Security + BonusStress;
     public virtual int BonusStress {get;} = 0;

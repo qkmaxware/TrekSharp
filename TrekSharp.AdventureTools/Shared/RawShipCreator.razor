@@ -283,7 +283,7 @@
 @code {
     Popup popup;
 
-    [Parameter] public Action OnImport {get; set;}
+    [Parameter] public Action<PlayerVessel> OnImport {get; set;}
 
     private PlayerVessel ship;
 
@@ -293,7 +293,7 @@
     private void Confirm() {
         if (ship != null) {
             Data.Ships.Add(ship);
-            OnImport?.Invoke();
+            OnImport?.Invoke(ship);
         }
         popup.Close();
     }

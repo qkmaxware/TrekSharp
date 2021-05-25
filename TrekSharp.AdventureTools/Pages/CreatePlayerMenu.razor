@@ -35,11 +35,14 @@
     }
     private void onCharacterLoaded(PlayerCharacter character) {
         this.Data.Party.Add(character);
+        this.NavigateToPlayerCharacter(character);
     }
 
     RawPlayerCharacterCreator raw;
     private void openRawImporter() {
         raw?.Open();
     }
-    private void onRawImport() {}
+    private void onRawImport(PlayerCharacter character) {
+        this.NavigateToPlayerCharacter(character);
+    }
 }

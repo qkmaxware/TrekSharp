@@ -286,7 +286,7 @@
 @code {
     Popup popup;
 
-    [Parameter] public Action OnImport {get; set;}
+    [Parameter] public Action<PlayerCharacter> OnImport {get; set;}
 
     private PlayerCharacter character;
 
@@ -296,7 +296,7 @@
     private void Confirm() {
         if (character != null) {
             Data.Party.Add(character);
-            OnImport?.Invoke();
+            OnImport?.Invoke(character);
         }
         popup.Close();
     }

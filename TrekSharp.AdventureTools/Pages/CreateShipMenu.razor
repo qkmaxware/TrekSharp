@@ -35,15 +35,15 @@
     }
     private void onShipLoaded(PlayerVessel vessel) {
         this.Data.Ships.Add(vessel);
-        this.StateHasChanged();
+        this.NavigateToPlayerVessel(vessel);
     }
 
     private RawShipCreator raw;
     private void openRawImporter() {
         raw?.Open();
     }
-    private void onRawShipLoaded() {
-        this.StateHasChanged();
+    private void onRawShipLoaded(PlayerVessel vessel) {
+        this.NavigateToPlayerVessel(vessel);
     }
 
     

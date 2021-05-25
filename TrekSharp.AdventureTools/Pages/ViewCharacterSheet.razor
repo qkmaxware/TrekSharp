@@ -80,6 +80,7 @@
         </div>
     </LCARS>
     
+    <!-- Talents -->
     @if (Player.Talents != null && Player.Talents.Count > 0) {
     <div class="pagebreak"></div>
     <LCARS PrintBorders=true>
@@ -107,6 +108,26 @@
         </div>
     </LCARS>
     }
+    
+    <!-- BIO -->
+    <div class="pagebreak"></div>
+    <LCARS PrintBorders=true>
+        <div class="row-fill">
+            <div class="w3-row w3-padding">
+                <div class="row w3-margin-bottom row-fill">
+                    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+                    <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
+                        BIO 
+                    </div>
+                    <div class="hbar row-fill elbow-right knee-right"></div>
+                </div>
+            </div>
+            <div class="row-fill w3-margin-left w3-margin-right">
+                <textarea class="text-primary border-primary no-print" @bind=Player.Bio style="width: 100%; resize: vertical; background-color: inherit; min-height: 120px;"></textarea>
+                <div class="print" style="white-space: pre-wrap;">@Player.Bio</div>
+            </div>
+        </div>
+    </LCARS>
 </div>
 
 
