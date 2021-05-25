@@ -55,7 +55,7 @@
     public async Task Export() {
         if (HasShip) {
             var ship = this.Ship;
-            await this.DownloadJson($"{ship.Name}.vessel", ship);
+            await this.DownloadJson($"{ship.Name}.vessel", ship, ship.GetType());
         }
     }
     
