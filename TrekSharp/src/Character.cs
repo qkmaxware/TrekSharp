@@ -70,10 +70,33 @@ public class Character {
 
 public class PlayableCharacter : Character {
     public List<CharacterTalent> Talents {get; set;}
+    public bool HasTalents => Talents != null && Talents.Count > 0;
 }
 
 public class SupportCharacter : PlayableCharacter { 
-    public bool HasBeenIntroduced => Talents != null && Values != null;
+    public bool IsPlayerEquivalent => HasTalents && Focuses.Count >= 6 && Values.Count >= 4;
+
+    public PlayerCharacter UpgradeToPlayer(string environment = null, string upbringing = null) {
+        return new PlayerCharacter {
+            Name = this.Name,
+            Rank = this.Rank,
+            Assignment = this.Assignment,
+            Species = this.Species,
+            Attributes = new Attributes(this.Attributes),
+            Disciplines = new Disciplines(this.Disciplines),
+            Focuses = new List<string>(this.Focuses),
+            Values = new List<string>(this.Values),
+            Avatar = this.Avatar,
+            Bio = null,
+            UsedStress = this.UsedStress,
+            Resistance = this.Resistance,
+            Equipment = new List<Item>(this.Equipment),
+            Condition = this.Condition,
+            Environment = environment,
+            Upbringing = upbringing,
+            Determination = 1,
+        };
+    }
 }
 
 public class PlayerCharacter : PlayableCharacter {

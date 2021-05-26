@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        DELETE
+    </span>
+    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+</div>
+<div class="w3-padding">
+    <Select @ref=toDelete Placeholder="Talent" Items=@Character.Talents></Select>
+</div>
+
+<div class="row">
+    <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
+    <span class="spacer typeface text-secondary w3-large">
+        ADD
+    </span>
+    <div class="hbar row-fill elbow-right knee-right" style="margin-right: 10px;"></div>
+</div>
+<div class="w3-padding">
+    <TalentSelect @ref=toAdd Character=@Character></TalentSelect>
+</div>
+
+@code {
+    private Select<CharacterTalent> toDelete;
+    private TalentSelect toAdd;
+
+    [Parameter] public PlayableCharacter Character {get; set;}
+
+    public void Swap() {
+        var delete = toDelete.Selected;
+        var add = toAdd.Talent;
+        if (delete != null && add != null) {
+            Character.Talents.Remove(delete);
+            Character.Talents.Add(add);
+        }
+    }
+
+    public void Deselect() {
+        toDelete.Deselect();
+        toAdd.Deselect();
+    }
+}

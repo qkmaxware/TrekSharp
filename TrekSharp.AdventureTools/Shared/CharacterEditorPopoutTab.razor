@@ -8,17 +8,16 @@
         <div class="w3-bar-block w3-padding">
             <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=AddMilestone>+ Milestone</button>
             <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=Promote>+ Promotion</button>
+            @if (Character is SupportCharacter sc) {
+                <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=assumingDirectControl>Reintroduce</button>
+                @if (sc.IsPlayerEquivalent) {
+                <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=upgradeToPlayer>Convert to Player Character</button>
+                } else {
+                    <button class="w3-bar-item w3-margin-bottom w3-grey" style="font-size: medium;" title="requires at least 6 focuses, 4 values, and 1 talent">Upgrade to Player Character</button>
+                }
+            }
         </div>
-        @if (Character is SupportCharacter sc) {
-        if (!sc.HasBeenIntroduced) {
-        <div class="typeface text-secondary w3-border-bottom w3-large">
-            <b>Player Options</b>
-        </div>
-        <div class="w3-bar-block w3-padding">
-            <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=assumingDirectControl>Assume Player Control</button>
-        </div>
-        }
-        }
+
         <div class="typeface text-secondary w3-border-bottom w3-large">
             <b>Other</b>
         </div>
@@ -73,6 +72,13 @@
         if (HasCharacter && Character is SupportCharacter sc) {
             introduce.Open(sc);
         }
+    }
+
+    private void upgradeToPlayer() {
+        if (HasCharacter && Character is SupportCharacter sc) {
+            this.Data.Supports.Remove(sc);
+            this.Data.Party.Add(sc.UpgradeToPlayer());
+        } 
     }
 
     private ConfirmationDialog confirm;

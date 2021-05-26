@@ -37,6 +37,8 @@
     private Popup popup;
     private AssetImporter<AppData> importer;
 
+    [Parameter] public Action OnFileLoaded {get; set;}
+
     public void Open() {
         popup.Open();
     }
@@ -57,7 +59,7 @@
     }
     private void onAppDataLoaded(AppData data) {
         this.Data.Overwrite(data);
-        this.StateHasChanged();
+        OnFileLoaded?.Invoke();
         this.NavigateHome();
     }
 

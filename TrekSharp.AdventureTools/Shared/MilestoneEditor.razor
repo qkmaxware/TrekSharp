@@ -65,7 +65,7 @@
                     </TabPage>
                     @if (Character is PlayableCharacter pc) {
                     <TabPage Title="Change Talent">
-                        <TalentPicker @ref=spotlightTalentSwap RequireDelete=true GetPlayer=@(() => pc)></TalentPicker>
+                        <TalentSwap @ref=spotlightTalentSwap Character=pc></TalentSwap>
                     </TabPage>
                     }
                 </TabLayout>
@@ -89,7 +89,7 @@
                     </TabPage>
                     @if (Character is PlayableCharacter pc) {
                     <TabPage Title="Add Talent">
-                        <TalentPicker @ref=arcNewTalent GetPlayer=@(() => pc)></TalentPicker>
+                        <TalentSelect @ref=arcNewTalent Character=pc></TalentSelect>
                     </TabPage>
                     }
                     <TabPage Title="Add Focus">
@@ -129,8 +129,7 @@
 
         spotlightAttributeDelta = new Attributes(0);
         if (spotlightTalentSwap != null) {
-            spotlightTalentSwap.DeletedTalent = null;
-            spotlightTalentSwap.SelectedTalent = null;
+            spotlightTalentSwap.Deselect();
         }
 
         arcDisciplineDelta = new Disciplines(0);
@@ -138,7 +137,7 @@
         arcNewFocus = null;
         arcNewValue = null;
         if (arcNewTalent != null)
-            arcNewTalent.SelectedTalent = null;
+            arcNewTalent.Deselect();
         StateHasChanged();
     }
 
@@ -153,9 +152,11 @@
 
         Character.Attributes.Add(spotlightAttributeDelta);
         if (Character is PlayableCharacter pc) {
-            if (spotlightTalentSwap != null && spotlightTalentSwap.DeletedTalent != null && spotlightTalentSwap.SelectedTalent != null) {
-                pc.Talents.Remove(spotlightTalentSwap.DeletedTalent);
-                pc.Talents.Add(spotlightTalentSwap.SelectedTalent);
+            if (pc.Talents == null) {
+                pc.Talents = new List<CharacterTalent>();
+            }
+            if (spotlightTalentSwap != null) {
+                spotlightTalentSwap.Swap();
             }
         }
 
@@ -169,8 +170,14 @@
             Character.Values.Add(arcNewValue);
         }
         if (Character is PlayableCharacter ppc) {
-            if (arcNewTalent != null && arcNewTalent.SelectedTalent != null) {
-                ppc.Talents.Add(arcNewTalent.SelectedTalent);
+            if (arcNewTalent != null ) {
+                var t = arcNewTalent.Talent;
+                if (t != null) {
+                    if (ppc.Talents == null) {
+                        ppc.Talents = new List<CharacterTalent>();
+                    }
+                    ppc.Talents.Add(t);
+                }
             }
         }
         OnSave?.Invoke();
@@ -190,13 +197,13 @@
     private Disciplines normalDisciplineDelta = new Disciplines(0);
     
     private Attributes spotlightAttributeDelta = new Attributes(0);
-    private TalentPicker spotlightTalentSwap;
+    private TalentSwap spotlightTalentSwap;
 
 
     private Disciplines arcDisciplineDelta = new Disciplines(0);
     private Attributes arcAttributeDelta = new Attributes(0);
     private string arcNewFocus = null;
     private string arcNewValue = null;
-    private TalentPicker arcNewTalent;
+    private TalentSelect arcNewTalent;
 
 }

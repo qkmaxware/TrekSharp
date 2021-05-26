@@ -135,6 +135,15 @@ public class Disciplines {
 
     public Disciplines() : this(0) {}
 
+    public Disciplines(Disciplines other) {
+        this.Command = other.Command;
+        this.Conn = other.Conn;
+        this.Engineering = other.Engineering;
+        this.Medicine = other.Medicine;
+        this.Science = other.Science;
+        this.Security = other.Security;
+    }
+
     public Disciplines (int values) {
         this[0] = values;
         this[1] = values;

@@ -1,0 +1,35 @@
+@typeparam T
+
+<input class="w3-input w3-margin-bottom" list="select_list_@ComponentGuid" placeholder="@Placeholder"  @bind=selectedString />
+<datalist id="select_list_@ComponentGuid">
+    @if(Items != null) {
+        foreach (var item in Items) {
+            <option value="@Stringify(item)"/>
+        }
+    }
+</datalist>
+
+@code {
+    [Parameter] public IEnumerable<T> Items {get; set;}
+    [Parameter] public string Placeholder {get; set;}
+    private string selectedString;
+    public T Selected => Items == null ? default(T) : Items.Where(item => string.Equals(Stringify(item), selectedString, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+    private string ComponentGuid;
+
+    [Parameter] public Func<T, string> Stringify {get; set;} = defaultStringify;
+    
+    private static string defaultStringify(T value) {
+        return value?.ToString();
+    }
+
+    protected override void OnInitialized() {
+        base.OnInitialized(); 
+        ComponentGuid = System.Guid.NewGuid().ToString();
+    }
+
+    public void Deselect() {
+        selectedString = null;
+        StateHasChanged();
+    }
+}

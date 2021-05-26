@@ -136,6 +136,15 @@ public class Attributes {
 
     }
 
+    public Attributes(Attributes other) {
+        this.Control = other.Control;
+        this.Daring = other.Daring;
+        this.Fitness = other.Daring;
+        this.Insight = other.Insight;
+        this.Presence = other.Presence;
+        this.Reason = other.Reason;
+    }
+
     public Attributes (int values) {
         this[0] = values;
         this[1] = values;

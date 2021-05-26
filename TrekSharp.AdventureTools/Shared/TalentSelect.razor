@@ -1,0 +1,25 @@
+<Select @ref=select Placeholder="Talent" Items=talents></Select>
+
+@code {
+
+    private Select<CharacterTalent> select;
+
+    public CharacterTalent Talent => select?.Selected;
+
+    private List<CharacterTalent> talents;
+
+    [Parameter] public Character Character {get; set;}
+
+    protected override void OnInitialized() {
+        talents = new Data.RulebookContainer()
+                .AllRulebooks
+                .SelectMany(book => book.Value.Talents)
+                .Where(talent => Character == null || talent.CanBeUsedBy(Character))
+                .ToList();
+    }
+
+    public void Deselect() {
+        select?.Deselect();
+    }
+
+}
