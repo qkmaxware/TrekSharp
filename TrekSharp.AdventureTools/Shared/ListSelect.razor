@@ -86,4 +86,10 @@
         }
         OnSelectionChanged?.Invoke();
     }
+
+    public void DeselectAll() {
+        this.AllSelected.Clear();
+        OnSelectionChanged?.Invoke();
+        StateHasChanged();
+    }
 }

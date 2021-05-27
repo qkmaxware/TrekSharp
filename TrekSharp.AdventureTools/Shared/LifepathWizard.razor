@@ -72,6 +72,19 @@
     </WizardStage>
     <WizardStage>
         <Content>
+            <p>
+               Many characters have parents from different species. Mixed-heritage species are treated as a member of the primary species taking more features from one parent than from the other, but inherits the traits of and can choose the talents avaliable for the other species. This step is optional as you may choose to <b>not</b> have a character be of mixed-heritage.
+            </p>
+            <div class="w3-center w3-padding">
+                <button @onclick=toggleMixedHeritage>@(useMixed ? "Do Not Use" : "Use") Mixed Heritage</button>
+            </div>
+            @if (useMixed) {
+            <ListSelect @ref="speciesSecondarySelector" Title="MIXED HERITAGE" List=species Filterable=true OnSelectionChanged=StateHasChanged></ListSelect>
+            }
+        </Content>
+    </WizardStage>
+    <WizardStage>
+        <Content>
             <div class="row">
                 <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                 <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
@@ -79,7 +92,7 @@
                 </div>
                 <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
             </div>
-            @if (characterSpecies.AttributeModifiers == null) {
+            @if (characterPrimarySpecies.AttributeModifiers == null) {
             <p>
                 This species has no default attributes, choose 3 attributes to increase.
             </p>
@@ -93,7 +106,7 @@
                 <p>
                     This species has the following default attributes
                 </p>
-                foreach (var attr in characterSpecies.AttributeModifiers.Enumerate()) {
+                foreach (var attr in characterPrimarySpecies.AttributeModifiers.Enumerate()) {
                     <div class="row w3-margin-bottom">
                         <div class="hbar elbow-left knee-left secondary" style="width: 16px;"></div>
                         <div class="hbar w3-padding typeface secondary" style="width: 112px;">
@@ -148,7 +161,7 @@
                         <div class="w3-container">
                             @context.Description
                         </div>
-                        @if ((context.AttributeSelectionMask ?? characterSpecies.AttributeModifiers ?? characterCustomSpeciesAttributes) != null) {
+                        @if ((context.AttributeSelectionMask ?? characterPrimarySpecies.AttributeModifiers ?? characterCustomSpeciesAttributes) != null) {
                         <div class="row">
                             <div class="hbar elbow-left knee-left" style="width: 32px;"></div>
                             <div class="typeface" style="margin-left: 10px; margin-right: 10px;">
@@ -157,7 +170,7 @@
                             <div class="hbar row-fill elbow-right knee-right" style="text-align: right;"></div>
                         </div>
                         <div class="w3-container">
-                            @foreach (var item in (context.AttributeSelectionMask ?? characterSpecies.AttributeModifiers ?? characterCustomSpeciesAttributes).Enumerate()){
+                            @foreach (var item in (context.AttributeSelectionMask ?? characterPrimarySpecies.AttributeModifiers ?? characterCustomSpeciesAttributes).Enumerate()){
                                 if (item.Value > 0) {
                                     <div>@item.Name</div>
                                 }
@@ -207,7 +220,7 @@
                 <div class="w3-container w3-padding">
                     <AttributeIncrement 
                         Points="1" 
-                        Mask="characterEnvironment.AttributeSelectionMask ?? characterSpecies.AttributeModifiers ?? characterCustomSpeciesAttributes"
+                        Mask="characterEnvironment.AttributeSelectionMask ?? characterPrimarySpecies.AttributeModifiers ?? characterCustomSpeciesAttributes"
                         Reference="characterEnvironmentAttributes"
                         />
                 </div>
@@ -877,7 +890,7 @@
     private Attributes characterBaseAttributes = new Attributes (7);
     private Disciplines characterBaseDisciplines = new Disciplines (1);
     private Attributes characterCustomSpeciesAttributes = new Attributes(0);
-    private Attributes speciesAttributes => characterSpecies?.AttributeModifiers ?? characterCustomSpeciesAttributes;
+    private Attributes speciesAttributes => characterPrimarySpecies?.AttributeModifiers ?? characterCustomSpeciesAttributes;
 
     private Attributes characterCareerPathAttributes = new Attributes();
     private Disciplines characterCareerPathMajorDisciplines = new Disciplines();
@@ -925,7 +938,8 @@
                 Name = characterName,
                 Rank = characterRank,
                 Assignment = characterAssignment,
-                Species = characterSpecies,
+                // Produces a "pure" species if characterSubspecies is null or empty
+                Species = characterPrimarySpecies.DeriveMixedSpecies(characterSubspecies),
                 Attributes = characterAttributesAfterRebalance,
                 Disciplines = characterDisciplinesAfterRebalance,
                 Equipment = characterEquipment,
@@ -942,8 +956,18 @@
 
     #region Species
     private ListSelect<Species> speciesSelector;
-    private Species characterSpecies => speciesSelector?.Selected;
+    private Species characterPrimarySpecies => speciesSelector?.Selected;
     private bool requireSpecies() => speciesSelector?.Selected != null;
+    
+    private bool useMixed;
+    private ListSelect<Species> speciesSecondarySelector;
+    private List<Species> characterSubspecies => speciesSecondarySelector.AllSelected;
+    private void toggleMixedHeritage() {
+        useMixed = !useMixed;
+        if (!useMixed) {
+            speciesSecondarySelector?.DeselectAll();
+        }
+    }
     #endregion
 
     #region First Talent

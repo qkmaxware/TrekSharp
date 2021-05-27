@@ -38,7 +38,7 @@ public class SpeciesRestrictedTalent : CharacterTalent {
         this.species = species;
     }
     public override bool CanBeUsedBy(Character character) {
-        return character.Species.Name == this.species;
+        return character.Species.Name == this.species || (character.Species.OtherHeritage != null && character.Species.OtherHeritage.Select(s => s.Name).Contains(this.species));
     }
     
 }
