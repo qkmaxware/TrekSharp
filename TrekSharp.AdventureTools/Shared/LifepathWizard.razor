@@ -961,7 +961,7 @@
     
     private bool useMixed;
     private ListSelect<Species> speciesSecondarySelector;
-    private List<Species> characterSubspecies => speciesSecondarySelector.AllSelected;
+    private List<Species> characterSubspecies => speciesSecondarySelector?.AllSelected;
     private void toggleMixedHeritage() {
         useMixed = !useMixed;
         if (!useMixed) {
