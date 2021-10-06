@@ -3,6 +3,22 @@
 
 @if (HasShip) {
 <VesselEditorPopupTab Ship=@Ship OnDelete=onConfirmDelete OnChange=StateHasChanged></VesselEditorPopupTab>
+
+<PopoutTab Name="Crew Manifest" TabPosition=168>
+    <div class="lcars">
+    <div class="typeface text-secondary w3-border-bottom w3-large">
+        <b>Crew Manifest</b>
+    </div>
+    @foreach (var crew in Data.Party.Cast<Character>().Concat(Data.Supports.Cast<Character>()).Where(c => Ship.Name == c.VesselAssignedTo).OrderByDescending(c => c.Rank.Order)) {
+        <div class="w3-bar-block w3-padding">
+            <button class="w3-bar-item" style="font-size: medium;" @onclick=@(() => { if (crew is PlayerCharacter pc) { NavigateToPlayerCharacter(pc); } else if (crew is SupportCharacter npc) { NaviateToSupportCharacter(npc); } })>
+                @crew.Assignment @crew.Rank @crew.Name
+            </button>
+        </div>
+    }
+    </div>
+</PopoutTab>
+
 <PrintNotification/>
 
 <div id="character-sheet" class="lcars">

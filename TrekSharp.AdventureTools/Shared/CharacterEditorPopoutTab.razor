@@ -8,6 +8,8 @@
         <div class="w3-bar-block w3-padding">
             <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=AddMilestone>+ Milestone</button>
             <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=Promote>+ Promotion</button>
+            <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=ChangeAssignment>Change Assignment</button>
+            
             @if (Character is SupportCharacter sc) {
                 <button class="w3-bar-item w3-margin-bottom" style="font-size: medium;" @onclick=assumingDirectControl>Reintroduce</button>
                 @if (sc.IsPlayerEquivalent) {
@@ -30,6 +32,7 @@
 
 <MilestoneEditor @ref=milestones OnSave=changesMade></MilestoneEditor>
 <PromotionEditor @ref=promotions OnSave=changesMade></PromotionEditor>
+<AssignmentEditor @ref=assignment OnSave=changesMade></AssignmentEditor>
 <SupportIntroductionPopup @ref=introduce OnSave=changesMade></SupportIntroductionPopup>
 
 <ConfirmationDialog @ref="confirm">
@@ -58,6 +61,12 @@
     private void AddMilestone() {
         if (this.HasCharacter)
             milestones.Open(this.Character);
+    }
+
+    private AssignmentEditor assignment;
+    private void ChangeAssignment() {
+        if (this.HasCharacter)
+            assignment.Open(this.Character);
     }
 
     private PromotionEditor promotions;

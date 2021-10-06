@@ -34,7 +34,17 @@
                         </div>
                         <div class="w3-row">
                             <div class="w3-quarter text-secondary typeface">ASSIGNMENT:</div> 
-                            <div class="w3-threequarter w3-border-bottom">@Player.Assignment</div>
+                            <div class="w3-threequarter w3-border-bottom">
+                                @Player.Assignment 
+                                @if (!string.IsNullOrEmpty(Player.VesselAssignedTo)) {
+                                    var ship = Data.Ships.Where(ship => Player.VesselAssignedTo == ship.Name).FirstOrDefault();
+                                    if (ship != null) {
+                                    <span> 
+                                        aboard <a style="text-decoration: none; cursor: pointer;" class="text-secondary" @onclick:preventDefault="true" @onclick:stopPropagation="true" @onclick=@(() => NavigateToPlayerVessel(ship))>@Player.VesselAssignedTo</a>
+                                    </span>
+                                    }
+                                }
+                            </div>
                         </div>
                         <div class="w3-row">
                             <div class="w3-quarter text-secondary typeface">ENVIRONMENT:</div> 

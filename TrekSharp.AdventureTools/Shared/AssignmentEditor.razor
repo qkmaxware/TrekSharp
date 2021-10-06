@@ -1,0 +1,75 @@
+@inject AppData Data;
+
+<Popup @ref="popup">
+    <div class="w3-panel typeface">
+        Characters can be assigned to different roles onboard various vessels throughout starfleet. Use this dialog to change a character's assignment or assigned vessel among the various player vessels.
+    </div>
+    <div class="w3-padding" style="max-height: 50vh; overflow: auto;">
+        <label>Role</label>
+        <select @bind="nextAssignment" class="w3-black w3-input lcars-border-primary">
+            @foreach (var group in Assignments.EnumerateByDepartment()) {
+                <optgroup label=@group.Key>
+                    @foreach (var assignment in group.Value) {
+                        <option>@assignment.Name</option>
+                    }
+                </optgroup>
+            }
+        </select>
+        <p class="w3-container">
+            @Assignments.EnumerateAll().Where(a => a.Name == nextAssignment).FirstOrDefault()?.Description
+        </p>
+        <label>Onboard</label>
+        <select @bind="assignmentVessel" class="w3-black w3-input lcars-border-primary">
+            <option value="null" selected>no vessel</option>
+            @foreach (var vessel in Data.Ships) {
+                <option>@vessel.Name</option>
+            }
+        </select>
+    </div>
+    <div class="w3-row">
+        <div class="w3-col s6 w3-left-align">
+            <button class="w3-red" @onclick=@(() => Close())>
+                Cancel
+            </button>
+        </div>
+        <div class="w3-col s6 w3-right-align">
+            <button class="w3-green" @onclick=@(() => Save())>
+                Change Assignment
+            </button>
+        </div>
+    </div>
+</Popup>
+
+@code {
+    Popup popup;
+    private Character Character {get; set;}
+    [Parameter] public Action OnSave {get; set;}
+
+    private string nextAssignment;
+    private string assignmentVessel;
+
+    public void Open(Character character) {
+        this.Character = character;
+        nextAssignment = character.Assignment;
+        assignmentVessel = character.VesselAssignedTo;
+        popup.Open();
+        StateHasChanged();
+    }
+
+    public void Close() {
+        popup.Close();
+        StateHasChanged();
+    }
+
+    private void Save() {
+        if (Character != null && !string.IsNullOrEmpty(nextAssignment)) {
+            Character.Assignment = nextAssignment;
+            if (assignmentVessel == "null") {
+                assignmentVessel = null;
+            }
+            Character.VesselAssignedTo = assignmentVessel;
+            Close();
+            OnSave?.Invoke();
+        }
+    }
+}

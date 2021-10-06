@@ -34,6 +34,7 @@ public class Character {
     public Faction Faction => Rank?.Faction;
     public Rank Rank {get; set;}
     public string Assignment {get; set;}
+    public string VesselAssignedTo {get; set;}
     public Species Species {get; set;}
 
     public Attributes Attributes {get; set;}
